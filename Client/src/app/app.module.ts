@@ -20,6 +20,8 @@ import { RepairPartsComponent } from './repair-parts/repair-parts.component';
 import { SiteVisitComponent } from './site-visit/site-visit.component';
 import { GatePassComponent } from './gate-pass/gate-pass.component';
 import { JobCardComponent } from './job-card/job-card.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { JobCardComponent } from './job-card/job-card.component';
     RepairPartsComponent,
     SiteVisitComponent,
     GatePassComponent,
-    JobCardComponent
+    JobCardComponent,
+    PageNotFoundComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
