@@ -26,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule} from '@angular/common/http';
+import { ForgetPasswordComponent } from './user-login/forget-password/forget-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,8 @@ import { HttpClientModule} from '@angular/common/http';
     GatePassComponent,
     JobCardComponent,
     PageNotFoundComponent,
-    DashboardComponent
+    DashboardComponent,
+    ForgetPasswordComponent
   ],
   imports: [
     BrowserModule,
