@@ -26,6 +26,8 @@ import { FormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule} from '@angular/common/http';
+import { SiteVisitService } from './site-visit/site-visit.service';
+
 @NgModule({
   declarations: [
     AppComponent,

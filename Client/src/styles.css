@@ -1,1 +1,24 @@
 @import '~bootstrap/dist/css/bootstrap.css';
+@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css';
+
+body{
+    background:#f3f3f3;
+    margin-top:20px;
+    color: #616f80;
+}
+.card {
+    border: none;
+    margin-bottom: 24px;
+    -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+    box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+}
+
+.avatar-xs {
+    height: 2.3rem;
+    width: 2.3rem;
+}
+.navbar {
+    margin-bottom: 30px;
+
+  }
+  
