@@ -1,5 +1,6 @@
-package com.Manipulus.arctic.userLogin.repo;
-import com.Manipulus.arctic.userLogin.model.User;
+package com.Manipulus.arctic.user.repository;
+
+import com.Manipulus.arctic.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
@@ -7,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @EnableJpaRepositories
 public interface IUserRepository extends JpaRepository<User,String> {
-    User findByUsername(String username);
+    abstract User findUserByEmail(String email);
 }

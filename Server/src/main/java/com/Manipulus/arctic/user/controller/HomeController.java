@@ -1,4 +1,4 @@
-package com.Manipulus.arctic.userLogin.controller;
+package com.Manipulus.arctic.user.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
