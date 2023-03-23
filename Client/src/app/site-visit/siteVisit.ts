@@ -1,3 +1,5 @@
+import { scheduled } from "rxjs";
+
 export interface SiteVisit{
     siteVisitName: string;
     siteVisitId: number;
@@ -7,5 +9,6 @@ export interface SiteVisit{
     startSiteVisit: boolean;
     dateRange: Date;
     state:string;
-    completedSiteVisits: number;
+    
+    
 }

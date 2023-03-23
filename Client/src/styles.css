@@ -19,6 +19,8 @@ body{
 }
 .navbar {
     margin-bottom: 30px;
+    width: 99%;
+    padding-left: 2%;
 
   }
   

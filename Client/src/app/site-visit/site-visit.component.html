@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse" id="navbarColor02">
        <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Add SiteVisit <span class="sr-only">(current)</span></a>
+            <a class="nav-link" (click)="onOpenModal(null,'add')" data-toggle="modal" data-target="#exampleModal">Add SiteVisit <span class="sr-only">(current)</span></a>
           </li>
        </ul>
        <form class="form-inline my-2 my-lg-0">
@@ -14,7 +14,7 @@
         </form>
     </div>
   </nav>
-<div class="container">
+<div class="container"id="main-container">
     <div class="row">
         <div *ngFor="let siteVisit of siteVisits" class="col-xl-3 col-md-6">
             <div class="card bg-pattern">
@@ -22,29 +22,30 @@
                     <div class="float-right">
                         <i class="fa fa-archive text-primary h4 ml-3"></i>
                     </div>
-                    <h5 class="font-size-20 mt-0 pt-1">{{siteVisits?.length}}</h5>
+                    <h5 class="font-size-20 mt-0 pt-1">{{ totalSiteVisitsCount}}</h5>
                     <p class="text-muted mb-0">Total Site Visits</p>
                 </div>
             </div>
         </div>
         <div *ngFor="let siteVisit of siteVisits" class="col-xl-3 col-md-6">
             <div class="card bg-pattern">
-                <div class="card-body">
-                    <div class="float-right">
-                        <i class="fa fa-th text-primary h4 ml-3"></i>
-                    </div>
-                    <h5 class="font-size-20 mt-0 pt-1">{{25}}</h5>
-                    <p class="text-muted mb-0">Completed Site Visits</p>
+              <div class="card-body">
+                <div class="float-right">
+                  <i class="fa fa-th text-primary h4 ml-3"></i>
                 </div>
+                <h5 class="font-size-20 mt-0 pt-1">{{ completedSiteVisitsCount }}</h5>
+                <p class="text-muted mb-0">Completed Site Visits</p>
+              </div>
             </div>
-        </div>
+          </div>
+          
         <div *ngFor="let siteVisit of siteVisits" class="col-xl-3 col-md-6">
             <div class="card bg-pattern">
                 <div class="card-body">
                     <div class="float-right">
                         <i class="fa fa-file text-primary h4 ml-3"></i>
                     </div>
-                    <h5 class="font-size-20 mt-0 pt-1">25</h5>
+                    <h5 class="font-size-20 mt-0 pt-1">{{incompleteSiteVisitsCount}}</h5>
                     <p class="text-muted mb-0">Pending Site Visits</p>
                 </div>
             </div>
@@ -56,7 +57,7 @@
                         <div class="form-group mb-0">
                             <label>Search</label>
                             <div class="input-group mb-0">
-                                <input type="text" class="form-control" placeholder="Search..." aria-describedby="siteVisit-search-addon" />
+                                <input type="search" class="form-control" placeholder="Search..." aria-describedby="siteVisit-search-addon" />
                                 <div class="input-group-append">
                                     <button class="btn btn-danger" type="button" id="siteVisit-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
                                 </div>
@@ -97,14 +98,14 @@
                                     <td>
                                         <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i> {{siteVisit?.state}}</span>
                                     </td>
-                                    <td>{{ siteVisit?.assignedTeamId.toString().padStart(9, '0') + 'v' }}</td>
+                                    <td>{{ siteVisit?.assignedTeamId }}</td>
 
                                     <td>{{siteVisit?.assignedVehicle}}</td>
                                     <td>{{siteVisit?.dateRange | date: 'yyyy-MM-dd'}}</td>
                                     <td>
                                         <div class="action">
-                                            <a href="#" class="text-success mr-4" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"> <i class="fa fa-pencil h5 m-0"></i></a>
-                                            <a href="#" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Close"> <i class="fa fa-remove h5 m-0"></i></a>
+                                            <a (click)="onOpenModal(siteVisit,'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"> <i class="fa fa-pencil"></i></a>
+                                            <a (click)="onOpenModal(siteVisit,'delete')" class="btn btn-secondary tooltips" data-placement="top" title="" data-original-title="delete"> <i class="fa fa-remove"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -113,6 +114,119 @@
                         </table>
                     </div>
                     <!-- end project-list -->
+
+<!-- Add Site Visit Modal -->
+<div class="modal fade" id="addSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="addSiteVisitModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           <div class="modal-header">
+              <h5 class="modal-title" id="addSiteVisitModalLabel">Add SiteVisit</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+           </div>
+           <div class="modal-body">
+              <form #addForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)">
+           
+            <div class="form-group">
+                 <label for="scheduledDate">Scheduled Date</label>
+                 <input type="date" ngModel name="scheduledDate" class="form-control" id="email" placeholder="scheduledDate" required>
+              </div>
+              <div class="form-group">
+                 <label for="assignedTeamId">Assigned Team Id</label>
+                 <input type="text" ngModel name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId" required>
+              </div>
+              <div class="form-group">
+                 <label for="assignedVehicle">Assigned Vehicle</label>
+                 <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="assignedVehicle" required>
+              </div>
+              <div class="form-group">
+                 <label for="dateRange">End Date</label>
+                 <input type="date" ngModel name="dateRange" class="form-control" id="dateRange" placeholder="dateRange" required>
+              </div>
+              <div class="form-group">
+                <label for="state">Status</label>
+                <input type="text" ngModel name="state" class="form-control" id="state" placeholder="state" required>
+             </div>
+              <div class="modal-footer">
+                 <button type="button" id="add-siteVisit-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                 <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+              </div>
+              </form>
+           </div>
+        </div>
+      </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="updateSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="siteVisitEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           <div class="modal-header">
+              <h5 class="modal-title" id="updateSiteVisitModalLabel">Edit Site Visit {{editSiteVisits?.siteVisitId}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+           </div>
+           <div class="modal-body">
+              <form #editForm="ngForm">
+                 <div class="form-group">
+                    <label for="name">siteVisitId</label>
+                    <input type="text" ngModel="{{editSiteVisits?.siteVisitId}}" name="siteVisitId" class="form-control" id="siteVisitId" aria-describedby="emailHelp" placeholder="siteVisitId">
+                 </div>
+
+                 <div class="form-group">
+                    <label for="scheduledDate">Scheduled Date</label>
+                    <input type="date" ngModel="{{editSiteVisits?.scheduledDate}}" name="scheduledDate" class="form-control" id="scheduledDate" placeholder="scheduledDate">
+                 </div>
+                 <div class="form-group">
+                    <label for="assignedTeamId">Assigned Team Id</label>
+                    <input type="text" ngModel="{{editSiteVisits?.assignedTeamId}}" name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId">
+                 </div>
+                 <div class="form-group">
+                    <label for="assignedVehicle">Assigned Vehicle</label>
+                    <input type="text" ngModel="{{editSiteVisits?.assignedVehicle}}" name="assignedVehicle" class="form-control" id="assignedVehicle" name="assignedVehicle" placeholder="assignedVehicle">
+                 </div>
+                 <div class="form-group">
+                    <label for="dateRange">End Date</label>
+                    <input type="date" ngModel="{{editSiteVisits?.dateRange}}" name="dateRange" class="form-control" id="dateRange" placeholder="dateRange">
+                 </div>
+                 <div class="form-group">
+                    <label for="state">Status</label>
+                    <input type="text" ngModel="{{editSiteVisits?.state}}" name="state" class="form-control" id="state" placeholder="state">
+                 </div>
+                 <div class="modal-footer">
+                    <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                    <button (click)="onUpdateSiteVisit(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+                 </div>
+              </form>
+           </div>
+        </div>
+     </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           <div class="modal-header">
+              <h5 class="modal-title" id="deleteModelLabel">Delete SiteVisit</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+           </div>
+           <div class="modal-body">
+              <p>Are you sure you want to delete siteVisit {{deleteSiteVisits?.siteVisitId}}?</p>
+              <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                 <button (click)="deleteSiteVisits?.siteVisitId && onDeleteSiteVisit(deleteSiteVisits.siteVisitId)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+
+              
+              </div>
+           </div>
+        </div>
+     </div>
+   </div>
 
                     <div class="pt-3">
                         <ul class="pagination justify-content-end mb-0">
