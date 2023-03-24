@@ -1,0 +1,575 @@
+<header class="py-3 border-bottom">
+    <div class="container d-flex flex-wrap justify-content-center">
+      <a
+        class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
+      >
+        <span class="fs-8">Customers</span>
+        <span class="badge rounded-pill bg-info customerCount text-muted"
+          >100</span
+        >
+      </a>
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0">
+        <input
+          type="search"
+          (ngModelChange)="searchCustomer(key.value)" #key="ngModel" ngModel
+          name="key"
+          class="form-control"
+          placeholder="Search..."
+          aria-label="Search"
+          required
+        />
+      </form>
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        <img
+          src="../../assets/Icon/Customer/person_add_FILL0_wght400_GRAD0_opsz48.png"
+          alt="Bootstrap"
+          width="20"
+          height="20"
+        />
+        Add Customer
+      </button>
+    </div>
+  </header>
+  <div class="tabel-containt " id="main-container">
+    <table class="table align-middle mb-0 bg-white">
+      <thead class="bg-light">
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Status</th>
+          <th>Job added</th>
+          <th>Contact person</th>
+          <th>Designation</th>
+          <th>Contact number</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers">
+          <td>
+            <div class="d-flex align-items-center">
+              <img
+                src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                alt=""
+                style="width: 45px; height: 45px"
+                class="rounded-circle"
+              />
+              <div class="ms-3">
+                <p class="fw-bold mb-1">{{ customer.name }}</p>
+                <p class="text-muted mb-0">{{ customer.nic_number }}</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <p class="text-muted mb-0">
+              {{ customer.address }}
+            </p>
+          </td>
+          <td>
+            <span class="badge rounded-pill bg-success jobtype">Active</span>
+          </td>
+          <td>
+            <p class="text-muted mb-0">22 Jun 2022</p>
+          </td>
+          <td>
+            <p class="fw-bold mb-1">{{ customer.contactPersonName }}</p>
+            <p class="text-muted mb-0">{{ customer.email }}</p>
+          </td>
+          <td>
+            <span class="badge rounded-pill bg-primary jobtype">{{
+              customer.designation
+            }}</span>
+          </td>
+          <td>
+            <p class="text-muted mb-0">{{ customer.contactNumber }}</p>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-link btn-sm btn-rounded"
+              (click)="onOpenModal(customer, 'delete')"
+            >
+              <img
+                src="../../assets/Icon/Customer/delete_FILL0_wght400_GRAD0_opsz48.png"
+                alt="Bootstrap"
+                width="20"
+                height="20"
+              />
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="onOpenModal(customer, 'edit')"
+            >
+              <img
+                src="../../assets/Icon/Customer/edit_FILL0_wght400_GRAD0_opsz48.png"
+                alt="Bootstrap"
+                width="20"
+                height="20"
+              />
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div  *ngIf="customers?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+      <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">NO CUSTOMERS!</h4>
+        <p> No Customer were found.</p>
+  
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal add -->
+  <form #addForm="ngForm" (ngSubmit)="onAddCustomer(addForm)">
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+      data-bs-backdrop="static"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Customer Details</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="card mb-4">
+              <div class="card-body">
+                <div>
+                  <h3 class="h6 mb-4">Basic information</h3>
+                </div>
+  
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Customer Name :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        ngModel
+                        name="name"
+                        required
+                      />
+                    </div>
+                  </div>
+  
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Contact Person Name :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="contactPersonName"
+                        ngModel
+                        name="contactPersonName"
+                        required
+                      />
+                    </div>
+                  </div>
+  
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Identity Number :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nic_number"
+                        ngModel
+                        name="nic_number"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Mobile Number :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="contactNumber"
+                        ngModel
+                        name="contactNumber"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Address :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="address"
+                        ngModel
+                        name="address"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label"> E- mail :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="email"
+                        ngModel
+                        name="email"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Designation :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="designation"
+                        ngModel
+                        name="designation"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              id="add-customer-form"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              [disabled]="addForm.invalid"
+              type="submit"
+              class="btn btn-primary"
+            >
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  <form #editForm="ngForm">
+    <div
+      class="modal fade"
+      id="exampleModal2"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Edit Customer {{ editCustomer?.name }}
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="card mb-4">
+              <div class="card-body">
+                <div>
+                  <h3 class="h6 mb-4">Basic information</h3>
+                </div>
+  
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Customer Name :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        ngModel="{{ editCustomer?.name }}"
+                        name="name"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <input
+                    type="hidden"
+                    class="form-control"
+                    id="id"
+                    ngModel="{{ editCustomer?.id }}"
+                    name="id"
+                  />
+                  <input
+                    type="hidden"
+                    class="form-control"
+                    id="customercode"
+                    ngModel="{{ editCustomer?.customercode }}"
+                    name="customercode"
+                  />
+  
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Contact Person Name :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="contactPersonName"
+                        ngModel="{{ editCustomer?.contactPersonName }}"
+                        name="contactPersonName"
+                        required
+                      />
+                    </div>
+                  </div>
+  
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Identity Number :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nic_number"
+                        ngModel="{{ editCustomer?.nic_number }}"
+                        name="nic_number"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Mobile Number :</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="contactNumber"
+                        ngModel="{{ editCustomer?.contactNumber }}"
+                        name="contactNumber"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Address :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="address"
+                        ngModel="{{ editCustomer?.address }}"
+                        name="address"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label"> E- mail :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="email"
+                        ngModel="{{ editCustomer?.email }}"
+                        name="email"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Designation :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="designation"
+                        ngModel="{{ editCustomer?.designation }}"
+                        name="designation"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              id="add-customer-form"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              (click)="onUpdateCustomer(editForm.value)"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  <!-- Button trigger modal -->
+  <!-- <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal3"
+  >
+    Launch demo modal
+  </button> -->
+  
+  <!-- Modal delete-->
+  <div
+    class="modal delete"
+    id="exampleModal3"
+    tabindex="-1"
+    aria-labelledby="exampleModal3"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabedelete">Detele Customer</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          Are you want to delete customer {{ deleteCustomer?.name }}?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            No
+          </button>
+          <button
+            (click)="onDeleteCustomer(deleteCustomer.id)"
+            class="btn btn-danger"
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <span class="badge rounded-pill bg-secondary jobtype">Secondary</span>
+  
+  <span class="badge rounded-pill bg-danger jobtype">Danger</span>
+  <span class="badge rounded-pill bg-warning text-dark jobtype">Warning</span>
+  
+  <span class="badge rounded-pill bg-light text-dark jobtype">Light</span>
+  <span class="badge rounded-pill bg-dark jobtype">Dark</span> -->
+  <!-- <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+  >
+    Launch demo modal
+  </button>
+  <div
+    class="modal fade"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title first</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">...</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-dismiss="modal"
+            data-bs-target="#exampleModal2"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="exampleModal2"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title second</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">...</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  
