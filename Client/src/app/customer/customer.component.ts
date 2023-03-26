@@ -4,6 +4,7 @@ import { CustomerService } from './customer.service';
 import { error } from '@angular/compiler/src/util';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-customer',
@@ -16,10 +17,30 @@ export class CustomerComponent implements OnInit {
   public customers : Customer[] =[];
   public editCustomer: Customer | undefined;
   public deleteCustomer!: Customer;
-
+  dtoptions:DataTables.Settings={}
+  dtTriger:Subject<any>=new Subject<any>();
   constructor( private customerService: CustomerService) { }
 
   ngOnInit(): void {
+    this.dtoptions={
+      pagingType: 'full_numbers',
+      destroy: true,
+      columns: [
+        // Define your columns here...
+        { data: 'name', orderable: true },
+        { data: 'address', orderable: false } ,
+        { data: 'contactNumber', orderable: false },
+        { data: 'nic_number', orderable: true } ,
+        { data: 'customer.address', orderable: true  },
+        { data: 'contactPersonName', orderable: false } ,
+        { data: 'designation', orderable: false },
+        { data: 'email', orderable: false },
+        { data: 'customercode', orderable: false },
+         // Disable sorting for this column
+      ],
+      order: []
+      
+    };
     this.getCustomers();
   }
 
@@ -27,6 +48,7 @@ export class CustomerComponent implements OnInit {
     this.customerService.getCustomerList().subscribe(
       (response: Customer[]) =>{
         this.customers = response;
+        this.dtTriger.next(null);
         console.log(this.customers);
       },
       (error: HttpErrorResponse) =>
@@ -40,6 +62,10 @@ export class CustomerComponent implements OnInit {
           (response: Customer)=> {
             console.log(response);
             this.getCustomers();
+            this.dtoptions={
+              retrieve: true,
+            };
+           
             addForm.reset();
           },
           (error: HttpErrorResponse) =>  {
@@ -54,6 +80,9 @@ export class CustomerComponent implements OnInit {
          (response: void)=> {
            console.log(response);
            this.getCustomers();
+           this.dtoptions={
+            retrieve: true,
+          };
           
          },
          (error: HttpErrorResponse) =>  {
@@ -69,6 +98,9 @@ export class CustomerComponent implements OnInit {
          (response: Customer)=> {
            console.log(response);
            this.getCustomers();
+           this.dtoptions={
+            retrieve: true,
+          };
          },
          (error: HttpErrorResponse) =>  {
            alert(error.message);
