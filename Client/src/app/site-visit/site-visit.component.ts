@@ -13,11 +13,12 @@ export class SiteVisitComponent implements OnInit {
  
   
   public siteVisits: SiteVisit[] ;
-  public editSiteVisits: SiteVisit | undefined;
+  public editSiteVisits: SiteVisit |null= null;
   public deleteSiteVisits: any;
   public completedSiteVisitsCount: number = 0;
   public incompleteSiteVisitsCount: number = 0;
   public totalSiteVisitsCount: number = 0;
+  
 
   constructor(private siteVisitService : SiteVisitService) {
     this.siteVisits=[];
@@ -119,10 +120,8 @@ export class SiteVisitComponent implements OnInit {
     console.log(key);
     const results: SiteVisit[] = [];
     for (const siteVisit of this.siteVisits) {
-      if (siteVisit.siteVisitId.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || siteVisit.assignedTeamId.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || siteVisit.assignedVehicle.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || siteVisit.siteVisitName.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+      if (siteVisit &&  siteVisit.siteVisitId && siteVisit.siteVisitId.toString().toLowerCase().indexOf(key.toLowerCase()) !== -1
+      ) {
         results.push(siteVisit);
       }
     }
@@ -145,7 +144,7 @@ function subscribe(arg0: (count: number) => number) {
       button.setAttribute('data-target','#addSiteVisitModal');
     }
     if(mode ==='edit'){
-      
+      this.editSiteVisits=siteVisit;
       button.setAttribute('data-target','#updateSiteVisitModal');
     }
     if(mode ==='delete'){
