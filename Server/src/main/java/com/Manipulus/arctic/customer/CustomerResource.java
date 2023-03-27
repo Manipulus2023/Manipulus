@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
+
 public class CustomerResource {
     private final CustomerService customerService;
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { SiteVisitService } from './site-visit.service';
 import { SiteVisit } from './siteVisit';
 import { NgForm } from '@angular/forms';
@@ -23,6 +23,7 @@ export class SiteVisitComponent implements OnInit {
     this.siteVisits=[];
     
    }
+
 
   ngOnInit(): void {
     
@@ -69,13 +70,12 @@ export class SiteVisitComponent implements OnInit {
         );
   }
   public onAddSiteVisit(addForm: NgForm): void {
-    const addButton = document.getElementById('add-siteVisit-form');
-    if (addButton !== null) {
-      addButton.click();
-    }
-    
-    this.siteVisitService.addSiteVisit(addForm.value).subscribe(
-      (response: SiteVisit) => {
+ document.getElementById('add-siteVisit-form')?.click();
+    // if (addButton !== null) {
+      // addButton.click();
+    // }
+ 
+    this.siteVisitService.addSiteVisit(addForm.value).subscribe((response: SiteVisit) => {
         console.log(response);
         this.getSiteVisits();
         addForm.reset();
@@ -86,6 +86,7 @@ export class SiteVisitComponent implements OnInit {
       }
     );
   }
+ 
   
   public onUpdateSiteVisit(siteVisit: SiteVisit): void {
     

@@ -16,18 +16,18 @@
   </nav>
 <div class="container"id="main-container">
     <div class="row">
-        <div *ngFor="let siteVisit of siteVisits" class="col-xl-3 col-md-6">
+        <div class="col-xl-3 col-md-6">
             <div class="card bg-pattern">
                 <div class="card-body">
                     <div class="float-right">
                         <i class="fa fa-archive text-primary h4 ml-3"></i>
                     </div>
-                    <h5 class="font-size-20 mt-0 pt-1">{{ totalSiteVisitsCount}}</h5>
+                    <h5  class="font-size-20 mt-0 pt-1">{{ totalSiteVisitsCount}}</h5>
                     <p class="text-muted mb-0">Total Site Visits</p>
                 </div>
             </div>
         </div>
-        <div *ngFor="let siteVisit of siteVisits" class="col-xl-3 col-md-6">
+        <div class="col-xl-3 col-md-6">
             <div class="card bg-pattern">
               <div class="card-body">
                 <div class="float-right">
@@ -39,7 +39,7 @@
             </div>
           </div>
           
-        <div *ngFor="let siteVisit of siteVisits" class="col-xl-3 col-md-6">
+        <div class="col-xl-3 col-md-6">
             <div class="card bg-pattern">
                 <div class="card-body">
                     <div class="float-right">
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div *ngFor="let siteVisit of siteVisits" class="col-xl-3 col-md-6">
+        <div class="col-xl-3 col-md-6">
             <div class="card">
                 <div class="card-body">
                     <form>
@@ -71,7 +71,7 @@
     <!-- end row -->
 
     <div class="row">
-        <div *ngFor="let siteVisit of siteVisits" class="col-lg-12">
+        <div *ngFor="let siteVisit of siteVisits; let i = index" class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive siteVisit-list">
@@ -90,7 +90,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th scope="row">{{siteVisits?.length}}</th>
+                                    <th scope="row">{{i+1}}</th>
                                     <td>{{siteVisit?.siteVisitId}}</td>
                                     
                                     <td>{{siteVisit?.scheduledDate | date: 'yyyy-MM-dd'}}</td>
@@ -113,8 +113,11 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- end project-list -->
 
+    <!-- end project-list -->
+    
+    
+    
 <!-- Add Site Visit Modal -->
 <div class="modal fade" id="addSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="addSiteVisitModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -173,7 +176,7 @@
                  <div class="form-group">
                     <label for="name">siteVisitId</label>
                     <input type="text" ngModel="{{editSiteVisits?.siteVisitId}}" name="siteVisitId" class="form-control" id="siteVisitId" aria-describedby="emailHelp" placeholder="siteVisitId">
-                 </div>
+                  </div> 
 
                  <div class="form-group">
                     <label for="scheduledDate">Scheduled Date</label>
@@ -221,29 +224,13 @@
                  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                  <button (click)="deleteSiteVisits?.siteVisitId && onDeleteSiteVisit(deleteSiteVisits.siteVisitId)" class="btn btn-danger" data-dismiss="modal">Yes</button>
 
-              
+              </div>
               </div>
            </div>
         </div>
      </div>
    </div>
 
-                    <div class="pt-3">
-                        <ul class="pagination justify-content-end mb-0">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end row -->
-</div>
+            
+  
+

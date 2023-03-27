@@ -1,5 +1,4 @@
 package com.Manipulus.arctic.siteVisit.service;
-
 import com.Manipulus.arctic.siteVisit.exception.UserNotFoundException;
 import com.Manipulus.arctic.siteVisit.repo.SiteVisitRepo;
 import com.Manipulus.arctic.siteVisit.siteVisit.SiteVisit;
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -23,7 +23,7 @@ public class SiteVisitService {
         }
 
         public SiteVisit addSiteVisit(SiteVisit siteVisit){
-
+            siteVisit.setSiteVisitCode(UUID.randomUUID().toString());
             return siteVisitRepo.save(siteVisit);
         }
 
@@ -40,6 +40,7 @@ public class SiteVisitService {
                     .orElseThrow(()->new UserNotFoundException("User by id "+siteVisitId +"was not found."));
         }
         public void deleteSiteVisit(Long siteVisitId){
+
             siteVisitRepo.deleteSiteVisitBySiteVisitId(siteVisitId);
         }
 

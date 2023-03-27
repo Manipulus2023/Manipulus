@@ -16,7 +16,7 @@ public class SiteVisitResource {
 
 
         public SiteVisitResource(com.Manipulus.arctic.siteVisit.service.SiteVisitService SiteVisitService) {
-            this.siteVisitService = siteVisitService;
+            this.siteVisitService = SiteVisitService;
         }
         @GetMapping("/all")
         public ResponseEntity<List<SiteVisit>> getAllSiteVisits(){
@@ -39,7 +39,7 @@ public class SiteVisitResource {
             SiteVisit updateSiteVisit=siteVisitService.updateSiteVisit(siteVisit);
             return new ResponseEntity<>(updateSiteVisit, HttpStatus.OK);
         }
-        @PutMapping("/delete/{siteVisitId}")
+        @DeleteMapping ("/delete/{siteVisitId}")
         public ResponseEntity<?> deleteSiteVisit(@PathVariable("siteVisitId")Long siteVisitId){
             siteVisitService.deleteSiteVisit(siteVisitId);
             return new ResponseEntity<>(HttpStatus.OK);
