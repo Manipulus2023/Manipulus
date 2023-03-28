@@ -6,6 +6,7 @@ import com.Manipulus.arctic.user.service.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.plaf.PanelUI;
@@ -30,11 +31,13 @@ public class UserController {
     }
 
     @GetMapping({"/forAdmin"})
+    @PreAuthorize("hasRole('Admin')")
     public String forAdmin(){
         return "This URL is only accessible to admin";
     }
 
     @GetMapping({"/forUser"})
+    @PreAuthorize("hasRole('User')")
     public String forUser(){
         return "This URL is only accessible to user";
     }
