@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,7 +6,11 @@ import { Injectable } from '@angular/core';
 })
 export class UserAuthService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  sendPasswordResetEmail(email: string) {
+    return this.http.post('/api/send-password-reset-email', { email });
+  }
 
   public setRoles(roles:[]){
     localStorage.setItem('roles',JSON.stringify(roles));

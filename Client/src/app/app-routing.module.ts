@@ -45,7 +45,7 @@ const routes: Routes = [
   { path: '*', component: PageNotFoundComponent },
   {path:'home',component:HomeComponent},
   {path:'admin',component:AdminComponent, canActivate:[AuthGuard],data:{roles:['Admin']}},
-  {path:'dashboard',component:DashboardComponent, canActivate:[AuthGuard],data:{roles:['User']}},
+  {path:'user',component:UserComponent, canActivate:[AuthGuard],data:{roles:['User']}},
   {path:'user-login',component:UserLoginComponent},
   {path:'forbidden',component:ForbiddenComponent},
   {path:'forget-password',component:ForgetPasswordComponent}
