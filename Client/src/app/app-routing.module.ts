@@ -17,6 +17,12 @@ import { UserGroupComponent } from './user-group/user-group.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { ForgetPasswordComponent } from './user-login/forget-password/forget-password.component';
+import { AuthGuard } from './_auth/auth.guard';
 
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -37,6 +43,12 @@ const routes: Routes = [
   { path: 'vehicle', component: VehicleComponent },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '*', component: PageNotFoundComponent },
+  {path:'home',component:HomeComponent},
+  {path:'admin',component:AdminComponent, canActivate:[AuthGuard],data:{roles:['Admin']}},
+  {path:'dashboard',component:DashboardComponent, canActivate:[AuthGuard],data:{roles:['User']}},
+  {path:'user-login',component:UserLoginComponent},
+  {path:'forbidden',component:ForbiddenComponent},
+  {path:'forget-password',component:ForgetPasswordComponent}
 ];
 
 @NgModule({
