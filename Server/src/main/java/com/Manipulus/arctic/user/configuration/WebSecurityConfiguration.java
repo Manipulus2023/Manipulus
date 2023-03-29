@@ -50,7 +50,7 @@ public class WebSecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/login").hasAnyRole("admin")
+                        .requestMatchers("/forAdmin").hasAnyRole("Admin")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -68,13 +68,14 @@ public class WebSecurityConfiguration {
     protected HttpSecurity configure (HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors();
         httpSecurity.csrf().disable()
-                .authorizeHttpRequests().requestMatchers("/authenticate").permitAll()
+                .authorizeHttpRequests()
+                .requestMatchers("/authenticate").permitAll()
                 .requestMatchers(HttpHeaders.ALLOW).permitAll()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-       // httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity;
     }
 
