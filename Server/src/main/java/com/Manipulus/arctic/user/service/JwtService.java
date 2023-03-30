@@ -31,21 +31,23 @@ public class JwtService implements UserDetailsService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    // Create JWT token
     public JwtResponse createJwtToken(JwtRequest jwtRequest)throws Exception{
         String userName = jwtRequest.getUserName();
         String userPassword = jwtRequest.getUserPassword();
-        authenticate(userName,userPassword);
+        authenticate(userName,userPassword); // authenticate user credentials
 
         final UserDetails userDetails = loadUserByUsername(userName);
 
 
-        String newGeneratedToken = jwtUtil.generateToken(userDetails);
+        String newGeneratedToken = jwtUtil.generateToken(userDetails);// generate JWT token
 
          User user = userDao.findById(userName).get();
 
-         return new JwtResponse(user, newGeneratedToken);
+         return new JwtResponse(user, newGeneratedToken); // return user details and JWT token
     }
 
+    // Load user details by username
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        User user = userDao.findById(username).get();
@@ -63,6 +65,7 @@ public class JwtService implements UserDetailsService {
        }
     }
 
+    // Get user authorities
     private Set getAuthorities(User user){
         Set authorities  = new HashSet();
 
@@ -73,6 +76,7 @@ public class JwtService implements UserDetailsService {
         return authorities;
     }
 
+    // Authenticate user credentials
     private void authenticate(String userName,  String userPassword)throws Exception{
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName,userPassword));

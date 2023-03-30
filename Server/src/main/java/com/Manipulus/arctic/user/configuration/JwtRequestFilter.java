@@ -32,7 +32,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-
+        // Extract JWT token from the "Authorization" header in the HTTP request
         final String header = request.getHeader("Authorization");
 
         String jwtToken=null;
@@ -41,6 +41,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwtToken=header.substring(7);
 
             try{
+                // Get username from JWT token using JwtUtil's getUserNameFromToken method
             userName=jwtUtil.getUserNameFromToken(jwtToken);
             }catch(IllegalArgumentException e){
                 System.out.println("Unable to get JWT token");
@@ -53,10 +54,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             System.out.println("Jwt token does not start with Bearer!");
         }
 
+        // If username is found and user is not already authenticated, load user details using JwtService and validate JWT token using JwtUtil's validateToken method
         if (userName != null && SecurityContextHolder.getContext().getAuthentication()==null ){
            UserDetails userDetails = jwtService.loadUserByUsername(userName);
 
            if(jwtUtil.validateToken(jwtToken,userDetails)){
+               // Create a new authentication token using the loaded user details and set the SecurityContext's authentication object to the new token
                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                        new UsernamePasswordAuthenticationToken(userDetails,
                        null,
@@ -67,7 +70,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
            }
         }
-
+        // Pass the request and response to the next filter in the chain
         filterChain.doFilter(request,response);
     }
 }

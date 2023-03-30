@@ -22,20 +22,24 @@ public class JwtUtil {
         return getClaimFromToken(token,Claims::getSubject);
     }
 
+    // Get a specific claim from a JWT token
     private <T> T getClaimFromToken(String token, Function<Claims,T> claimResolver){
         final Claims claims = getAllClaimsFromToken(token);
         return claimResolver.apply(claims);
     }
 
+    // Parse a JWT token and retrieve all its claims
     private Claims getAllClaimsFromToken(String token){
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
+    // Validate whether a JWT token is still valid for the given user
     public boolean validateToken(String token, UserDetails userDetails){
        String userName = getUserNameFromToken(token);
        return ( userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
+    // Check whether a JWT token has expired
     private boolean isTokenExpired(String token){
        final Date expirationDate = getExpirationDateFromToken(token);
        return expirationDate.before(new Date());
@@ -45,9 +49,13 @@ public class JwtUtil {
         return getClaimFromToken(token,Claims::getExpiration);
     }
 
+
+    // Generate a new JWT token for the given user details
     public String generateToken(UserDetails userDetails){
+        // Create an empty map of claims
         Map<String, Object> claims = new HashMap<>();
 
+        // Build the JWT token
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())

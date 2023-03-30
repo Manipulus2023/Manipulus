@@ -12,9 +12,12 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    // Implement method from AuthenticationEntryPoint interface to handle unauthorized requests
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
+        // Send HTTP error response with "Unauthorized" message and 401 status code
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized");
 
     }

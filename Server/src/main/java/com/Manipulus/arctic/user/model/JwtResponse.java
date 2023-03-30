@@ -10,6 +10,8 @@ public class JwtResponse {
         this.jwtToken = jwtToken;
     }
 
+    // Getter and Setter methods for User and JWT Token
+
     public User getUser() {
         return user;
     }

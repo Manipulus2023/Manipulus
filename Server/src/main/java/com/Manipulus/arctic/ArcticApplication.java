@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 
@@ -16,7 +18,16 @@ public class ArcticApplication {
 		SpringApplication.run(ArcticApplication.class, args);
 	}
 	@Bean
-	public CorsFilter corsFilter() {
+	public WebMvcConfigurer corsConfigure()
+	{
+		return new WebMvcConfigurer() {
+ 			public void addCorsMapping(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedOrigins("http://localhost:4200");
+			}
+		};
+	}
+	/*public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
 		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
@@ -29,5 +40,5 @@ public class ArcticApplication {
 		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
-	}
+	}*/
 }

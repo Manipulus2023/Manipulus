@@ -20,6 +20,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 @Configuration
@@ -36,16 +42,21 @@ public class WebSecurityConfiguration {
     @Autowired
     private UserDetailsService jwtService;
 
+    // Create an AuthenticationManager bean
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
+
+    // Customize web security by ignoring certain requests
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers("/images/**", "/js/**", "/webjars/**");
     }
 
+
+    // Create a SecurityFilterChain bean that defines authorization rules
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -63,11 +74,13 @@ public class WebSecurityConfiguration {
         return httpSecurity.build();
     }
 
+
+    // Create a HttpSecurity bean to configure security settings
     @Bean
     @Primary
     protected HttpSecurity configure (HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors();
-        httpSecurity.csrf().disable()
+        httpSecurity.cors().
+        and().csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/authenticate").permitAll()
                 .requestMatchers(HttpHeaders.ALLOW).permitAll()
@@ -85,6 +98,7 @@ public class WebSecurityConfiguration {
 
     }
 
+    // Configure global authentication using the UserDetailsService and PasswordEncoder beans
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
         authenticationManagerBuilder.userDetailsService(jwtService).passwordEncoder(passwordEncoder());
