@@ -57,7 +57,7 @@ import { HttpClientModule} from '@angular/common/http';
     FormsModule,
     FormsModule,
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
