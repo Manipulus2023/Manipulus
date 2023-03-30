@@ -15,6 +15,7 @@ public class ArcticApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ArcticApplication.class, args);
 	}
+
 	@Bean
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();

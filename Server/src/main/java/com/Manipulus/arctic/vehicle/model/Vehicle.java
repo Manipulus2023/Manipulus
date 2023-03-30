@@ -10,7 +10,7 @@ public class Vehicle implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private long id;
 
     @Column(name = "vehicle_name")
@@ -38,10 +38,13 @@ public class Vehicle implements Serializable {
     public void setVehicle_code(String vehicle_code) {
         this.vehicle_code = vehicle_code;
     }
-    public Vehicle(){
+
+    public Vehicle() {
 
     }
-    public Vehicle(String vehicle_name, String vehicle_image, String vehicle_number, String number_of_passengers, String active_state, String vehicle_code) {
+
+    public Vehicle(String vehicle_name, String vehicle_image, String vehicle_number, String number_of_passengers,
+            String active_state, String vehicle_code) {
         this.vehicle_name = vehicle_name;
         this.vehicle_image = vehicle_image;
         this.vehicle_number = vehicle_number;
@@ -98,19 +101,16 @@ public class Vehicle implements Serializable {
         this.active_state = active_state;
     }
 
-
-
-        @Override
-        public String toString(){
-            return "Vehicle{" +
-                    "id=" + id +
-                    "vehicle_name=" + vehicle_name +
-                    "vehicle_image=" +vehicle_image +
-                    "vehicle_number=" +vehicle_number +
-                    "number_of_passengers="+ number_of_passengers +
-                    "active_state="+active_state+
-                    '}';
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id=" + id +
+                "vehicle_name=" + vehicle_name +
+                "vehicle_image=" + vehicle_image +
+                "vehicle_number=" + vehicle_number +
+                "number_of_passengers=" + number_of_passengers +
+                "active_state=" + active_state +
+                '}';
 
     }
 }
-
