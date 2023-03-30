@@ -9,6 +9,9 @@ import { Vehicle } from './vehicle';
     providedIn: 'root'  
 })
 export class VehicleServise{
+    getAll() {
+        throw new Error('Method not implemented.');
+      }
     private baseUrl=environment.baseurl;
     constructor( private httpClient : HttpClient){}
 

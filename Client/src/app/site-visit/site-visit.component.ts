@@ -3,6 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { SiteVisitService } from './site-visit.service';
 import { SiteVisit } from './siteVisit';
 import { NgForm } from '@angular/forms';
+import { Vehicle } from '../vehicle/vehicle';
+import { VehicleServise } from '../vehicle/vehicle.service';
 
 @Component({
   selector: 'app-site-visit',
@@ -18,7 +20,8 @@ export class SiteVisitComponent implements OnInit {
   public completedSiteVisitsCount: number = 0;
   public incompleteSiteVisitsCount: number = 0;
   public totalSiteVisitsCount: number = 0;
-  
+  // public assignVehicle: Vehicle | null = null;
+  // public vehicles: Vehicle[] = [];
 
   constructor(private siteVisitService : SiteVisitService) {
     this.siteVisits=[];
@@ -36,7 +39,17 @@ export class SiteVisitComponent implements OnInit {
     });
   }
   
-  
+//   this.siteVisitService.getAvailableVehicles().subscribe(
+//     (response: Vehicle[]) => {
+//       console.log(response);
+//       this.vehicles = response;
+//     },
+//     (error: HttpErrorResponse) => {
+//       alert(error.message);
+//     }
+//   );
+// }
+
 
   countCompletedSiteVisits(siteVisits: SiteVisit[]): number {
     let completedSiteVisitsCount = 0;
@@ -130,7 +143,23 @@ export class SiteVisitComponent implements OnInit {
       this.getSiteVisits();
     }
   }
+    // public onAssignSiteVisit(siteVisit: SiteVisit): void {
+  //   siteVisit.vehicle = this.assignVehicle!;
+
+  //   if (siteVisit != null) {
+  //     this.siteVisitService.updateSiteVisit(siteVisit).subscribe(
+  //       (response: SiteVisit) => {
+  //         console.log(response);
+  //         this.getSiteVisits();
+  //       },
+  //       (error: HttpErrorResponse) => {
+  //         alert(error.message);
+  //       }
+  //     );
+  //   }
+  // }
   
+
 /*}
 function subscribe(arg0: (count: number) => number) {
   throw new Error('Function not implemented.');*/
@@ -151,10 +180,44 @@ function subscribe(arg0: (count: number) => number) {
       this.deleteSiteVisits = siteVisit;
       button.setAttribute('data-target','#deleteSiteVisitModal');
     }
+        // if (mode === 'addVehicle') {
+    //   if (!siteVisit) {
+    //     return;
+    //   }
+    //   this.siteVisitService.getAvailableVehicles().subscribe(
+    //     (response: Vehicle[]) => {
+    //       if (response.length > 0) {
+    //       this.assignVehicle = response[0];
+    //       // Assign the first available vehicle to the site visit
+    //       siteVisit.vehicle = this.assignVehicle;
+
+
+
+      //     if (siteVisit != null) {
+      //     this.siteVisitService.updateSiteVisit(siteVisit).subscribe(
+      //       (response: SiteVisit) => {
+      //         console.log(response);
+      //         this.getSiteVisits();
+      //       },
+      //       (error: HttpErrorResponse) => {
+      //         alert(error.message);
+      //       }
+      //     );
+      //   } 
+      // }else {
+      //     alert('No vehicles available');
+      //   }
+    //     },
+    //     (error: HttpErrorResponse) => {
+    //       alert(error.message);
+    //     }
+    //   );
+    // }
     container?.appendChild(button);
     button.click();
 
   }
+  
 }
 
 
