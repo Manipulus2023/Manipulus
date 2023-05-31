@@ -1,1 +1,27 @@
-<p>unit works!</p>
+<header class="py-3 border-bottom">
+  <div class="container d-flex flex-wrap justify-content-center">
+    <a
+      class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
+    >
+      <span class="fs-8">Units</span>
+      <span class="badge rounded-pill bg-info unitCount text-muted">100</span>
+    </a>
+  </div>
+</header>
+
+<div class="modal-background"></div>
+<div class="modal-content">
+  <form [formGroup]="addUnitForm" (ngSubmit)="onItemAdd()" class="unit-form">
+    <div class="form-field">
+      <label for="add_unit_name">Unit Name:</label>
+      <input type="text" formControlName="unitName" />
+    </div>
+
+    <div class="form-field">
+      <label for="add_item_name">Item Name:</label>
+      <input type="text" formControlName="itemName" />
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+</div>
