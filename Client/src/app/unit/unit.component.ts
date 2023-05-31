@@ -32,7 +32,15 @@ export class UnitComponent implements OnInit {
   initializeUnitForm() {
     this.addUnitForm =  this.formBuilder.group({
       unitName: this.formBuilder.control(''),
-      itemName: this.formBuilder.control('')
+      itemName: this.formBuilder.control(''),
+      installedLocation:this.formBuilder.control(''),
+      installedname:this.formBuilder.control(''),
+      installedaddressn:this.formBuilder.control(''),
+      installedparentLocation:this.formBuilder.control(''),
+      warrantyPeriod:this.formBuilder.control(''),
+      unitPrice:this.formBuilder.control(''),
+      status:this.formBuilder.control(''),
+
     });
   }
 
