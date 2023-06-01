@@ -26,11 +26,12 @@ public class AgreementServiceIMP implements AgreementService{
                 agreementSaveDTO.getEmergency_service_rate(),
                 agreementSaveDTO.getType_of_the_service(),
                 agreementSaveDTO.getInitiated_date(),
-                agreementSaveDTO.getExpired_date()
+                agreementSaveDTO.getExpired_date(),
+                agreementSaveDTO.getNIC()
 
         );
         agreementRepo.save(agreement);
-        return agreement.getUnitid();
+        return agreement.getAgreementid();
 
     }
 
@@ -47,7 +48,8 @@ public class AgreementServiceIMP implements AgreementService{
                     a.getEmergency_service_rate(),
                     a.getType_of_the_service(),
                     a.getInitiated_date(),
-                    a.getExpired_date()
+                    a.getExpired_date(),
+                    a.getNIC()
             );
             agreementDTOList.add(agreementDTO);
         }
@@ -71,6 +73,7 @@ public class AgreementServiceIMP implements AgreementService{
             agreement.setType_of_the_service(agreementUpdateDTO.getType_of_the_service());
             agreement.setInitiated_date(agreementUpdateDTO.getInitiated_date());
             agreement.setExpired_date(agreementUpdateDTO.getExpired_date());
+            agreement.setNIC(agreementUpdateDTO.getNIC());
 
             agreementRepo.save(agreement);
         }

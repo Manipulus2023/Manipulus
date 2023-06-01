@@ -25,10 +25,13 @@ public class Agreement {
     @Column(name="expired_date",length =10)
     private String expired_date;
 
+    @Column(name="customerId",length = 10)
+    private String NIC;
 
 
 
-    public Agreement(int agreementid,int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date) {
+
+    public Agreement(int agreementid,int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
         this.agreementid = agreementid;
         this.unitid = unitid;
         this.equipment = equipment;
@@ -37,13 +40,15 @@ public class Agreement {
         this.type_of_the_service = type_of_the_service;
         this.initiated_date = initiated_date;
         this.expired_date = expired_date;
+        this.NIC = NIC;
+
     }
 
     public Agreement() {
 
     }
 
-    public Agreement(int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date) {
+    public Agreement(int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
 
         this.unitid = unitid;
         this.equipment = equipment;
@@ -52,6 +57,7 @@ public class Agreement {
         this.type_of_the_service = type_of_the_service;
         this.initiated_date = initiated_date;
         this.expired_date = expired_date;
+        this.NIC = NIC;
     }
 
 
@@ -121,6 +127,13 @@ public class Agreement {
         this.expired_date = expired_date;
     }
 
+    public String getNIC() {
+        return NIC;
+    }
+
+    public void setNIC(String NIC) {
+        this.NIC = NIC;
+    }
 
     @Override
     public String toString() {
@@ -133,6 +146,7 @@ public class Agreement {
                 ", type_of_the_service='" + type_of_the_service + '\'' +
                 ", initiated_date='" + initiated_date + '\'' +
                 ", expired_date='" + expired_date + '\'' +
+                ", NIC='" + NIC + '\'' +
                 '}';
     }
 

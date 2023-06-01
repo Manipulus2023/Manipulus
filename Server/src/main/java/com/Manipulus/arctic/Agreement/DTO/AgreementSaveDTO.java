@@ -11,8 +11,10 @@ public class AgreementSaveDTO {
     private String initiated_date;
     private String expired_date;
 
+    private String NIC;
 
-    public AgreementSaveDTO(int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date) {
+
+    public AgreementSaveDTO(int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
 
         this.unitid = unitid;
         this.equipment = equipment;
@@ -21,13 +23,20 @@ public class AgreementSaveDTO {
         this.type_of_the_service = type_of_the_service;
         this.initiated_date = initiated_date;
         this.expired_date = expired_date;
+        this.NIC=NIC;
     }
 
     public AgreementSaveDTO() {
     }
 
 
+    public String getNIC() {
+        return NIC;
+    }
 
+    public void setNIC(String NIC) {
+        this.NIC = NIC;
+    }
 
     public int getUnitid() {
         return unitid;
@@ -96,6 +105,7 @@ public class AgreementSaveDTO {
                 ", type_of_the_service='" + type_of_the_service + '\'' +
                 ", initiated_date='" + initiated_date + '\'' +
                 ", expired_date='" + expired_date + '\'' +
+                ", NIC='" + NIC + '\'' +
                 '}';
     }
 
