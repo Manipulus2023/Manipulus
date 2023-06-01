@@ -21,15 +21,13 @@
     margin-left: 20px;
   }
   .tabel-containt {
-    padding: 20px;;
     background-color: white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0);
-    border: 20px solid #e6ecff;
-    
-    height: 100vh;
+    border-top: 0px;
+    border-left: 20px solid #e6ecff;
+    border-right: 20px solid #e6ecff;
   }
   
   .customer-background{
-    
     background-color: aqua;
   }

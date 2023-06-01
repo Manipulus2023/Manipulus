@@ -7,7 +7,7 @@
   
   .vehicle_details{
     width: 299px;
-    height: 370px;
+    height: 299px;
     margin-left: 12px;
     margin-right: 12px;
     margin-bottom: 12px;
@@ -35,13 +35,11 @@
   }
   
   .vehicle_details_data{
-    padding-left: 10px;
     margin-top: 5%;
     background-color: rgb(255, 255, 255);
   }
   
   .vehilve_number{
-    padding-left: 10px;
     margin-top: 2%;
     background-color: rgb(255, 255, 255);
   }
