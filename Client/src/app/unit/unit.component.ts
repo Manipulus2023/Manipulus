@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './unit.component.html',
   styleUrls: ['./unit.component.css'],
 })
-
 export class UnitComponent implements OnInit {
   addUnitForm: FormGroup;
   units: any[] = []; // Placeholder for unit list
@@ -30,23 +29,23 @@ export class UnitComponent implements OnInit {
   }
 
   initializeUnitForm() {
-    this.addUnitForm =  this.formBuilder.group({
+    this.addUnitForm = this.formBuilder.group({
       unitName: this.formBuilder.control(''),
       itemName: this.formBuilder.control(''),
-      installedLocation:this.formBuilder.control(''),
-      installedname:this.formBuilder.control(''),
-      installedaddressn:this.formBuilder.control(''),
-      installedparentLocation:this.formBuilder.control(''),
-      warrantyPeriod:this.formBuilder.control(''),
-      unitPrice:this.formBuilder.control(''),
-      status:this.formBuilder.control(''),
-
+      indoorSerial:this.formBuilder.control(''),
+      outdoorSerial:this.formBuilder.control(''),
+      installedLocation: this.formBuilder.control(''),
+      installedName: this.formBuilder.control(''),
+      installedAddress: this.formBuilder.control(''),
+      installedParentLocation: this.formBuilder.control(''),
+      warrantyPeriod: this.formBuilder.control(''),
+      unitPrice: this.formBuilder.control(''),
+      status: this.formBuilder.control(''),
     });
   }
 
-  onItemAdd(){
+  onItemAdd() {
     console.log(this.addUnitForm.value);
-
   }
 
   onAddUnitSubmit() {
