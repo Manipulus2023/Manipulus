@@ -1,31 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UnitService } from './unit.service';
+import { Subscription } from 'rxjs';
+import { Unit } from './unit';
 
 @Component({
   selector: 'app-unit',
   templateUrl: './unit.component.html',
   styleUrls: ['./unit.component.css'],
 })
-export class UnitComponent implements OnInit {
+export class UnitComponent implements OnInit, OnDestroy {
   addUnitForm: FormGroup;
-  units: any[] = []; // Placeholder for unit list
-  //editUnitForm: FormGroup;
+  unitSubscription: Subscription;
+  units: Unit[] = [];
   isAddUnitModalOpen = false;
   isEditUnitModalOpen = false;
   selectedUnit: any;
-  // location: this.fb.group({
-  //   installedLocation: [''],
-  //   name: [''],
-  //   address: [''],
-  //   parentLocation: [''],
-  // warrantyPeriod: [''],
-  // unitPrice: [''],
-  // status: [''],
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private unitService: UnitService) {}
 
   ngOnInit() {
+    this.getUnitList();
     this.initializeUnitForm();
+  }
+
+  getUnitList(){
+    this.unitSubscription = this.unitService.getUnitList().subscribe(res =>
+    {
+      this.units = res;
+    });
   }
 
   initializeUnitForm() {
@@ -102,5 +105,9 @@ export class UnitComponent implements OnInit {
     //const searchKey = this.searchForm.value.key;
     // Perform the search operation using the searchKey
     // ...
+  }
+
+  ngOnDestroy(): void {
+    this.unitSubscription.unsubscribe();
   }
 }
