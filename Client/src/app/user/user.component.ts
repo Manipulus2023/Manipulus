@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../_services/user.service';
 
 @Component({
@@ -9,17 +10,16 @@ import { UserService } from '../_services/user.service';
 export class UserComponent implements OnInit {
 
   message:any;
-  constructor(private userService:UserService) { }
+  constructor(private userService:UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.forUser();
   }
 
   forUser(){
-    this.userService.forAdmin().subscribe(
+    this.userService.forUser().subscribe(
     (response)=>{
-      console.log(response);
-      this.message=response;
+      this.router.navigate(['dashboard']);
     },
     (error)=>{
       console.log(error);

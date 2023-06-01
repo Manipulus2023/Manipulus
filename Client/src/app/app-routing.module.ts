@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CustomerComponent } from './customer/customer.component';
 import { CalendarComponent } from './calendar/calendar.component';
@@ -43,12 +43,22 @@ const routes: Routes = [
   { path: 'vehicle', component: VehicleComponent },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '*', component: PageNotFoundComponent },
-  {path:'home',component:HomeComponent},
-  {path:'admin',component:AdminComponent, canActivate:[AuthGuard],data:{roles:['Admin']}},
-  {path:'user',component:UserComponent, canActivate:[AuthGuard],data:{roles:['User']}},
-  {path:'user-login',component:UserLoginComponent},
-  {path:'forbidden',component:ForbiddenComponent},
-  {path:'forget-password',component:ForgetPasswordComponent}
+  { path: 'home', component: HomeComponent },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] },
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['User'] },
+  },
+  { path: 'user-login', component: UserLoginComponent },
+  { path: 'forbidden', component: ForbiddenComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent },
 ];
 
 @NgModule({

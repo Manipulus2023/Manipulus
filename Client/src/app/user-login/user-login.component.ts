@@ -11,7 +11,6 @@ import { UserService } from '../_services/user.service';
 })
 export class UserLoginComponent implements OnInit {
 
-
   constructor(
     private userService:UserService,
     private userAuthService:UserAuthService,
@@ -19,6 +18,10 @@ export class UserLoginComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {}
+
+  goToForgetPassword() {
+    this.router.navigate(['/forget-password']);
+  };
 
   login(loginForm: NgForm) {
 
@@ -38,11 +41,13 @@ export class UserLoginComponent implements OnInit {
       },
 
 
-      (error)=>{
+      (error:any)=>{
         console.log(error);
       }
-    );
+    )
     }
 
   }
+
+
 
