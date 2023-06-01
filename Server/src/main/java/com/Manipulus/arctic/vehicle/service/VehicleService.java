@@ -19,19 +19,26 @@ public class VehicleService {
         this.VehicleRepository = vehicleRepository;
     }
 
-    public Vehicle addVehicle(Vehicle vehicle){
+    public Vehicle addVehicle(Vehicle vehicle) {
         vehicle.setVehicle_code(UUID.randomUUID().toString());
         return VehicleRepository.save(vehicle);
     }
-    public List<Vehicle> findAllVehicle(){return VehicleRepository.findAll();}
-    public Vehicle updateVehicle( Vehicle vehicle){ return VehicleRepository.save(vehicle);}
-    public Vehicle findVehicleById(Long id){
+
+    public List<Vehicle> findAllVehicle() {
+        return VehicleRepository.findAll();
+    }
+
+    public Vehicle updateVehicle(Vehicle vehicle) {
+        return VehicleRepository.save(vehicle);
+    }
+
+    public Vehicle findVehicleById(Long id) {
         return VehicleRepository.findVehicleById(id)
-                .orElseThrow( ()-> new VehicleNotFoundException(" vehicle by id" + id + "was not found") );
+                .orElseThrow(() -> new VehicleNotFoundException(" vehicle by id" + id + "was not found"));
     }
 
     @Transactional
-    public void deleteVehicleById(long id){
+    public void deleteVehicleById(long id) {
         VehicleRepository.deleteVehicleById(id);
     }
 }

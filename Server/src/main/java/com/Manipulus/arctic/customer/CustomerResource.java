@@ -17,49 +17,39 @@ public class CustomerResource {
         this.customerService = customerService;
     }
 
+    // Get all customers
     @GetMapping("/all")
-    public ResponseEntity<List<Customer>> getAllCustomer(){
+    public ResponseEntity<List<Customer>> getAllCustomer() {
         List<Customer> customers = customerService.findAllCustomers();
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
+    // Get customer by ID
     @GetMapping("/find/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable("id") Long id){
-       Customer customer = customerService.findCustomerById(id);
+    public ResponseEntity<Customer> getCustomerById(@PathVariable("id") Long id) {
+        Customer customer = customerService.findCustomerById(id);
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
+    // Add new customer
     @PostMapping("/add")
-    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer){
+    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
         Customer newCustomer = customerService.addCustomer(customer);
         return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
     }
 
+    // Update customer details
     @PutMapping("/update")
-    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer){
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
         Customer updateCustomer = customerService.updateCustomer(customer);
         return new ResponseEntity<>(updateCustomer, HttpStatus.CREATED);
     }
 
+    // Delete customer by ID
 
-    @DeleteMapping ("/delete/{id}")
-    public void deleteCustomer(@PathVariable("id") Long id){
+    @DeleteMapping("/delete/{id}")
+    public void deleteCustomer(@PathVariable("id") Long id) {
         customerService.deleteCustomerById(id);
     }
-
-
-
-//        return new ResponseEntity<>(HttpStatus.OK);
-
-
-//    @DeleteMapping("/employees/{id}")
-//    public ResponseEntity<Map<String,Boolean>> deleteEmployee(@PathVariable long id){
-//        Employee emp = emp_repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id: "+id));
-//
-//        emp_repo.delete(emp);
-//        Map<String,Boolean> response = new HashMap<>();
-//        response.put("Deleted",Boolean.TRUE);
-//        return ResponseEntity.ok(response);
-//    }
 
 }
