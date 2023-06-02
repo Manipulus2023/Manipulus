@@ -1,6 +1,5 @@
 package com.Manipulus.arctic.unit;
 
-import com.Manipulus.arctic.customer.model.Customer;
 import com.Manipulus.arctic.unit.model.Unit;
 import com.Manipulus.arctic.unit.service.UnitService;
 import org.springframework.http.HttpStatus;
@@ -35,11 +34,11 @@ public class UnitResource {
         Unit newUnit = unitService.addUnit(unit);
         return new ResponseEntity<>(newUnit, HttpStatus.CREATED);
     }
-    @PutMapping("/update")
-    public ResponseEntity<Unit> updateUnit(@RequestBody Unit unit){
-        Unit updateUnit = unitService.updateUnit(unit);
-        return new ResponseEntity<>(updateUnit, HttpStatus.CREATED);
-    }
+//    @PutMapping("/update")
+//    public ResponseEntity<Unit> updateUnit(@RequestBody Unit unit){
+//        Unit updateUnit = unitService.updateUnit(id, unit);
+//        return new ResponseEntity<>(updateUnit, HttpStatus.CREATED);
+//    }
     @DeleteMapping ("/delete/{id}")
     public void deleteUnit(@PathVariable("id") Long id){
         unitService.deleteUnitById(id);

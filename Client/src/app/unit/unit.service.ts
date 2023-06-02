@@ -13,11 +13,11 @@ export class UnitService {
   constructor(private httpClient : HttpClient) { }
 
   public getUnitList(): Observable<Unit[]>{
-    return this.httpClient.get<Unit[]>(`${this.baseUrl}/unit/all`);
+    return this.httpClient.get<Unit[]>(`${this.baseUrl}/unit`);
   }
 
    public addUnit(unit:Unit): Observable<Unit>{
-    return this.httpClient.post<Unit>(`${this.baseUrl}/unit/add` ,unit);
+    return this.httpClient.post<Unit>(`${this.baseUrl}/unit` ,unit);
   }
 
   public updateUnit(unit:Unit): Observable<Unit>{

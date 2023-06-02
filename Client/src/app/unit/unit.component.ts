@@ -20,7 +20,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder, private unitService: UnitService) {}
 
   ngOnInit() {
-    this.getUnitList();
+    //this.getUnitList();
     this.initializeUnitForm();
   }
 
@@ -37,9 +37,10 @@ export class UnitComponent implements OnInit, OnDestroy {
       itemName: this.formBuilder.control(''),
       indoorSerial:this.formBuilder.control(''),
       outdoorSerial:this.formBuilder.control(''),
-      installedLocation: this.formBuilder.control(''),
-      installedName: this.formBuilder.control(''),
-      installedAddress: this.formBuilder.control(''),
+      commissionedDate:this.formBuilder.control(''),
+      owner:this.formBuilder.control(''),
+      installedLocationName: this.formBuilder.control(''),
+      installedLocationAddress: this.formBuilder.control(''),
       installedParentLocation: this.formBuilder.control(''),
       warrantyPeriod: this.formBuilder.control(''),
       unitPrice: this.formBuilder.control(''),
@@ -49,6 +50,10 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   onItemAdd() {
     console.log(this.addUnitForm.value);
+    this.unitService.addUnit(this.addUnitForm.value).subscribe(res =>
+      {
+        console.log(res);
+      });
   }
 
   onAddUnitSubmit() {

@@ -4,10 +4,11 @@ export class Unit{
   itemName!: string;
   indoorSerial!:string;
   outdoorSerial!:string;
-  installedLocation!: number;
-  installedaddress!: string;
-  contactPersonName!: string;
-  installedparentLocation!:   string;
+  commissionedDate!:string;
+  owner!:string;
+  installedLocationName!: string;
+  installedLocationAddress!: string;
+  installedparentLocation!: string;
   warrantyPeriod: string;
   unitPrice!: string;
   status!: string;
