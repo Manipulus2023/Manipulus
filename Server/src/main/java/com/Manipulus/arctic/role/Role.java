@@ -1,12 +1,18 @@
-package com.Manipulus.arctic.user.model;
+package com.Manipulus.arctic.role;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Role {
+@Table(name = "role")
+public class Role implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id", nullable = false, updatable = false)
+    private long roleId;
+    @Column(name = "role_name", nullable = false, unique = true)
     private String roleName;
+    @Column(name = "role_description", nullable = true)
     private String roleDescription;
 
     public String getRoleName() {

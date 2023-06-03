@@ -1,6 +1,6 @@
 package com.Manipulus.arctic.user.controller;
 
-import com.Manipulus.arctic.user.model.Role;
+import com.Manipulus.arctic.role.Role;
 import com.Manipulus.arctic.user.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

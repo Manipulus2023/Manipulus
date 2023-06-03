@@ -5,55 +5,54 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="units")
+@Table(name="unit")
 public class Unit implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,updatable = false)
-    private long id;
+    @Column(name = "unit_id", nullable = false,updatable = false)
+    private long unitId;
 
-    @Column(name = "unit_name" )
-    private String unit_name;
+    @Column(name = "unit_name")
+    private String unitName;
 
-    @Column(name = "item_name" )
-    private String item_name;
+    @Column(name = "item_name")
+    private String itemName;
 
-    @Column(name = "indoor_serial" )
-    private String indoor_serial;
+    @Column(name = "indoor_serial")
+    private String indoorSerial;
 
-    @Column(name = "outdoor_serial" )
-    private String outdoor_serial;
+    @Column(name = "outdoor_serial")
+    private String outdoorSerial;
 
-    @Column(name = "commissioned_date" )
-    private String commissioned_date;
+    @Column(name = "commissioned_date")
+    private String commissionedDate;
 
-    @Column(name = "owner" )
+    @Column(name = "owner")
     private String owner;
 
-    @Column(name = "installed_location_name" )
-    private String installed_location_name;
+    @Column(name = "installed_location_name")
+    private String installedLocationName;
 
-    @Column(name = "installed_location_address" )
-    private String installed_location_address;
+    @Column(name = "installed_location_address")
+    private String installedLocationAddress;
 
-    @Column(name = "installed_parent_location" )
-    private String installed_parent_location;
+    @Column(name = "installed_parent_location")
+    private String installedParentLocation;
 
-    @Column(name = "warranty_period" )
-    private String warranty_period;
+    @Column(name = "warranty_period")
+    private String warrantyPeriod;
 
-    @Column(name = "unit_price" )
-    private String unit_price;
+    @Column(name = "unit_price")
+    private String unitPrice;
 
-    @Column(name = "status" )
+    @Column(name = "status")
     private String status;
 
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private String unitCode;
 
     public String getUnitCode() {
-
         return unitCode;
     }
 
@@ -67,58 +66,58 @@ public class Unit implements Serializable {
 
     public Unit(String unit_name,String item_name,String indoor_serial,String outdoor_serial, String commissioned_date,String owner,String installed_location_address,String installed_location_name,String installed_parent_location,String warranty_period,String unit_price,String status)
     {
-        this.unit_name=unit_name;
-        this.item_name=item_name;
-        this.indoor_serial=indoor_serial;
-        this.outdoor_serial=outdoor_serial;
-        this.commissioned_date=commissioned_date;
+        this.unitName=unit_name;
+        this.itemName=item_name;
+        this.indoorSerial=indoor_serial;
+        this.outdoorSerial=outdoor_serial;
+        this.commissionedDate=commissioned_date;
         this.owner=owner;
-        this.installed_location_name=installed_location_name;
-        this.installed_location_address=installed_location_address;
-        this.installed_parent_location=installed_parent_location;
-        this.warranty_period=warranty_period;
-        this.unit_price=unit_price;
+        this.installedLocationName=installed_location_name;
+        this.installedLocationAddress=installed_location_address;
+        this.installedParentLocation=installed_parent_location;
+        this.warrantyPeriod=warranty_period;
+        this.unitPrice=unit_price;
         this.status=status;
     }
 
     public long getId() {
-        return id;
+        return unitId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.unitId = id;
     }
 
     public String getItem_name() {
-        return item_name;
+        return itemName;
     }
 
     public void setItem_name(String item_name) {
-        this.item_name = item_name;
+        this.itemName = item_name;
     }
 
     public String getIndoor_serial() {
-        return indoor_serial;
+        return indoorSerial;
     }
 
     public void setIndoor_serial(String indoor_serial) {
-        this.indoor_serial = indoor_serial;
+        this.indoorSerial = indoor_serial;
     }
 
     public String getOutdoor_serial() {
-        return outdoor_serial;
+        return outdoorSerial;
     }
 
     public void setOutdoor_serial(String outdoor_serial) {
-        this.outdoor_serial = outdoor_serial;
+        this.outdoorSerial = outdoor_serial;
     }
 
     public String getCommissioned_date() {
-        return commissioned_date;
+        return commissionedDate;
     }
 
     public void setCommissioned_date(String commissioned_date) {
-        this.commissioned_date = commissioned_date;
+        this.commissionedDate = commissioned_date;
     }
 
     public String getOwner() {
@@ -130,43 +129,43 @@ public class Unit implements Serializable {
     }
 
     public String getInstalled_location_name() {
-        return installed_location_name;
+        return installedLocationName;
     }
 
     public void setInstalled_location_name(String installed_location_name) {
-        this.installed_location_name = installed_location_name;
+        this.installedLocationName = installed_location_name;
     }
 
     public String getInstalled_location_address() {
-        return installed_location_address;
+        return installedLocationAddress;
     }
 
     public void setInstalled_location_address(String installed_location_address) {
-        this.installed_location_address = installed_location_address;
+        this.installedLocationAddress = installed_location_address;
     }
 
     public String getInstalled_parent_location() {
-        return installed_parent_location;
+        return installedParentLocation;
     }
 
     public void setInstalled_parent_location(String installed_parent_location) {
-        this.installed_parent_location = installed_parent_location;
+        this.installedParentLocation = installed_parent_location;
     }
 
     public String getWarranty_period() {
-        return warranty_period;
+        return warrantyPeriod;
     }
 
     public void setWarranty_period(String warranty_period) {
-        this.warranty_period = warranty_period;
+        this.warrantyPeriod = warranty_period;
     }
 
     public String getUnit_price() {
-        return unit_price;
+        return unitPrice;
     }
 
     public void setUnit_price(String unit_price) {
-        this.unit_price = unit_price;
+        this.unitPrice = unit_price;
     }
 
     public String getStatus() {
@@ -180,20 +179,19 @@ public class Unit implements Serializable {
     @Override
     public String toString(){
         return "Unit{"+
-                "id="+id+
-                "unitName"+unit_name +
-                "itemName"+item_name+
-                "indoorSerial"+indoor_serial+
-                "outdoorSerial"+outdoor_serial+
-                "commissionedDate"+commissioned_date+
+                "id="+unitId+
+                "unitName"+unitName +
+                "itemName"+itemName+
+                "indoorSerial"+indoorSerial+
+                "outdoorSerial"+outdoorSerial+
+                "commissionedDate"+commissionedDate+
                 "owner"+owner+
-                "installedLocationName"+installed_location_name+
-                "installedLocationAddress"+installed_location_address+
-                "installedParentLocation"+installed_parent_location+
-                "warrantyPeriod"+warranty_period+
-                "unitPrice"+unit_price+
+                "installedLocationName"+installedLocationName+
+                "installedLocationAddress"+installedLocationAddress+
+                "installedParentLocation"+installedParentLocation+
+                "warrantyPeriod"+warrantyPeriod+
+                "unitPrice"+unitPrice+
                 "status"+status+
                 '}';
-
     }
 }

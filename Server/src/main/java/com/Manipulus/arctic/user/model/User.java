@@ -1,78 +1,64 @@
 package com.Manipulus.arctic.user.model;
 
-
+import com.Manipulus.arctic.role.Role;
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
-
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
-
-    private long id;
-
     @Id
-    @Column(name = "username")
-    private String username;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false, updatable = false)
+    private long userId;
+
+    @Column(name = "user_name", nullable = false, unique = true)
+    private String userName;
 
     @Column(name = "first_name")
-    private String first_name;
+    private String firstName;
 
     @Column(name = "last_name")
-    private String last_name;
+    private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name = "USER_ROLE",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
     joinColumns = {
-            @JoinColumn(name = "USER_ID")
+            @JoinColumn(name = "user_id")
     },
-            inverseJoinColumns = {
-            @JoinColumn(name = "ROLE_ID")
-            }
-
-    )
+    inverseJoinColumns = {
+            @JoinColumn(name = "role_id")
+    })
     private Set<Role> role;
 
-   // public long getId() {
-     //   return id;
-   // }
-
-   // public void setId(long id) {
-     //   this.id = id;
-   // }
-
     public String getUsername() {
-        return username;
+        return userName;
     }
 
-    public void setUsername(String username) { this.username = username;
+    public void setUsername(String username) { this.userName = username;
     }
 
     public String getFirst_name() {
-        return first_name;
+        return firstName;
     }
 
     public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+        this.firstName = first_name;
     }
 
     public String getLast_name() {
-        return last_name;
+        return lastName;
     }
 
     public void setLast_name(String last_name) {
-        this.last_name = last_name;
+        this.lastName = last_name;
     }
 
     public String getEmail() {

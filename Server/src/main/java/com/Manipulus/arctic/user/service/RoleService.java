@@ -1,7 +1,7 @@
 package com.Manipulus.arctic.user.service;
 
+import com.Manipulus.arctic.role.Role;
 import com.Manipulus.arctic.user.dao.RoleDao;
-import com.Manipulus.arctic.user.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
