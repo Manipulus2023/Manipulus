@@ -1,4 +1,4 @@
-package com.Manipulus.arctic.role;
+package com.Manipulus.arctic.role.model;
 
 import jakarta.persistence.*;
 import java.io.Serializable;

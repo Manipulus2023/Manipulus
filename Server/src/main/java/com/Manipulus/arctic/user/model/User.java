@@ -1,6 +1,6 @@
 package com.Manipulus.arctic.user.model;
 
-import com.Manipulus.arctic.role.Role;
+import com.Manipulus.arctic.role.model.Role;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Set;

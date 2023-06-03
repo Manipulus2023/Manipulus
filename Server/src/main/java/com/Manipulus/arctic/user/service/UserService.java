@@ -1,9 +1,10 @@
 package com.Manipulus.arctic.user.service;
 
-import com.Manipulus.arctic.role.Role;
+import com.Manipulus.arctic.role.model.Role;
 import com.Manipulus.arctic.user.dao.RoleDao;
 import com.Manipulus.arctic.user.dao.UserDao;
 import com.Manipulus.arctic.user.model.User;
+import com.Manipulus.arctic.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ import java.util.Set;
 
 @Service
 public class UserService{
+
+    @Autowired
+    private IUserRepository userRepository;
 
     @Autowired
     private UserDao userDao;
@@ -32,37 +36,44 @@ public class UserService{
     }
 
     public void initRolesAndUser() {
-        Role adminRole = new Role();
-        Set<Role> adminRoles = new HashSet<> ();
-        adminRole.setRoleName("Admin");
-        adminRole.setRoleDescription("Admin role");
-        roleDao.save(adminRole);
-        adminRoles.add(adminRole);
+        boolean isAdminExisting = userRepository.existsById(1);
+        boolean isUserExisting = userRepository.existsById(2);
 
-        User adminUser = new User();
-        adminUser.setFirst_name("Admin");
-        adminUser.setLast_name("Person");
-        adminUser.setUsername("admin123");
-        adminUser.setEmail("admin.user@test.lk");
-        adminUser.setPassword(getEncodedPassword("admin@pass"));
-        adminUser.setRole(adminRoles);
-        userDao.save(adminUser);
+        if(!isAdminExisting) {
+            Role adminRole = new Role();
+            Set<Role> adminRoles = new HashSet<> ();
+            adminRole.setRoleName("Admin");
+            adminRole.setRoleDescription("Admin role");
+            roleDao.save(adminRole);
+            adminRoles.add(adminRole);
 
-        Role userRole = new Role();
-        Set<Role>userRoles= new HashSet<>();
-        userRole.setRoleName("User");
-        userRole.setRoleDescription("User role");
-        userRoles.add(userRole);
-        roleDao.save(userRole);
+            User adminUser = new User();
+            adminUser.setFirst_name("Admin");
+            adminUser.setLast_name("Person");
+            adminUser.setUsername("admin123");
+            adminUser.setEmail("admin.user@test.lk");
+            adminUser.setPassword(getEncodedPassword("admin@pass"));
+            adminUser.setRole(adminRoles);
+            userDao.save(adminUser);
+        }
 
-        User user = new User();
-        user.setFirst_name("Nethmini");
-        user.setLast_name("Kavindya");
-        user.setUsername("neth123");
-        user.setEmail("nethmini.kavindya@test.lk");
-        user.setPassword(getEncodedPassword("neth@pass"));
-        user.setRole(userRoles);
-        userDao.save(user);
+        if(!isUserExisting) {
+            Role userRole = new Role();
+            Set<Role>userRoles= new HashSet<>();
+            userRole.setRoleName("User");
+            userRole.setRoleDescription("User role");
+            userRoles.add(userRole);
+            roleDao.save(userRole);
+
+            User user = new User();
+            user.setFirst_name("Nethmini");
+            user.setLast_name("Kavindya");
+            user.setUsername("neth123");
+            user.setEmail("nethmini.kavindya@test.lk");
+            user.setPassword(getEncodedPassword("neth@pass"));
+            user.setRole(userRoles);
+            userDao.save(user);
+        }
     }
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);

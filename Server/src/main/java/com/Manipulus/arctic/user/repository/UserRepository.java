@@ -1,6 +1,8 @@
 package com.Manipulus.arctic.user.repository;
 
 import com.Manipulus.arctic.user.model.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,10 +13,19 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class UserRepository implements IUserRepository {
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public User findUserByEmail(String email) {
         return null;
+    }
+
+    @Override
+    public User findUserByUserName(String userName) {
+        return entityManager.createQuery("SELECT u FROM User u WHERE u.userName = :userName", User.class)
+                .setParameter("userName", userName)
+                .getSingleResult();
     }
 
     @Override
@@ -38,7 +49,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void deleteAllByIdInBatch(Iterable<String> strings) {
+    public void deleteAllByIdInBatch(Iterable<Integer> integers) {
 
     }
 
@@ -48,17 +59,17 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User getOne(String s) {
+    public User getOne(Integer s) {
         return null;
     }
 
     @Override
-    public User getById(String s) {
+    public User getById(Integer s) {
         return null;
     }
 
     @Override
-    public User getReferenceById(String s) {
+    public User getReferenceById(Integer s) {
         return null;
     }
 
@@ -108,12 +119,12 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public Optional<User> findById(String s) {
+    public Optional<User> findById(Integer s) {
         return Optional.empty();
     }
 
     @Override
-    public boolean existsById(String s) {
+    public boolean existsById(Integer s) {
         return false;
     }
 
@@ -123,7 +134,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public List<User> findAllById(Iterable<String> strings) {
+    public List<User> findAllById(Iterable<Integer> strings) {
         return null;
     }
 
@@ -133,7 +144,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void deleteById(String s) {
+    public void deleteById(Integer s) {
 
     }
 
@@ -143,7 +154,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void deleteAllById(Iterable<? extends String> strings) {
+    public void deleteAllById(Iterable<? extends Integer> strings) {
 
     }
 

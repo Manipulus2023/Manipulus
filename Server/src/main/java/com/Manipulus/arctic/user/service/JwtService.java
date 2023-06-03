@@ -5,6 +5,7 @@ import com.Manipulus.arctic.user.dao.UserDao;
 import com.Manipulus.arctic.user.model.JwtRequest;
 import com.Manipulus.arctic.user.model.JwtResponse;
 import com.Manipulus.arctic.user.model.User;
+import com.Manipulus.arctic.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,6 +27,9 @@ public class JwtService implements UserDetailsService {
     private UserDao userDao;
 
     @Autowired
+    private IUserRepository userRepository;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     @Autowired
@@ -42,7 +46,7 @@ public class JwtService implements UserDetailsService {
 
         String newGeneratedToken = jwtUtil.generateToken(userDetails);// generate JWT token
 
-         User user = userDao.findById(userName).get();
+         User user = userRepository.findUserByUserName(userName); //userDao.findById(userName).get();
 
          return new JwtResponse(user, newGeneratedToken); // return user details and JWT token
     }
@@ -50,7 +54,7 @@ public class JwtService implements UserDetailsService {
     // Load user details by username
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       User user = userDao.findById(username).get();
+        User user = userRepository.findUserByUserName(username);
 
        if (user != null){
             return new org.springframework.security.core.userdetails.User(
