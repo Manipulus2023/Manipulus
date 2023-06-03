@@ -1,3 +1,5 @@
-<app-header></app-header>
-<!-- <app-side-nav></app-side-nav> -->
-<router-outlet></router-outlet>
+{{isTokenAvailable}}
+<app-header *ngIf="isTokenAvailable == ''"></app-header>
+<router-outlet>
+  <app-side-nav *ngIf="isTokenAvailable != ''"></app-side-nav>
+</router-outlet>

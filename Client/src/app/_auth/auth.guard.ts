@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     private userAuthService: UserAuthService,
     private router: Router,
     private userService: UserService
-  ) {}
+  ) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -28,7 +28,9 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.userAuthService.getToken() !== null) {
+      console.log(this.userAuthService.getToken());
+
+    if (this.userAuthService.getToken() !== null && this.userAuthService.getRoles !== null) {
       const role = route.data['roles'] as Array<string>;
 
       if (role) {
@@ -44,7 +46,7 @@ export class AuthGuard implements CanActivate {
       }
     }
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['/user-login']);
     return false;
   }
 }

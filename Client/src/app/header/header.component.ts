@@ -6,26 +6,23 @@ import { UserService } from '../_services/user.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  constructor(
+    private userAuthService: UserAuthService,
+    private router: Router,
+    public userService: UserService
+  ) {}
 
-  constructor(private userAuthService:UserAuthService,
-    private router:Router,
-    public userService:UserService
-     ) { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
-
-  public isLoggedin(){
+  public isLoggedin() {
     return this.userAuthService.isLoggedIn();
   }
 
-  public logout(){
+  public logout() {
     this.userAuthService.clear();
-    this.router.navigate(['/home']);
+    this.router.navigate(['/user-login']);
   }
-
 }

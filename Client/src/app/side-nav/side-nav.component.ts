@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserAuthService } from '../_services/user-auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-nav',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideNavComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userAuthService: UserAuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  public logout() {
+    this.userAuthService.clear();
+    this.router.navigate(['/home']);
+  }
 }

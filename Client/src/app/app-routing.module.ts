@@ -27,7 +27,6 @@ import { AuthGuard } from './_auth/auth.guard';
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
   { path: 'customer', component: CustomerComponent },
-  { path: 'dashboard', component: DashboardComponent },
   { path: 'gate-pass', component: GatePassComponent },
   { path: 'item', component: ItemComponent },
   { path: 'job', component: JobComponent },
@@ -37,11 +36,16 @@ const routes: Routes = [
   { path: 'service-agreement', component: ServiceAgreementComponent },
   { path: 'site-visit', component: SiteVisitComponent },
   { path: 'sub-location', component: SubLocationComponent },
-  { path: 'unit', component: UnitComponent },
+  {
+    path: 'unit',
+    component: UnitComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['User'] },
+  },
   { path: 'user', component: UserComponent },
   { path: 'user-group', component: UserGroupComponent },
   { path: 'vehicle', component: VehicleComponent },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/user-login', pathMatch: 'full' },
   { path: '*', component: PageNotFoundComponent },
   { path: 'home', component: HomeComponent },
   {
