@@ -1,435 +1,230 @@
 <header class="py-3 border-bottom">
   <div class="container d-flex flex-wrap justify-content-center">
-    <a
-      class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
-    >
-      <span class="fs-8">Units </span>
-      <span class="badge round-pill bg-info unitCount text-muted">50</span>
+    <a class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+      <span class="fs-8">Units</span>
+      <span class="badge rounded-pill bg-info unitCount text-muted">100</span>
     </a>
-    <form class="col-12 col-lg-auto mb-3 mb-lg-0">
-      <input
-        type="search"
-        class="form-control"
-        placeholder="Search a unit..."
-        aria-label="Search"
-      />
-    </form>
-    <button
-      type="button"
-      class="btn btn-outline-primary"
-      class="new"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal2"
-    >
-      <img
-        src="../../assets/Icon/Customer/person_add_FILL0_wght400_GRAD0_opsz48.png"
-        alt="Bootstrap"
-        width="15"
-        height="15"
-      />
-      Add a Unit
-    </button>
-  </div>
+    <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0">
+      <input type="search" (ngModelChange)="searchUnit(key.value)" #key="ngModel" ngModel name="key"
+        class="form-control" placeholder="Search..." aria-label="Search" required />
+    </form> -->
+
+
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <img src="../../assets/Icon/Customer/person_add_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
+    height="20" />
+  Add Unit
+</button>
+</div>
 </header>
-<div class="space_in_unit"></div>
-<div class="unit_loop">
-  <div *ngFor="let unit of unit" class="unit_loop_class">
-    <div class="unit_details_container" id="unit_details_container">
-      <div class="unit_details">
-        <div class="unit_image">
-          <img
-            src="../../assets/Item/lg-air-conditioner-r32-wall-unit-dual-cool-ap12rt-35-kw-i-12000-btu.jpg"
-            alt="Bootstrap"
-            width="100%"
-            height="80%"
-          />
-        </div>
-        <div class="unit_details_data">
-          <p>
-            <b>{{ unit.unit_name }}</b>
-          </p>
-          <p>Area : {{ unit.unit_capacity }} sq.feet</p>
-          <p>Manufactured by : {{ unit.unit_manufacturer }}</p>
-          <p>Avaliability : {{ unit.active_state }}</p>
 
-          <div class="button">
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              (click)="onOpenModal_unit(unit, 'delete')"
-            >
-              <img
-                src="../../assets/Icon/Customer/delete_FILL0_wght400_GRAD0_opsz48.png"
-                alt="Bootstrap"
-                width="20"
-                height="20"
-              />
-            </button>
 
-            <button
-              type="button"
-              class="btn btn-outline-primary"
-              (click)="onOpenModal_unit(unit, 'edit')"
-            >
-              <img
-                src="../../assets/Icon/Customer/edit_FILL0_wght400_GRAD0_opsz48.png"
-                alt="Bootstrap"
-                width="20"
-                height="20"
-              />
-            </button>
-          </div>
-        </div>
-      </div>
+
+
+<!-- <div class="modal-background"></div>
+<div class="modal-content">
+  <form [formGroup]="addUnitForm" (ngSubmit)="onItemAdd()" class="unit-form">
+    <div class="form-field">
+      <label for="add_unit_name">Unit Name:</label>
+      <input type="text" formControlName="unitName" />
     </div>
-  </div>
 
-  <!-- add -->
-  <form #addForm1="ngForm" (ngSubmit)="onAddUnit(addForm1)">
-    <div
-      class="modal fade"
-      id="exampleModal2"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Unit Details</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="card mb-4">
-              <div class="card-body">
-                <div>
-                  <h3 class="h6 mb-4">Product Information</h3>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="mb-3">
-                      <label class="form-label">Unit Name :</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="unit_name"
-                        ngModel
-                        name="unit_name"
-                        required
-                        minlength="2"
-                        maxlength="50"
-                      />
-
-                      <div
-                        *ngIf="
-                          addForm1.controls['unit_name'].invalid &&
-                          (addForm1.controls['unit_name'].dirty ||
-                            addForm1.controls['unit_name'].touched)
-                        "
-                      >
-                        <small
-                          class="text-danger"
-                          *ngIf="addForm1.controls['unit_name'].errors?.['required']"
-                          >Unit name is required.</small
-                        >
-                        <small
-                          class="text-danger"
-                          *ngIf="addForm1.controls['unit_name'].errors?.['minlength']"
-                          >Unit name must be at least 2 characters long.</small
-                        >
-                        <small
-                          class="text-danger"
-                          *ngIf="addForm1.controls['unit_name'].errors?.['maxlength']"
-                          >Unit name cannot be longer than 50 characters.</small
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-6">
-                  <div class="mb-3">
-                    <label class="form-label">Unit capacity :</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="unit_capacity"
-                      ngModel
-                      name="unit_capacity"
-                      required
-                      minlength="2"
-                      maxlength="6"
-                    />
-                    <div
-                      *ngIf="
-                        addForm1.controls['unit_capacity'].invalid &&
-                        (addForm1.controls['unit_capacity'].dirty ||
-                          addForm1.controls['unit_capacity'].touched)
-                      "
-                    >
-                      <small
-                        class="text-danger"
-                        *ngIf="addForm1.controls['unit_capacity'].errors?.['required']"
-                        >Unit capacity is required.</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="addForm1.controls['unit_capacity'].errors?.['minlength']"
-                        >Unit capacity must be at least 2 characters
-                        long.</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="addForm1.controls['unit_capacity'].errors?.['maxlength']"
-                        >Unit capacity cannot be longer than 6
-                        characters.</small
-                      >
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-6">
-                  <div class="mb-3">
-                    <label class="form-label">Manufactured by :</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="unit_manufacturer"
-                      ngModel
-                      name="unit_manufacturer"
-                      required
-                      minlength="2"
-                      maxlength="50"
-                    />
-                    <div
-                      *ngIf="
-                        addForm1.controls['unit_manufacturer'].invalid &&
-                        (addForm1.controls['unit_manufacturer'].dirty ||
-                          addForm1.controls['unit_manufacturer'].touched)
-                      "
-                    >
-                      <small
-                        class="text-danger"
-                        *ngIf="addForm1.controls['unit_manufacturer'].errors?.['required']"
-                        >Unit manufacturer is required.</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="addForm1.controls['unit_manufacturer'].errors?.['minlength']"
-                        >Unit manufacturer must be at least 2 characters
-                        long.</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="addForm1.controls['unit_manufacturer'].errors?.['maxlength']"
-                        >Unit manufacturer cannot be longer than 6
-                        characters.</small
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="mb-3">
-                    <label class="form-label">Avaliability :</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="active_state"
-                      ngModel
-                      name="active_state"
-                      required
-                      pattern="^(yes|no)$"
-                      maxlength="50"
-                      minlength="3"
-                    />
-                    <div class="invalid-feedback">
-                      Please enter a valid availability (must be either "yes" or
-                      "no" and between 3 and 50 characters).
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            id="add-item-form"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button
-            [disabled]="addForm1.invalid"
-            type="submit"
-            class="btn btn-primary"
-          >
-            Save changes
-          </button>
-        </div>
-      </div>
+    <div class="form-field">
+      <label for="add_item_name">Item Name:</label>
+      <input type="text" formControlName="itemName" />
     </div>
+
+    <button type="submit">Submit</button>
   </form>
+</div> -->
 
-  <form #editForm1="ngForm">
-    <div
-      class="modal fade"
-      id="exampleModal22"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Edit Item, {{ editUnit?.unit_name }}
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="card mb-4">
-              <div class="card-body">
-                <div>
-                  <h3 class="h6 mb-4">Product information</h3>
-                </div>
 
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="mb-3">
-                      <label class="form-label">Unit Name :</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="unit_name"
-                        ngModel="{{ editUnit?.unit_name }}"
-                        name="unit_name"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <input
-                    type="hidden"
-                    class="form-control"
-                    id="id"
-                    ngModel="{{ editUnit?.id }}"
-                    name="id"
-                  />
-
-                  <div class="col-lg-6">
-                    <div class="mb-3">
-                      <label class="form-label">Unit Capacity :</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="unit_capacity"
-                        ngModel="{{ editUnit?.unit_capacity }}"
-                        name="unit_capacity"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div class="col-lg-6">
-                    <div class="mb-3">
-                      <label class="form-label">Manufactured by : </label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="unit_manufacturer"
-                        ngModel="{{ editUnit?.unit_manufacturer }}"
-                        name="unit_manufacturer"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="mb-3">
-                      <label class="form-label">Avaliability : </label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="active_state"
-                        ngModel="{{ editUnit?.active_state }}"
-                        name="active_state"
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              id="add-customer-form"
-              class="btn btn-secondary "
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              (click)="onUpdateUnit(editForm1.value)"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-            >
-              Save changes
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
-
-  <div
-    class="modal delete"
-    id="exampleModal23"
-    tabindex="-1"
-    aria-labelledby="exampleModal31"
-    aria-hidden="true"
-  >
+<form formGroup="addUnitForm" (ngSubmit)="onItemAdd()" class="unit-form">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabedelete">Detele Unit</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <h5 class="modal-title" id="exampleModalLabel">Unit Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Are you want to delete this item ? {{ deleteUnit.unit_name }}?
+          <div class="card mb-4">
+            <div class="card-body">
+              <div>
+                <h3 class="h6 mb-4">Basic Information</h3>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Unit Name:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="unitName" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Item Name:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="itemName" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Indoor Serial:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="indoorSerial" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Outdoor Serial:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="outdoorSerial" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Commissioned date:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="commissionedDate" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Owner:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="owner" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Installed Location Name:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="installedLocationName" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Installed Location Address:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="installedLocationAddress" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Installed Parent Location:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="installedParentLocation" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Warranty Period:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="warrantyPeriod" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Unit Price:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="unitPrice" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Status:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="status" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            No
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
           </button>
-
-          <button (click)="onDeleteUnit(deleteUnit.id)" class="btn btn-danger">
-            Yes
-          </button>
+          <button type="submit" class="btn btn-primary" >Submit</button>
         </div>
       </div>
     </div>
   </div>
-</div>
+</form>

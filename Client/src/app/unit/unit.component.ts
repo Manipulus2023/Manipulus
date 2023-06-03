@@ -1,94 +1,118 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UnitService } from './unit.service';
+import { Subscription } from 'rxjs';
 import { Unit } from './unit';
-import { UnitServise } from './unit.service';
 
 @Component({
   selector: 'app-unit',
   templateUrl: './unit.component.html',
   styleUrls: ['./unit.component.css'],
 })
-export class UnitComponent implements OnInit {
-  public unit: Unit[] = [];
-  public editUnit: Unit | undefined;
-  public deleteUnit!: Unit;
-  constructor(private unitService: UnitServise) {}
-  ngOnInit(): void {
-    this.getUnits(); //View an unit
+export class UnitComponent implements OnInit, OnDestroy {
+  addUnitForm: FormGroup;
+  unitSubscription: Subscription;
+  units: Unit[] = [];
+  isAddUnitModalOpen = false;
+  isEditUnitModalOpen = false;
+  selectedUnit: any;
+
+  constructor(private formBuilder: FormBuilder, private unitService: UnitService) {}
+
+  ngOnInit() {
+    //this.getUnitList();
+    this.initializeUnitForm();
   }
 
-  // get all units
-  public getUnits(): void {
+  getUnitList(){
+    this.unitSubscription = this.unitService.getUnitList().subscribe(res =>
     {
-      this.unitService.getUnitList().subscribe(
-        (Response: Unit[]) => {
-          this.unit = Response;
-          console.log(this.unit);
-        },
-        (error: HttpErrorResponse) => alert(error.message)
-      );
-    }
-  }
-  public onAddUnit(addForm: NgForm): void { //Add a new unit
-    (document.getElementById('add-unit-form') as HTMLElement).click();
-    this.unitService.addUnit(addForm.value).subscribe(
-      (Response: Unit) => {
-        console.log(Response);
-        this.getUnits();
-        addForm.reset();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
+      this.units = res;
+    });
   }
 
-  public onDeleteUnit(unitId: number): void { //Delete a unit
-    // (document.getElementById('add-unit-form') as HTMLElement).click();
-    this.unitService.deleteUnit(unitId).subscribe(
-      (Response: void) => {
-        console.log(Response);
-        this.getUnits();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-  }
-  public onUpdateUnit(Unit: Unit): void { //Update a unit
-    this.unitService.updateUnit(Unit).subscribe(
-      (Response: Unit) => {
-        console.log(Response);
-        this.getUnits();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
+  initializeUnitForm() {
+    this.addUnitForm = this.formBuilder.group({
+      unitName: this.formBuilder.control(''),
+      itemName: this.formBuilder.control(''),
+      indoorSerial:this.formBuilder.control(''),
+      outdoorSerial:this.formBuilder.control(''),
+      commissionedDate:this.formBuilder.control(''),
+      owner:this.formBuilder.control(''),
+      installedLocationName: this.formBuilder.control(''),
+      installedLocationAddress: this.formBuilder.control(''),
+      installedParentLocation: this.formBuilder.control(''),
+      warrantyPeriod: this.formBuilder.control(''),
+      unitPrice: this.formBuilder.control(''),
+      status: this.formBuilder.control(''),
+    });
   }
 
-  // open the modal window for edit or delete action
-  public onOpenModal_unit(unit: Unit, mode: string): void {
-    //Open modal
-    const container = document.getElementById(
-      'unit_details_container'
-    ) as HTMLInputElement;
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.style.display = 'none';
-    button.setAttribute('data-bs-toggle', 'modal');
-    if (mode === 'edit') {
-      //edit function
-      button.setAttribute('data-bs-target', '#exampleModal22');
-      this.editUnit = unit;
-    }
-    if (mode === 'delete') {
-      //delete function
-      button.setAttribute('data-bs-target', '#exampleModal23');
-      this.deleteUnit = unit;
-    }
-    container.appendChild(button);
-    button.click();
+  onItemAdd() {
+    console.log(this.addUnitForm.value);
+    this.unitService.addUnit(this.addUnitForm.value).subscribe(res =>
+      {
+        console.log(res);
+      });
+  }
+
+  onAddUnitSubmit() {
+    // if (this.addUnitForm.invalid) {
+    //   return;
+    // }
+    // const newUnit = this.addUnitForm.value;
+    // this.units.push(newUnit );
+    // this.closeAddUnitModal();
+  }
+
+  // onEditUnitSubmit() {
+  //   if (this.editUnitForm.invalid) {
+  //     return;
+  //   }
+
+  // const updatedUnit = this.editUnitForm.value;
+  // // Update the selected customer in the list
+  // const index = this.units.findIndex(unit => unit === this.selectedUnit);
+  // if (index !== -1) {
+  //   this.units[index] = updatedUnit;
+  // }
+
+  //   this.closeEditUnitModal();
+  // }
+
+  openAddUnitModal() {
+    this.isAddUnitModalOpen = true;
+  }
+
+  closeAddUnitModal() {
+    // this.isAddUnitModalOpen = false;
+    // this.addUnitForm.reset();
+  }
+
+  // openEditUnitModal(unit: any) {
+  //   this.isEditUnitModalOpen = true;
+  //   this.selectedUnit = unit;
+  //   // Pre-fill the edit form with the selected unit's data
+  //  // this.editUnitForm.patchValue({
+  //   unitName: unit.unitName,
+  //   itemName: unit.itemName,
+  //     // Update other customer fields
+  //   });
+  // }
+
+  // closeEditCustomerModal() {
+  //   this.isEditUnitModalOpen = false;
+  //   this.editUnitForm.reset();
+  //   this.selectedUnit = null;
+  // }
+
+  searchCustomer() {
+    //const searchKey = this.searchForm.value.key;
+    // Perform the search operation using the searchKey
+    // ...
+  }
+
+  ngOnDestroy(): void {
+    this.unitSubscription.unsubscribe();
   }
 }

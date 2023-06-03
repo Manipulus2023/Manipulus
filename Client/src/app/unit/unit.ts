@@ -1,9 +1,16 @@
 export class Unit{
   id!: number;
-  unit_name!: string;
-  unit_image!: string;
-  unit_capacity!: string;
-  unit_manufacturer!: number;
-  active_state!: string;
-  unit_code!: string;
-  }
+  unitName!: string;
+  itemName!: string;
+  indoorSerial!:string;
+  outdoorSerial!:string;
+  commissionedDate!:string;
+  owner!:string;
+  installedLocationName!: string;
+  installedLocationAddress!: string;
+  installedparentLocation!: string;
+  warrantyPeriod: string;
+  unitPrice!: string;
+  status!: string;
+}
+

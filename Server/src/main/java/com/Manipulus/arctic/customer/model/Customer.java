@@ -38,6 +38,7 @@ public class Customer implements Serializable {
     private String customerCode;
 
     public String getCustomerCode() {
+
         return customerCode;
     }
 
