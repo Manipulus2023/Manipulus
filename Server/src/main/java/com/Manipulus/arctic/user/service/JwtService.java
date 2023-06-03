@@ -1,6 +1,6 @@
 package com.Manipulus.arctic.user.service;
 
-import com.Manipulus.arctic.user.Utils.JwtUtil;
+import com.Manipulus.arctic.user.Utils.JwtUtils;
 import com.Manipulus.arctic.user.dao.UserDao;
 import com.Manipulus.arctic.user.model.JwtRequest;
 import com.Manipulus.arctic.user.model.JwtResponse;
@@ -30,7 +30,7 @@ public class JwtService implements UserDetailsService {
     private IUserRepository userRepository;
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private JwtUtils jwtUtil;
 
     @Autowired
     private AuthenticationManager authenticationManager;

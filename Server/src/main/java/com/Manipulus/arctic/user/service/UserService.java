@@ -1,38 +1,37 @@
 package com.Manipulus.arctic.user.service;
 
 import com.Manipulus.arctic.role.model.Role;
-import com.Manipulus.arctic.user.dao.RoleDao;
-import com.Manipulus.arctic.user.dao.UserDao;
+import com.Manipulus.arctic.role.repository.IRoleRepository;
 import com.Manipulus.arctic.user.model.User;
 import com.Manipulus.arctic.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class UserService{
+public class UserService implements IUserService{
 
     @Autowired
     private IUserRepository userRepository;
 
     @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private RoleDao roleDao;
+    private IRoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
     public User registerNewUser(User user){
-        Role role = roleDao.findById(1).get();
+        Role role = roleRepository.findById(1).get();
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         user.setRole(roles);
         user.setPassword(getEncodedPassword(user.getUserPassword()));
-        return userDao.save(user);
+        return userRepository.save(user);
     }
 
     public void initRolesAndUser() {
@@ -44,7 +43,7 @@ public class UserService{
             Set<Role> adminRoles = new HashSet<> ();
             adminRole.setRoleName("Admin");
             adminRole.setRoleDescription("Admin role");
-            roleDao.save(adminRole);
+            roleRepository.save(adminRole);
             adminRoles.add(adminRole);
 
             User adminUser = new User();
@@ -54,7 +53,7 @@ public class UserService{
             adminUser.setEmail("admin.user@test.lk");
             adminUser.setPassword(getEncodedPassword("admin@pass"));
             adminUser.setRole(adminRoles);
-            userDao.save(adminUser);
+            userRepository.save(adminUser);
         }
 
         if(!isUserExisting) {
@@ -63,7 +62,7 @@ public class UserService{
             userRole.setRoleName("User");
             userRole.setRoleDescription("User role");
             userRoles.add(userRole);
-            roleDao.save(userRole);
+            roleRepository.save(userRole);
 
             User user = new User();
             user.setFirst_name("Nethmini");
@@ -72,10 +71,21 @@ public class UserService{
             user.setEmail("nethmini.kavindya@test.lk");
             user.setPassword(getEncodedPassword("neth@pass"));
             user.setRole(userRoles);
-            userDao.save(user);
+            userRepository.save(user);
         }
     }
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String username) {
+        User user = userRepository.findUserByUserName(username);
+        if(user == null) {
+            throw new UsernameNotFoundException("User Not Found with username: " + username);
+        }
+
+        return UserDetailsImpl.build(user);
     }
 }
