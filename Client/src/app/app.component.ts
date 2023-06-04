@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserAuthService } from './_services/user-auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,16 +11,9 @@ export class AppComponent {
   title = 'Manipulus';
   isTokenAvailable: string;
 
-  constructor(private userAuthService: UserAuthService, private router: Router) { }
+  constructor(private router: Router) { }
 
-  ngOnInit(): void {
-    this.isLoggedin();
-  }
-
-
-  public isLoggedin() {
-    this.isTokenAvailable = this.userAuthService.isLoggedIn();
-  }
+  ngOnInit(): void {}
 }
 
 

@@ -22,7 +22,6 @@ import { AdminComponent } from './admin/admin.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { ForgetPasswordComponent } from './user-login/forget-password/forget-password.component';
-import { AuthGuard } from './_auth/auth.guard';
 
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -39,7 +38,7 @@ const routes: Routes = [
   {
     path: 'unit',
     component: UnitComponent,
-    canActivate: [AuthGuard],
+    canActivate: [],
     data: { roles: ['User'] },
   },
   { path: 'user', component: UserComponent },
@@ -51,13 +50,13 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard],
+    canActivate: [],
     data: { roles: ['Admin'] },
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    canActivate: [],
     data: { roles: ['User'] },
   },
   { path: 'user-login', component: UserLoginComponent },

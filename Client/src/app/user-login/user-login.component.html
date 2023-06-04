@@ -1,29 +1,13 @@
 <div class="container mt-5">
   <div class="card" style="padding: 20px">
     <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-      <input
-        type="text"
-        ngModel
-        name="userName"
-        id="userName"
-        placeholder="Enter your username"
-        class="form-control mb-3"
-      />
+      <input type="text" ngModel name="username" id="username" placeholder="Enter your username"
+        class="form-control mb-3" />
 
-      <input
-        type="password"
-        ngModel
-        name="userPassword"
-        id="userPassword"
-        placeholder="Enter your password"
-        class="form-control mb-3"
-      />
+      <input type="password" ngModel name="password" id="password" placeholder="Enter your password"
+        class="form-control mb-3" />
 
-      <input
-        type="submit"
-        value="Login"
-        class="btn btn-outline-primary form-control rounded-0"
-      />
+      <input type="submit" value="Login" class="btn btn-outline-primary form-control rounded-0" />
     </form>
   </div>
 
@@ -37,11 +21,11 @@
       <div class="card p-5 shadow-sm">
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
           <div class="form-group">
-            <label for="userName" class="form-label">Username:</label>
+            <label for="username" class="form-label">Username:</label>
             <input type="text"
               ngModel
-              name="userName"
-              id="userName"
+              name="username"
+              id="username"
               placeholder="Enter your username"
               class="form-control rounded-0"
               required
@@ -49,11 +33,11 @@
           </div>
 
           <div class="form-group">
-            <label for="userPassword" class="form-label">Password:</label>
+            <label for="password" class="form-label">Password:</label>
             <input type="password"
               ngModel
-              name="userPassword"
-              id="userPassword"
+              name="password"
+              id="password"
               placeholder="Enter your password"
               class="form-control rounded-0"
               required
