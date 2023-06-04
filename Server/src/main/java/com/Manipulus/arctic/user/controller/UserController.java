@@ -1,35 +1,73 @@
 package com.Manipulus.arctic.user.controller;
 
+import com.Manipulus.arctic.auth.helpers.JWTHelper;
+import com.Manipulus.arctic.role.model.Role;
 import com.Manipulus.arctic.user.model.User;
-import com.Manipulus.arctic.user.repository.IUserRepository;
 import com.Manipulus.arctic.user.service.UserService;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.plaf.PanelUI;
-import java.util.Map;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import static com.Manipulus.arctic.auth.constants.JWTUtil.AUTH_HEADER;
+import static com.Manipulus.arctic.auth.constants.JWTUtil.SECRET;
 
 @RestController
-//@RequestMapping("/user")
-//@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/users")
 public class UserController {
-
-    @Autowired
     private UserService userService;
+    private JWTHelper jwtHelper;
+    public UserController(UserService userService, JWTHelper jwtHelper) {
+        this.userService = userService;
+        this.jwtHelper = jwtHelper;
+    }
 
     @PostConstruct
     public void initRolesAndUsers() {
         userService.initRolesAndUser();
     }
 
-    @PostMapping({"/registerNewUser"})
+    @PostMapping({"/register"})
+    @PreAuthorize("hasAuthority('Admin')")
     public User registerNewUser(@RequestBody User user){
+
         return userService.registerNewUser(user);
     }
 
+    @PostMapping({"/refresh-token"})
+    public void generateNewAccessToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String jwtRefreshToken = jwtHelper.extractTokenFromHeaderIfExist(request.getHeader(AUTH_HEADER));
+        if(jwtRefreshToken != null) {
+            Algorithm algorithm = Algorithm.HMAC256(SECRET);
+            JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = jwtVerifier.verify(jwtRefreshToken);
+            String username = decodedJWT.getSubject();
+            User user = userService.loadUserByUsername(username);
+            Set<Role> roles = user.getRoles();
+            List<String> rolesList = new ArrayList<>();
+            for (Role role: roles) {
+                rolesList.add(role.getRoleName());
+            }
+            String jwtAccessToken = jwtHelper.generateAccessToken(user.getUsername(), rolesList);
+            response.setContentType("application/json");
+            new ObjectMapper().writeValue(response.getOutputStream(), jwtHelper.getTokenMap(jwtAccessToken, jwtRefreshToken));
+        }else {
+            throw  new RuntimeException("Refresh token required");
+        }
+    }
+
+    //TODO: Remove the followings
     @GetMapping({"/forAdmin"})
     @PreAuthorize("hasRole('Admin')")
     public String forAdmin(){
