@@ -6,4 +6,5 @@ public class JWTUtil {
     public static final String ISSUER = "arcticApplication";
     public static final String SECRET = "arcticSecret";
     public static final String BEARER_PREFIX = "Bearer ";
+    public static final String AUTH_HEADER = "Authorization";
 }
