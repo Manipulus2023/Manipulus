@@ -36,6 +36,8 @@ export class UserLoginComponent implements OnInit {
   onSumbit(loginForm: NgForm) {
     this.authService.login(loginForm.value).subscribe(res =>
     {
+      console.log(res);
+
       this.tokenStorageService.saveToken(res.accessToken);
       this.tokenStorageService.saveUser(res);
 

@@ -35,6 +35,7 @@ public class JwtService implements UserDetailsService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    //TODO: Need to remove
     // Create JWT token
     public JwtResponse createJwtToken(JwtRequest jwtRequest)throws Exception{
         String userName = jwtRequest.getUserName();
@@ -48,7 +49,7 @@ public class JwtService implements UserDetailsService {
 
          User user = userRepository.findUserByUserName(userName); //userDao.findById(userName).get();
 
-         return new JwtResponse(user, newGeneratedToken); // return user details and JWT token
+         return null; //new JwtResponse(user, newGeneratedToken); // return user details and JWT token
     }
 
     // Load user details by username
@@ -81,9 +82,9 @@ public class JwtService implements UserDetailsService {
     }
 
     // Authenticate user credentials
-    private void authenticate(String userName,  String userPassword)throws Exception{
+    private void authenticate(String userName, String password)throws Exception{
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName,userPassword));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName,password));
 
         }catch (DisabledException e){
             throw new Exception("User is disabled");

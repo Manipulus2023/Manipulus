@@ -5,9 +5,11 @@ import com.Manipulus.arctic.role.repository.IRoleRepository;
 import com.Manipulus.arctic.user.model.User;
 import com.Manipulus.arctic.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class UserService implements IUserService, UserDetailsService {
+public class UserService {
 
     @Autowired
     private IUserRepository userRepository;
@@ -76,17 +78,6 @@ public class UserService implements IUserService, UserDetailsService {
         }
     }
     public String getEncodedPassword(String password) {
-        return passwordEncoder.encode(password);
+        return new BCryptPasswordEncoder().encode(password);
     }
-
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findUserByUserName(username);
-        if(user == null) {
-            throw new UsernameNotFoundException("User Not Found with username: " + username);
-        }
-
-        return UserDetailsImpl.build(user);
-    }
-}
+ }

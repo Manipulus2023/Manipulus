@@ -1,30 +1,21 @@
 package com.Manipulus.arctic.user.model;
 
+import java.util.List;
+
 public class JwtResponse {
 
-    private User user;
-    private String jwtToken;
+    private String token;
+    private String type = "Bearer";
+    private Integer id;
+    private String username;
+    private String email;
+    private List<String> roles;
 
-    public JwtResponse(User user, String jwtToken) {
-        this.user = user;
-        this.jwtToken = jwtToken;
-    }
-
-    // Getter and Setter methods for User and JWT Token
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getJwtToken() {
-        return jwtToken;
-    }
-
-    public void setJwtToken(String jwtToken) {
-        this.jwtToken = jwtToken;
+    public JwtResponse(String jwtToken, Integer id, String username, String email, List<String> roles) {
+        this.token = jwtToken;
+        this.email = email;
+        this.id = id;
+        this.username = username;
+        this.roles = roles;
     }
 }

@@ -19,7 +19,11 @@ export class AuthService {
       password: credentials.password
     }, httpOptions);
   }
-
+  // public login(loginData: NgForm) {
+  //   return this.httpclient.post(this.API_PATH + '/authenticate', loginData, {
+  //     headers: this.requestHeader,
+  //   });
+  // }
 
   // To be implemented
   // register(user): Observable<any> {}
