@@ -1,33 +1,19 @@
 package com.Manipulus.arctic.auth.controller;
 
-import com.Manipulus.arctic.auth.models.request.LoginRequest;
-import com.Manipulus.arctic.user.Utils.JwtUtil;
 import com.Manipulus.arctic.user.repository.IUserRepository;
-import com.Manipulus.arctic.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    @Autowired
-    AuthenticationManager authenticationManager;
-
     @Autowired
     IUserRepository userRepository;
 
     //@Autowired
     //IRoleRepository userRepository;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
-    JwtUtil jwtUtil;
 
     /*@PostMapping("/signin")
     public ResponseEntity<?> authenticatedUser(@RequestBody LoginRequest loginRequest) {

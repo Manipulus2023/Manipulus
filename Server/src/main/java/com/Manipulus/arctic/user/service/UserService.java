@@ -6,6 +6,7 @@ import com.Manipulus.arctic.user.dao.UserDao;
 import com.Manipulus.arctic.user.model.User;
 import com.Manipulus.arctic.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,6 @@ public class UserService{
     @Autowired
     private RoleDao roleDao;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
     public User registerNewUser(User user){
         Role role = roleDao.findById(1).get();
         Set<Role> roles = new HashSet<>();
@@ -75,7 +74,11 @@ public class UserService{
             userDao.save(user);
         }
     }
+
+    public User loadUserByUsername(String username) {
+        return userRepository.findUserByUserName(username);
+    }
     public String getEncodedPassword(String password) {
-        return passwordEncoder.encode(password);
+        return new BCryptPasswordEncoder().encode(password);
     }
 }

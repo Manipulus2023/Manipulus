@@ -3,6 +3,8 @@ package com.Manipulus.arctic;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -17,7 +19,13 @@ public class ArcticApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ArcticApplication.class, args);
 	}
+
 	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	/*@Bean
 	public WebMvcConfigurer corsConfigure()
 	{
 		return new WebMvcConfigurer() {
@@ -26,7 +34,7 @@ public class ArcticApplication {
 						.allowedOrigins("http://localhost:4200");
 			}
 		};
-	}
+	}*/
 	/*public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
