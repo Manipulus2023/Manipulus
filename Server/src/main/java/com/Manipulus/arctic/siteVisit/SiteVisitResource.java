@@ -2,6 +2,7 @@ package com.Manipulus.arctic.siteVisit;
 
 import com.Manipulus.arctic.siteVisit.service.SiteVisitService;
 import com.Manipulus.arctic.siteVisit.siteVisit.SiteVisit;
+import com.Manipulus.arctic.vehicle.model.Vehicle;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,8 @@ public class SiteVisitResource {
         @PutMapping("/update")
         public ResponseEntity<SiteVisit>updateSiteVisit(@RequestBody SiteVisit siteVisit){
             SiteVisit updateSiteVisit=siteVisitService.updateSiteVisit(siteVisit);
-            return new ResponseEntity<>(updateSiteVisit, HttpStatus.OK);
+            return new ResponseEntity<>(updateSiteVisit, HttpStatus.CREATED);
+
         }
         @DeleteMapping ("/delete/{siteVisitId}")
         public ResponseEntity<?> deleteSiteVisit(@PathVariable("siteVisitId")Long siteVisitId){

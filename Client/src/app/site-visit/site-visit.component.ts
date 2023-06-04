@@ -23,6 +23,7 @@ export class SiteVisitComponent implements OnInit {
   // public assignVehicle: Vehicle | null = null;
   // public vehicles: Vehicle[] = [];
 
+
   constructor(private siteVisitService : SiteVisitService) {
     this.siteVisits=[];
     
@@ -31,7 +32,7 @@ export class SiteVisitComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.siteVisitService.getSiteVisits().subscribe(siteVisits => {
+    this.siteVisitService.getSiteVisits().subscribe(siteVisits => { // fetches all site visits
       this.siteVisits = siteVisits;
       this.completedSiteVisitsCount = this.countCompletedSiteVisits(siteVisits);
       this.incompleteSiteVisitsCount = this.countIncompleteSiteVisits(siteVisits);
@@ -50,7 +51,7 @@ export class SiteVisitComponent implements OnInit {
 //   );
 // }
 
-
+//count completed site Visits
   countCompletedSiteVisits(siteVisits: SiteVisit[]): number {
     let completedSiteVisitsCount = 0;
       for (let siteVisit of siteVisits) {
@@ -61,6 +62,7 @@ export class SiteVisitComponent implements OnInit {
     return completedSiteVisitsCount;
   }
 
+  //count incompleted site Visits
   countIncompleteSiteVisits(siteVisits: SiteVisit[]): number {
     let incompleteSiteVisitsCount = 0;
       for (let siteVisit of siteVisits) {
@@ -71,6 +73,7 @@ export class SiteVisitComponent implements OnInit {
     return incompleteSiteVisitsCount;
   }
   
+  //get all the site Visits
   public getSiteVisits():void{
     this.siteVisitService.getSiteVisits().subscribe(
       (response: SiteVisit[])=>{
@@ -83,6 +86,8 @@ export class SiteVisitComponent implements OnInit {
         }
         );
   }
+
+  //add a new site visit
   public onAddSiteVisit(addForm: NgForm): void {
  document.getElementById('add-siteVisit-form')?.click();
     // if (addButton !== null) {
@@ -101,7 +106,7 @@ export class SiteVisitComponent implements OnInit {
     );
   }
  
-  
+   //Edit asite visit
   public onUpdateSiteVisit(siteVisit: SiteVisit): void {
     
     this.siteVisitService.updateSiteVisit(siteVisit).subscribe(
@@ -117,6 +122,7 @@ export class SiteVisitComponent implements OnInit {
     );
   }
 
+   //Delete a site visit
   public onDeleteSiteVisit(siteVisitId: number): void {
     this.siteVisitService.deleteSiteVisit(siteVisitId).subscribe(
       (response: void) => {
@@ -129,6 +135,7 @@ export class SiteVisitComponent implements OnInit {
     );
   }
 
+   //Search a site visit
   public searchSiteVisits(key: string): void {
     console.log(key);
     const results: SiteVisit[] = [];
@@ -163,7 +170,9 @@ export class SiteVisitComponent implements OnInit {
 /*}
 function subscribe(arg0: (count: number) => number) {
   throw new Error('Function not implemented.');*/
-  public onOpenModal(siteVisit: SiteVisit | null,mode:string): void{
+
+  
+  public onOpenModal(siteVisit: SiteVisit | null,mode:string): void{ //takes a SiteVisit object and a mode as parameters. It opens a modal window based on the mode passed in as a parameter.
     const container=document.getElementById('main-container');
     const button = document.createElement('button');
     button.type='button';
@@ -173,11 +182,13 @@ function subscribe(arg0: (count: number) => number) {
       button.setAttribute('data-target','#addSiteVisitModal');
     }
     if(mode ==='edit'){
+      
       this.editSiteVisits=siteVisit;
       button.setAttribute('data-target','#updateSiteVisitModal');
     }
     if(mode ==='delete'){
       this.deleteSiteVisits = siteVisit;
+     
       button.setAttribute('data-target','#deleteSiteVisitModal');
     }
         // if (mode === 'addVehicle') {
