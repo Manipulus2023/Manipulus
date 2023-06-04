@@ -1,4 +1,4 @@
-package com.Manipulus.arctic.user.configuration;
+package com.Manipulus.arctic.auth.jwt;
 
 
 import jakarta.servlet.ServletException;
