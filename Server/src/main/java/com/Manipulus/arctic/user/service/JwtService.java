@@ -1,6 +1,6 @@
 package com.Manipulus.arctic.user.service;
 
-import com.Manipulus.arctic.user.Utils.JwtUtils;
+import com.Manipulus.arctic.auth.jwt.JwtUtils;
 import com.Manipulus.arctic.user.dao.UserDao;
 import com.Manipulus.arctic.user.model.JwtRequest;
 import com.Manipulus.arctic.user.model.JwtResponse;

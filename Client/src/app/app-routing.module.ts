@@ -22,7 +22,7 @@ import { AdminComponent } from './admin/admin.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { ForgetPasswordComponent } from './user-login/forget-password/forget-password.component';
-import { AuthGuard } from './_auth/auth.guard';
+import { AuthGuard } from './authentication/auth-guards/auth.guard';
 
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },

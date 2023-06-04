@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserAuthService } from '../_services/user-auth.service';
-import { UserService } from '../_services/user.service';
+import { UserAuthService } from '../authentication/services/user-auth.service';
+import { UserService } from '../authentication/services/user.service';
+import { TokenStorageService } from '../authentication/services/token-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -9,20 +10,53 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(
-    private userAuthService: UserAuthService,
-    private router: Router,
-    public userService: UserService
-  ) {}
+  title = 'Manipulus';
+  isTokenAvailable: string;
+  private roles: string[];
+  isLoggedIn = false;
+  showAdminBoard = false;
+  showUserBoard = false;
+  username: string;
 
-  ngOnInit(): void {}
+  constructor(private userAuthService: UserAuthService, private router: Router, private tokenStorageService: TokenStorageService) { }
 
-  public isLoggedin() {
-    return this.userAuthService.isLoggedIn();
+
+  ngOnInit(): void {
+    //this.isLoggedin();
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if(this.isLoggedIn) {
+      const user = this.tokenStorageService.getUser();
+      this.roles = user.roles;
+
+      this.showAdminBoard = this.roles.includes('ADMIN');
+      this.showUserBoard = this.roles.includes('USER');
+
+      this.username = user.username;
+    }
   }
 
-  public logout() {
-    this.userAuthService.clear();
-    this.router.navigate(['/user-login']);
+
+  logout(): void {
+    this.tokenStorageService.signOut();
+    window.location.reload();
   }
+
+  //TODO: Remove these
+  // constructor(
+  //   private userAuthService: UserAuthService,
+  //   private router: Router,
+  //   public userService: UserService
+  // ) {}
+
+  // ngOnInit(): void {}
+
+  // public isLoggedin() {
+  //   return this.userAuthService.isLoggedIn();
+  // }
+
+  // public logout() {
+  //   this.userAuthService.clear();
+  //   this.router.navigate(['/user-login']);
+  // }
 }

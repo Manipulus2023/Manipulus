@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../user-login/User/user';
+import { User } from '../../user-login/User/user';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -21,7 +21,11 @@ export class TokenStorageService {
   }
 
   public getToken(): string {
-    return "";//sessionStorage.getItem(TOKEN_KEY);
+    let x = sessionStorage.getItem(TOKEN_KEY);
+    if(x == null){
+      return '';
+    }
+    return x;
   }
 
   public saveUser(use: User): void {
@@ -30,6 +34,10 @@ export class TokenStorageService {
   }
 
   public getUser(): any {
-    return "";//JSON.parse(sessionStorage.getItem(USER_KEY));
+    let x = sessionStorage.getItem(TOKEN_KEY);
+    if(x == null){
+      return JSON.parse('');
+    }
+    return JSON.parse(x);
   }
 }

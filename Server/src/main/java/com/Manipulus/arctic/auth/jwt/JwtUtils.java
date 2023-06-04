@@ -1,4 +1,4 @@
-package com.Manipulus.arctic.user.Utils;
+package com.Manipulus.arctic.auth.jwt;
 
 import com.Manipulus.arctic.user.service.UserDetailsImpl;
 import io.jsonwebtoken.*;

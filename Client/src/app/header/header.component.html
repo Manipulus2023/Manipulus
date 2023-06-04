@@ -12,14 +12,14 @@
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" routerLink="/admin"
-            *ngIf="userService.roleMatch(['Admin'])">Admin Dashboard</a>
+            *ngIf="isLoggedIn">Admin Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/dashboard"
-            *ngIf="userService.roleMatch(['User'])">User Dashboard</a>
+          <a class="nav-link active" aria-current="page" routerLink="/user"
+            *ngIf="isLoggedIn">User Dashboard</a>
         </li>
       </ul>
-      <button *ngIf="!isLoggedin()" type="button" class="btn btn-success" routerLink="/user-login">
+      <button *ngIf="!isLoggedIn" type="button" class="btn btn-success" routerLink="/user-login">
         Login
       </button>
     </div>

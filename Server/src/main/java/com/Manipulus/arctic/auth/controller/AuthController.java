@@ -3,7 +3,7 @@ package com.Manipulus.arctic.auth.controller;
 import com.Manipulus.arctic.auth.models.request.LoginRequest;
 import com.Manipulus.arctic.auth.models.response.UserInfoResponse;
 import com.Manipulus.arctic.role.repository.IRoleRepository;
-import com.Manipulus.arctic.user.Utils.JwtUtils;
+import com.Manipulus.arctic.auth.jwt.JwtUtils;
 import com.Manipulus.arctic.user.repository.IUserRepository;
 import com.Manipulus.arctic.user.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<?> authenticatedUser(@RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager

@@ -1,6 +1,6 @@
 package com.Manipulus.arctic.user.configuration;
 
-import com.Manipulus.arctic.user.Utils.JwtUtils;
+import com.Manipulus.arctic.auth.jwt.JwtUtils;
 import com.Manipulus.arctic.user.service.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;

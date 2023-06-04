@@ -25,16 +25,16 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ForgetPasswordComponent } from './user-login/forget-password/forget-password.component';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { HeaderComponent } from './header/header.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { RouterModule } from '@angular/router';
-import { AuthInterceptor } from './_auth/auth.interceptor';
-import { AuthGuard } from './_auth/auth.guard';
-import { UserService } from './_services/user.service';
+import { AuthInterceptor } from './authentication/auth-guards/auth.interceptor';
+import { AuthGuard } from './authentication/auth-guards/auth.guard';
+import { UserService } from './authentication/services/user.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,9 +61,8 @@ import { UserService } from './_services/user.service';
     HomeComponent,
     AdminComponent,
     HeaderComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
   ],
-
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -72,20 +71,19 @@ import { UserService } from './_services/user.service';
     FormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
-
+    RouterModule,
   ],
   providers: [
-    AuthGuard,
-    {
-      provide:HTTP_INTERCEPTORS,
-      useClass:AuthInterceptor,
-      multi:true
-    },
-    UserService,
+    AuthInterceptor,
+    // AuthGuard,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi: true,
+    // },
+    // UserService,
     ReactiveFormsModule,
-
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
