@@ -7,13 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
-    @Autowired
-    IUserRepository userRepository;
-
-    //@Autowired
-    //IRoleRepository userRepository;
+    private IUserRepository userRepository;
+    public AuthController(IUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /*@PostMapping("/signin")
     public ResponseEntity<?> authenticatedUser(@RequestBody LoginRequest loginRequest) {

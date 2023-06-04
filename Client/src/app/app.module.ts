@@ -23,7 +23,6 @@ import { JobCardComponent } from './job-card/job-card.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { ForgetPasswordComponent } from './user-login/forget-password/forget-password.component';
