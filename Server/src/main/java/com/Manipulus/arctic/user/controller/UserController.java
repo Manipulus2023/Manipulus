@@ -67,21 +67,6 @@ public class UserController {
         }
     }
 
-    //TODO: Remove the followings
-    @GetMapping({"/forAdmin"})
-    @PreAuthorize("hasRole('Admin')")
-    public String forAdmin(){
-        return "This URL is only accessible to admin";
-    }
-
-    @GetMapping({"/forUser"})
-    @PreAuthorize("hasRole('User')")
-    public String forUser(){
-        return "This URL is only accessible to user";
-    }
-   // @Autowired
-   // private IUserRepository userRepository;
-
     /*@PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User userData){
         System.out.println(userData);
