@@ -21,7 +21,7 @@ import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
-import { ForgetPasswordComponent } from './user-login/forget-password/forget-password.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { AuthGuard } from './authentication/auth-guards/auth.guard';
 
 const routes: Routes = [

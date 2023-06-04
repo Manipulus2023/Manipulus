@@ -26,7 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ForgetPasswordComponent } from './user-login/forget-password/forget-password.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { HeaderComponent } from './header/header.component';
