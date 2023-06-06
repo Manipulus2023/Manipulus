@@ -25,7 +25,7 @@ public class SiteVisitResource {
             return new ResponseEntity<>(siteVisits, HttpStatus.OK);
         }
         @GetMapping("/find/{siteVisitId}")
-        public ResponseEntity<SiteVisit>getSiteVisitById(@PathVariable("siteVisitId") Long siteVisitId){
+        public ResponseEntity<SiteVisit>getSiteVisitById(@PathVariable("siteVisitId") Integer siteVisitId){
             SiteVisit siteVisit=siteVisitService.findSiteVisitBySiteVisitId(siteVisitId);
             return new ResponseEntity<>(siteVisit, HttpStatus.OK);
 
@@ -42,7 +42,7 @@ public class SiteVisitResource {
 
         }
         @DeleteMapping ("/delete/{siteVisitId}")
-        public ResponseEntity<?> deleteSiteVisit(@PathVariable("siteVisitId")Long siteVisitId){
+        public ResponseEntity<?> deleteSiteVisit(@PathVariable("siteVisitId")Integer siteVisitId){
             siteVisitService.deleteSiteVisit(siteVisitId);
             return new ResponseEntity<>(HttpStatus.OK);
         }

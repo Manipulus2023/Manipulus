@@ -114,7 +114,7 @@
                                     <td>
                                         <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i> {{siteVisit?.state}}</span>
                                     </td>
-                                    <td>{{ siteVisit?.assignedTeamId }}</td>
+                                    <td>{{ siteVisit?.teamDetails}}</td>
 
                                     <td>{{siteVisit?.assignedVehicle}}</td>
                                     <td>{{siteVisit?.dateRange | date: 'yyyy-MM-dd'}}</td>
@@ -157,8 +157,8 @@
                  <input type="date" ngModel name="scheduledDate" class="form-control" id="email" placeholder="scheduledDate" required>
               </div>
               <div class="form-group">
-                 <label for="assignedTeamId">Assigned Team Id</label>
-                 <input type="text" ngModel name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId" required>
+                 <label for="teamDetails">Team Details</label>
+                 <input type="text" ngModel name="teamDetails" class="form-control" id="teamDetails" placeholder="teamDetails" required>
               </div>
               <div class="form-group">
                 <label for="assignedVehicle">Assigned Vehicle</label>
@@ -224,8 +224,8 @@
                     <input type="date" ngModel="{{editSiteVisits?.scheduledDate}}" name="scheduledDate" class="form-control" id="scheduledDate" placeholder="scheduledDate">
                  </div>
                  <div class="form-group">
-                    <label for="assignedTeamId">Assigned Team Id</label>
-                    <input type="text" ngModel="{{editSiteVisits?.assignedTeamId}}" name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId">
+                    <label for="teamDetails">Team Details</label>
+                    <input type="text" ngModel="{{editSiteVisits?.teamDetails}}" name="teamDetails" class="form-control" id="teamDetails" placeholder="teamDetails">
                  </div>
                  <div class="form-group">
                     <label for="assignedVehicle">Assigned Vehicle</label>

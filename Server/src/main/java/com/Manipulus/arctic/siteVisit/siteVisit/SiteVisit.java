@@ -1,32 +1,46 @@
 package com.Manipulus.arctic.siteVisit.siteVisit;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
+@DynamicUpdate
+@DynamicInsert
 @Entity
 @Table(name = "site_visit")
 public class SiteVisit implements Serializable {
+    private static final long serialVersionID=1L;
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(nullable = false,updatable = false)
-        private Long siteVisitId;
-    @Column(name = "scheduledDate" )
-        private Date scheduledDate;
-    @Column(name = "assignedTeamId" )
-        private Long assignedTeamId;
-    @Column(name = "assignedVehicle" )
-        private String assignedVehicle;
-    @Column(name = "startSiteVisit" )
-        private boolean startSiteVisit;
-    @Column(name = "dateRange" )
-        private Date dateRange;
-    @Column(name = "state" )
-        private String state;
+        private Integer siteVisitId;
 
-    @Column(nullable = false, updatable = false)
-    private String siteVisitCode;
+        @Column(name = "uuid")
+        private String uuid;
+        @Column(name = "jobDetails", columnDefinition = "json"  )
+        private String jobDetails;
+        @Column(name = "scheduledDate" )
+            private Date scheduledDate;
+        @Column(name = "teamDetails", columnDefinition = "json" )
+            private String teamDetails;
+        @Column(name = "assignedVehicle", columnDefinition = "json")
+            private String assignedVehicle;
+        @Column(name = "startSiteVisit" )
+            private boolean startSiteVisit;
+        @Column(name = "dateRange" )
+            private Date dateRange;
+        @Column(name = "state" )
+            private String state;
+
+        @Column(nullable = false, updatable = false)
+        private String siteVisitCode;
+
+//-------------------------------------------------------------
     public String getSiteVisitCode() {
         return siteVisitCode;
     }
@@ -37,20 +51,21 @@ public class SiteVisit implements Serializable {
 
     public  SiteVisit(){}
 
-        public SiteVisit(Date scheduledDate, Long assignedTeamId, String assignedVehicle, boolean startSiteVisit, Date dateRange, String state, String siteVisitCode){
+        public SiteVisit(Date scheduledDate, String teamDetails, String assignedVehicle, boolean startSiteVisit, Date dateRange, String state, String siteVisitCode,String jobName){
             this.scheduledDate=scheduledDate;
-            this.assignedTeamId=assignedTeamId;
+            this.teamDetails=teamDetails;
             this.startSiteVisit=startSiteVisit;
             this.dateRange=dateRange;
             this.state=state;
             this.assignedVehicle=assignedVehicle;
             this.siteVisitCode=siteVisitCode;
+            this.jobDetails=jobDetails;
         }
 
-        public Long getSiteVisitId(){
+        public Integer getSiteVisitId(){
             return siteVisitId;
         }
-        public  void setSiteVisitId(long siteVisitId){
+        public  void setSiteVisitId(Integer siteVisitId){
             this.siteVisitId=siteVisitId;
         }
 
@@ -61,11 +76,11 @@ public class SiteVisit implements Serializable {
             this.assignedVehicle=assignedVehicle;
         }
 
-        public Long getAssignedTeamId(){
-            return  assignedTeamId;
+        public String getTeamDetails(){
+            return  teamDetails;
         }
-        public void setAssignedTeamId(long assignedTeamId){
-            this.assignedTeamId=assignedTeamId;
+        public void setTeamDetails(String teamDetails){
+            this.teamDetails=teamDetails;
         }
 
         public boolean getStartSiteVisit(){
@@ -82,6 +97,7 @@ public class SiteVisit implements Serializable {
             this.scheduledDate=scheduledDate;
         }
 
+
         public Date getDateRange(){
             return  dateRange;
         }
@@ -96,21 +112,28 @@ public class SiteVisit implements Serializable {
             this.state=state;
         }
 
-
+        public String getJobDetails(){
+            return  jobDetails;
+        }
+        public void setJobDetails(String jobDetails){
+            this.jobDetails=jobDetails;
+        }
 
         @Override
         public String toString(){
             return "SiteVisit{" +
                     "SiteVisitId="+ siteVisitId+'\''+
                     ", ScheduledDate"+ scheduledDate+'\''+
-                    ", AssignedTeamId"+assignedTeamId+'\''+
+                    ", AssignedTeamId"+teamDetails+'\''+
                     ", AssignedVehicle"+ assignedVehicle+'\''+
                     ", startSiteVisit "+ startSiteVisit+'\''+
                     ", DateRange "+ dateRange+'\''+
                     ", state" +state+'\''+
+                    ", JobDetails" +jobDetails+'\''+
 
                     '}';
         }
+
 
 
 }

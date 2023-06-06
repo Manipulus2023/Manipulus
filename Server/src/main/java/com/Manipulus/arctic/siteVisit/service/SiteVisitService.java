@@ -4,18 +4,20 @@ import com.Manipulus.arctic.siteVisit.repo.SiteVisitRepo;
 import com.Manipulus.arctic.siteVisit.siteVisit.SiteVisit;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-@Service
-@Transactional
-public class SiteVisitService {
 
-        private final SiteVisitRepo siteVisitRepo;
+public interface SiteVisitService {
+    ResponseEntity<String >generateReport(Map<String,Object>requestMap);
 
+        //private final SiteVisitRepo siteVisitRepo;
 
+/*
         @Autowired
         public SiteVisitService(SiteVisitRepo siteVisitRepo) {
 
@@ -35,16 +37,16 @@ public class SiteVisitService {
 
             return siteVisitRepo.save(siteVisit);
         }
-        public SiteVisit findSiteVisitBySiteVisitId(Long siteVisitId){
+        public SiteVisit findSiteVisitBySiteVisitId(Integer siteVisitId){
             return siteVisitRepo.findSiteVisitBySiteVisitId(siteVisitId)
                     .orElseThrow(()->new UserNotFoundException("User by id "+siteVisitId +"was not found."));
         }
-        public void deleteSiteVisit(Long siteVisitId){
+        public void deleteSiteVisit(Integer siteVisitId){
 
             siteVisitRepo.deleteSiteVisitBySiteVisitId(siteVisitId);
         }
 
 
-
+*/
     }
 

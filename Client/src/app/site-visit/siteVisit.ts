@@ -4,7 +4,7 @@ export interface SiteVisit{
     siteVisitName: string;
     siteVisitId: number;
     scheduledDate: Date;
-    assignedTeamId: number;
+    teamDetails: String;
     assignedVehicle: string;
     startSiteVisit: boolean;
     dateRange: Date;

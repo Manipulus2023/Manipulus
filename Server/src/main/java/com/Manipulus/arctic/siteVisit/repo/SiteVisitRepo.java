@@ -6,12 +6,12 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface SiteVisitRepo extends JpaRepository<SiteVisit, Long>{
+public interface SiteVisitRepo extends JpaRepository<SiteVisit, Integer>{
 
 
-        Optional<SiteVisit> findSiteVisitBySiteVisitId(Long siteVisitId);
+        Optional<SiteVisit> findSiteVisitBySiteVisitId(Integer siteVisitId);
 
-        void deleteSiteVisitBySiteVisitId(Long siteVisitId);
+        void deleteSiteVisitBySiteVisitId(Integer siteVisitId);
 
 
     }
