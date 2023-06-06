@@ -15,6 +15,7 @@ export class AuthService {
 
   jwtHelperService = new JwtHelperService();
   user = new BehaviorSubject<LoggedUser | null> (null);
+  tokenExpirationTimer: any;
 
   constructor(private httpClient: HttpClient, private router: Router) { }
 
@@ -30,6 +31,7 @@ export class AuthService {
     const loggedUser = new LoggedUser(decodedAccessToken.sub, decodedAccessToken.roles, jwtTokens.accessToken, this.getExpirationDate(decodedAccessToken.exp), undefined);
     localStorage.setItem('userData', JSON.stringify(loggedUser));
     this.user.next(loggedUser);
+    this.autoLogout(this.getExpirationDate(decodedAccessToken.exp).valueOf() - new Date().valueOf());
     this.redirectLoggedInUser(decodedAccessToken, jwtTokens.accessToken);
   }
 
@@ -65,6 +67,7 @@ export class AuthService {
     const loadedUser = new LoggedUser(userData.username, userData.roles, userData._token, new Date(userData._expiration), userData.userType);
     if (loadedUser.token) {
       this.user.next(loadedUser);
+      this.autoLogout(loadedUser._expiration.valueOf() - new Date().valueOf());
     }
   }
 
@@ -72,5 +75,15 @@ export class AuthService {
     localStorage.clear();
     this.user.next(null);
     this.router.navigate(['/user-login']);
+    if(this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 }
