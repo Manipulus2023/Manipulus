@@ -72,6 +72,13 @@ public class SiteVisitServiceImpl implements SiteVisitService {
                     addRows(table, ManipulusUtils.getMapFromJSON(jsonArray.getString(i)));
 
                 }
+                document.add(table);
+
+                document.close();
+                return new ResponseEntity<>("{\"uuid\":\""+fileName+"\"}",HttpStatus.OK);
+
+
+
             }
             return ManipulusUtils.getResponsesEntity("Required data not found.",HttpStatus.BAD_REQUEST);
         }catch(Exception ex ){

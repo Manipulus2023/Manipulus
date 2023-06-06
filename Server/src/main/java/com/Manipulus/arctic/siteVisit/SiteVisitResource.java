@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/siteVisit")
 public class SiteVisitResource {
 
-        private SiteVisitService siteVisitService ;
+      /*
 
 
         public SiteVisitResource(com.Manipulus.arctic.siteVisit.service.SiteVisitService SiteVisitService) {
@@ -47,7 +47,7 @@ public class SiteVisitResource {
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
-
+*/
 
     }
 

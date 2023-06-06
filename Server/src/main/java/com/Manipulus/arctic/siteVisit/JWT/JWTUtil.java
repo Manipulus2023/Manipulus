@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 @Service
 public class JWTUtil {
-
+/*
     private String secret = "btechdays";
     private String username;
 
@@ -58,5 +58,5 @@ public class JWTUtil {
        //boolean b = username.equals(UserDetails.getUsername()) && !isTokenExpired(token);
         return true;
     }
-
+*/
 }
