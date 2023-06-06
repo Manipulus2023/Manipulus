@@ -12,8 +12,4 @@ export class SideNavComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  public logout() {
-    this.router.navigate(['/home']);
-  }
 }
