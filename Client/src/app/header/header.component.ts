@@ -22,8 +22,7 @@ export class HeaderComponent implements OnInit {
   public isLoggedin() {}
 
   public logout() {
-    console.log("Clicked on logout");
-
+    this.authService.logout();
   }
 
   subscribeToLoggedInUser() {

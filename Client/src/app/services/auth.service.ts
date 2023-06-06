@@ -67,4 +67,10 @@ export class AuthService {
       this.user.next(loadedUser);
     }
   }
+
+  logout() {
+    localStorage.clear();
+    this.user.next(null);
+    this.router.navigate(['/user-login']);
+  }
 }
