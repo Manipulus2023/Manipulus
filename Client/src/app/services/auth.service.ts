@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoggedUser } from '../models/logged-user-model';
 import { Router } from '@angular/router';
-import { UserType } from '../models/User-types';
+import { USER_TYPES } from '../models/enums/user-type';
 
 @Injectable({
   providedIn: 'root'
@@ -39,10 +39,10 @@ export class AuthService {
   }
 
   redirectLoggedInUser(decodedToken: any, accessToken: string) {
-    if(decodedToken.roles.includes('Admin')) {
+    if(decodedToken.roles.includes(USER_TYPES.Admin)) {
       const loggedUser = new LoggedUser(decodedToken.sub, decodedToken.roles, accessToken, this.getExpirationDate(decodedToken.exp), "admin");
       this.router.navigateByUrl("/admin");
-    } else if (decodedToken.roles.includes('User')) {
+    } else if (decodedToken.roles.includes(USER_TYPES.User)) {
       const loggedUser = new LoggedUser(decodedToken.sub, decodedToken.roles, accessToken, this.getExpirationDate(decodedToken.exp), "user");
       this.router.navigateByUrl("/user");
     }

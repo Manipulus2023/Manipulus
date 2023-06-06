@@ -1,5 +1,3 @@
-import { UserType } from "./User-types";
-
 export class LoggedUser {
   constructor (
     public username: string,
