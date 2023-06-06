@@ -25,6 +25,7 @@ export class UserLoginComponent implements OnInit {
     console.log(loginForm.value);
     this.authService.login(loginForm.value).subscribe({
       next: res => {
+        this.authService.saveToken(res);
         console.log(res);
       },
       error: err => {

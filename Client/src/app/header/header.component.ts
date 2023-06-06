@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -7,13 +9,26 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  userSubscription: Subscription;
+  isAuthenticated = false;
+
+  constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.subscribeToLoggedInUser();
+  }
 
   public isLoggedin() {}
 
   public logout() {
-    this.router.navigate(['/user-login']);
+    console.log("Clicked on logout");
+
+  }
+
+  subscribeToLoggedInUser() {
+    this.userSubscription = this.authService.user.subscribe(loggedUser => {
+      this.isAuthenticated = !!loggedUser;
+    });
   }
 }
