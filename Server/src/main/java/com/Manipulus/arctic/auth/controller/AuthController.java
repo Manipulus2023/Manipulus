@@ -1,7 +1,10 @@
 package com.Manipulus.arctic.auth.controller;
 
+import com.Manipulus.arctic.user.model.User;
 import com.Manipulus.arctic.user.repository.IUserRepository;
+import com.Manipulus.arctic.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +12,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    private IUserRepository userRepository;
-    public AuthController(IUserRepository userRepository) {
-        this.userRepository = userRepository;
+    private IUserService userService;
+    public AuthController(IUserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/forgot-password")
+    public boolean ForgotPassword(@RequestBody String email) {
+        User user = userService.loadUserByEmail(email);
+        if(user != null) {
+            return true;
+        }
+        return false;
     }
 
     /*@PostMapping("/signin")

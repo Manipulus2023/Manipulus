@@ -1,6 +1,7 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -9,18 +10,16 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./forget-password.component.css']
 })
 export class ForgetPasswordComponent implements OnInit {
-  email: string | undefined;
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit(): void {
   }
 
   onSubmit(form: NgForm) {
     const email = form.value.email;
+    this.authService.sendResetPasswordRequest(email).subscribe(data => {
+      console.log(data);
 
-    this.http.post('/api/forget-password', { email }).subscribe(() => {
-      // Show a success message
     });
   }
 

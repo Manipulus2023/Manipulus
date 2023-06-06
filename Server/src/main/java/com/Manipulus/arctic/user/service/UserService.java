@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class UserService{
+public class UserService implements IUserService {
 
     @Autowired
     private IUserRepository userRepository;
@@ -77,6 +77,9 @@ public class UserService{
 
     public User loadUserByUsername(String username) {
         return userRepository.findUserByUserName(username);
+    }
+    public User loadUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
     public String getEncodedPassword(String password) {
         return new BCryptPasswordEncoder().encode(password);

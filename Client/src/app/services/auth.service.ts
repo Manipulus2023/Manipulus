@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoggedUser } from '../models/logged-user-model';
 import { Router } from '@angular/router';
 import { USER_TYPES } from '../models/enums/user-type';
+import { ForgotPasswordRequest } from '../models/reset-password';
 
 @Injectable({
   providedIn: 'root'
@@ -85,5 +86,11 @@ export class AuthService {
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
     }, expirationDuration);
+  }
+
+  sendResetPasswordRequest(forgotPW: ForgotPasswordRequest): Observable<boolean> {
+    const formData = new FormData();
+    formData.append('email', forgotPW.email);
+    return this.httpClient.post<boolean>(environment.baseurl + '/forgot-password', formData);
   }
 }
