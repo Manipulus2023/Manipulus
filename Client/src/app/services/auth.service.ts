@@ -28,6 +28,7 @@ export class AuthService {
   saveToken(jwtTokens: LoginResponse) {
     const decodedAccessToken = this.jwtHelperService.decodeToken(jwtTokens.accessToken);
     const loggedUser = new LoggedUser(decodedAccessToken.sub, decodedAccessToken.roles, jwtTokens.accessToken, this.getExpirationDate(decodedAccessToken.exp), undefined);
+    localStorage.setItem('userData', JSON.stringify(loggedUser));
     this.user.next(loggedUser);
     this.redirectLoggedInUser(decodedAccessToken, jwtTokens.accessToken);
   }
@@ -41,10 +42,29 @@ export class AuthService {
   redirectLoggedInUser(decodedToken: any, accessToken: string) {
     if(decodedToken.roles.includes(USER_TYPES.Admin)) {
       const loggedUser = new LoggedUser(decodedToken.sub, decodedToken.roles, accessToken, this.getExpirationDate(decodedToken.exp), "admin");
+      localStorage.setItem('userData', JSON.stringify(loggedUser));
       this.router.navigateByUrl("/admin");
     } else if (decodedToken.roles.includes(USER_TYPES.User)) {
       const loggedUser = new LoggedUser(decodedToken.sub, decodedToken.roles, accessToken, this.getExpirationDate(decodedToken.exp), "user");
+      localStorage.setItem('userData', JSON.stringify(loggedUser));
       this.router.navigateByUrl("/user");
+    }
+  }
+
+  autoLogin() {
+    const currentUser = localStorage.getItem('userData');
+    const userData: {
+      username: string,
+      roles: string[],
+      _token: string,
+      _expiration: Date,
+      userType: string | undefined
+    } = currentUser !== null ? JSON.parse(currentUser) : undefined;
+
+    if (!userData) return;
+    const loadedUser = new LoggedUser(userData.username, userData.roles, userData._token, new Date(userData._expiration), userData.userType);
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
     }
   }
 }

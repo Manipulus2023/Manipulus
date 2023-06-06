@@ -4,7 +4,7 @@ export class LoggedUser {
     public roles: string[],
     private _token: string,
     public _expiration: Date,
-    public user: string | undefined
+    public userType: string | undefined
     ) { }
 
   get token() {
