@@ -31,6 +31,7 @@ import { AdminComponent } from './admin/admin.component';
 import { HeaderComponent } from './header/header.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { RouterModule } from '@angular/router';
+import { AuthInterceptorService } from './services/auth.interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +70,14 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     RouterModule
   ],
-  providers: [ReactiveFormsModule],
+  providers: [
+    ReactiveFormsModule,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,10 +1,16 @@
-export class LoggedUser {
-  constructor(public username: string, public roles: string[], private _token: string, public _expiration: Date) {
+import { UserType } from "./User-types";
 
-  }
+export class LoggedUser {
+  constructor (
+    public username: string,
+    public roles: string[],
+    private _token: string,
+    public _expiration: Date,
+    public user: string | undefined
+    ) { }
 
   get token() {
-    if(!this._expiration || new Date() > this._expiration) {
+    if (!this._expiration || new Date() > this._expiration) {
       return null;
     }
     return this._token;
