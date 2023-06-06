@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
@@ -10,7 +10,7 @@ import { USER_TYPES } from '../models/enums/user-type';
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.css']
 })
-export class SideNavComponent implements OnInit {
+export class SideNavComponent implements OnInit, OnDestroy {
 
   userSubscription: Subscription;
   isAuthenticated = false;
@@ -44,5 +44,9 @@ export class SideNavComponent implements OnInit {
   initializeState() {
     this.isAdmin = false;
     this.isUser = false;
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   }
 }
