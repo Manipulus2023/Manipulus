@@ -17,7 +17,7 @@ export class UserLoginComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  goToForgetPassword() {
+  navigateToResetPassword() {
     this.router.navigate(['/forget-password']);
   };
 
