@@ -32,6 +32,7 @@ import { HeaderComponent } from './header/header.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptorService } from './services/auth.interceptor.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +59,7 @@ import { AuthInterceptorService } from './services/auth.interceptor.service';
     HomeComponent,
     AdminComponent,
     HeaderComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
   ],
   imports: [
     BrowserModule,
