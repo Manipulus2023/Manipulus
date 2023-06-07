@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer } from './customer';
 import { CustomerService } from './customer.service';
-import { error } from '@angular/compiler/src/util';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -12,41 +11,50 @@ import { Subject } from 'rxjs';
   styleUrls: ['./customer.component.css'],
 })
 export class CustomerComponent implements OnInit {
+onChange(arg0: any) {
+throw new Error('Method not implemented.');
+}
   // Define class properties
   currentDate = new Date();
   public customers: Customer[] = [];
-  public editCustomer: Customer | undefined;
+  public editCustomer!: Customer;
   public deleteCustomer!: Customer;
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
 
   // Inject customer service
   constructor(private customerService: CustomerService) {}
-
+ 
   ngOnInit(): void {
     // Define DataTables options
+    
     this.dtoptions = {
       pagingType: 'full_numbers',
       destroy: true,
-      columns: [
-        // Define your columns here...
-        { data: 'name', orderable: true },
-        { data: 'address', orderable: false },
-        { data: 'contactNumber', orderable: false },
-        { data: 'nic_number', orderable: true },
-        { data: 'customer.address', orderable: true },
-        { data: 'contactPersonName', orderable: false },
-        { data: 'designation', orderable: false },
-        { data: 'email', orderable: false },
-        { data: 'customercode', orderable: false },
-        // Disable sorting for this column
-      ],
-      order: [],
+      // columns: [
+      //   // Define your columns here...
+      //   { data: 'name', orderable: true },
+      //   { data: 'address', orderable: false },
+      //   { data: 'contactNumber', orderable: false },
+      //   { data: 'nic_number', orderable: true },
+      //   { data: 'customer.address', orderable: true },
+      //   { data: 'contactPersonName', orderable: false },
+      //   { data: 'designation', orderable: false },
+      //   { data: 'email', orderable: false },
+      //   { data: 'customercode', orderable: false },
+      //   // Disable sorting for this column
+      // ],
+      // order: [],
     };
     // Call getCustomers method to retrieve customer data
     this.getCustomers();
-  }
+    this.dtoptions = {
+      retrieve: true,
+    };
 
+    
+  }
+ 
   // Retrieve customer data using customer service
   public getCustomers(): void {
     {
@@ -63,7 +71,6 @@ export class CustomerComponent implements OnInit {
 
   // Add new customer using customer service and reset form
   public onAddCustomer(addForm: NgForm): void {
-    (document.getElementById('add-customer-form') as HTMLInputElement).click();
     this.customerService.addCustomer(addForm.value).subscribe(
       (response: Customer) => {
         console.log(response);
@@ -73,6 +80,7 @@ export class CustomerComponent implements OnInit {
         };
 
         addForm.reset();
+        window.location.reload();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -96,6 +104,8 @@ export class CustomerComponent implements OnInit {
     );
   }
 
+
+
   // Update customer using customer service
   public onUpdateCustomer(Customer: Customer): void {
     this.customerService.updateCustomer(Customer).subscribe(
@@ -111,6 +121,12 @@ export class CustomerComponent implements OnInit {
       }
     );
   }
+
+
+  // public toggleActiveStatus(){
+  //   this.editCustomer.active_status = !this.editCustomer.active_status;
+  // }
+
 
   // Search customers by name, email, or contact person name
   public searchCustomer(key: string): void {
@@ -132,8 +148,13 @@ export class CustomerComponent implements OnInit {
     }
   }
 
+public news (){
+  console.log("delete clicked")
+}
+  
   // Function to handle opening modal dialog for editing or deleting a customer
   public onOpenModal(customer: Customer, mode: string): void {
+    console.log(" open modal called");
     const container = document.getElementById(
       'main-container'
     ) as HTMLInputElement;

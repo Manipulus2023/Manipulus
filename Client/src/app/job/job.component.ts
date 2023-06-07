@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { Job } from './job';
 import { JobService } from './job.service';
+import { Customer } from '../customer/customer';
 @Component({
   selector: 'app-job',
   templateUrl: './job.component.html',
@@ -15,6 +16,7 @@ export class JobComponent implements OnInit {
   public deleteJob!: Job;
   dtoptions:DataTables.Settings={}
   dtTriger:Subject<any>=new Subject<any>();
+  public customers!: Customer;
 
   constructor(private jobService: JobService) { }
 
@@ -26,8 +28,22 @@ export class JobComponent implements OnInit {
       
     };
     this.getJobs();
+    this.findCustomerById(34);
   }
 
+
+  public findCustomerById(customerId: number):void{
+    {
+      this.jobService.findCustomerById(customerId).subscribe(
+        (response: Customer) =>{
+          this.customers = response;
+          console.log(this.customers);
+        },
+        (error: HttpErrorResponse) =>
+           alert(error.message)
+          
+        ); }
+  }
 
   public getJobs():void { {
     this.jobService.getJobList().subscribe(

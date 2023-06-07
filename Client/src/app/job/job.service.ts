@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Job } from './job';
+import { Customer } from '../customer/customer';
 
 @Injectable({
   providedIn: 'root',
@@ -32,4 +33,9 @@ export class JobService {
   public deleteJob(jobId: Number): Observable<void> {
     return this.httpClient.delete<void>(`${this.baseUrl}/job/delete/${jobId}`);
   }
+
+  public findCustomerById(customerId: Number): Observable<Customer>{
+    return this.httpClient.get<Customer>(`${this.baseUrl}/customer/find/${customerId}`);
+  }
+  
 }
