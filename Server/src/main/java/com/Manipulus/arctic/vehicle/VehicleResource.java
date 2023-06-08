@@ -1,17 +1,22 @@
 package com.Manipulus.arctic.vehicle;
 
 import com.Manipulus.arctic.vehicle.model.Vehicle;
+import com.Manipulus.arctic.vehicle.repository.VehicleRepository;
 import com.Manipulus.arctic.vehicle.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/vehicle")
 public class VehicleResource {
-    private final VehicleService vehicleService;
+
+    private  VehicleService vehicleService;
 
     public VehicleResource(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
@@ -29,11 +34,22 @@ public class VehicleResource {
         return new ResponseEntity<>(vehicles, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/photo")
+    public ResponseEntity<byte[]> getVehiclePhoto(@PathVariable long id) {
+        return vehicleService.getVehiclePhoto(id);
+    }
+
+
     @PostMapping("/add")
     public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle) {
         Vehicle newVehicle = vehicleService.addVehicle(vehicle);
         return new ResponseEntity<>(newVehicle, HttpStatus.CREATED);
 
+    }
+
+    @PostMapping("/{id}/photo")
+    public ResponseEntity<String> addPhotoToVehicle(@PathVariable long id, @RequestParam("file") MultipartFile file) throws IOException {
+        return vehicleService.addPhotoToVehicle(id,file);
     }
 
     @PutMapping("/update")
