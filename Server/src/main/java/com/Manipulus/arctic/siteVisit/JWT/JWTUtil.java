@@ -1,4 +1,4 @@
-package com.Manipulus.arctic.siteVisit.JWT;
+//package com.Manipulus.arctic.siteVisit.JWT;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@Service
-public class JWTUtil {
+//@Service
+//public class JWTUtil {
 /*
     private String secret = "btechdays";
     private String username;
@@ -53,10 +53,12 @@ public class JWTUtil {
                 .signWith(SignatureAlgorithm.HS256,secret).compact();
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails){
+    //public Boolean validateToken(String token, UserDetails userDetails){
         final String Username = extractUsername(token);
        //boolean b = username.equals(UserDetails.getUsername()) && !isTokenExpired(token);
         return true;
     }
-*/
+
 }
+
+ */

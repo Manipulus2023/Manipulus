@@ -16,10 +16,8 @@ import java.util.Map;
 @RestController
 public class SiteVisitRestImpl implements SiteVisitRest {
 
-
-
-    @Autowired
-    SiteVisitService siteVisitService;
+@Autowired
+SiteVisitService siteVisitService;
 
     @Override
     public ResponseEntity<String> generateReport(Map<String, Object> requestMap) {

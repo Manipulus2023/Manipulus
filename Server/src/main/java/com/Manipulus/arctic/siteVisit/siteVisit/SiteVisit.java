@@ -17,7 +17,7 @@ public class SiteVisit implements Serializable {
     private static final long serialVersionID=1L;
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(nullable = false,updatable = false)
+        @Column(name ="siteVisitId" )
         private Integer siteVisitId;
 
         @Column(name = "uuid")
@@ -41,7 +41,7 @@ public class SiteVisit implements Serializable {
         private String siteVisitCode;
 
 //-------------------------------------------------------------
-    public String getSiteVisitCode() {
+   /* public String getSiteVisitCode() {
         return siteVisitCode;
     }
 
@@ -134,6 +134,6 @@ public class SiteVisit implements Serializable {
                     '}';
         }
 
-
+*/
 
 }

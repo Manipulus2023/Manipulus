@@ -10,6 +10,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.tuple.UpdateTimestampGeneration;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,41 +27,39 @@ import java.util.stream.Stream;
 @Service
 public class SiteVisitServiceImpl implements SiteVisitService {
 
-    @Autowired
-    SiteVisitRepo siteVisitRepo;
 
-    public SiteVisitServiceImpl(SiteVisitRepo siteVisitRepo) {
-        this.siteVisitRepo = siteVisitRepo;
-    }
+  @Autowired SiteVisitRepo siteVisitRepo;
 
     @Override
     public ResponseEntity<String> generateReport(Map<String, Object> requestMap) {
-        log.info("Inside generateReport");
-        try{
+         log.info("Inside generateReport");
+        try {
             String fileName;
-            if (validateResponseMap(requestMap)){
-              if (requestMap.containsKey("isGenerate")&& !(Boolean)requestMap.get("isGenerate")){
-                  fileName= (String) requestMap.get("uuid");
-              }else {
-                  fileName =ManipulusUtils.getUUID();
-                  requestMap.put("uuid",fileName);
+            if (validateRequestMap(requestMap)) {
+                if (requestMap.containsKey("isGenerate") && !(Boolean) requestMap.get("isGenerate")) {
+                    fileName = (String) requestMap.get("uuid");
+                } else {
+                    fileName = ManipulusUtils.getUUID();
+                    requestMap.put("uuid", fileName);
                     insertSiteVisit(requestMap);
-              
-              }
 
-              String data = "SiteVisitId: "+requestMap.get("siteVisitId")+"\n"+"ScheduledDate : "+requestMap.get("scheduledDate")+"\n"+"DateRange"+requestMap.get("dateRange");
+                }
+
+                String data = "SiteVisitId: " + requestMap.get("siteVisitId") +
+                        "\n" + "ScheduledDate : " + requestMap.get("scheduledDate") +
+                        "\n" + "DateRange" + requestMap.get("dateRange");
 
                 Document document = new Document();
-                PdfWriter.getInstance(document,new FileOutputStream(ManipulusConstants.STORE_LOCATION+"\\"+fileName+".pdf"));
+                PdfWriter.getInstance(document, new FileOutputStream(ManipulusConstants.STORE_LOCATION + "\\" + fileName + ".pdf"));
 
                 document.open();
                 setRectanglePdf(document);
 
-                Paragraph chunk = new Paragraph("Gate Pass Arctic (Pvt) Ltd",getFont("Header"));
+                Paragraph chunk = new Paragraph("Gate Pass Arctic (Pvt) Ltd", getFont("Header"));
                 chunk.setAlignment(Element.ALIGN_CENTER);
                 document.add(chunk);
 
-                Paragraph paragraph=new Paragraph(data+"\n \n",getFont("Data"));
+                Paragraph paragraph = new Paragraph(data + "\n \n", getFont("Data"));
                 document.add(paragraph);
 
                 PdfPTable table = new PdfPTable(3);
@@ -68,27 +67,27 @@ public class SiteVisitServiceImpl implements SiteVisitService {
                 addTableHeader(table);
 
                 JSONArray jsonArray = ManipulusUtils.getJsonArrayFromString((String) requestMap.get("assignedVehicle"));
-                for (int i=0;i<=jsonArray.length();i++){
+                for (int i = 0; i <= jsonArray.length(); i++) {
                     addRows(table, ManipulusUtils.getMapFromJSON(jsonArray.getString(i)));
 
                 }
                 document.add(table);
 
                 document.close();
-                return new ResponseEntity<>("{\"uuid\":\""+fileName+"\"}",HttpStatus.OK);
-
-
+                return new ResponseEntity<>("{\"uuid\":\"" + fileName + "\"}", HttpStatus.OK);
 
             }
-            return ManipulusUtils.getResponsesEntity("Required data not found.",HttpStatus.BAD_REQUEST);
-        }catch(Exception ex ){
+            return ManipulusUtils.getResponsesEntity("Required data not found.", HttpStatus.BAD_REQUEST);
+
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return ManipulusUtils.getResponsesEntity(ManipulusConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+            return ManipulusUtils.getResponsesEntity(ManipulusConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
 
     private void addRows(PdfPTable table, Map<String, Object> data) {
-        log.info("Inside addRows");
+       log.info("Inside addRows");
         table.addCell((String) data.get("vehicle_name"));
         table.addCell((String) data.get("vehicle_number"));
         table.addCell((String) data.get("number_of_passenger"));
@@ -114,14 +113,12 @@ public class SiteVisitServiceImpl implements SiteVisitService {
         log.info("Inside getFont");
         switch (type){
             case "Header":
-                Font headerFont = FontFactory.getFont(
-                        FontFactory.HELVETICA_BOLDOBLIQUE,18,BaseColor.BLUE);
+                Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLDOBLIQUE,18,BaseColor.BLUE);
                 headerFont.setStyle(Font.BOLD);
                 return headerFont;
 
             case "Data":
-                Font dataFont = FontFactory.getFont(
-                        FontFactory.TIMES_ROMAN,11,BaseColor.BLACK);
+                Font dataFont = FontFactory.getFont(FontFactory.TIMES_ROMAN,11,BaseColor.BLACK);
                 dataFont.setStyle(Font.BOLD);
                 return dataFont;
             default:
@@ -130,13 +127,13 @@ public class SiteVisitServiceImpl implements SiteVisitService {
     }
 
     private void setRectanglePdf(Document document) throws DocumentException {
-        log.info("Inside setRectangleInPdf");
+     log.info("Inside setRectangleInPdf");
         Rectangle rect = new Rectangle(577,825,18,15);
         rect.enableBorderSide(1);
         rect.enableBorderSide(2);
         rect.enableBorderSide(4);
         rect.enableBorderSide(81);
-        rect.setBackgroundColor(BaseColor.BLACK);
+        rect.setBorderColor(BaseColor.BLACK);
         rect.setBorderWidth(1);
         document.add(rect);
     }
@@ -154,12 +151,13 @@ public class SiteVisitServiceImpl implements SiteVisitService {
             siteVisit.setJobDetails((String) requestMap.get("jobDetails"));
             siteVisitRepo.save(siteVisit);
 
+
         }catch (Exception ex){
             ex.printStackTrace();
         }
     }
 
-    private boolean validateResponseMap(Map<String, Object> requestMap) {
+    private boolean validateRequestMap(Map<String, Object> requestMap) {
    return requestMap.containsKey("siteVisitId") &&
            requestMap.containsKey("scheduledDate") &&
            requestMap.containsKey("teamDetails") &&
