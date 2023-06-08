@@ -5,6 +5,7 @@ import { environment } from "src/environments/environment";
 import { Vehicle } from './vehicle';
 
 
+
 @Injectable({
     providedIn: 'root'  
 })
@@ -15,6 +16,7 @@ export class VehicleServise{
      public getVehicleList(): Observable<Vehicle[]>{
         return this.httpClient.get<Vehicle[]>(`${this.baseUrl}/vehicle/all`)
      }
+    
      public addVehicle(vehicle: Vehicle): Observable<Vehicle>{
         return this.httpClient.post<Vehicle>(`${this.baseUrl}/vehicle/add`, vehicle);
      }
