@@ -1,11 +1,9 @@
+
 <header class="py-3 border-bottom">
     <div class="container d-flex flex-wrap justify-content-center">
-      <a
-        class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
-      >
-        <span class="fs-8">Vehicle</span>
-        <span class="badge rounded-pill bg-info customerCount text-muted"
-          >100</span
+        <a class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+            <span class="fs-8">Vehicle</span>
+            <span class="badge rounded-pill bg-info customerCount text-muted">100</span
         >
       </a>
       <form class="col-12 col-lg-auto mb-3 mb-lg-0">
@@ -36,7 +34,7 @@
   <div class="vehicle_loop">
     <div *ngFor="let vehicle of vehicle" class="vehicle_loop_class">
       <div class="vehicle_details_container" id="vehicle_details_container" >
-      
+
             <div class="vehicle_details">
               <div class="vehicle_image">
                 <img
@@ -65,7 +63,7 @@
                 height="20"
               />
             </button>
-  
+
             <button
               type="button"
               class="btn btn-outline-primary"
@@ -79,14 +77,14 @@
               />
             </button>
               </div>
-  
+
             </div>
       </div>
   </div>
   </div>
-  
-  
-  
+
+
+
   <!-- Modal add -->
   <form #addForm1="ngForm" (ngSubmit)="onAddVehicle(addForm1)">
     <div
@@ -113,7 +111,7 @@
                 <div>
                   <h3 class="h6 mb-4">Basic information</h3>
                 </div>
-  
+
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="mb-3">
@@ -128,7 +126,7 @@
                       />
                     </div>
                   </div>
-  
+
                   <div class="col-lg-6">
                     <div class="mb-3">
                       <label class="form-label">Vehicle Number :</label>
@@ -142,7 +140,7 @@
                       />
                     </div>
                   </div>
-  
+
                   <div class="col-lg-6">
                     <div class="mb-3">
                       <label class="form-label">Number Of passengers :</label>
@@ -194,8 +192,8 @@
       </div>
     </div>
   </form>
-  
-  
+
+
   <form #editForm1="ngForm">
     <div
       class="modal fade"
@@ -223,7 +221,7 @@
                 <div>
                   <h3 class="h6 mb-4">Basic information</h3>
                 </div>
-  
+
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="mb-3">
@@ -252,7 +250,7 @@
                     ngModel="{{ editVehicle?.vehicle_code }}"
                     name="vehicle_code"
                   />
-  
+
                   <div class="col-lg-6">
                     <div class="mb-3">
                       <label class="form-label">Vehicle Number :</label>
@@ -266,7 +264,7 @@
                       />
                     </div>
                   </div>
-  
+
                   <div class="col-lg-6">
                     <div class="mb-3">
                       <label class="form-label">Number Of passengers :</label>
@@ -294,7 +292,7 @@
                     </div>
                   </div>
                 </div>
-                
+
               </div>
             </div>
           </div>
@@ -319,9 +317,9 @@
       </div>
     </div>
   </form>
-  
-  
-  
+
+
+
   <div
     class="modal delete"
     id="exampleModal23"

@@ -1,1 +1,23 @@
-<p>user-login works!</p>
+<div class="container mt-5">
+  <div class="card" style="padding: 20px">
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <input type="text" ngModel name="username" id="username" placeholder="Enter your username"
+        class="form-control mb-3" />
+
+      <input type="password" ngModel name="password" id="password" placeholder="Enter your password"
+        class="form-control mb-3" />
+
+      <input type="submit" value="Login" class="btn btn-outline-primary form-control rounded-0" />
+    </form>
+
+    <div class="container text-end mt-4">
+      Forgot your password? <button class="btn btn-outline-secondary rounded-0" (click)="navigateToResetPassword()"> Click here</button>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="errorMessage">
+  <div class="alert-danger">
+    {{errorMessage}}
+  </div>
+</ng-container>

@@ -25,7 +25,7 @@ public class UnitService {
         return UnitRepository.save(unit);
     }
 
-    public List<Unit> findAllUnits(){
+    public List<Unit> getUnits(){
         return UnitRepository.findAll();
     }
     public Unit updateUnit(Long id, Unit unit){

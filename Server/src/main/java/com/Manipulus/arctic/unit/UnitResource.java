@@ -18,7 +18,7 @@ public class UnitResource {
     }
     @GetMapping("/all")
     public ResponseEntity<List<Unit>> getAllUnit(){
-        List<Unit> units=unitService.findAllUnits();
+        List<Unit> units=unitService.getUnits();
         return new ResponseEntity<>(units,HttpStatus.OK);
     }
 
