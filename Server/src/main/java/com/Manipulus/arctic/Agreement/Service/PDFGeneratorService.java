@@ -1,22 +1,15 @@
 package com.Manipulus.arctic.Agreement.Service;
 
 import com.Manipulus.arctic.Agreement.DTO.AgreementDTO;
-import com.Manipulus.arctic.Agreement.DTO.AgreementSaveDTO;
 import com.Manipulus.arctic.Agreement.DTO.PdfDTO;
-import com.Manipulus.arctic.customer.DTO.CustomerDTO;
 import com.Manipulus.arctic.customer.model.Customer;
 import com.Manipulus.arctic.customer.service.CustomerService;
 import com.lowagie.text.*;
 import com.lowagie.text.Image;
 import com.lowagie.text.Font;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
 import jakarta.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
