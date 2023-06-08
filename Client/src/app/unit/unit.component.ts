@@ -113,6 +113,6 @@ export class UnitComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unitSubscription.unsubscribe();
+    this.unitSubscription?.unsubscribe();
   }
 }
