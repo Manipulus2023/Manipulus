@@ -1,42 +1,60 @@
 package com.Manipulus.arctic.customer.model;
 
-
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 
+// Define the Customer Entity and map it to the 'customers' table in the database
 @Entity
 @Table(name = "customers")
 public class Customer implements Serializable {
+    // Define the Customer's ID as the primary key and auto-generate it
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private long id;
-
-    @Column(name = "nic_number" )
+    // Define the Customer's NIC number
+    @Column(name = "nic_number")
     private String nic_number;
-
+    // Define the Customer's name
     @Column(name = "customer_name")
     private String name;
-
+    // Define the Customer's contact number
     @Column(name = "contact_number")
     private int contactNumber;
-
+    // Define the Customer's address
     @Column(name = "address")
     private String address;
-
+    // Define the contact person's name for the Customer
     @Column(name = "contact_person_name")
     private String contactPersonName;
-
+    // Define the contact person's designation for the Customer
     @Column(name = "designation")
     private String designation;
-
+    // Define the Customer's email address
     @Column(name = "email")
     private String email;
-
-    @Column(nullable = false,updatable = false)
+    // Define the Customer's code, which cannot be null and is unchangeable once set
+    @Column(nullable = false, updatable = false)
     private String customerCode;
 
+    // Define the Customer's default constructor
+    public Customer() {
+    }
+
+    // Define the Customer's constructor with all properties
+    public Customer(String nic_number, String name, int contactNumber, String address, String contactPersonName,
+            String designation, String email, String customerCode) {
+        this.nic_number = nic_number;
+        this.name = name;
+        this.customerCode = customerCode;
+        this.contactNumber = contactNumber;
+        this.address = address;
+        this.contactPersonName = contactPersonName;
+        this.designation = designation;
+        this.email = email;
+    }
+
+    // Define the getter and setter methods
     public String getCustomerCode() {
 
         return customerCode;
@@ -44,20 +62,6 @@ public class Customer implements Serializable {
 
     public void setCustomerCode(String customerCode) {
         this.customerCode = customerCode;
-    }
-
-    public Customer(){
-
-    }
-    public Customer(String nic_number, String name, int contactNumber, String address, String contactPersonName, String designation, String email,String customerCode) {
-        this.nic_number = nic_number;
-        this.name = name;
-        this.customerCode =customerCode;
-        this.contactNumber = contactNumber;
-        this.address = address;
-        this.contactPersonName = contactPersonName;
-        this.designation = designation;
-        this.email = email;
     }
 
     public String getNic_number() {
@@ -124,21 +128,21 @@ public class Customer implements Serializable {
         this.email = email;
     }
 
+    // Overrides the default toString() method to return a string representation of
+    // this Customer object
     @Override
-    public String toString(){
+    public String toString() {
         return "Customer{" +
                 "id=" + id +
                 "nic_number=" + nic_number +
-                "name=" +name +
-                "contactNumber=" +contactNumber +
-                "address="+ address +
-                "contactPersonName="+contactPersonName+
-                "designation="+ designation +
-                "email="+email+
+                "name=" + name +
+                "contactNumber=" + contactNumber +
+                "address=" + address +
+                "contactPersonName=" + contactPersonName +
+                "designation=" + designation +
+                "email=" + email +
                 '}';
 
     }
 
-
 }
-
