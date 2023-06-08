@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ThrowStmt } from '@angular/compiler';
-import { isNull } from '@angular/compiler/src/output/output_ast';
-import { Component, OnInit } from '@angular/core';
+import { Component, } from '@angular/core';
 import Swal from 'sweetalert2';
 
 
@@ -44,7 +42,7 @@ export class ServiceAgreementComponent {
 
 
 
- 
+
 
 
 
@@ -658,14 +656,14 @@ export class ServiceAgreementComponent {
   setDelete(data: any) {
 
 
-  
 
-     
+
+
 
     this.http.delete("http://localhost:8080/api/v1/agreement/deleteagreement" + "/" + data.agreementid, { responseType: 'text' }).subscribe((resultData: any) => {
       console.log(resultData);
       // alert("Service Agreement Deleted")
-  
+
       this.getAllAgreement();
 
       this.unitid = 0;

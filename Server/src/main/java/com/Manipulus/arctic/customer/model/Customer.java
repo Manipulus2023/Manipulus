@@ -56,6 +56,7 @@ public class Customer implements Serializable {
 
     // Define the getter and setter methods
     public String getCustomerCode() {
+
         return customerCode;
     }
 

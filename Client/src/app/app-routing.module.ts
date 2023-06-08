@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CustomerComponent } from './customer/customer.component';
 import { CalendarComponent } from './calendar/calendar.component';
@@ -20,11 +20,15 @@ import { UserGroupComponent } from './user-group/user-group.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { ForgetPasswordComponent } from './user-login/forget-password/forget-password.component';
 
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
   { path: 'customer', component: CustomerComponent },
-  { path: 'dashboard', component: DashboardComponent },
   { path: 'gate-pass', component: GatePassComponent },
   { path: 'item', component: ItemComponent },
   { path: 'job', component: JobComponent },
@@ -37,12 +41,33 @@ const routes: Routes = [
 
   { path: 'site-visit', component: SiteVisitComponent },
   { path: 'sub-location', component: SubLocationComponent },
-  { path: 'unit', component: UnitComponent },
+  {
+    path: 'unit',
+    component: UnitComponent,
+    canActivate: [],
+    data: { roles: ['User'] },
+  },
   { path: 'user', component: UserComponent },
   { path: 'user-group', component: UserGroupComponent },
   { path: 'vehicle', component: VehicleComponent },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/user-login', pathMatch: 'full' },
   { path: '*', component: PageNotFoundComponent },
+  { path: 'home', component: HomeComponent },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [],
+    data: { roles: ['Admin'] },
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [],
+    data: { roles: ['User'] },
+  },
+  { path: 'user-login', component: UserLoginComponent },
+  { path: 'forbidden', component: ForbiddenComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent },
 ];
 
 @NgModule({

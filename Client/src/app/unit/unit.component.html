@@ -1,0 +1,230 @@
+<header class="py-3 border-bottom">
+  <div class="container d-flex flex-wrap justify-content-center">
+    <a class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+      <span class="fs-8">Units</span>
+      <span class="badge rounded-pill bg-info unitCount text-muted">100</span>
+    </a>
+    <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0">
+      <input type="search" (ngModelChange)="searchUnit(key.value)" #key="ngModel" ngModel name="key"
+        class="form-control" placeholder="Search..." aria-label="Search" required />
+    </form> -->
+
+
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <img src="../../assets/Icon/Customer/person_add_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
+    height="20" />
+  Add Unit
+</button>
+</div>
+</header>
+
+
+
+
+<!-- <div class="modal-background"></div>
+<div class="modal-content">
+  <form [formGroup]="addUnitForm" (ngSubmit)="onItemAdd()" class="unit-form">
+    <div class="form-field">
+      <label for="add_unit_name">Unit Name:</label>
+      <input type="text" formControlName="unitName" />
+    </div>
+
+    <div class="form-field">
+      <label for="add_item_name">Item Name:</label>
+      <input type="text" formControlName="itemName" />
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+</div> -->
+
+
+<form formGroup="addUnitForm" (ngSubmit)="onItemAdd()" class="unit-form">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Unit Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div>
+                <h3 class="h6 mb-4">Basic Information</h3>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Unit Name:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="unitName" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Item Name:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="itemName" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Indoor Serial:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="indoorSerial" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Outdoor Serial:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="outdoorSerial" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Commissioned date:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="commissionedDate" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Owner:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="owner" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Installed Location Name:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="installedLocationName" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Installed Location Address:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="installedLocationAddress" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Installed Parent Location:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="installedParentLocation" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Warranty Period:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="warrantyPeriod" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Unit Price:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="unitPrice" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Status:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="status" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary" >Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
