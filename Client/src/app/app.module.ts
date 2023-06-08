@@ -68,7 +68,8 @@ import { AuthInterceptorService } from './services/auth.interceptor.service';
     FormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
   providers: [
     ReactiveFormsModule,

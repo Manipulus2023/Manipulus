@@ -180,18 +180,18 @@ public class Unit implements Serializable {
     public String toString(){
         return "Unit{"+
                 "id="+unitId+
-                "unitName"+unitName +
-                "itemName"+itemName+
-                "indoorSerial"+indoorSerial+
-                "outdoorSerial"+outdoorSerial+
-                "commissionedDate"+commissionedDate+
-                "owner"+owner+
-                "installedLocationName"+installedLocationName+
-                "installedLocationAddress"+installedLocationAddress+
-                "installedParentLocation"+installedParentLocation+
-                "warrantyPeriod"+warrantyPeriod+
-                "unitPrice"+unitPrice+
-                "status"+status+
+                "unitName="+unitName +
+                "itemName="+itemName+
+                "indoorSerial="+indoorSerial+
+                "outdoorSerial="+outdoorSerial+
+                "commissionedDate="+commissionedDate+
+                "owner="+owner+
+                "installedLocationName="+installedLocationName+
+                "installedLocationAddress="+installedLocationAddress+
+                "installedParentLocation="+installedParentLocation+
+                "warrantyPeriod="+warrantyPeriod+
+                "unitPrice="+unitPrice+
+                "status="+status+
                 '}';
     }
 }

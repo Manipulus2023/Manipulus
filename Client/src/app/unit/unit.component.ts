@@ -48,7 +48,7 @@ export class UnitComponent implements OnInit, OnDestroy {
     });
   }
 
-  onItemAdd() {
+  onUnitAdd() {
     console.log(this.addUnitForm.value);
     this.unitService.addUnit(this.addUnitForm.value).subscribe(res =>
       {
@@ -71,7 +71,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   //   }
 
   // const updatedUnit = this.editUnitForm.value;
-  // // Update the selected customer in the list
+  // // Update the selected unit in the list
   // const index = this.units.findIndex(unit => unit === this.selectedUnit);
   // if (index !== -1) {
   //   this.units[index] = updatedUnit;
@@ -100,19 +100,19 @@ export class UnitComponent implements OnInit, OnDestroy {
   //   });
   // }
 
-  // closeEditCustomerModal() {
+  // closeEditUnitModal() {
   //   this.isEditUnitModalOpen = false;
   //   this.editUnitForm.reset();
   //   this.selectedUnit = null;
   // }
 
-  searchCustomer() {
+  searchUnit() {
     //const searchKey = this.searchForm.value.key;
     // Perform the search operation using the searchKey
     // ...
   }
 
   ngOnDestroy(): void {
-    this.unitSubscription.unsubscribe();
+    this.unitSubscription?.unsubscribe();
   }
 }
