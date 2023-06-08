@@ -4,7 +4,7 @@
       <span class="fs-8">Units</span>
       <span class="badge rounded-pill bg-info unitCount text-muted">100</span>
     </a>
-    <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0">
+   <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0">
       <input type="search" (ngModelChange)="searchUnit(key.value)" #key="ngModel" ngModel name="key"
         class="form-control" placeholder="Search..." aria-label="Search" required />
     </form> -->
@@ -23,7 +23,7 @@
 
 <!-- <div class="modal-background"></div>
 <div class="modal-content">
-  <form [formGroup]="addUnitForm" (ngSubmit)="onItemAdd()" class="unit-form">
+  <form [formGroup]="addUnitForm" (ngSubmit)="onUnitAdd()" class="unit-form">
     <div class="form-field">
       <label for="add_unit_name">Unit Name:</label>
       <input type="text" formControlName="unitName" />
@@ -39,7 +39,7 @@
 </div> -->
 
 
-<form [formGroup]="addUnitForm" (ngSubmit)="onItemAdd()" class="unit-form">
+<form [formGroup]="addUnitForm" (ngSubmit)="onUnitAdd()" class="unit-form">
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
     data-bs-backdrop="static">
     <div class="modal-dialog">

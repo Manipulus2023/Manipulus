@@ -180,19 +180,19 @@ public class Unit implements Serializable {
     @Override
     public String toString(){
         return "Unit{"+
-                "id="+id+
-                "unitName"+unit_name +
-                "itemName"+item_name+
-                "indoorSerial"+indoor_serial+
-                "outdoorSerial"+outdoor_serial+
-                "commissionedDate"+commissioned_date+
-                "owner"+owner+
-                "installedLocationName"+installed_location_name+
-                "installedLocationAddress"+installed_location_address+
-                "installedParentLocation"+installed_parent_location+
-                "warrantyPeriod"+warranty_period+
-                "unitPrice"+unit_price+
-                "status"+status+
+                "id="+unitId+
+                "unitName="+unitName +
+                "itemName="+itemName+
+                "indoorSerial="+indoorSerial+
+                "outdoorSerial="+outdoorSerial+
+                "commissionedDate="+commissionedDate+
+                "owner="+owner+
+                "installedLocationName="+installedLocationName+
+                "installedLocationAddress="+installedLocationAddress+
+                "installedParentLocation="+installedParentLocation+
+                "warrantyPeriod="+warrantyPeriod+
+                "unitPrice="+unitPrice+
+                "status="+status+
                 '}';
 
     }
