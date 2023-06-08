@@ -77,10 +77,10 @@ export class ServiceAgreementComponent {
   isUpdateFormActive = false;
 
 
-  unitid: Number = 0;
+  unitid: number = 0;
   equipment: string = "";
-  price_per_service: Number = 0;
-  emergency_service_rate: Number = 0;
+  price_per_service: number = 0;
+  emergency_service_rate: number = 0;
   type_of_the_service: string = "";
   initiated_date: string = "";
   expired_date: string = "";
@@ -282,10 +282,10 @@ export class ServiceAgreementComponent {
         },
       });
     } else if (this.nic == '') {
-      // alert("Please insert an existing NIC Number!")
+      // alert("Please insert an existing NIC number!")
       Swal.fire({
         title: 'Fill The Form Correctly',
-        text: 'Please insert an existing NIC Number!',
+        text: 'Please insert an existing NIC number!',
         icon: 'error',
         position: 'top',
         width: '500px',
@@ -307,7 +307,7 @@ export class ServiceAgreementComponent {
         // alert("Service Agreement Created Successfully");
         Swal.fire({
           title: 'Service Agreement Created Successfully',
-          //  text: 'Please insert an existing NIC Number!',
+          //  text: 'Please insert an existing NIC number!',
           icon: 'success',
           position: 'top',
           width: '500px',
@@ -530,10 +530,10 @@ export class ServiceAgreementComponent {
         },
       });
     } else if (this.nic == '') {
-      // alert("Please insert an existing NIC Number!")
+      // alert("Please insert an existing NIC number!")
       Swal.fire({
         title: 'Fill The Form Correctly',
-        text: 'Please insert an existing NIC Number!',
+        text: 'Please insert an existing NIC number!',
         icon: 'error',
         position: 'top',
         width: '500px',
@@ -553,7 +553,7 @@ export class ServiceAgreementComponent {
         // alert("Service Agreement is Updated")
         Swal.fire({
           title: 'Service Agreement is Updated Successfully',
-          //  text: 'Please insert an existing NIC Number!',
+          //  text: 'Please insert an existing NIC number!',
           icon: 'success',
           position: 'top',
           width: '500px',
@@ -627,7 +627,7 @@ export class ServiceAgreementComponent {
       // alert("PDF is generated")
       Swal.fire({
         title: 'PDF is generated Successfully',
-        //  text: 'Please insert an existing NIC Number!',
+        //  text: 'Please insert an existing NIC number!',
         icon: 'success',
         position: 'top',
         width: '500px',
