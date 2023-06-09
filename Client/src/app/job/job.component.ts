@@ -17,7 +17,8 @@ export class JobComponent implements OnInit {
   dtoptions:DataTables.Settings={}
   dtTriger:Subject<any>=new Subject<any>();
   public customers!: Customer;
-
+  public customersList: Customer[] = [];
+  public customerId!: number;
   constructor(private jobService: JobService) { }
 
   ngOnInit(): void {
@@ -28,7 +29,8 @@ export class JobComponent implements OnInit {
       
     };
     this.getJobs();
-    this.findCustomerById(34);
+    this.getCustomers();
+  
   }
 
 
@@ -45,6 +47,21 @@ export class JobComponent implements OnInit {
         ); }
   }
 
+
+  public getCustomers(): void {
+    {
+      this.jobService.getCustomerList().subscribe(
+        (response: Customer[]) => {
+          this.customersList = response;
+          console.log(this.customers);
+        },
+        (error: HttpErrorResponse) => alert(error.message)
+      );
+    }
+  }
+
+
+  
   public getJobs():void { {
     this.jobService.getJobList().subscribe(
       (response: Job[]) =>{
@@ -58,26 +75,28 @@ export class JobComponent implements OnInit {
       ); }}
 
 
-      public onAddJob(addForm: NgForm):void{
-        
-        (document.getElementById("add-job-form") as HTMLInputElement).click();
-       this.jobService.addJob(addForm.value).subscribe(
-         (response: Job)=> {
-           console.log(response);
-           this.getJobs();
-           this.dtoptions={
-             retrieve: true,
-           };
-          
-           addForm.reset();
-         },
-         (error: HttpErrorResponse) =>  {
-           alert(error.message);
+      public onAddJob(addForm: NgForm): void {
+        this.getCustomers();
+        const customerId: number = this.customerId;
+        // const customerId: number = 5; // Set the desired customer ID here
+        this.jobService.addJob(addForm.value, customerId).subscribe(
+          (response: Job) => {
+            console.log(response);
+            this.getJobs();
+            this.dtoptions = {
+              retrieve: true,
+            };
+            addForm.reset();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
 
-         } 
-       );
-     }
 
+      
+      
 
      public onDeleteJob(jobID: number):void{
         
