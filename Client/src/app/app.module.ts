@@ -7,7 +7,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { CustomerComponent } from './customer/customer.component';
 import { JobComponent } from './job/job.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
-import { LocationComponent } from './location/location.component';
+// import { LocationComponent } from './location/location.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserComponent } from './user/user.component';
 import { UnitComponent } from './unit/unit.component';
@@ -33,7 +33,7 @@ import { HttpClientModule} from '@angular/common/http';
     CustomerComponent,
     JobComponent,
     VehicleComponent,
-    LocationComponent,
+    // LocationComponent,
     UserLoginComponent,
     UserComponent,
     UnitComponent,
