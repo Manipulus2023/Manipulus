@@ -32,6 +32,8 @@ import { HeaderComponent } from './header/header.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptorService } from './services/auth.interceptor.service';
+import { DataTablesModule } from "angular-datatables";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +71,8 @@ import { AuthInterceptorService } from './services/auth.interceptor.service';
     FormsModule,
     HttpClientModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DataTablesModule,
   ],
   providers: [
     ReactiveFormsModule,
