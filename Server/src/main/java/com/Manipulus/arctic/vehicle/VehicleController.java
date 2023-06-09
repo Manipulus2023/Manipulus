@@ -1,9 +1,7 @@
 package com.Manipulus.arctic.vehicle;
 
 import com.Manipulus.arctic.vehicle.model.Vehicle;
-import com.Manipulus.arctic.vehicle.repository.VehicleRepository;
 import com.Manipulus.arctic.vehicle.service.VehicleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/vehicle")
-public class VehicleResource {
+public class VehicleController {
 
     private  VehicleService vehicleService;
 
-    public VehicleResource(VehicleService vehicleService) {
+    public VehicleController(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
     }
 
