@@ -9,7 +9,7 @@ import { Vehicle } from './vehicle';
 @Injectable({
   providedIn: 'root',
 })
-export class VehicleServise{
+export class VehicleService{
     private baseUrl=environment.baseurl;
     constructor( private httpClient : HttpClient){}
 
@@ -21,16 +21,9 @@ export class VehicleServise{
         return this.httpClient.post<Vehicle>(`${this.baseUrl}/vehicle/add`, vehicle);
      }
 
-  public getVehicleList(): Observable<Vehicle[]> {
-    return this.httpClient.get<Vehicle[]>(`${this.baseUrl}/vehicle/all`);
-  }
+ 
 
-  public addVehicle(vehicle: Vehicle): Observable<Vehicle> {
-    return this.httpClient.post<Vehicle>(
-      `${this.baseUrl}/vehicle/add`,
-      vehicle
-    );
-  }
+  
 
   public updateVehicle(vehicle: Vehicle): Observable<Vehicle> {
     return this.httpClient.put<Vehicle>(

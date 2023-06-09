@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -17,7 +18,7 @@ export class JobComponent implements OnInit {
   dtTriger:Subject<any>=new Subject<any>();
   public customers!: Customer;
 
-  constructor() { }
+  constructor(private jobService: JobService) { }
 
   ngOnInit(): void {
 
