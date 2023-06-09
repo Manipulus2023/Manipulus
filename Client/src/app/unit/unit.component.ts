@@ -4,25 +4,54 @@ import { UnitService } from './unit.service';
 import { Subscription } from 'rxjs';
 import { Unit } from './unit';
 
+
 @Component({
   selector: 'app-unit',
   templateUrl: './unit.component.html',
   styleUrls: ['./unit.component.css'],
 })
+
+
 export class UnitComponent implements OnInit, OnDestroy {
   addUnitForm: FormGroup;
+  searchForm: FormGroup;
   unitSubscription: Subscription;
   units: Unit[] = [];
   isAddUnitModalOpen = false;
   isEditUnitModalOpen = false;
   selectedUnit: any;
+  key: string;
 
-  constructor(private formBuilder: FormBuilder, private unitService: UnitService) {}
-
+  constructor(private formBuilder: FormBuilder, private unitService: UnitService) {
+    this.addUnitForm = this.formBuilder.group({
+      // define form controls with validators
+      unitName: ['', Validators.required],
+      itemName: ['', Validators.required],
+      indoorSerial: [''],
+      outdoorSerial: [''],
+      commissionedDate: [''],
+      owner: [''],
+      installedLocationName: [''],
+      installedLocationAddress: [''],
+      installedParentLocation: [''],
+      warrantyPeriod: [''],
+      unitPrice: [''],
+      status: [''],
+      // add more form controls as needed
+    });
+    this.searchForm = this.formBuilder.group({
+      key: ['']
+    });
+  }
   ngOnInit() {
-    //this.getUnitList();
+    this.getUnitList();
     this.initializeUnitForm();
   }
+
+  ngOnDestroy(): void {
+    this.unitSubscription?.unsubscribe();
+  }
+
 
   getUnitList(){
     this.unitSubscription = this.unitService.getUnitList().subscribe(res =>
@@ -57,62 +86,71 @@ export class UnitComponent implements OnInit, OnDestroy {
   }
 
   onAddUnitSubmit() {
-    // if (this.addUnitForm.invalid) {
-    //   return;
-    // }
-    // const newUnit = this.addUnitForm.value;
-    // this.units.push(newUnit );
-    // this.closeAddUnitModal();
+   if (this.addUnitForm.invalid) {
+      return;
+    }
+    const newUnit = this.addUnitForm.value;
+    this.units.push(newUnit );
+    this.closeAddUnitModal();
   }
 
-  // onEditUnitSubmit() {
-  //   if (this.editUnitForm.invalid) {
-  //     return;
-  //   }
+  onEditUnitSubmit() {
+    if (this.addUnitForm.invalid) {
+      return;
+    }
 
-  // const updatedUnit = this.editUnitForm.value;
-  // // Update the selected unit in the list
-  // const index = this.units.findIndex(unit => unit === this.selectedUnit);
-  // if (index !== -1) {
-  //   this.units[index] = updatedUnit;
-  // }
+  const updatedUnit = this.addUnitForm.value;
+  // Update the selected unit in the list
+  const index = this.units.findIndex(unit => unit === this.selectedUnit);
+  if (index !== -1) {
+    this.units[index] = updatedUnit;
+  }
 
-  //   this.closeEditUnitModal();
-  // }
+    this.closeEditUnitModal();
+  }
 
   openAddUnitModal() {
     this.isAddUnitModalOpen = true;
   }
 
   closeAddUnitModal() {
-    // this.isAddUnitModalOpen = false;
-    // this.addUnitForm.reset();
+    this.isAddUnitModalOpen = false;
+    this.addUnitForm.reset();
   }
 
-  // openEditUnitModal(unit: any) {
-  //   this.isEditUnitModalOpen = true;
-  //   this.selectedUnit = unit;
-  //   // Pre-fill the edit form with the selected unit's data
-  //  // this.editUnitForm.patchValue({
-  //   unitName: unit.unitName,
-  //   itemName: unit.itemName,
-  //     // Update other customer fields
-  //   });
-  // }
+  openEditUnitModal(unit: any) {
+    this.isEditUnitModalOpen = true;
+    this.selectedUnit = unit;
+    this.addUnitForm.patchValue({
+      unitName: unit.unitName,
+      itemName: unit.itemName,
+      indoorSerial:unit.indoorSerial,
+      outdoorSerial:unit.outdoorSerial,
+      commissionedDate:unit.commissionedDate,
+      owner:unit.owner,
+      installedLocationName:unit.installedLocationName ,
+      installedLocationAddress:unit.installedLocationAddress ,
+      installedParentLocation:unit.installedparentLocation ,
+      warrantyPeriod:unit.warrantyPeriod ,
+      unitPrice: unit.unitPrice,
+      status:unit.status ,
+    });
+  }
 
-  // closeEditUnitModal() {
-  //   this.isEditUnitModalOpen = false;
-  //   this.editUnitForm.reset();
-  //   this.selectedUnit = null;
-  // }
 
-  searchUnit() {
-    //const searchKey = this.searchForm.value.key;
+  closeEditUnitModal() {
+    this.isEditUnitModalOpen = false;
+    this.addUnitForm.reset();
+    this.selectedUnit = null;
+  }
+
+  searchUnit(value: string)  {
+    const searchKey = this.searchForm.value.key;
     // Perform the search operation using the searchKey
     // ...
   }
 
-  ngOnDestroy(): void {
-    this.unitSubscription?.unsubscribe();
+  // ngOnDestroy(): void {
+  //   this.unitSubscription?.unsubscribe();
   }
-}
+

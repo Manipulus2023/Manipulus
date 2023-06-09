@@ -4,10 +4,10 @@
       <span class="fs-8">Units</span>
       <span class="badge rounded-pill bg-info unitCount text-muted">100</span>
     </a>
-   <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0">
-      <input type="search" (ngModelChange)="searchUnit(key.value)" #key="ngModel" ngModel name="key"
-        class="form-control" placeholder="Search..." aria-label="Search" required />
-    </form> -->
+    <form class="col-12 col-lg-auto mb-3 mb-lg-0">
+      <input type="search" [(ngModel)]="key" name="key" class="form-control"
+        placeholder="Search..." aria-label="Search" required />
+    </form>
 
 
 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -63,7 +63,9 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="unitName" class="form-control"/>
+                    <input type="text" formControlName="unitName" class="form-control" required />
+                    <div *ngIf="addUnitForm.get('unitName')?.hasError('required')" class="text-danger">Unit Name is required.</div>
+
                   </div>
                 </div>
               </div>
@@ -76,7 +78,9 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="itemName" class="form-control"/>
+                    <input type="text" formControlName="itemName" class="form-control" required/>
+                    <div *ngIf="addUnitForm.get('itemName')?.hasError('required')" class="text-danger">Item Name is required.</div>
+
                   </div>
                 </div>
               </div>
@@ -89,7 +93,9 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="indoorSerial" class="form-control"/>
+                    <input type="text" formControlName="indoorSerial" class="form-control" required/>
+                    <div *ngIf="addUnitForm.get('indoorSerial')?.hasError('required')" class="text-danger">Indoor Serial is required.</div>
+
                   </div>
                 </div>
               </div>
@@ -102,7 +108,9 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="outdoorSerial" class="form-control"/>
+                    <input type="text" formControlName="outdoorSerial" class="form-control" required/>
+                    <div *ngIf="addUnitForm.get('outdoorSerial')?.hasError('required')" class="text-danger">Outdoor Serial is required.</div>
+
                   </div>
                 </div>
               </div>
@@ -110,12 +118,14 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <label class="form-label">Commissioned date:</label>
+                    <label class="form-label">Commissioned Date:</label>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="commissionedDate" class="form-control"/>
+                    <input type="text" formControlName="commissionedDate" class="form-control" required/>
+                    <div *ngIf="addUnitForm.get('commissionedDate')?.hasError('required')" class="text-danger">Commissioned Date is required.</div>
+
                   </div>
                 </div>
               </div>
@@ -128,7 +138,9 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="owner" class="form-control"/>
+                    <input type="text" formControlName="owner" class="form-control" required/>
+                    <div *ngIf="addUnitForm.get('owner')?.hasError('required')" class="text-danger">Owner is required.</div>
+
                   </div>
                 </div>
               </div>
@@ -141,7 +153,9 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="installedLocationName" class="form-control"/>
+                    <input type="text" formControlName="installedLocationName" class="form-control" required/>
+                    <div *ngIf="addUnitForm.get('installedLocationName')?.hasError('required')" class="text-danger">Installed Location Name is required.</div>
+
                   </div>
                 </div>
               </div>
@@ -154,7 +168,9 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="installedLocationAddress" class="form-control"/>
+                    <input type="text" formControlName="installedLocationAddress" class="form-control" required/>
+                    <div *ngIf="addUnitForm.get('installedLocationAddress')?.hasError('required')" class="text-danger">Installed Location Address is required.</div>
+
                   </div>
                 </div>
               </div>
@@ -167,7 +183,9 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="installedParentLocation" class="form-control"/>
+                    <input type="text" formControlName="installedParentLocation" class="form-control" required/>
+                    <div *ngIf="addUnitForm.get('installedParentLocation')?.hasError('required')" class="text-danger">Installed Parent Location is required.</div>
+
                   </div>
                 </div>
               </div>
@@ -180,7 +198,9 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="warrantyPeriod" class="form-control"/>
+                    <input type="text" formControlName="warrantyPeriod" class="form-control" required/>
+                    <div *ngIf="addUnitForm.get('warrantyPeriod')?.hasError('required')" class="text-danger">Warranty Period is required.</div>
+
                   </div>
                 </div>
               </div>
@@ -194,7 +214,9 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="unitPrice" class="form-control"/>
+                    <input type="text" formControlName="unitPrice" class="form-control" required/>
+                    <div *ngIf="addUnitForm.get('unitPrice')?.hasError('required')" class="text-danger">Unit Price is required.</div>
+
                   </div>
                 </div>
               </div>
@@ -207,7 +229,13 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="status" class="form-control"/>
+                    <select formControlName="status" class="form-control" required
+>
+                    <option value="">Select status</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+                    <div *ngIf="addUnitForm.get('status')?.hasError('required')" class="text-danger">Status is required.</div>
                   </div>
                 </div>
               </div>
@@ -222,7 +250,7 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Close
           </button>
-          <button type="submit" class="btn btn-primary" >Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!addUnitForm.valid">Submit</button>
         </div>
       </div>
     </div>
