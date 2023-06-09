@@ -18,16 +18,7 @@ public class ArcticApplication {
 	public static void main(String[] args) throws JRException {
 
 		SpringApplication.run(ArcticApplication.class, args);
-		String filePath="C:\\Manipulus 7.0\\Manipulus\\Server\\src\\main\\resources\\template\\gatePass.jrxml";
-		Map<String,Object> parameters=new HashMap<>();
-		parameters.put("siteVisitId",123);
-		parameters.put("jobId",456);
-		parameters.put("scheduledDate",java.sql.Date.valueOf("2022-07-07"));
-		parameters.put("endDate",java.sql.Date.valueOf("2022-07-08"));
-		JasperReport report= JasperCompileManager.compileReport(filePath);
-		JasperPrint print= JasperFillManager.fillReport(report,parameters,new JREmptyDataSource());
-		JasperExportManager.exportReportToPdfFile(print,"C:\\Manipulus 7.0\\Manipulus\\Server\\src\\main\\resources\\static\\gatePass.pdf");
-		System.out.println("Report Generated Successfully");
+
 	}
 	@Bean
 	public CorsFilter corsFilter() {
