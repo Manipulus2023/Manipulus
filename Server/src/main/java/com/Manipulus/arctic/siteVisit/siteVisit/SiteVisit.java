@@ -1,10 +1,20 @@
 package com.Manipulus.arctic.siteVisit.siteVisit;
 
+import com.Manipulus.arctic.vehicle.model.Vehicle;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+@Data
+@AllArgsConstructor
+//@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "site_visit")
 public class SiteVisit implements Serializable {
@@ -27,7 +37,18 @@ public class SiteVisit implements Serializable {
 
     @Column(nullable = false, updatable = false)
     private String siteVisitCode;
-    public String getSiteVisitCode() {
+
+    public SiteVisit() {
+
+    }
+
+   @OneToMany(targetEntity = Vehicle.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "sv_fk",referencedColumnName = "siteVisitId")
+    private List<Vehicle>vehicles;
+
+
+
+   /*public String getSiteVisitCode() {
         return siteVisitCode;
     }
 
@@ -35,7 +56,7 @@ public class SiteVisit implements Serializable {
         this.siteVisitCode = siteVisitCode;
     }
 
-    public  SiteVisit(){}
+
 
         public SiteVisit(Date scheduledDate, Long assignedTeamId, String assignedVehicle, boolean startSiteVisit, Date dateRange, String state, String siteVisitCode){
             this.scheduledDate=scheduledDate;
@@ -112,5 +133,5 @@ public class SiteVisit implements Serializable {
                     '}';
         }
 
-
+*/
 }

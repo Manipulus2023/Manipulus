@@ -1,5 +1,6 @@
 package com.Manipulus.arctic.vehicle.model;
 
+import com.Manipulus.arctic.siteVisit.siteVisit.SiteVisit;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ public class Vehicle implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private long id;
 
     @Column(name = "vehicle_name")
@@ -31,6 +32,7 @@ public class Vehicle implements Serializable {
     @Column(name = "vehicle_code")
     private String vehicle_code;
 
+
     public String getVehicle_code() {
         return vehicle_code;
     }
@@ -38,9 +40,11 @@ public class Vehicle implements Serializable {
     public void setVehicle_code(String vehicle_code) {
         this.vehicle_code = vehicle_code;
     }
-    public Vehicle(){
+
+    public Vehicle() {
 
     }
+
     public Vehicle(String vehicle_name, String vehicle_image, String vehicle_number, String number_of_passengers, String active_state, String vehicle_code) {
         this.vehicle_name = vehicle_name;
         this.vehicle_image = vehicle_image;
@@ -99,18 +103,27 @@ public class Vehicle implements Serializable {
     }
 
 
-
-        @Override
-        public String toString(){
-            return "Vehicle{" +
-                    "id=" + id +
-                    "vehicle_name=" + vehicle_name +
-                    "vehicle_image=" +vehicle_image +
-                    "vehicle_number=" +vehicle_number +
-                    "number_of_passengers="+ number_of_passengers +
-                    "active_state="+active_state+
-                    '}';
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id=" + id +
+                "vehicle_name=" + vehicle_name +
+                "vehicle_image=" + vehicle_image +
+                "vehicle_number=" + vehicle_number +
+                "number_of_passengers=" + number_of_passengers +
+                "active_state=" + active_state +
+                '}';
 
     }
-}
 
+
+   /* public void setSiteVisit(SiteVisit siteVisit) {
+        // Set the site visit for the vehicle
+        this.siteVisit = siteVisit;
+
+        // Add the vehicle to the site visit's list of vehicles
+        if (siteVisit != null) {
+            siteVisit.getVehicles().add(this);
+        }}*/
+
+}

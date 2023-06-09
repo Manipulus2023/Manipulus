@@ -1,10 +1,12 @@
 package com.Manipulus.arctic.siteVisit.service;
+import com.Manipulus.arctic.siteVisit.dto.VehicleOrderRequest;
 import com.Manipulus.arctic.siteVisit.exception.UserNotFoundException;
 import com.Manipulus.arctic.siteVisit.repo.SiteVisitRepo;
 import com.Manipulus.arctic.siteVisit.siteVisit.SiteVisit;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +26,7 @@ public class SiteVisitService {
 
         public SiteVisit addSiteVisit(SiteVisit siteVisit){
             siteVisit.setSiteVisitCode(UUID.randomUUID().toString());
+
             return siteVisitRepo.save(siteVisit);
         }
 
