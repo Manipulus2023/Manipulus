@@ -11,7 +11,7 @@ public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "unit_id", nullable = false,updatable = false)
-    private long unitId;
+    private int unitId;
 
     @Column(name = "unit_name")
     private String unitName;
@@ -49,22 +49,11 @@ public class Unit implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @Column(nullable = false, updatable = false)
-    private String unitCode;
-
-    public String getUnitCode() {
-        return unitCode;
-    }
-
-    public void setUnitCode(String unitCode) {
-        this.unitCode = unitCode;
-    }
-
     public Unit(){
 
     }
 
-    public Unit(String unit_name,String item_name,String indoor_serial,String outdoor_serial, String commissioned_date,String owner,String installed_location_address,String installed_location_name,String installed_parent_location,String warranty_period,String unit_price,String status)
+    /*public Unit(String unit_name,String item_name,String indoor_serial,String outdoor_serial, String commissioned_date,String owner,String installed_location_address,String installed_location_name,String installed_parent_location,String warranty_period,String unit_price,String status)
     {
         this.unitName=unit_name;
         this.itemName=item_name;
@@ -78,13 +67,13 @@ public class Unit implements Serializable {
         this.warrantyPeriod=warranty_period;
         this.unitPrice=unit_price;
         this.status=status;
-    }
+    }*/
 
     public long getId() {
         return unitId;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.unitId = id;
     }
 

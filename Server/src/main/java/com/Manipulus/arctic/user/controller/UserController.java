@@ -28,6 +28,7 @@ import static com.Manipulus.arctic.auth.constants.JWTUtil.SECRET;
 public class UserController {
     private UserService userService;
     private JWTHelper jwtHelper;
+
     public UserController(UserService userService, JWTHelper jwtHelper) {
         this.userService = userService;
         this.jwtHelper = jwtHelper;
@@ -40,15 +41,44 @@ public class UserController {
 
     @PostMapping({"/register"})
     @PreAuthorize("hasAuthority('Admin')")
-    public User registerNewUser(@RequestBody User user){
-
+    public User registerNewUser(@RequestBody User user) {
         return userService.registerNewUser(user);
     }
+
+    @PostMapping("/add")
+    public User addUser(@RequestBody User user) {
+        return userService.addUser(user);
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAnyAuthority('Admin','User')")
+    public List<User> getUsers() {
+        return userService.getUsers();
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('Admin')")
+    public User getUserById(@PathVariable("id") int id) {
+        return userService.findUserById(id);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('Admin')")
+    public User updateUser(@PathVariable("id") int id, @RequestBody User user) {
+        return userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('Admin')")
+    public void deleteUserById(@PathVariable("id") int id) {
+        userService.deleteUserById(id);
+    }
+
 
     @PostMapping({"/refresh-token"})
     public void generateNewAccessToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String jwtRefreshToken = jwtHelper.extractTokenFromHeaderIfExist(request.getHeader(AUTH_HEADER));
-        if(jwtRefreshToken != null) {
+        if (jwtRefreshToken != null) {
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
             JWTVerifier jwtVerifier = JWT.require(algorithm).build();
             DecodedJWT decodedJWT = jwtVerifier.verify(jwtRefreshToken);
@@ -56,16 +86,17 @@ public class UserController {
             User user = userService.loadUserByUsername(username);
             Set<Role> roles = user.getRoles();
             List<String> rolesList = new ArrayList<>();
-            for (Role role: roles) {
+            for (Role role : roles) {
                 rolesList.add(role.getRoleName());
             }
             String jwtAccessToken = jwtHelper.generateAccessToken(user.getUsername(), rolesList);
             response.setContentType("application/json");
             new ObjectMapper().writeValue(response.getOutputStream(), jwtHelper.getTokenMap(jwtAccessToken, jwtRefreshToken));
-        }else {
-            throw  new RuntimeException("Refresh token required");
+        } else {
+            throw new RuntimeException("Refresh token required");
         }
     }
+}
 
     /*@PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User userData){
@@ -89,4 +120,3 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
         return null;
     }*/
-}
