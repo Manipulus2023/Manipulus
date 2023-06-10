@@ -44,7 +44,7 @@
         <td>
           <div class="d-flex align-items-center">
             <div class="ms-3">
-              <p class="fw-bold mb-1">{{ job.customer.name}}</p>
+              <p class="fw-bold mb-1">{{ job.customer.name }}</p>
               <p class="text-muted mb-0">{{ job.customer.contactNumber }}</p>
             </div>
           </div>
@@ -52,7 +52,7 @@
         <td>
           <div class="d-flex align-items-center">
             <div class="ms-3">
-              <p class="fw-bold mb-1">{{ job.customer.address}}</p>
+              <p class="fw-bold mb-1">{{ job.customer.address }}</p>
             </div>
           </div>
         </td>
@@ -156,20 +156,24 @@
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label class="form-label">Job type:</label>
-                    <select class="form-control" id="job_type" ngModel name="job_type" required>
-                      <option value="">Select Job Type</option>
-                      <option value="Option 1">Inspection</option>
-                      <option value="Option 2">Service</option>
-                      <option value="Option 3">Installation</option>
-                      <option value="Option 4">Breakdowns</option>
-                      <option value="Option 5">Upgrades</option>
-                      <option value="Option 6">Remove</option>
+                    <select
+                      class="form-control"
+                      id="job_type"
+                      ngModel
+                      name="job_type"
+                      required
+                    >
+                      <option value="Inspection">Inspection</option>
+                      <option value="Service">Service</option>
+                      <option value="Installation">Installation</option>
+                      <option value="Breakdowns">Breakdowns</option>
+                      <option value="Upgrades">Upgrades</option>
+                      <option value="Remove">Remove</option>
                       <!-- Add more options as needed -->
                     </select>
                     <!-- Validation messages if necessary -->
                   </div>
                 </div>
-                
 
                 <div class="col-lg-6">
                   <div class="mb-3">
@@ -345,10 +349,8 @@
                 ngModel="{{ editJob?.id }}"
                 name="id"
               />
-              
-              <div class="row">
-               
 
+              <div class="row">
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label class="form-label">Job due date :</label>
@@ -375,7 +377,6 @@
                     </div>
                   </div>
                 </div>
-            
 
                 <div class="col-lg-6">
                   <div class="mb-3">
@@ -390,7 +391,6 @@
                       <option value="">Select Customer</option>
                       <option
                         *ngFor="let customer of customersList"
-                       
                         [value]="customer.id"
                       >
                         {{ customer.name }}
@@ -414,17 +414,36 @@
                 </div>
 
 
-                <select class="form-control" id="job_type" [(ngModel)]="selectedJobType" name="job_type" required>
-                  <option value="">Select Job Type</option>
-                  <option value="Option 1">Option 1</option>
-                  <option value="Option 2">Option 2</option>
-                  <option value="Option 3">Option 3</option>
+
+
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Job type:</label>
+                    <select
+                  class="form-control"
+                  id="job_type"
+                  [(ngModel)]="selectedJobType"
+                  name="job_type"
+                  required
+                >
+                  <option value="Inspection">Inspection</option>
+                  <option value="Service">Service</option>
+                  <option value="Installation">Installation</option>
+                  <option value="Breakdowns">Breakdowns</option>
+                  <option value="Upgrades">Upgrades</option>
+                  <option value="Remove">Remove</option>
                   <!-- Add more options as needed -->
                 </select>
-                
-                
+                    <!-- Validation messages if necessary -->
+                  </div>
+                </div>
 
 
+
+
+
+
+                
               </div>
             </div>
           </div>
