@@ -33,6 +33,7 @@ public class JobService {
     public Job addJob(Job job, Long id) {
         job.setJobCode(UUID.randomUUID().toString());
         job.setCustomer(findCustomerById(id));
+        job.setJob_status("Not Complete");
         return JobRepository.save(job);
     }
 
@@ -40,7 +41,9 @@ public class JobService {
         return JobRepository.findAll();
     }
 
-    public Job updateJob(Job job) {
+    public Job updateJob(Job job, Long id) {
+        job.setCustomer(findCustomerById(id));
+        job.setJob_status("Not Complete");
         return JobRepository.save(job);
     }
 

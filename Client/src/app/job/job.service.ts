@@ -25,8 +25,8 @@ export class JobService {
   }
   
   // Updates an existing job
-  public updateJob(job: Job): Observable<Job> {
-    return this.httpClient.put<Job>(`${this.baseUrl}/job/update`, job);
+  public updateJob(job: Job, id: number): Observable<Job> {
+    return this.httpClient.put<Job>(`${this.baseUrl}/job/update?id=${id}`, job);
   }
 
   // Deletes an existing job

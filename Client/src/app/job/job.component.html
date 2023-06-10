@@ -352,51 +352,23 @@
                 name="jobCode"
               />
               <input
+                      type="hidden"
+                      class="form-control"
+                      id="job_type"
+                      ngModel="{{ editJob?.job_type }}"
+                      name="job_type"
+                      
+                    />
+              <input
                 type="hidden"
                 class="form-control"
                 id="id"
                 ngModel="{{ editJob?.id }}"
                 name="id"
               />
+              
               <div class="row">
-                <div class="col-lg-6">
-                  <div class="mb-3">
-                    <label class="form-label">Job type :</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="job_type"
-                      ngModel="{{ editJob?.job_type }}"
-                      name="job_type"
-                      required
-                      minlength="4"
-                      maxlength="50"
-                    />
-                    <div
-                      *ngIf="
-                        editForm.controls['job_type'].invalid &&
-                        (editForm.controls['job_type'].dirty ||
-                          editForm.controls['job_type'].touched)
-                      "
-                    >
-                      <small
-                        class="text-danger"
-                        *ngIf="editForm.controls['job_type'].errors?.['required']"
-                        >Job type is required.</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="editForm.controls['job_type'].errors?.['minlength']"
-                        >Job type must be at least 4 characters long.</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="editForm.controls['job_type'].errors?.['maxlength']"
-                        >Job type cannot be longer than 50 characters.</small
-                      >
-                    </div>
-                  </div>
-                </div>
+               
 
                 <div class="col-lg-6">
                   <div class="mb-3">
@@ -424,39 +396,38 @@
                     </div>
                   </div>
                 </div>
+            
 
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <label class="form-label">Job status :</label>
-                    <input
-                      type="text"
+                    <label class="form-label">Customer Name:</label>
+                    <select
                       class="form-control"
-                      id="job_status"
-                      ngModel="{{ editJob?.job_status }}"
-                      name="job_status"
+                      id="customer_id"
+                      [(ngModel)]="EditcustomerId"
+                      name="customer_id"
                       required
-                      minlength="4"
-                      maxlength="12"
-                    />
+                    >
+                      <option value="">Select Customer</option>
+                      <option
+                        *ngFor="let customer of customersList"
+                        [value]="customer.id"
+                      >
+                        {{ customer.name }}
+                      </option>
+                    </select>
+
                     <div
                       *ngIf="
-                        editForm.controls['job_status'].invalid &&
-                        (editForm.controls['job_status'].dirty ||
-                          editForm.controls['job_status'].touched)
+                        addForm.controls['customer_id'].invalid &&
+                        (addForm.controls['customer_id'].dirty ||
+                          addForm.controls['customer_id'].touched)
                       "
-                      class="text-danger"
                     >
                       <small
-                        *ngIf="editForm.controls['job_status'].errors?.['required']"
-                        >Job status is required.</small
-                      >
-                      <small
-                        *ngIf="editForm.controls['job_status'].errors?.['minlength']"
-                        >Job status must be at least 4 characters long.</small
-                      >
-                      <small
-                        *ngIf="editForm.controls['job_status'].errors?.['maxlength']"
-                        >Job status cannot be longer than 12 characters.</small
+                        class="text-danger"
+                        *ngIf="addForm.controls['customer_id'].errors?.['required']"
+                        >Customer ID is required.</small
                       >
                     </div>
                   </div>

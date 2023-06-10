@@ -19,6 +19,7 @@ export class JobComponent implements OnInit {
   public customers!: Customer;
   public customersList: Customer[] = [];
   public customerId!: number;
+  public EditcustomerId!: number;
   constructor(private jobService: JobService) { }
 
   ngOnInit(): void {
@@ -117,8 +118,9 @@ export class JobComponent implements OnInit {
     }
 
     public onUpdateJob(Job: Job):void{
-        
-      this.jobService.updateJob(Job).subscribe(
+      this.getCustomers();
+      const EditcustomerId: number = this.EditcustomerId;
+      this.jobService.updateJob(Job,EditcustomerId).subscribe(
         (response: Job)=> {
           console.log(response);
           this.getJobs();

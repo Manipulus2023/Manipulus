@@ -34,9 +34,9 @@ public class JobController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Job> updateJob(@RequestBody Job job) {
+    public ResponseEntity<Job> updateJob(@RequestBody Job job, @RequestParam("id" )Long id) {
         // Update an existing job using the jobService
-        Job updateJob = jobService.updateJob(job);
+        Job updateJob = jobService.updateJob(job,id);
         // Return the updated job and the status code 201 (CREATED)
         return new ResponseEntity<>(updateJob, HttpStatus.CREATED);
     }
