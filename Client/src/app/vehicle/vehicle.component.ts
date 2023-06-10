@@ -15,10 +15,36 @@ export class VehicleComponent implements OnInit {
   public editVehicle: Vehicle | undefined;
   public deleteVehicle!: Vehicle;
 
+  // @ts-ignore
+  selectedFile: File;
+
+  id=24;
   constructor(private vehicleService: VehicleService) {}
 
   ngOnInit(): void {
     this.getVehicles();
+  }
+
+  onFileSelected(event:any) {
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
+  }
+
+  onUpload() {
+    const fd = new FormData();
+    fd.append('file', this.selectedFile, this.selectedFile.name);
+    console.log('upload');
+    this.vehicleService.uploadPhoto(this.id, fd).subscribe(
+      res => {
+        console.log(res);
+        alert('Photo added successfully');
+      },
+      error => {
+        console.log(error);
+        alert('Error occurred while uploading photo');
+      }
+    );
+    // location.reload();
   }
 
   public getVehicles(): void {

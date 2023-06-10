@@ -76,6 +76,17 @@
                 height="20"
               />
             </button>
+             <div>
+            <form>
+              <div>
+                <input type="file" (change)="onFileSelected($event)" />
+              </div>
+              <div>
+                <button type="button" (click)="onUpload()">Upload</button>
+              </div>
+            </form>
+          </div>
+       
               </div>
 
             </div>

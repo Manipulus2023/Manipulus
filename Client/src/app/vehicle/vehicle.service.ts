@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
 import { environment } from "src/environments/environment";
@@ -28,5 +28,11 @@ export class VehicleService{
      public deleteVehicle(vehicleId: number): Observable<void>{
         return this.httpClient.delete<void>(`${this.baseUrl}/vehicle/delete/${vehicleId}`);
     }
+
+    uploadPhoto(id: number, photo: FormData): Observable<any> {
+        const headers = new HttpHeaders();
+        headers.append('Content-Type', 'multipart/form-data');
+        return this.httpClient.post(`${this.baseUrl}/${id}/photo`, photo, { headers: headers });
+      }
 
 }
