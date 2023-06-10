@@ -15,12 +15,17 @@ onChange(arg0: any) {
 throw new Error('Method not implemented.');
 }
   // Define class properties
+  
   currentDate = new Date();
   public customers: Customer[] = [];
   public editCustomer!: Customer;
   public deleteCustomer!: Customer;
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
+
+
+  
+  public activeStatus: boolean = true;
 
   // Inject customer service
   constructor(private customerService: CustomerService) {}
@@ -108,6 +113,7 @@ throw new Error('Method not implemented.');
 
   // Update customer using customer service
   public onUpdateCustomer(Customer: Customer): void {
+    Customer.active_status = this.activeStatus; // Set the updated active_status value
     this.customerService.updateCustomer(Customer).subscribe(
       (response: Customer) => {
         console.log(response);
@@ -121,6 +127,7 @@ throw new Error('Method not implemented.');
       }
     );
   }
+  
 
 
   // public toggleActiveStatus(){
