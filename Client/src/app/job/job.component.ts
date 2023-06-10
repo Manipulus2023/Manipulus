@@ -20,6 +20,11 @@ export class JobComponent implements OnInit {
   public customersList: Customer[] = [];
   public customerId!: number;
   public EditcustomerId!: number;
+  public selectedJobType!: string;
+
+
+
+
   constructor(private jobService: JobService) { }
 
   ngOnInit(): void {
@@ -48,18 +53,18 @@ export class JobComponent implements OnInit {
         ); }
   }
 
-
-  public getCustomers(): void {
-    {
-      this.jobService.getCustomerList().subscribe(
-        (response: Customer[]) => {
-          this.customersList = response;
-          console.log(this.customers);
-        },
-        (error: HttpErrorResponse) => alert(error.message)
-      );
-    }
+public getCustomers(): void {
+  {
+    this.jobService.getCustomerList().subscribe(
+      (response: Customer[]) => {
+        this.customersList = response.filter(customer => customer.active_status);
+        console.log(this.customersList);
+      },
+      (error: HttpErrorResponse) => alert(error.message)
+    );
   }
+}
+
 
 
   
@@ -117,24 +122,24 @@ export class JobComponent implements OnInit {
       );
     }
 
-    public onUpdateJob(Job: Job):void{
+    public onUpdateJob(job: Job): void {
       this.getCustomers();
       const EditcustomerId: number = this.EditcustomerId;
-      this.jobService.updateJob(Job,EditcustomerId).subscribe(
-        (response: Job)=> {
+      job.job_type = this.selectedJobType; // Assign the selected job type
+      this.jobService.updateJob(job, EditcustomerId).subscribe(
+        (response: Job) => {
           console.log(response);
           this.getJobs();
-          this.dtoptions={
-           retrieve: true,
-         };
+          this.dtoptions = {
+            retrieve: true,
+          };
         },
-        (error: HttpErrorResponse) =>  {
+        (error: HttpErrorResponse) => {
           alert(error.message);
-
-        } 
+        }
       );
     }
-     
+    
 
     public onOpenModal(job:Job, mode:string):void {
       const container = (document.getElementById('main-container') as HTMLInputElement);

@@ -155,42 +155,21 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <label class="form-label">Job type :</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="job_type"
-                      ngModel
-                      name="job_type"
-                      required
-                      minlength="4"
-                      maxlength="50"
-                    />
-                    <div
-                      *ngIf="
-                        addForm.controls['job_type'].invalid &&
-                        (addForm.controls['job_type'].dirty ||
-                          addForm.controls['job_type'].touched)
-                      "
-                    >
-                      <small
-                        class="text-danger"
-                        *ngIf="addForm.controls['job_type'].errors?.['required']"
-                        >Job type is required.</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="addForm.controls['job_type'].errors?.['minlength']"
-                        >Job type must be at least 4 characters long.</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="addForm.controls['job_type'].errors?.['maxlength']"
-                        >Job type cannot be longer than 50 characters.</small
-                      >
-                    </div>
+                    <label class="form-label">Job type:</label>
+                    <select class="form-control" id="job_type" ngModel name="job_type" required>
+                      <option value="">Select Job Type</option>
+                      <option value="Option 1">Inspection</option>
+                      <option value="Option 2">Service</option>
+                      <option value="Option 3">Installation</option>
+                      <option value="Option 4">Breakdowns</option>
+                      <option value="Option 5">Upgrades</option>
+                      <option value="Option 6">Remove</option>
+                      <!-- Add more options as needed -->
+                    </select>
+                    <!-- Validation messages if necessary -->
                   </div>
                 </div>
+                
 
                 <div class="col-lg-6">
                   <div class="mb-3">
@@ -351,14 +330,14 @@
                 ngModel="{{ editJob?.jobCode }}"
                 name="jobCode"
               />
-              <input
+              <!-- <input
                       type="hidden"
                       class="form-control"
                       id="job_type"
                       ngModel="{{ editJob?.job_type }}"
                       name="job_type"
                       
-                    />
+                    /> -->
               <input
                 type="hidden"
                 class="form-control"
@@ -411,6 +390,7 @@
                       <option value="">Select Customer</option>
                       <option
                         *ngFor="let customer of customersList"
+                       
                         [value]="customer.id"
                       >
                         {{ customer.name }}
@@ -432,6 +412,19 @@
                     </div>
                   </div>
                 </div>
+
+
+                <select class="form-control" id="job_type" [(ngModel)]="selectedJobType" name="job_type" required>
+                  <option value="">Select Job Type</option>
+                  <option value="Option 1">Option 1</option>
+                  <option value="Option 2">Option 2</option>
+                  <option value="Option 3">Option 3</option>
+                  <!-- Add more options as needed -->
+                </select>
+                
+                
+
+
               </div>
             </div>
           </div>
