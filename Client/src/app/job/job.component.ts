@@ -17,6 +17,13 @@ export class JobComponent implements OnInit {
   dtoptions:DataTables.Settings={}
   dtTriger:Subject<any>=new Subject<any>();
   public customers!: Customer;
+  public customersList: Customer[] = [];
+  public customerId!: number;
+  public EditcustomerId!: number;
+  public selectedJobType!: string;
+
+
+
 
   constructor(private jobService: JobService) { }
 
@@ -28,7 +35,8 @@ export class JobComponent implements OnInit {
       
     };
     this.getJobs();
-    this.findCustomerById(34);
+    this.getCustomers();
+  
   }
 
 
@@ -45,6 +53,21 @@ export class JobComponent implements OnInit {
         ); }
   }
 
+public getCustomers(): void {
+  {
+    this.jobService.getCustomerList().subscribe(
+      (response: Customer[]) => {
+        this.customersList = response.filter(customer => customer.active_status);
+        console.log(this.customersList);
+      },
+      (error: HttpErrorResponse) => alert(error.message)
+    );
+  }
+}
+
+
+
+  
   public getJobs():void { {
     this.jobService.getJobList().subscribe(
       (response: Job[]) =>{
@@ -58,26 +81,28 @@ export class JobComponent implements OnInit {
       ); }}
 
 
-      public onAddJob(addForm: NgForm):void{
-        
-        (document.getElementById("add-job-form") as HTMLInputElement).click();
-       this.jobService.addJob(addForm.value).subscribe(
-         (response: Job)=> {
-           console.log(response);
-           this.getJobs();
-           this.dtoptions={
-             retrieve: true,
-           };
-          
-           addForm.reset();
-         },
-         (error: HttpErrorResponse) =>  {
-           alert(error.message);
+      public onAddJob(addForm: NgForm): void {
+        this.getCustomers();
+        const customerId: number = this.customerId;
+        // const customerId: number = 5; // Set the desired customer ID here
+        this.jobService.addJob(addForm.value, customerId).subscribe(
+          (response: Job) => {
+            console.log(response);
+            this.getJobs();
+            this.dtoptions = {
+              retrieve: true,
+            };
+            addForm.reset();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
 
-         } 
-       );
-     }
 
+      
+      
 
      public onDeleteJob(jobID: number):void{
         
@@ -97,23 +122,24 @@ export class JobComponent implements OnInit {
       );
     }
 
-    public onUpdateJob(Job: Job):void{
-        
-      this.jobService.updateJob(Job).subscribe(
-        (response: Job)=> {
+    public onUpdateJob(job: Job): void {
+      this.getCustomers();
+      const EditcustomerId: number = this.EditcustomerId;
+      job.job_type = this.selectedJobType; // Assign the selected job type
+      this.jobService.updateJob(job, EditcustomerId).subscribe(
+        (response: Job) => {
           console.log(response);
           this.getJobs();
-          this.dtoptions={
-           retrieve: true,
-         };
+          this.dtoptions = {
+            retrieve: true,
+          };
         },
-        (error: HttpErrorResponse) =>  {
+        (error: HttpErrorResponse) => {
           alert(error.message);
-
-        } 
+        }
       );
     }
-     
+    
 
     public onOpenModal(job:Job, mode:string):void {
       const container = (document.getElementById('main-container') as HTMLInputElement);
