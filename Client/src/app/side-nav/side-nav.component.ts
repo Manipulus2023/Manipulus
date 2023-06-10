@@ -22,7 +22,9 @@ export class SideNavComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribeToUser();
   }
-
+  public logout() {
+    this.authService.logout();
+  }
   subscribeToUser() {
     this.userSubscription = this.authService.user.subscribe(user => {
       this.isAuthenticated = !!user;

@@ -1,5 +1,5 @@
-<div class="container mt-5">
-  <div class="row">
+<!-- <div class="container mt-5  b">
+   <div class="row">
     <div class="col-sm-3">
       <div class="container">
         <img src="../../assets/login/user-login.jpg" class="img-fluid" alt="User-Login">
@@ -22,13 +22,77 @@
         </div>
       </div>
     </div>
-    </div>
+      </div>
+    </div> 
+  
+  -->
+<div class="girl-container">
+  <img
+    src="../../assets/fun-3d-illustration-cartoon-teenage-girl-with-rain-gear-removebg-preview.png"
+    class="gril_image"
+  />
+</div>
+<div class="mid_chip">
+  <img
+    src="../../assets/original-b47fd46878972efc7d4283cef54dc984-removebg-preview.png"
+    class="image_chip"
+  />
+</div>
+
+<div class="welcome">Welcome Back</div>
+<div class="container-sm main-container">
+  <div
+    class="card2 card px-4 py-5 shadow-sm p-3 mb-5 bg-white rounded border-top-0 border-left-0"
+  >
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <div class="row px-3">
+        <label class="mb-1"><h6 class="mb-0 text-sm">Email Address</h6></label>
+        <input
+          class="mb-4 form-control"
+          type="text"
+          ngModel
+          name="username"
+          id="username"
+          placeholder="Enter your username"
+        />
+      </div>
+      <div class="row px-3">
+        <label class="mb-1"><h6 class="mb-0 text-sm">Password</h6></label>
+        <input
+          class="form-control"
+          type="password"
+          ngModel
+          name="password"
+          id="password"
+          placeholder="Enter your password"
+        />
+      </div>
+      <div class="row mb-3 px-3 py-3">
+        <div class="col-lg-6">
+          <button
+            type="submit"
+            value="Login"
+            class="btn btn-blue text-center form-control"
+          >
+            Login
+          </button>
+        </div>
+        <div class="col-lg-6">
+          <div
+            href=""
+            class="mb-0 text-sm cursor-pointer"
+            (click)="navigateToResetPassword()"
+          >
+            Forgot Password?
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
-
-
+</div>
 
 <ng-container *ngIf="errorMessage">
   <div class="alert-danger">
-    {{errorMessage}}
+    {{ errorMessage }}
   </div>
 </ng-container>
