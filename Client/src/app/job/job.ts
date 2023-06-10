@@ -7,4 +7,5 @@ export class Job{
     job_status!: String;
     jobCode!: String;
     customer!:Customer;
+    customer_id!: number;
 }

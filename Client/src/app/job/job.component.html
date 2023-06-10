@@ -13,7 +13,7 @@
     />
     Add Job
   </button>
-  
+
   <table
     datatable
     [dtOptions]="dtoptions"
@@ -23,9 +23,11 @@
     <thead class="bg-light m-2">
       <tr>
         <th>id</th>
+        <th>Customer name</th>
+        <th>Customer Address</th>
         <th>type</th>
         <th>Status</th>
-        <th>Job added</th>
+        <th>Job DUe Date</th>
         <th></th>
         <th></th>
       </tr>
@@ -36,6 +38,21 @@
           <div class="d-flex align-items-center">
             <div class="ms-3">
               <p class="fw-bold mb-1">{{ job.id }}</p>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div class="ms-3">
+              <p class="fw-bold mb-1">{{ job.customer.name }}</p>
+              <p class="text-muted mb-0">{{ job.customer.contactNumber }}</p>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div class="ms-3">
+              <p class="fw-bold mb-1">{{ job.customer.address }}</p>
             </div>
           </div>
         </td>
@@ -62,7 +79,7 @@
         <td>
           <div class="d-flex align-items-center">
             <div class="ms-3">
-              <p class="mb-0">{{ job.job_date |date}}</p>
+              <p class="mb-0">{{ job.job_date | date }}</p>
             </div>
           </div>
         </td>
@@ -100,8 +117,8 @@
   </table>
   <div *ngIf="jobs?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
     <div class="alert alert-info" role="alert">
-      <h4 class="alert-heading">NO CUSTOMERS!</h4>
-      <p>No Customer were found.</p>
+      <h4 class="alert-heading">NO JOBS!</h4>
+      <p>No Job were found.</p>
     </div>
   </div>
 </div>
@@ -133,23 +150,25 @@
               <div>
                 <h3 class="h6 mb-4">Basic information</h3>
               </div>
-              hv hvgyv
-             
-
               <div class="row">
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <label class="form-label">Job type :</label>
-                    <input
-                      type="text"
+                    <label class="form-label">Job type:</label>
+                    <select
                       class="form-control"
                       id="job_type"
                       ngModel
                       name="job_type"
                       required
-                      minlength="4"
-                      maxlength="50"
-                    />
+                    >
+                      <option value="Inspection" >Inspection</option>
+                      <option value="Service">Service</option>
+                      <option value="Installation">Installation</option>
+                      <option value="Breakdowns">Breakdowns</option>
+                      <option value="Upgrades">Upgrades</option>
+                      <option value="Remove">Remove</option>
+                      <!-- Add more options as needed -->
+                    </select>
                     <div
                       *ngIf="
                         addForm.controls['job_type'].invalid &&
@@ -161,16 +180,6 @@
                         class="text-danger"
                         *ngIf="addForm.controls['job_type'].errors?.['required']"
                         >Job type is required.</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="addForm.controls['job_type'].errors?.['minlength']"
-                        >Job type must be at least 4 characters long.</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="addForm.controls['job_type'].errors?.['maxlength']"
-                        >Job type cannot be longer than 50 characters.</small
                       >
                     </div>
                   </div>
@@ -202,39 +211,35 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <label class="form-label">Job status :</label>
-                    <input
-                      type="text"
+                    <label class="form-label">Customer Name:</label>
+                    <select
                       class="form-control"
-                      id="job_status"
-                      ngModel
-                      name="job_status"
+                      id="customer_id"
+                      [(ngModel)]="customerId"
+                      name="customer_id"
                       required
-                      minlength="4"
-                      maxlength="12"
-                    />
+                    >
+                      <option
+                        *ngFor="let customer of customersList"
+                        [value]="customer.id"
+                      >
+                        {{ customer.name }}
+                      </option>
+                    </select>
+
                     <div
                       *ngIf="
-                        addForm.controls['job_status'].invalid &&
-                        (addForm.controls['job_status'].dirty ||
-                          addForm.controls['job_status'].touched)
+                        addForm.controls['customer_id'].invalid &&
+                        (addForm.controls['customer_id'].dirty ||
+                          addForm.controls['customer_id'].touched)
                       "
-                      class="text-danger"
                     >
                       <small
-                        *ngIf="addForm.controls['job_status'].errors?.['required']"
-                        >Job status is required.</small
-                      >
-                      <small
-                        *ngIf="addForm.controls['job_status'].errors?.['minlength']"
-                        >Job status must be at least 4 characters long.</small
-                      >
-                      <small
-                        *ngIf="addForm.controls['job_status'].errors?.['maxlength']"
-                        >Job status cannot be longer than 12 characters.</small
+                        class="text-danger"
+                        *ngIf="addForm.controls['customer_id'].errors?.['required']"
+                        >Customer ID is required.</small
                       >
                     </div>
                   </div>
@@ -264,191 +269,21 @@
     </div>
   </div>
 </form>
-  
-  <form #editForm="ngForm">
-    <div
-      class="modal fade"
-      id="exampleModal2"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Edit job {{ editJob?.id  }}
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="card mb-4">
-              <div class="card-body">
-                <div>
-                  <h3 class="h6 mb-4">Basic information</h3>
-                </div>
-  
-                <input
-                type="hidden"
-                class="form-control"
-                id="jobCode"
-                ngModel="{{ editJob?.jobCode }}"
-                name="jobCode"
-              />
-              <input
-                type="hidden"
-                class="form-control"
-                id="id"
-                ngModel="{{ editJob?.id }}"
-                name="id"
-              />
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="mb-3">
-                      <label class="form-label">Job type :</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="job_type"
-                        ngModel="{{ editJob?.job_type }}"
-                        name="job_type"
-                        required
-                        minlength="4"
-                        maxlength="50"
-                      />
-                      <div
-                        *ngIf="
-                          editForm.controls['job_type'].invalid &&
-                          (editForm.controls['job_type'].dirty ||
-                            editForm.controls['job_type'].touched)
-                        "
-                      >
-                        <small
-                          class="text-danger"
-                          *ngIf="editForm.controls['job_type'].errors?.['required']"
-                          >Job type is required.</small
-                        >
-                        <small
-                          class="text-danger"
-                          *ngIf="editForm.controls['job_type'].errors?.['minlength']"
-                          >Job type must be at least 4 characters long.</small
-                        >
-                        <small
-                          class="text-danger"
-                          *ngIf="editForm.controls['job_type'].errors?.['maxlength']"
-                          >Job type cannot be longer than 50 characters.</small
-                        >
-                      </div>
-                    </div>
-                  </div>
-  
-                  <div class="col-lg-6">
-                    <div class="mb-3">
-                      <label class="form-label">Job due date :</label>
-                      <input
-                        type="date"
-                        class="form-control"
-                        id="job_date"
-                        ngModel="{{ editJob?.job_date }}"
-                        name="job_date"
-                        required
-                      />
-                      <div
-                        *ngIf="
-                          editForm.controls['job_date'].invalid &&
-                          (editForm.controls['job_date'].dirty ||
-                            editForm.controls['job_date'].touched)
-                        "
-                      >
-                        <small
-                          class="text-danger"
-                          *ngIf="editForm.controls['job_date'].errors?.['required']"
-                          >Job due date is required.</small
-                        >
-                      </div>
-                    </div>
-                  </div>
-  
-                  <div class="col-lg-6">
-                    <div class="mb-3">
-                      <label class="form-label">Job status :</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="job_status"
-                        ngModel="{{ editJob?.job_status }}"
-                        name="job_status"
-                        required
-                        minlength="4"
-                        maxlength="12"
-                      />
-                      <div
-                        *ngIf="
-                          editForm.controls['job_status'].invalid &&
-                          (editForm.controls['job_status'].dirty ||
-                            editForm.controls['job_status'].touched)
-                        "
-                        class="text-danger"
-                      >
-                        <small
-                          *ngIf="editForm.controls['job_status'].errors?.['required']"
-                          >Job status is required.</small
-                        >
-                        <small
-                          *ngIf="editForm.controls['job_status'].errors?.['minlength']"
-                          >Job status must be at least 4 characters long.</small
-                        >
-                        <small
-                          *ngIf="editForm.controls['job_status'].errors?.['maxlength']"
-                          >Job status cannot be longer than 12 characters.</small
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              id="add-customer-form"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              (click)="onUpdateJob(editForm.value)"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-            >
-              Save changes
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
 
-
-
-<div
-    class="modal delete"
-    id="exampleModal3"
+<form #editForm="ngForm">
+  <div
+    class="modal fade"
+    id="exampleModal2"
     tabindex="-1"
-    aria-labelledby="exampleModal3"
+    aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabedelete">Detele Customer</h5>
+          <h5 class="modal-title" id="exampleModalLabel">
+            Edit job {{ editJob?.id }}
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -457,20 +292,189 @@
           ></button>
         </div>
         <div class="modal-body">
-          Are you want to delete customer {{ deleteJob?.id }}?
+          <div class="card mb-4">
+            <div class="card-body">
+              <div>
+                <h3 class="h6 mb-4">Basic information</h3>
+              </div>
+
+              <input
+                type="hidden"
+                class="form-control"
+                id="jobCode"
+                ngModel="{{ editJob?.jobCode }}"
+                name="jobCode"
+              />
+              <!-- <input
+                      type="hidden"
+                      class="form-control"
+                      id="job_type"
+                      ngModel="{{ editJob?.job_type }}"
+                      name="job_type"
+                      
+                    /> -->
+              <input
+                type="hidden"
+                class="form-control"
+                id="id"
+                ngModel="{{ editJob?.id }}"
+                name="id"
+              />
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Job due date :</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="job_date"
+                      ngModel="{{ editJob?.job_date }}"
+                      name="job_date"
+                      required
+                    />
+                    <div
+                      *ngIf="
+                        editForm.controls['job_date'].invalid &&
+                        (editForm.controls['job_date'].dirty ||
+                          editForm.controls['job_date'].touched)
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="editForm.controls['job_date'].errors?.['required']"
+                        >Job due date is required.</small
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Customer Name:</label>
+                    <select
+                      class="form-control"
+                      id="customer_id"
+                      [(ngModel)]="EditcustomerId"
+                      name="customer_id"
+                      required
+                    >
+                      <option
+                        *ngFor="let customer of customersList"
+                        [value]="customer.id"
+                      >
+                        {{ customer.name }}
+                      </option>
+                    </select>
+
+                    <div
+                      *ngIf="
+                        addForm.controls['customer_id'].invalid &&
+                        (addForm.controls['customer_id'].dirty ||
+                          addForm.controls['customer_id'].touched)
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="addForm.controls['customer_id'].errors?.['required']"
+                        >Customer ID is required.</small
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Job type:</label>
+                    <select
+                      class="form-control"
+                      id="job_type"
+                      [(ngModel)]="selectedJobType"
+                      name="job_type"
+                      required
+                    >
+                      <option value="Inspection">Inspection</option>
+                      <option value="Service">Service</option>
+                      <option value="Installation">Installation</option>
+                      <option value="Breakdowns">Breakdowns</option>
+                      <option value="Upgrades">Upgrades</option>
+                      <option value="Remove">Remove</option>
+                      <!-- Add more options as needed -->
+                    </select>
+                    <div
+                    *ngIf="
+                      addForm.controls['job_type'].invalid &&
+                      (addForm.controls['job_type'].dirty ||
+                        addForm.controls['job_type'].touched)
+                    "
+                  >
+                    <small
+                      class="text-danger"
+                      *ngIf="addForm.controls['job_type'].errors?.['required']"
+                      >Job type is required.</small
+                    >
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            No
-          </button>
           <button
-            (click)="onDeleteJob(deleteJob.id)"
-            class="btn btn-danger"
+            type="button"
+            id="add-customer-form"
+            class="btn btn-secondary"
             data-bs-dismiss="modal"
           >
-            Yes
+            Close
+          </button>
+          <button
+            (click)="onUpdateJob(editForm.value)"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+          >
+            Save changes
           </button>
         </div>
       </div>
     </div>
-  </div> 
+  </div>
+</form>
+
+<div
+  class="modal delete"
+  id="exampleModal3"
+  tabindex="-1"
+  aria-labelledby="exampleModal3"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabedelete">Detele Job</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you want to delete Job {{ deleteJob?.id }}? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+        <button
+          (click)="onDeleteJob(deleteJob.id)"
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

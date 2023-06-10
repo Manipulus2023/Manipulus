@@ -30,7 +30,7 @@
           <th>Name</th>
           <th>Address</th>
           <th>Status</th>
-          <th>Job added</th>
+          <th>Customer added</th>
           <th>Contact person</th>
           <th>Designation</th>
           <th>Contact number</th>
@@ -543,6 +543,13 @@
                   ngModel="{{ editCustomer?.customercode }}"
                   name="customercode"
                 />
+                <input
+                  type="hidden"
+                  class="form-control"
+                  id="createdAt"
+                  ngModel="{{ editCustomer?.createdAt }}"
+                  name="createdAt"
+                />
 
                 <div class="col-lg-6">
                   <div class="mb-3">
@@ -738,7 +745,7 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <label class="fKumaraorm-label">Designation :</label>
+                    <label class="form-label">Designation :</label>
                     <input
                       type="text"
                       class="form-control"
@@ -749,14 +756,16 @@
                     />
                   </div>
                 </div>
-                <!-- <div class="col-lg-6">
+                
+                <div class="col-lg-6">
                   <div class="mb-3">
-                    <label class="fKumaraorm-label">Active status :</label>
-                    <button  type="button"  class="btn btn-primary" (click)="toggleActiveStatus"> 
-                      {{editCustomer?.active_status}}
+                    <label class="form-label">Active status :</label>
+                    <button type="button" class="btn btn-primary" (click)="activeStatus = !activeStatus" ngModel="{{ editCustomer?.active_status }}">
+                      {{ activeStatus ? 'Active' : 'Inactive' }}
                     </button>
                   </div>
-                </div> -->
+                </div>
+                
               </div>
             </div>
           </div>
