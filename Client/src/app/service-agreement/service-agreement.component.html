@@ -146,7 +146,7 @@
                         </button>
                     </td>
                     <td>
-                        <button type="submit " class="btn btn-outline-primary " onClick="history.go(0) ">
+                        <button type="submit " class="btn btn-outline-primary " onClick="history.go(0);">
                             <img src=" ../../assets/Icon/Customer/close1.gif " alt="Bootstrap " width="50 " height="55 " />
                             </button> </td>
                 </form>
@@ -161,7 +161,7 @@
             <a class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none ">
                 <span class="fs-8 ">Agreements</span>
                 <span class="badge rounded-pill bg-info customerCount text-muted ">
-                    100
+                    
                 </span>
             </a>
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 ">
@@ -182,13 +182,13 @@
                     <!-- <th scope="col ">AgreementID</th>
                     <th scope="col ">UnitID</th> -->
                     <!-- <th scope="col ">UnitName</th> -->
-                    <th scope="col ">Customer NIC</th>
-                    <th scope="col ">Equipments</th>
-                    <th scope="col ">ServicePrice</th>
-                    <th scope="col ">Emergency Price Rate</th>
-                    <th scope="col ">Service Type</th>
-                    <th scope="col ">Initiated Date</th>
-                    <th scope="col ">Expired Date</th>
+                    <th>Customer NIC</th>
+                    <th>Equipments</th>
+                    <th>ServicePrice</th>
+                    <th>Emergency Price Rate</th>
+                    <th>Service Type</th>
+                    <th>Initiated Date</th>
+                    <th>Expired Date</th>
                     <th>delete</th>
                     <th>edit</th>
                     <th>pdf</th>
@@ -198,7 +198,7 @@
                 <tr *ngFor="let AgreementItem of AgreementArray ">
                     <!-- <th scope="row ">{{ AgreementItem.agreementid }}</th>
                     <td>{{ AgreementItem.unitid }}</td> -->
-                    <td scope="row ">{{ AgreementItem.nic }}</td>
+                    <td>{{ AgreementItem.nic }}</td>
                     <td>{{ AgreementItem.equipment }}</td>
                     <td>{{ AgreementItem.price_per_service }}</td>
                     <td>{{ AgreementItem.emergency_service_rate }}</td>
