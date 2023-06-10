@@ -22,6 +22,10 @@ export class SiteVisitService {
   getAvailableVehicles(): Observable<Vehicle[]> {
     return this.http.get<Vehicle[]>(`${this.apiServerUrl}/vehicle/all`);
   }
+  public updateVehicles(vehicle: Vehicle):Observable<Vehicle> {
+    return this.http.put<Vehicle>(`${this.apiServerUrl}/vehicle/update`,vehicle);
+
+}
   public getSiteVisits():Observable<SiteVisit[]> {
     return this.http.get<SiteVisit[]>(`${this.apiServerUrl}/siteVisit/all`);
 
@@ -30,6 +34,8 @@ public addSiteVisit(siteVisit: SiteVisit):Observable<SiteVisit> {
     return this.http.post<SiteVisit>(`${this.apiServerUrl}/siteVisit/add`,siteVisit);
 
 }
+
+
 public updateSiteVisit(siteVisit: SiteVisit):Observable<SiteVisit> {
     return this.http.put<SiteVisit>(`${this.apiServerUrl}/siteVisit/update`,siteVisit);
 

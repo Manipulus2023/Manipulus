@@ -27,7 +27,7 @@ export class SiteVisitComponent implements OnInit {
   //vehicleService: any;
   availableVehicles: Vehicle[] = [];
   selectedVehicle: Vehicle | null = null;
-  public state!: string;
+  public state: string | undefined;
 
   //siteVisit: any;
   constructor(private siteVisitService : SiteVisitService,private route: ActivatedRoute) {
@@ -107,9 +107,52 @@ export class SiteVisitComponent implements OnInit {
 
   //add a new site visit
   public onAddSiteVisit(addForm: NgForm): void {
- document.getElementById('add-siteVisit-form')?.click();
+    document.getElementById('add-siteVisit-form')?.click();
     
-    this.siteVisitService.addSiteVisit(addForm.value).subscribe((response: SiteVisit) => {
+    const siteVisit: SiteVisit = {
+      scheduledDate: addForm.value.scheduledDate,
+      assignedTeamId: addForm.value.assignedTeamId,
+      assignedVehicle: addForm.value.assignedVehicle,
+      startSiteVisit: false,
+      dateRange: addForm.value.dateRange,
+      state: addForm.value.state,
+      vehicles: [],
+      siteVisitName: '',
+      siteVisitId: 0
+    };
+    
+    if (siteVisit.state !== 'Completed') {
+      siteVisit.vehicles.push({
+        vehicle_number: siteVisit.assignedVehicle,
+        active_state: 'Assigned',
+        id: 0,
+        vehicle_name: '',
+        vehicle_image: '',
+        number_of_passengers: 0,
+        vehicle_code: '',
+        name: undefined,
+        make: '',
+        model: '',
+        licensePlate: ''
+      });
+    } else {
+      siteVisit.vehicles.push({
+        vehicle_number: siteVisit.assignedVehicle,
+        active_state: 'Available',
+        id: 0,
+        vehicle_name: '',
+        vehicle_image: '',
+        number_of_passengers: 0,
+        vehicle_code: '',
+        name: undefined,
+        make: '',
+        model: '',
+        licensePlate: ''
+      });
+    }
+    
+    this.siteVisitService.addSiteVisit(siteVisit).subscribe(
+      (response: SiteVisit) => {
         console.log(response);
         this.getSiteVisits();
         addForm.reset();
@@ -119,8 +162,8 @@ export class SiteVisitComponent implements OnInit {
         addForm.reset();
       }
     );
-
   }
+  
  
    //Edit asite visit
   public onUpdateSiteVisit(siteVisit: SiteVisit): void {
