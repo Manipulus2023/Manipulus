@@ -32,6 +32,11 @@ public class Vehicle implements Serializable {
     @Column(name = "vehicle_code")
     private String vehicle_code;
 
+    @ManyToOne
+    @JoinColumn(name = "site_visit_id")
+    private SiteVisit siteVisit;
+
+
 
     public String getVehicle_code() {
         return vehicle_code;
@@ -102,6 +107,13 @@ public class Vehicle implements Serializable {
         this.active_state = active_state;
     }
 
+    public SiteVisit getSiteVisit() {
+        return siteVisit;
+    }
+
+    public void setSiteVisit(SiteVisit siteVisit) {
+        this.siteVisit = siteVisit;
+    }
 
     @Override
     public String toString() {
@@ -111,7 +123,7 @@ public class Vehicle implements Serializable {
                 "vehicle_image=" + vehicle_image +
                 "vehicle_number=" + vehicle_number +
                 "number_of_passengers=" + number_of_passengers +
-                "active_state=" + active_state +
+                "active_state=" + active_state + '\'' +
                 '}';
 
     }

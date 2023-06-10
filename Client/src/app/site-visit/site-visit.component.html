@@ -114,9 +114,17 @@
                                     <td>
                                         <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i> {{siteVisit?.state}}</span>
                                     </td>
-                                    <td>{{ siteVisit?.assignedTeamId }}</td>
+                                     <td>{{ siteVisit?.assignedTeamId }}</td> 
+                                    
 
-                                    <td>{{siteVisit?.assignedVehicle}}</td>
+                                    <td>{{siteVisit?.assignedVehicle}}</td> 
+                                    <!-- <td>
+                                        <ul>
+                                            <li *ngFor="let vehicle of siteVisit.vehicles">{{ vehicle.id }}</li>
+
+                                          <li *ngFor="let vehicle of siteVisit.vehicles">{{ Vehicle. vehicle_name }}</li> 
+                                        </ul>
+                                        </td> -->
                                     <td>{{siteVisit?.dateRange | date: 'yyyy-MM-dd'}}</td>
                                     <td>
                                         <div class="action">
@@ -160,39 +168,60 @@
                  <label for="assignedTeamId">Assigned Team Id</label>
                  <input type="text" ngModel name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId" required>
               </div>
-              <div class="form-group">
-                <label for="assignedVehicle">Assigned Vehicle</label>
-                <table class="table vehicle-table table-centered table-nowrap">
+              
+                  
+                <table class="table siteVisit-table table-centered table-nowrap">
+                    
                     <tbody>
                         <tr>
-                            <td><input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="assignedVehicle" required></td>
-                             <!-- <td>{{ siteVisit.vehicle?.id || 'Not assigned' }}</td> -->
-                             <!-- <td>
-                                <div class="action">
-                                  <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Select Vehicle
-                                    </button>
-                                    <div class="dropdown-menu">
-                                      <a class="dropdown-item" *ngFor="let vehicle of vehicles" (click)="assignVehicle = vehicle">{{vehicle.make}} {{vehicle.model}} ({{vehicle.licensePlate}})</a>
-                                    </div>
-                                  </div>
+                                <div class="form-group">
+                                    <label for="assignedVehicle">Available Vehicles</label>
+                                    <select id="vehicleDropdown" [(ngModel)]="selectedVehicle">
+                                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }}    Name: {{ vehicle.vehicle_name }}   No of Passengers: {{ vehicle.number_of_passengers }}</option>
+                                    </select>
                                 </div>
-                              </td> -->
-                              
+                                    
                         </tr>
+                        <tr>
+                                <div class="form-group">
+                                    <tr>
+                                <label for="assignedVehicle">Assign Vehicle</label>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        <label for="assignedVehicle">Vehicle No:</label>
+                                        </td>
+                                        <td>
+                                        <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="assignedVehicle" required>
+                                        </td>
+                                </tr>
+                            </div>
+                                  
+                       </tr>
                     </tbody>
             </table>
 
-                </div>
+                
               <div class="form-group">
                  <label for="dateRange">End Date</label>
                  <input type="date" ngModel name="dateRange" class="form-control" id="dateRange" placeholder="dateRange" required>
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="state">Status</label>
                 <input type="text" ngModel name="state" class="form-control" id="state" placeholder="state" required>
-             </div>
+             </div> -->
+
+             <div class="form-group">
+                <label for="state">Status</label>
+                <select id="state" [(ngModel)]="state" name="state" class="form-control" required>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+             
+<!-- EDIT VEHICLE ACTIVE_STATE -->
+
+<!-- SAVE BUTTON -->
               <div class="modal-footer">
                  <button type="button" id="add-siteVisit-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
                  <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save </button>
@@ -227,18 +256,57 @@
                     <label for="assignedTeamId">Assigned Team Id</label>
                     <input type="text" ngModel="{{editSiteVisits?.assignedTeamId}}" name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId">
                  </div>
-                 <div class="form-group">
+                 <!-- <div class="form-group">
                     <label for="assignedVehicle">Assigned Vehicle</label>
-                    <input type="text" ngModel="{{editSiteVisits?.assignedVehicle}}" name="assignedVehicle" class="form-control" id="assignedVehicle" name="assignedVehicle" placeholder="assignedVehicle">
-                 </div>
+                    <input type="text" ngModel="{{editSiteVisits?.vehicles}}" name="assignedVehicle" class="form-control" id="assignedVehicle" name="assignedVehicle" placeholder="assignedVehicle">
+                 </div> -->
+
+                 <table class="table siteVisit-table table-centered table-nowrap">
+                    
+                    <tbody>
+                        <tr>
+                                <div class="form-group">
+                                    <label for="assignedVehicle">Available Vehicles</label>
+                                    <select id="vehicleDropdown" [(ngModel)]="selectedVehicle">
+                                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }}    Name: {{ vehicle.vehicle_name }}   No of Passengers: {{ vehicle.number_of_passengers }}</option>
+                                    </select>
+                                </div>
+                                    
+                        </tr>
+                        <tr>
+                                <div class="form-group">
+                                    <tr>
+                                <label for="assignedVehicle">Assign Vehicle</label>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        <label for="assignedVehicle">Vehicle No:</label>
+                                        </td>
+                                        <td>
+                                        <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="assignedVehicle" required>
+                                        </td>
+                                </tr>
+                            </div>
+                                  
+                       </tr>
+                    </tbody>
+            </table>
+
                  <div class="form-group">
                     <label for="dateRange">End Date</label>
                     <input type="date" ngModel="{{editSiteVisits?.dateRange}}" name="dateRange" class="form-control" id="dateRange" placeholder="dateRange">
                  </div>
-                 <div class="form-group">
+                 <!-- <div class="form-group">
                     <label for="state">Status</label>
                     <input type="text" ngModel="{{editSiteVisits?.state}}" name="state" class="form-control" id="state" placeholder="state">
-                 </div>
+                 </div> -->
+                 <div class="form-group">
+                    <label for="state">Status</label>
+                    <select id="state" [(ngModel)]="state" name="state" class="form-control" required>
+                      <option value="Pending">Pending</option>
+                      <option value="Completed">Completed</option>
+                    </select>
+                  </div>
                  <div class="modal-footer">
                     <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
                     <button (click)="onUpdateSiteVisit(editForm.value)" data-dismiss="modal" class="btn btn-primary">
@@ -277,7 +345,7 @@
 
 <!-- Assign Vehicle Modal -->
 
-</div>
+
 
      
   

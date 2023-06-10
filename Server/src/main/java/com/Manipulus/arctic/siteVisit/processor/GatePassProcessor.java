@@ -17,7 +17,7 @@ public class GatePassProcessor {
     public ByteArrayOutputStream generateReport() throws JRException {
         String filePath = "C:\\Manipulus 7.0\\Manipulus\\Server\\src\\main\\resources\\template\\gatePass.jrxml";
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("siteVisitId", 1234L);
+        parameters.put("siteVisitId", 123L);
         parameters.put("jobId", 456L);
         parameters.put("scheduledDate", java.sql.Date.valueOf("2022-07-07"));
         parameters.put("endDate", java.sql.Date.valueOf("2022-07-08"));

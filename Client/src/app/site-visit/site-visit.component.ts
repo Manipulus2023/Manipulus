@@ -5,6 +5,7 @@ import { SiteVisit } from './siteVisit';
 import { NgForm } from '@angular/forms';
 import { Vehicle } from '../vehicle/vehicle';
 import { VehicleServise } from '../vehicle/vehicle.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-site-visit',
@@ -22,34 +23,51 @@ export class SiteVisitComponent implements OnInit {
   public totalSiteVisitsCount: number = 0;
   // public assignVehicle: Vehicle | null = null;
   // public vehicles: Vehicle[] = [];
+  // Add a new property for the available vehicles
+  //vehicleService: any;
+  availableVehicles: Vehicle[] = [];
+  selectedVehicle: Vehicle | null = null;
+  public state!: string;
 
-
-  constructor(private siteVisitService : SiteVisitService) {
+  //siteVisit: any;
+  constructor(private siteVisitService : SiteVisitService,private route: ActivatedRoute) {
     this.siteVisits=[];
     
    }
 
 
+
   ngOnInit(): void {
     
+    
+    this.getSiteVisit();
+    this.getAvailableVehicles();
+  }
+  getAvailableVehicles() {
+    this.siteVisitService.getAvailableVehicles().subscribe((vehicles: Vehicle[]) => {
+      this.availableVehicles = vehicles;
+    });
+
+  }
+  getSiteVisit(): void {
+    const siteVisitId = this.route.snapshot.paramMap.get('siteVisitId');
     this.siteVisitService.getSiteVisits().subscribe(siteVisits => { // fetches all site visits
       this.siteVisits = siteVisits;
       this.completedSiteVisitsCount = this.countCompletedSiteVisits(siteVisits);
       this.incompleteSiteVisitsCount = this.countIncompleteSiteVisits(siteVisits);
       this.totalSiteVisitsCount = siteVisits.length;
     });
+    
   }
-  
-//   this.siteVisitService.getAvailableVehicles().subscribe(
-//     (response: Vehicle[]) => {
-//       console.log(response);
-//       this.vehicles = response;
-//     },
-//     (error: HttpErrorResponse) => {
-//       alert(error.message);
-//     }
-//   );
-// }
+
+  //Assign Vehicle
+  assignVehicle(): void {
+    if (this.selectedVehicle) {
+      this.siteVisits[0].vehicles.push(this.selectedVehicle);
+
+      this.selectedVehicle = null;
+    }
+  }
 
 //count completed site Visits
   countCompletedSiteVisits(siteVisits: SiteVisit[]): number {
@@ -90,10 +108,7 @@ export class SiteVisitComponent implements OnInit {
   //add a new site visit
   public onAddSiteVisit(addForm: NgForm): void {
  document.getElementById('add-siteVisit-form')?.click();
-    // if (addButton !== null) {
-      // addButton.click();
-    // }
- 
+    
     this.siteVisitService.addSiteVisit(addForm.value).subscribe((response: SiteVisit) => {
         console.log(response);
         this.getSiteVisits();
@@ -104,6 +119,7 @@ export class SiteVisitComponent implements OnInit {
         addForm.reset();
       }
     );
+
   }
  
    //Edit asite visit
@@ -150,28 +166,8 @@ export class SiteVisitComponent implements OnInit {
       this.getSiteVisits();
     }
   }
-    // public onAssignSiteVisit(siteVisit: SiteVisit): void {
-  //   siteVisit.vehicle = this.assignVehicle!;
-
-  //   if (siteVisit != null) {
-  //     this.siteVisitService.updateSiteVisit(siteVisit).subscribe(
-  //       (response: SiteVisit) => {
-  //         console.log(response);
-  //         this.getSiteVisits();
-  //       },
-  //       (error: HttpErrorResponse) => {
-  //         alert(error.message);
-  //       }
-  //     );
-  //   }
-  // }
   
 
-/*}
-function subscribe(arg0: (count: number) => number) {
-  throw new Error('Function not implemented.');*/
-
-  
   public onOpenModal(siteVisit: SiteVisit | null,mode:string): void{ //takes a SiteVisit object and a mode as parameters. It opens a modal window based on the mode passed in as a parameter.
     const container=document.getElementById('main-container');
     const button = document.createElement('button');
@@ -180,6 +176,7 @@ function subscribe(arg0: (count: number) => number) {
     button.setAttribute('data-toggle','modal');
     if(mode ==='add'){
       button.setAttribute('data-target','#addSiteVisitModal');
+      
     }
     if(mode ==='edit'){
       
@@ -191,39 +188,7 @@ function subscribe(arg0: (count: number) => number) {
      
       button.setAttribute('data-target','#deleteSiteVisitModal');
     }
-        // if (mode === 'addVehicle') {
-    //   if (!siteVisit) {
-    //     return;
-    //   }
-    //   this.siteVisitService.getAvailableVehicles().subscribe(
-    //     (response: Vehicle[]) => {
-    //       if (response.length > 0) {
-    //       this.assignVehicle = response[0];
-    //       // Assign the first available vehicle to the site visit
-    //       siteVisit.vehicle = this.assignVehicle;
-
-
-
-      //     if (siteVisit != null) {
-      //     this.siteVisitService.updateSiteVisit(siteVisit).subscribe(
-      //       (response: SiteVisit) => {
-      //         console.log(response);
-      //         this.getSiteVisits();
-      //       },
-      //       (error: HttpErrorResponse) => {
-      //         alert(error.message);
-      //       }
-      //     );
-      //   } 
-      // }else {
-      //     alert('No vehicles available');
-      //   }
-    //     },
-    //     (error: HttpErrorResponse) => {
-    //       alert(error.message);
-    //     }
-    //   );
-    // }
+     
     container?.appendChild(button);
     button.click();
 

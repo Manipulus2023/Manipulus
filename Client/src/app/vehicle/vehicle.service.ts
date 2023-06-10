@@ -16,7 +16,7 @@ export class VehicleServise{
     constructor( private httpClient : HttpClient){}
 
      public getVehicleList(): Observable<Vehicle[]>{
-        return this.httpClient.get<Vehicle[]>(`${this.baseUrl}/vehicle/all`)
+        return this.httpClient.get<Vehicle[]>(`${this.baseUrl}/vehicle/all`);
      }
      public addVehicle(vehicle: Vehicle): Observable<Vehicle>{
         return this.httpClient.post<Vehicle>(`${this.baseUrl}/vehicle/add`, vehicle);
@@ -29,5 +29,19 @@ export class VehicleServise{
      public deleteVehicle(vehicleId: number): Observable<void>{
         return this.httpClient.delete<void>(`${this.baseUrl}/vehicle/delete/${vehicleId}`);
     }
+    
+    
+   
 
+      private apiUrl = environment.baseurl;
+    
+      
+    
+    //   // Method to get the available vehicles
+    //   getAvailableVehicles(): Observable<Vehicle[]> {
+    //    // return this.httpClient.get<Vehicle[]>(`${this.baseUrl}/vehicles/available`);
+    //    return this.httpClient.get<Vehicle[]>(`${this.baseUrl}/vehicle/all`);
+    //   }
+    
+    
 }

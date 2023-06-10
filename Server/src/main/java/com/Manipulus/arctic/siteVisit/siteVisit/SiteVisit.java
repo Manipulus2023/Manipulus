@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 @ToString
 @Entity
 @Table(name = "site_visit")
@@ -26,6 +26,7 @@ public class SiteVisit implements Serializable {
         private Date scheduledDate;
     @Column(name = "assignedTeamId" )
         private Long assignedTeamId;
+
     @Column(name = "assignedVehicle" )
         private String assignedVehicle;
     @Column(name = "startSiteVisit" )
@@ -38,17 +39,15 @@ public class SiteVisit implements Serializable {
     @Column(nullable = false, updatable = false)
     private String siteVisitCode;
 
-    public SiteVisit() {
-
-    }
-
-   @OneToMany(targetEntity = Vehicle.class,cascade = CascadeType.ALL)
+  /* @OneToMany(targetEntity = Vehicle.class,cascade = CascadeType.ALL)
     @JoinColumn(name = "sv_fk",referencedColumnName = "siteVisitId")
     private List<Vehicle>vehicles;
+*/
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "siteVisit")
+  private List<Vehicle> vehicles;
 
 
-
-   /*public String getSiteVisitCode() {
+   public String getSiteVisitCode() {
         return siteVisitCode;
     }
 
@@ -58,14 +57,15 @@ public class SiteVisit implements Serializable {
 
 
 
-        public SiteVisit(Date scheduledDate, Long assignedTeamId, String assignedVehicle, boolean startSiteVisit, Date dateRange, String state, String siteVisitCode){
+        public SiteVisit(Date scheduledDate, Long assignedTeamId, String assignedVehicle, List<Vehicle> vehicles,boolean startSiteVisit, Date dateRange, String state, String siteVisitCode){
             this.scheduledDate=scheduledDate;
             this.assignedTeamId=assignedTeamId;
             this.startSiteVisit=startSiteVisit;
             this.dateRange=dateRange;
             this.state=state;
-            this.assignedVehicle=assignedVehicle;
+           // this.assignedVehicle=assignedVehicle;
             this.siteVisitCode=siteVisitCode;
+            this.vehicles = vehicles;
         }
 
         public Long getSiteVisitId(){
@@ -75,7 +75,7 @@ public class SiteVisit implements Serializable {
             this.siteVisitId=siteVisitId;
         }
 
-        public String getAssignedVehicle(){
+       public String getAssignedVehicle(){
             return  assignedVehicle;
         }
         public void setAssignedVehicle(String assignedVehicle){
@@ -116,6 +116,13 @@ public class SiteVisit implements Serializable {
         public void setState(String state){
             this.state=state;
         }
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+    }
 
 
 
@@ -125,7 +132,7 @@ public class SiteVisit implements Serializable {
                     "SiteVisitId="+ siteVisitId+'\''+
                     ", ScheduledDate"+ scheduledDate+'\''+
                     ", AssignedTeamId"+assignedTeamId+'\''+
-                    ", AssignedVehicle"+ assignedVehicle+'\''+
+                    ", Vehicles"+ vehicles+'\''+
                     ", startSiteVisit "+ startSiteVisit+'\''+
                     ", DateRange "+ dateRange+'\''+
                     ", state" +state+'\''+
@@ -133,5 +140,5 @@ public class SiteVisit implements Serializable {
                     '}';
         }
 
-*/
+
 }
