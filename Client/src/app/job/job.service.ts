@@ -20,10 +20,10 @@ export class JobService {
   }
 
   // Adds a new job
-  public addJob(job: Job): Observable<Job> {
-    return this.httpClient.post<Job>(`${this.baseUrl}/job/add`, job);
+  public addJob(job: Job, id: number): Observable<Job> {
+    return this.httpClient.post<Job>(`${this.baseUrl}/job/add?id=${id}`, job);
   }
-
+  
   // Updates an existing job
   public updateJob(job: Job): Observable<Job> {
     return this.httpClient.put<Job>(`${this.baseUrl}/job/update`, job);
@@ -37,5 +37,10 @@ export class JobService {
   public findCustomerById(customerId: Number): Observable<Customer>{
     return this.httpClient.get<Customer>(`${this.baseUrl}/customer/find/${customerId}`);
   }
-  
+
+  public getCustomerList(): Observable<Customer[]> {
+    return this.httpClient.get<Customer[]>(`${this.baseUrl}/customer/all`); // Get a list of all customers from the server
+  }
+
+
 }

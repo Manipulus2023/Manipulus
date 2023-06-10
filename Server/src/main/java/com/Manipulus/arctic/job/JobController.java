@@ -26,9 +26,9 @@ public class JobController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Job> addJob(@RequestBody Job job) {
-        // Add a new job using the jobService
-        Job newJob = jobService.addJob(job);
+    public ResponseEntity<Job> addJob(@RequestBody Job job , @RequestParam("id" )Long id) {
+        // Add a new job using the job  Service
+        Job newJob = jobService.addJob(job, id);
         // Return the newly added job and the status code 201 (CREATED)
         return new ResponseEntity<>(newJob, HttpStatus.CREATED);
     }
