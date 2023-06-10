@@ -177,7 +177,7 @@
                                 <div class="form-group">
                                     <label for="assignedVehicle">Available Vehicles</label>
                                     <select id="vehicleDropdown" [(ngModel)]="selectedVehicle">
-                                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }}    Name: {{ vehicle.vehicle_name }}   No of Passengers: {{ vehicle.number_of_passengers }}     Active State : {{vehicle.active_state}}</option>
+                                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }}    Name: {{ vehicle.vehicle_name }}   NoP: {{ vehicle.number_of_passengers }}     Ac_State : {{vehicle.active_state}}</option>
                                     </select>
                                 </div>
                                     

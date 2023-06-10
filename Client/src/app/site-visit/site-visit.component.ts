@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { Vehicle } from '../vehicle/vehicle';
 import { VehicleServise } from '../vehicle/vehicle.service';
 import { ActivatedRoute } from '@angular/router';
+import { scheduled } from 'rxjs';
 
 @Component({
   selector: 'app-site-visit',
@@ -109,62 +110,87 @@ export class SiteVisitComponent implements OnInit {
   public onAddSiteVisit(addForm: NgForm): void {
     document.getElementById('add-siteVisit-form')?.click();
     
-    const siteVisit: SiteVisit = {
-      scheduledDate: addForm.value.scheduledDate,
-      assignedTeamId: addForm.value.assignedTeamId,
-      assignedVehicle: addForm.value.assignedVehicle,
-      startSiteVisit: false,
-      dateRange: addForm.value.dateRange,
-      state: addForm.value.state,
-      vehicles: [],
-      siteVisitName: '',
-      siteVisitId: 0
-    };
-    
-    if (siteVisit.state !== 'Completed') {
-      siteVisit.vehicles.push({
-        vehicle_number: siteVisit.assignedVehicle,
-        active_state: 'Assigned',
-        id: 0,
-        vehicle_name: '',
-        vehicle_image: '',
-        number_of_passengers: 0,
-        vehicle_code: '',
-        name: undefined,
-        make: '',
-        model: '',
-        licensePlate: ''
-      });
-    } else {
-      siteVisit.vehicles.push({
-        vehicle_number: siteVisit.assignedVehicle,
-        active_state: 'Available',
-        id: 0,
-        vehicle_name: '',
-        vehicle_image: '',
-        number_of_passengers: 0,
-        vehicle_code: '',
-        name: undefined,
-        make: '',
-        model: '',
-        licensePlate: ''
-      });
-    }
-    
-    this.siteVisitService.addSiteVisit(siteVisit).subscribe(
-      (response: SiteVisit) => {
-        console.log(response);
-        this.getSiteVisits();
-        addForm.reset();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-        addForm.reset();
+    const assignedVehicle = addForm.value.assignedVehicle;
+    const state = addForm.value.state;
+  
+    // Check if the vehicle number already exists in the site visits
+    const existingVehicle = this.availableVehicles.find(sv => sv.vehicle_number === assignedVehicle);
+    if (existingVehicle) {
+      // Update the active_state of the existing vehicle
+      const vehicleToUpdate = existingVehicle;
+      
+      if (vehicleToUpdate) {
+        // const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
+        // vehicleToUpdate.active_state = `${assignedStatus} (FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
+        const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
+        // let activeState = assignedStatus;
+        // let preActiveState = activeState;
+        // if (assignedStatus === 'Assigned') {
+        //   activeState += ` (FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
+        // }
+        // vehicleToUpdate.active_state = activeState;
+        if (assignedStatus === 'Assigned') {
+          const fromDate = addForm.value.scheduledDate;
+          const toDate = addForm.value.dateRange;
+          
+          if (vehicleToUpdate.active_state === 'Available') {
+            // If the vehicle was previously available, initialize the active state with the new dates
+            vehicleToUpdate.active_state = `${assignedStatus} (FROM: ${fromDate}, TO: ${toDate})`;
+          } else {
+            // If the vehicle already had assigned status, append the new dates to the existing active state
+            const existingDates = vehicleToUpdate.active_state.match(/\((.*?)\)/g)?.map((match) => match.replace(/[()]/g, '')) || [];
+            const updatedDates = [...existingDates, `FROM: ${fromDate}, TO: ${toDate}`];
+            vehicleToUpdate.active_state = `${assignedStatus} (${updatedDates.join(',')})`;
+          }
+        } else {
+          // Set the active state to 'Available' if the assigned status is not 'Assigned'
+          vehicleToUpdate.active_state = 'Available';
+        }
       }
-    );
+      
+      
+      this.siteVisitService.updateVehicles(existingVehicle).subscribe(
+        (response: Vehicle) => {
+          console.log(response);
+          this.getSiteVisits();
+          addForm.reset();
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+          addForm.reset();
+        }
+      );
+
+      const siteVisit: SiteVisit = {
+        scheduledDate: addForm.value.scheduledDate,
+        assignedTeamId: addForm.value.assignedTeamId,
+        assignedVehicle: assignedVehicle,
+        startSiteVisit: false,
+        dateRange: addForm.value.dateRange,
+        state: state,
+        vehicles: [],
+        siteVisitName: '',
+        siteVisitId: 0
+      };
+      
+      this.siteVisitService.addSiteVisit(siteVisit).subscribe(
+        (response: SiteVisit) => {
+          console.log(response);
+          this.getSiteVisits();
+          addForm.reset();
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+          addForm.reset();
+        }
+      );
+    } else {
+      alert('Vehicle number already exists in a site visit. Please select a different vehicle number.');
+      return;
+      };
+      
   }
   
- 
    //Edit asite visit
   public onUpdateSiteVisit(siteVisit: SiteVisit): void {
     
