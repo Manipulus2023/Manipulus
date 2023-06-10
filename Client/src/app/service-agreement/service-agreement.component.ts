@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
+import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 
 
@@ -15,14 +16,14 @@ import Swal from 'sweetalert2';
 })
 
 
-export class ServiceAgreementComponent {
+export class ServiceAgreementComponent implements OnInit {
 
 
 
 
 
   showMe: boolean = false
-  ngOnInit() {
+  ngOnInitw() {
 
   }
   toogleTag() {
@@ -85,6 +86,10 @@ export class ServiceAgreementComponent {
   initiated_date: string = "";
   expired_date: string = "";
   nic: string = "";
+  dtoptions: DataTables.Settings = {};
+  dtTriger: Subject<any> = new Subject<any>();
+  
+
 
   currentAgreementID = "";
 
@@ -95,6 +100,38 @@ export class ServiceAgreementComponent {
     this.getAllNIC();
 
   }
+
+
+  ngOnInit(): void {
+    // Define DataTables options
+    
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      destroy: true,
+      // columns: [
+      //   // Define your columns here...
+      //   { data: 'name', orderable: true },
+      //   { data: 'address', orderable: false },
+      //   { data: 'contactNumber', orderable: false },
+      //   { data: 'nic_number', orderable: true },
+      //   { data: 'customer.address', orderable: true },
+      //   { data: 'contactPersonName', orderable: false },
+      //   { data: 'designation', orderable: false },
+      //   { data: 'email', orderable: false },
+      //   { data: 'customercode', orderable: false },
+      //   // Disable sorting for this column
+      // ],
+      // order: [],
+    };
+    // Call getCustomers method to retrieve customer data
+    this.getAllAgreement();
+    this.dtoptions = {
+      retrieve: true,
+    };
+
+    
+  }
+ 
 
 
 

@@ -138,6 +138,7 @@
                     <br />
                     <select class="form-control " [(ngModel)]="nic " [ngModelOptions]="{ standalone: true } " id="nic ">
                                     <option *ngFor="let item of CustomerArray ">{{item.nic_number}}</option>
+                                    <option>23344</option>
                                 </select>
 
                     <td> <button type="submit " class="btn btn-outline-primary " (click)="save() ">
@@ -175,7 +176,7 @@
     </header>
 
     <div class="tabel-containt " id="main-container ">
-        <table class="table align-middle mb-0 bg-white ">
+        <table datatable [dtTrigger]="dtTriger" [dtOptions]="dtoptions" class="table align-middle mb-0 bg-white ">
             <thead class="bg-light ">
                 <tr>
                     <!-- <th scope="col ">AgreementID</th>
@@ -188,14 +189,16 @@
                     <th scope="col ">Service Type</th>
                     <th scope="col ">Initiated Date</th>
                     <th scope="col ">Expired Date</th>
-
+                    <th>delete</th>
+                    <th>edit</th>
+                    <th>pdf</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let AgreementItem of AgreementArray ">
                     <!-- <th scope="row ">{{ AgreementItem.agreementid }}</th>
                     <td>{{ AgreementItem.unitid }}</td> -->
-                    <th scope="row ">{{ AgreementItem.nic }}</th>
+                    <td scope="row ">{{ AgreementItem.nic }}</td>
                     <td>{{ AgreementItem.equipment }}</td>
                     <td>{{ AgreementItem.price_per_service }}</td>
                     <td>{{ AgreementItem.emergency_service_rate }}</td>
