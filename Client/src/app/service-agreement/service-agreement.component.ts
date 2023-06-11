@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
+import { Data } from '@angular/router';
+import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 
 
@@ -15,16 +17,43 @@ import Swal from 'sweetalert2';
 })
 
 
-export class ServiceAgreementComponent {
+export class ServiceAgreementComponent implements OnInit{
 
+  dtoptions: DataTables.Settings = {};
+  dtTriger: Subject<any> = new Subject<any>();
+  ngOnInit(): void {
+    // Define DataTables options
+    
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      destroy: true,
+      // columns: [
+      //   // Define your columns here...
+      //   { data: 'name', orderable: true },
+      //   { data: 'address', orderable: false },
+      //   { data: 'contactNumber', orderable: false },
+      //   { data: 'nic_number', orderable: true },
+      //   { data: 'customer.address', orderable: true },
+      //   { data: 'contactPersonName', orderable: false },
+      //   { data: 'designation', orderable: false },
+      //   { data: 'email', orderable: false },
+      //   { data: 'customercode', orderable: false },
+      //   // Disable sorting for this column
+      // ],
+      // order: [],
+    };
+    // Call getCustomers method to retrieve customer data
+    this.getAllAgreement();
+    this.dtoptions = {
+      retrieve: true,
+    };
 
-
+    
+  }
 
 
   showMe: boolean = false
-  ngOnInit() {
-
-  }
+  
   toogleTag() {
     this.showMe = !this.showMe
   }
@@ -82,9 +111,11 @@ export class ServiceAgreementComponent {
   price_per_service: number = 0;
   emergency_service_rate: number = 0;
   type_of_the_service: string = "";
-  initiated_date: string = "";
-  expired_date: string = "";
+  initiated_date: string ;
+  expired_date: string;
   nic: string = "";
+
+ 
 
   currentAgreementID = "";
 
@@ -107,6 +138,7 @@ export class ServiceAgreementComponent {
         this.isResultLoaded = true;
         console.log(resultData);
         this.AgreementArray = resultData;
+        this.dtTriger.next(null);
       });
   }
 
