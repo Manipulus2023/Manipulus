@@ -8,23 +8,23 @@ import { Unit } from './unit';
   providedIn: 'root'
 })
 export class UnitService {
-  private baseUrl=environment.baseurl;
+  private baseUrl = environment.baseurl;
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  public getUnitList(): Observable<Unit[]>{
-    return this.httpClient.get<Unit[]>(`${this.baseUrl}/unit`);
+  public getUnitList(): Observable<Unit[]> {
+    return this.httpClient.get<Unit[]>(`${this.baseUrl}/units`);
   }
 
-   public addUnit(unit:Unit): Observable<Unit>{
-    return this.httpClient.post<Unit>(`${this.baseUrl}/unit` ,unit);
+  public addUnit(unit: Unit): Observable<Unit> {
+    return this.httpClient.post<Unit>(`${this.baseUrl}/units`, unit);
   }
 
-  public updateUnit(unit:Unit): Observable<Unit>{
-    return this.httpClient.put<Unit>(`${this.baseUrl}/unit/update` ,unit);
+  public updateUnit(unitId: Number, unit: Unit): Observable<Unit> {
+    return this.httpClient.put<Unit>(`${this.baseUrl}/units/${unitId}`, unit);
   }
-  public deleteUnit(unitId:Number): Observable<void>{
-    return this.httpClient.delete<void>(`${this.baseUrl}/unit/delete/${unitId}` );
+  public deleteUnit(unitId: Number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseUrl}/unit/delete/${unitId}`);
   }
 
 

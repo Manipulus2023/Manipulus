@@ -11,6 +11,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,10 +36,10 @@ public class UserController {
         this.jwtHelper = jwtHelper;
     }
 
-    /*@PostConstruct
+    @PostConstruct
     public void initRolesAndUsers() {
         userService.initRolesAndUser();
-    }*/
+    }
 
     @PostMapping({"/register"})
     @PreAuthorize("hasAuthority('Admin')")
