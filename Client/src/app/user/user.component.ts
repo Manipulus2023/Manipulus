@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from './user';
 import { UserService } from './user.service';
@@ -21,6 +21,13 @@ export class UserComponent implements OnInit, OnDestroy {
   selectedUser: any;
   key: string;
 
+  public editUser!: User;
+  public deleteUser!: User;
+
+  //Data Table configs
+  dtoptions: DataTables.Settings = {};
+  dtTriger: Subject<any> = new Subject<any>();
+
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.searchForm = this.formBuilder.group({
       key: ['']
@@ -30,6 +37,17 @@ export class UserComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getUserList();
     this.initializeUserForm();
+    this.loadDataTableConfigs();
+  }
+
+  loadDataTableConfigs() {
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      destroy: true,
+    };
+    this.dtoptions = {
+      retrieve: true,
+    };
   }
 
   ngOnDestroy(): void {
@@ -122,5 +140,33 @@ export class UserComponent implements OnInit, OnDestroy {
 
   searchUser(value: string) {
     const searchKey = this.searchForm.value.key;
+  }
+
+  public onOpenModal(user: User, mode: string): void {
+    const container = document.getElementById(
+      'main-container'
+    ) as HTMLInputElement;
+
+    // Create a hidden button element
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.style.display = 'none';
+    button.setAttribute('data-bs-toggle', 'modal');
+
+    // If mode is 'edit', set data-bs-target attribute to edit modal and assign user to edituser property
+    // if (mode === 'edit') {
+    //   button.setAttribute('data-bs-target', '#exampleModal2');
+    //   this.edituser = user;
+    // }
+
+    // If mode is 'delete', set data-bs-target attribute to delete modal and assign user to deleteuser property
+    if (mode === 'delete') {
+      button.setAttribute('data-bs-target', '#exampleModal3');
+      this.deleteUser = user;
+    }
+
+    // Append button to main container element and trigger a click event
+    container.appendChild(button);
+    button.click();
   }
 }

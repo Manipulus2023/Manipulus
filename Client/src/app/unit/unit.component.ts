@@ -29,7 +29,6 @@ export class UnitComponent implements OnInit, OnDestroy {
     this.loadDataTableConfigs();
     this.getUnitList();
     this.initializeUnitForm();
-
   }
 
   loadDataTableConfigs() {
