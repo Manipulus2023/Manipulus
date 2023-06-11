@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/units")
 //@CrossOrigin("*")
 public class UnitController {
-    private UnitService unitService;
+    private static UnitService unitService;
     UnitController(UnitService unitService){
         this.unitService = unitService;
     }
@@ -29,19 +29,19 @@ public class UnitController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin')")
-    public Unit getUnitById(@PathVariable("id") Long id) {
+    public Unit getUnitById(@PathVariable("id") int id) {
         return unitService.findUnitById(id);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin')")
-    public Unit updateUnit(@PathVariable("id") Long id, @RequestBody Unit unit) {
+    public Unit updateUnit(@PathVariable("id") int id, @RequestBody Unit unit) {
         return unitService.updateUnit(id, unit);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin')")
-    public void deleteUnitById(@PathVariable("id") Long id) {
+    public void deleteUnitById(@PathVariable("id") int id) {
         unitService.deleteUnitById(id);
     }
 }

@@ -35,11 +35,6 @@ export class SideNavComponent implements OnInit, OnDestroy {
     this.sideNavService.navigation(navigation);
   }
 
-
-
-
-
-
   subscribeToUser() {
     this.userSubscription = this.authService.user.subscribe(user => {
       this.isAuthenticated = !!user;

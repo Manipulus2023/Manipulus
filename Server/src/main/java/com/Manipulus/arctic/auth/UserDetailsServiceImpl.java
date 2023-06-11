@@ -32,7 +32,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             authorities.add(authority);
         });
         org.springframework.security.core.userdetails.User userDetails = new org.springframework.security.core.userdetails.User(
-                user.getUsername(), user.getUserPassword(), authorities
+                user.getUserName(),
+                user.getUserPassword(), authorities
         );
         return userDetails;
     }
