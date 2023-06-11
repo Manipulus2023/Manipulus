@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { LoggedUser } from '../models/logged-user-model';
 import { USER_TYPES } from '../models/enums/user-type';
+import { SideNavService } from './side-nav.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -17,11 +18,27 @@ export class SideNavComponent implements OnInit, OnDestroy {
   isAdmin = false;
   isUser = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService , private sideNavService : SideNavService) { }
 
   ngOnInit(): void {
     this.subscribeToUser();
   }
+  public logout() {
+    this.authService.logout();
+  }
+
+  public dashboard() {
+    this.sideNavService.dashboard();
+  }
+
+  public navigation(navigation:string){
+    this.sideNavService.navigation(navigation);
+  }
+
+
+
+
+
 
   subscribeToUser() {
     this.userSubscription = this.authService.user.subscribe(user => {

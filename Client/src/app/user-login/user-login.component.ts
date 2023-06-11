@@ -20,7 +20,9 @@ export class UserLoginComponent implements OnInit {
   navigateToResetPassword() {
     this.router.navigate(['/forget-password']);
   };
-
+  dismissAlert() {
+    this.errorMessage = '';
+  }
   login(loginForm: NgForm) {
     console.log(loginForm.value);
     this.authService.login(loginForm.value).subscribe({

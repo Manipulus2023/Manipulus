@@ -13,6 +13,7 @@ import { ForgotPasswordRequest } from '../models/reset-password';
   providedIn: 'root'
 })
 export class AuthService {
+ 
 
   jwtHelperService = new JwtHelperService();
   user = new BehaviorSubject<LoggedUser | null> (null);
@@ -46,11 +47,11 @@ export class AuthService {
     if(decodedToken.roles.includes(USER_TYPES.Admin)) {
       const loggedUser = new LoggedUser(decodedToken.sub, decodedToken.roles, accessToken, this.getExpirationDate(decodedToken.exp), "admin");
       localStorage.setItem('userData', JSON.stringify(loggedUser));
-      this.router.navigateByUrl("/admin");
+      this.router.navigateByUrl("/dashboard");
     } else if (decodedToken.roles.includes(USER_TYPES.User)) {
       const loggedUser = new LoggedUser(decodedToken.sub, decodedToken.roles, accessToken, this.getExpirationDate(decodedToken.exp), "user");
       localStorage.setItem('userData', JSON.stringify(loggedUser));
-      this.router.navigateByUrl("/user");
+      this.router.navigateByUrl("/dashboard");
     }
   }
 
