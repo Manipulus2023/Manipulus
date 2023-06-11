@@ -48,26 +48,6 @@ public class User implements Serializable {
             @JoinColumn(name = "role_id")
     })
 
-    /*@Column(nullable = false, updatable = false)
-
-    public User(){
-
-    }
-    public User(String first_name,String last_name,String user_name,String address,String mobile_number, String email,String password,String status,String designation,String group){
-        this.firstName=first_name;
-        this.lastName=last_name;
-        this.userName=user_name;
-        this.address=address;
-        this.mobileNumber=mobile_number;
-        this.email=email;
-        this.password=password;
-        this.status=status;
-        this.designation=designation;
-        this.group=group;
-
-    }*/
-
-
     private Set<Role> roles;
 
     public int getId() {
@@ -156,5 +136,31 @@ public class User implements Serializable {
       return password;
     }
 
+    public User UserRequestMapper(String first_name, String last_name, String user_name, String address, String mobile_number, String email, String password, String status, String designation, Set<Role> roles){
+        this.firstName=first_name;
+        this.lastName=last_name;
+        this.userName=user_name;
+        this.address=address;
+        this.mobileNumber=mobile_number;
+        this.email=email;
+        this.password=password;
+        this.status=status;
+        this.designation=designation;
+        this.roles = roles;
+        return this;
+    }
+
+    public UserResponse UserResponseMapper(String first_name, String last_name, String user_name, String email, String status, String designation){
+        UserResponse response = new UserResponse();
+        response.firstName=first_name;
+        response.lastName=last_name;
+        response.userName=user_name;
+        response.address=address;
+        response.email=email;
+        response.password=password;
+        response.status=status;
+        response.designation=designation;
+        return response;
+    }
 
 }

@@ -3,6 +3,8 @@ package com.Manipulus.arctic.user.controller;
 import com.Manipulus.arctic.auth.helpers.JWTHelper;
 import com.Manipulus.arctic.role.model.Role;
 import com.Manipulus.arctic.user.model.User;
+import com.Manipulus.arctic.user.model.UserRequest;
+import com.Manipulus.arctic.user.model.UserResponse;
 import com.Manipulus.arctic.user.service.UserService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -45,7 +47,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User addUser(@RequestBody User user) {
+    public UserResponse addUser(@RequestBody UserRequest user) {
         return userService.addUser(user);
     }
 
