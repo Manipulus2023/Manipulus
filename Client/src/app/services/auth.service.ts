@@ -13,6 +13,7 @@ import { ForgotPasswordRequest } from '../models/reset-password';
   providedIn: 'root'
 })
 export class AuthService {
+ 
 
   jwtHelperService = new JwtHelperService();
   user = new BehaviorSubject<LoggedUser | null> (null);
