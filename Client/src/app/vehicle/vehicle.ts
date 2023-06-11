@@ -6,4 +6,5 @@ export class Vehicle{
     number_of_passengers!: number;
     active_state!: string;
     vehicle_code!: string;
+    imageapi!:string;
 }

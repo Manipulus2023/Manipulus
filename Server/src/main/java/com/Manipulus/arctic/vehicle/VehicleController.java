@@ -1,10 +1,13 @@
 package com.Manipulus.arctic.vehicle;
 
 import com.Manipulus.arctic.vehicle.model.Vehicle;
+import com.Manipulus.arctic.vehicle.repository.VehicleRepository;
 import com.Manipulus.arctic.vehicle.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -47,8 +50,9 @@ public class VehicleController {
 
     @PostMapping("/{id}/photo")
     public ResponseEntity<String> addPhotoToVehicle(@PathVariable long id, @RequestParam("file") MultipartFile file) throws IOException {
-        return vehicleService.addPhotoToVehicle(id,file);
+        return vehicleService.addPhotoToVehicle(id, file);
     }
+
 
     @PutMapping("/update")
     public ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle) {
