@@ -33,6 +33,7 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptorService } from './services/auth.interceptor.service';
 import { DataTablesModule } from "angular-datatables";
+import { AgreementPdfComponent } from './agreement-pdf/agreement-pdf.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,9 @@ import { DataTablesModule } from "angular-datatables";
     HomeComponent,
     AdminComponent,
     HeaderComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    AgreementPdfComponent,
+    
   ],
   imports: [
     BrowserModule,

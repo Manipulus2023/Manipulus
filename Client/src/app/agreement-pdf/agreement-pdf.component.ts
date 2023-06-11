@@ -11,13 +11,17 @@ import Swal from 'sweetalert2';
 
 
 @Component({
-  selector: 'app-service-agreement',
-  templateUrl: './service-agreement.component.html',
-  styleUrls: ['./service-agreement.component.css']
+  selector: 'app-agreement-pdf',
+  templateUrl: './agreement-pdf.component.html',
+  styleUrls: ['./agreement-pdf.component.css']
 })
 
 
-export class ServiceAgreementComponent implements OnInit{
+export class AgreementPdfComponent implements OnInit{
+
+
+
+  
 
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
@@ -67,12 +71,10 @@ export class ServiceAgreementComponent implements OnInit{
     this.showMeForm = !this.showMeForm
   }
 
+  pdfDownloadLink: string;
 
 
-
-
-
-
+  
 
 
 //...............................................

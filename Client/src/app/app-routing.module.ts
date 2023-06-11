@@ -10,13 +10,14 @@ import { JobCardComponent } from './job-card/job-card.component';
 import { LocationComponent } from './location/location.component';
 import { RepairPartsComponent } from './repair-parts/repair-parts.component';
 import { ServiceAgreementComponent } from './service-agreement/service-agreement.component';
+import { AgreementPdfComponent } from './agreement-pdf/agreement-pdf.component';
 
 
 
 import { SiteVisitComponent } from './site-visit/site-visit.component';
 import { SubLocationComponent } from './sub-location/sub-location.component';
 import { UnitComponent } from './unit/unit.component';
-import { UserGroupComponent } from './user-group/user-group.component';
+import { UserGroupComponent } from './user-group/user-group.component'
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -36,7 +37,7 @@ const routes: Routes = [
   { path: 'location', component: LocationComponent },
   { path: 'repair-parts', component: RepairPartsComponent },
   { path: 'service-agreement', component: ServiceAgreementComponent },
-
+  { path: 'agreement-pdf', component: AgreementPdfComponent },
   
 
   { path: 'site-visit', component: SiteVisitComponent },

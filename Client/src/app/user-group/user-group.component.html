@@ -1,1 +1,78 @@
-<p>user-group works!</p>
+<div class="container mt-4">
+
+    <div class="card">
+        <h1>User Registration</h1>
+
+        <button type="button" class="btn btn-primary mt-4" (click)="toggleFormVisibility()">Add User</button>
+
+        <form *ngIf="isFormVisible">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" class="form-control" id="name" placeholder="Enter Name">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control" id="password" placeholder="Enter Password">
+            </div>
+
+            <div class="form-group">
+                <label for="role">Role</label>
+
+
+
+                <select class="form-control " type="text" [(ngModel)]="role" [ngModelOptions]="{standalone: true}" class="form-control" id="role" placeholder="Enter Role">
+                    <option>Diver</option>
+                    <option>Manager</option>
+                    <option>Technician</option>
+                    <option>Call_Operater</option>
+                  
+                </select>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" class="form-control" id="email" placeholder="Enter Email">
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-4" (click)="save()">Submit</button>
+        </form>
+    </div>
+
+    <div>
+        <div class="container mt-4">
+            <h1>User Table</h1>
+
+            <table class="table">
+                <thead>
+                    <h1 *ngIf="!isResultLoaded">Loading.................</h1>
+
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of UserArray">
+                        <th scope="row">{{user.id}}</th>
+                        <td>{{user.name | uppercase}}</td>
+                        <td>{{user.password}}</td>
+                        <td>{{user.role}}</td>
+                        <td>{{user.email}}</td>
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="setUpdate(user)">Edit</button>
+                            <button type="button" class="btn btn-danger" (click)="setDelete(user)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
