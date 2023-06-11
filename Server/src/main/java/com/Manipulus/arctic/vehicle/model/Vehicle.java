@@ -16,9 +16,6 @@ public class Vehicle implements Serializable {
     @Column(name = "vehicle_name")
     private String vehicle_name;
 
-    @Column(name = "vehicle_image")
-    private String vehicle_image;
-
     @Column(name = "vehicle_number")
     private String vehicle_number;
 
@@ -27,6 +24,12 @@ public class Vehicle implements Serializable {
 
     @Column(name = "active_state")
     private String active_state;
+
+    @Column(name = "vehicle_image", columnDefinition = "longblob")
+    private byte[] vehicle_image;
+
+    @Column(name = "ImageAPI")
+    private String imageapi;
 
     @Column(name = "vehicle_code")
     private String vehicle_code;
@@ -43,13 +46,14 @@ public class Vehicle implements Serializable {
 
     }
 
-    public Vehicle(String vehicle_name, String vehicle_image, String vehicle_number, String number_of_passengers,
+    public Vehicle(String vehicle_name, byte[] vehicle_image,String imageapi, String vehicle_number, String number_of_passengers,
             String active_state, String vehicle_code) {
         this.vehicle_name = vehicle_name;
-        this.vehicle_image = vehicle_image;
         this.vehicle_number = vehicle_number;
         this.number_of_passengers = number_of_passengers;
         this.active_state = active_state;
+        this.vehicle_image = vehicle_image;
+        this.imageapi=imageapi;
         this.vehicle_code = vehicle_code;
     }
 
@@ -61,6 +65,14 @@ public class Vehicle implements Serializable {
         this.id = id;
     }
 
+    public String getImageapi() {
+        return imageapi;
+    }
+
+    public void setImageapi(String imageapi) {
+        this.imageapi = imageapi;
+    }
+
     public String getVehicle_name() {
         return vehicle_name;
     }
@@ -69,11 +81,11 @@ public class Vehicle implements Serializable {
         this.vehicle_name = vehicle_name;
     }
 
-    public String getVehicle_image() {
+    public byte[] getVehicle_image() {
         return vehicle_image;
     }
 
-    public void setVehicle_image(String vehicle_image) {
+    public void setVehicle_image(byte[] vehicle_image) {
         this.vehicle_image = vehicle_image;
     }
 

@@ -10,10 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/job")
-public class JobResource {
+public class JobController {
     private final JobService jobService;
 
-    public JobResource(JobService jobService) {
+    public JobController(JobService jobService) {
         this.jobService = jobService;
     }
 
@@ -26,17 +26,17 @@ public class JobResource {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Job> addCustomer(@RequestBody Job job) {
-        // Add a new job using the jobService
-        Job newJob = jobService.addJob(job);
+    public ResponseEntity<Job> addJob(@RequestBody Job job , @RequestParam("id" )Long id) {
+        // Add a new job using the job  Service
+        Job newJob = jobService.addJob(job, id);
         // Return the newly added job and the status code 201 (CREATED)
         return new ResponseEntity<>(newJob, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Job> updateJob(@RequestBody Job job) {
+    public ResponseEntity<Job> updateJob(@RequestBody Job job, @RequestParam("id" )Long id) {
         // Update an existing job using the jobService
-        Job updateJob = jobService.updateJob(job);
+        Job updateJob = jobService.updateJob(job,id);
         // Return the updated job and the status code 201 (CREATED)
         return new ResponseEntity<>(updateJob, HttpStatus.CREATED);
     }

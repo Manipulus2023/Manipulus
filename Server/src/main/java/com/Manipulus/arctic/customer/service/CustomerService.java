@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +22,9 @@ public class CustomerService {
     // Add a new customer
     public Customer addCustomer(Customer customer){
         // Generate a unique customer code
+        customer.setCreatedAt(LocalDateTime.now());
         customer.setCustomerCode(UUID.randomUUID().toString());
+        customer.setActive_status(true);
         // Save the new customer to the database
         return CustomerRepository.save(customer);
     }
