@@ -1,8 +1,8 @@
 export class User
 {
   id!:Number;
-  firstName:string;
-  lastName:string;
+  first_name:string;
+  last_name:string;
   userName!:string;
   address!:string;
   mobileNumber!:string;

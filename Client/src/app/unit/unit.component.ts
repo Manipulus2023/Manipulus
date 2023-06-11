@@ -66,7 +66,6 @@ export class UnitComponent implements OnInit, OnDestroy {
   }
 
   onUnitAdd() {
-    console.log(this.addUnitForm.value);
     this.unitService.addUnit(this.addUnitForm.value).subscribe(res =>
       {
         if (res.id > 0) {
@@ -76,21 +75,12 @@ export class UnitComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDeleteCustomer() {
+  onDeleteUnit() {
     this.unitService.deleteUnit(this.deleteUnit.id).subscribe(res=>{
       if(res == null) {
         this.getUnitList();
       }
     });
-  }
-
-  onAddUnitSubmit() {
-    // if (this.addUnitForm.invalid) {
-    //   return;
-    // }
-    // const newUnit = this.addUnitForm.value;
-    // this.units.push(newUnit );
-    // this.closeAddUnitModal();
   }
 
   // onEditUnitSubmit() {
@@ -110,11 +100,6 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   openAddUnitModal() {
     this.isAddUnitModalOpen = true;
-  }
-
-  closeAddUnitModal() {
-    // this.isAddUnitModalOpen = false;
-    // this.addUnitForm.reset();
   }
 
   // openEditUnitModal(unit: any) {
@@ -156,10 +141,10 @@ export class UnitComponent implements OnInit, OnDestroy {
     button.setAttribute('data-bs-toggle', 'modal');
 
     // If mode is 'edit', set data-bs-target attribute to edit modal and assign unit to editUnit property
-    // if (mode === 'edit') {
-    //   button.setAttribute('data-bs-target', '#exampleModal2');
-    //   this.editUnit = unit;
-    // }
+    if (mode === 'edit') {
+      button.setAttribute('data-bs-target', '#exampleModal2');
+      this.editUnit = unit;
+    }
 
     // If mode is 'delete', set data-bs-target attribute to delete modal and assign unit to deleteUnit property
     if (mode === 'delete') {

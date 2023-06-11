@@ -78,7 +78,6 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onUserAdd() {
-    console.log(this.addUserForm.value);
     this.userService.addUser(this.addUserForm.value).subscribe(res => {
       console.log(res);
     });
@@ -154,10 +153,10 @@ export class UserComponent implements OnInit, OnDestroy {
     button.setAttribute('data-bs-toggle', 'modal');
 
     // If mode is 'edit', set data-bs-target attribute to edit modal and assign user to edituser property
-    // if (mode === 'edit') {
-    //   button.setAttribute('data-bs-target', '#exampleModal2');
-    //   this.edituser = user;
-    // }
+    if (mode === 'edit') {
+      button.setAttribute('data-bs-target', '#exampleModal2');
+      this.editUser = user;
+    }
 
     // If mode is 'delete', set data-bs-target attribute to delete modal and assign user to deleteuser property
     if (mode === 'delete') {
