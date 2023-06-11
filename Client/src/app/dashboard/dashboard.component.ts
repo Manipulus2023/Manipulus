@@ -24,10 +24,12 @@ export class DashboardComponent implements OnInit {
 "Breakdowns",
 "Upgrades",
 "Remove"
-]
+];
+addForm: NgForm;
   ngOnInit(): void {
     this.getCustomers();
     this.getJobs();
+
   }
 
 
@@ -49,12 +51,12 @@ export class DashboardComponent implements OnInit {
     this.jobService.getJobList().subscribe(
       (response: Job[]) =>{
         this.jobs = response;
-     
+
         console.log(this.jobs);
       },
       (error: HttpErrorResponse) =>
          alert(error.message)
-        
+
       ); }}
 
       public filterJobs(event: Event): void {
@@ -73,7 +75,7 @@ export class DashboardComponent implements OnInit {
       (response: Customer) => {
         console.log(response);
         this.getCustomers();
-       
+
 
         addForm.reset();
         // window.location.reload();
@@ -92,7 +94,7 @@ export class DashboardComponent implements OnInit {
   //     (response: Job) => {
   //       console.log(response);
   //       this.getJobs();
-      
+
   //       addForm.reset();
   //     },
   //     (error: HttpErrorResponse) => {

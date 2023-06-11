@@ -8,22 +8,22 @@ import { Observable } from "rxjs";
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl=environment.baseurl;
+  private baseUrl = environment.baseurl;
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  public getUserList(): Observable<User[]>{
-    return this.httpClient.get<User[]>(`${this.baseUrl}/user`);
+  public getUserList(): Observable<User[]> {
+    return this.httpClient.get<User[]>(`${this.baseUrl}/users`);
   }
 
-   public addUser(user:User): Observable<User>{
-    return this.httpClient.post<User>(`${this.baseUrl}/user` ,user);
+  public addUser(user: User): Observable<User> {
+    return this.httpClient.post<User>(`${this.baseUrl}/users`, user);
   }
 
-  public updateUser(user:User): Observable<User>{
-    return this.httpClient.put<User>(`${this.baseUrl}/user/update` ,user);
+  public updateUser(userId: Number, user: User): Observable<User> {
+    return this.httpClient.put<User>(`${this.baseUrl}/users/${userId}`, user);
   }
-  public deleteUser(userId:Number): Observable<void>{
-    return this.httpClient.delete<void>(`${this.baseUrl}/user/delete/${userId}` );
+  public deleteUser(userId: Number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseUrl}/users/${userId}`);
   }
 }

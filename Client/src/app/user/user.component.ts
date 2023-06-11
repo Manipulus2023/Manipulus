@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from './user';
 import { UserService } from './user.service';
 
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -20,22 +21,7 @@ export class UserComponent implements OnInit, OnDestroy {
   selectedUser: any;
   key: string;
 
-
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
-    // this.addUserForm = this.formBuilder.group({
-    //   // define form controls with validators
-    //   firstName: ['', Validators.required],
-    //   lastName: ['', Validators.required],
-    //   userName: ['', Validators.required],
-    //   address: ['', Validators.required],
-    //   mobileNumber: [''],
-    //   emailAddress: [''],
-    //   password: [''],
-    //   status: [''],
-    //   designation: [''],
-    //   group: [''],
-    //   userRole: [''],
-    // });
     this.searchForm = this.formBuilder.group({
       key: ['']
     });
@@ -45,14 +31,17 @@ export class UserComponent implements OnInit, OnDestroy {
     this.getUserList();
     this.initializeUserForm();
   }
+
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
   }
+
   getUserList() {
     this.userSubscription = this.userService.getUserList().subscribe(res => {
       this.users = res;
     });
   }
+
   initializeUserForm() {
     this.addUserForm = this.formBuilder.group({
       firstName: this.formBuilder.control('', Validators.required),
@@ -68,14 +57,15 @@ export class UserComponent implements OnInit, OnDestroy {
       userRole: this.formBuilder.control(''),
 
     });
-
   }
+
   onUserAdd() {
     console.log(this.addUserForm.value);
     this.userService.addUser(this.addUserForm.value).subscribe(res => {
       console.log(res);
     });
   }
+
   onAddUserSubmit() {
     if (this.addUserForm.invalid) {
       return;
@@ -123,6 +113,7 @@ export class UserComponent implements OnInit, OnDestroy {
       userRole: user.userRole,
     });
   }
+
   closeEditUserModal() {
     this.isEditUserModalOpen = false;
     this.addUserForm.reset();

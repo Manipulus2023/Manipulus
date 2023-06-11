@@ -112,6 +112,9 @@ public class UserService implements IUserService{
                 adminUser.setEmail("admin.user@test.lk");
                 adminUser.setPassword(getEncodedPassword("admin@pass"));
                 adminUser.setRoles(adminRoles);
+                adminUser.setMobileNumber("011255444");
+                adminUser.setDesignation("Admin");
+                adminUser.setStatus("1");
                 this.userRepository.save(adminUser);
             }
 
@@ -130,6 +133,9 @@ public class UserService implements IUserService{
                 user.setEmail("nethmini.kavindya@test.lk");
                 user.setPassword(getEncodedPassword("neth@pass"));
                 user.setRoles(userRoles);
+                user.setMobileNumber("011255444");
+                user.setDesignation("User");
+                user.setStatus("1");
                 userRepository.save(user);
             }
         }
