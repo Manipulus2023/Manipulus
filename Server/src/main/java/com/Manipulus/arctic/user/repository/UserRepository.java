@@ -13,6 +13,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class UserRepository implements IUserRepository {
+
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -30,7 +32,6 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public void flush() {
-
     }
 
     @Override
@@ -65,7 +66,10 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public User getById(Integer s) {
-        return null;
+
+        return entityManager.createQuery("SELECT u FROM User u WHERE u.userId = :userId", User.class)
+                .setParameter("userId", s)
+                .getSingleResult();
     }
 
     @Override
@@ -144,7 +148,9 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void deleteById(Integer s) {
+    public void deleteById(Integer id) {
+        entityManager.createQuery("DELETE FROM User u WHERE u.userId = :id", User.class)
+                .setParameter("userId", id);
 
     }
 

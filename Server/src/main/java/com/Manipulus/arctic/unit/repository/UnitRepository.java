@@ -1,7 +1,7 @@
 package com.Manipulus.arctic.unit.repository;
 
 import com.Manipulus.arctic.unit.model.Unit;
-import com.Manipulus.arctic.user.model.User;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.domain.Example;

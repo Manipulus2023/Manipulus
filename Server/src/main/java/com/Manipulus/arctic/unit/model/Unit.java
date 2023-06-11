@@ -69,7 +69,7 @@ public class Unit implements Serializable {
         this.status=status;
     }*/
 
-    public long getId() {
+    public int getId() {
         return unitId;
     }
 

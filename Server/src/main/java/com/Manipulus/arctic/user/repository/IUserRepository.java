@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 @EnableJpaRepositories
 public interface IUserRepository extends JpaRepository<User, Integer> {
     abstract User findUserByEmail(String email);
-    abstract User findUserByUserName(String userName);
+    abstract User findUserByUserName(String username);
+
 }

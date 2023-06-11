@@ -9,7 +9,6 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,10 +33,10 @@ public class UserController {
         this.jwtHelper = jwtHelper;
     }
 
-    @PostConstruct
+    /*@PostConstruct
     public void initRolesAndUsers() {
         userService.initRolesAndUser();
-    }
+    }*/
 
     @PostMapping({"/register"})
     @PreAuthorize("hasAuthority('Admin')")
@@ -45,7 +44,7 @@ public class UserController {
         return userService.registerNewUser(user);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
@@ -89,7 +88,7 @@ public class UserController {
             for (Role role : roles) {
                 rolesList.add(role.getRoleName());
             }
-            String jwtAccessToken = jwtHelper.generateAccessToken(user.getUsername(), rolesList);
+            String jwtAccessToken = jwtHelper.generateAccessToken(user.getUserName(), rolesList);
             response.setContentType("application/json");
             new ObjectMapper().writeValue(response.getOutputStream(), jwtHelper.getTokenMap(jwtAccessToken, jwtRefreshToken));
         } else {
