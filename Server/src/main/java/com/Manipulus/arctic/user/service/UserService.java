@@ -56,8 +56,29 @@ public class UserService implements IUserService{
         return null;
     }
 
-    public User updateUser(int id, User user){
-        return userRepository.save(user);
+    public UserResponse updateUser(int id, UserRequest user) {
+        User existingUser = findUserById(id);
+        if(existingUser != null) {
+            Set<Role> userRoles = new HashSet<>();
+
+            existingUser.setFirst_name(user.firstName);
+            existingUser.setLast_name(user.lastName);
+            existingUser.setPassword(getEncodedPassword(user.password));
+            existingUser.setEmail(user.email);
+            existingUser.setDesignation(user.designation);
+            existingUser.setMobileNumber(user.mobileNumber);
+
+            Role role = roleRepository.getById(user.role);
+            if(role != null)
+            {
+                userRoles.add(role);
+                existingUser.setRoles(userRoles);
+            }
+            User updatedUser = userRepository.save(existingUser);
+            UserResponse response = updatedUser.UserResponseMapper(updatedUser.getFirst_name(),updatedUser.getLast_name(),updatedUser.getUserName(),updatedUser.getEmail(),updatedUser.getStatus(),updatedUser.getDesignation());
+            return response;
+        }
+        throw new UserNotFoundException(" user by id"+ id + "was not found");
     }
     public User findUserById(int id){
         return userRepository.findById(id)

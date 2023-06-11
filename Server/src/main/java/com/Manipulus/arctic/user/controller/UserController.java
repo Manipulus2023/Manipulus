@@ -65,7 +65,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin')")
-    public User updateUser(@PathVariable("id") int id, @RequestBody User user) {
+    public UserResponse updateUser(@PathVariable("id") int id, @RequestBody UserRequest user) {
         return userService.updateUser(id, user);
     }
 
