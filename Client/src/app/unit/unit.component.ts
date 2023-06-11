@@ -26,8 +26,20 @@ export class UnitComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder, private unitService: UnitService) {}
 
   ngOnInit() {
+    this.loadDataTableConfigs();
     this.getUnitList();
     this.initializeUnitForm();
+
+  }
+
+  loadDataTableConfigs() {
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      destroy: true,
+    };
+    this.dtoptions = {
+      retrieve: true,
+    };
   }
 
   getUnitList(){
@@ -63,6 +75,14 @@ export class UnitComponent implements OnInit, OnDestroy {
           this.getUnitList();
         }
       });
+  }
+
+  onDeleteCustomer() {
+    this.unitService.deleteUnit(this.deleteUnit.id).subscribe(res=>{
+      if(res == null) {
+        this.getUnitList();
+      }
+    });
   }
 
   onAddUnitSubmit() {
@@ -137,17 +157,15 @@ export class UnitComponent implements OnInit, OnDestroy {
     button.setAttribute('data-bs-toggle', 'modal');
 
     // If mode is 'edit', set data-bs-target attribute to edit modal and assign unit to editUnit property
-    if (mode === 'edit') {
-      button.setAttribute('data-bs-target', '#exampleModal2');
-      this.editUnit = unit;
-    }
+    // if (mode === 'edit') {
+    //   button.setAttribute('data-bs-target', '#exampleModal2');
+    //   this.editUnit = unit;
+    // }
 
     // If mode is 'delete', set data-bs-target attribute to delete modal and assign unit to deleteUnit property
     if (mode === 'delete') {
       button.setAttribute('data-bs-target', '#exampleModal3');
       this.deleteUnit = unit;
-      console.log(unit);
-
     }
 
     // Append button to main container element and trigger a click event

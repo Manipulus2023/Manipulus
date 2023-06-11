@@ -24,10 +24,6 @@ export class UnitService {
     return this.httpClient.put<Unit>(`${this.baseUrl}/units/${unitId}`, unit);
   }
   public deleteUnit(unitId: Number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.baseUrl}/unit/delete/${unitId}`);
+    return this.httpClient.delete<void>(`${this.baseUrl}/units/${unitId}`);
   }
-
-
-
-
 }
