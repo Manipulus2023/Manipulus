@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @ToString
 @Entity
 @Table(name = "site_visit")
@@ -46,7 +46,9 @@ public class SiteVisit implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "siteVisit")
   private List<Vehicle> vehicles;
 
-
+public SiteVisit(){
+    super();
+}
    public String getSiteVisitCode() {
         return siteVisitCode;
     }
@@ -63,7 +65,7 @@ public class SiteVisit implements Serializable {
             this.startSiteVisit=startSiteVisit;
             this.dateRange=dateRange;
             this.state=state;
-           // this.assignedVehicle=assignedVehicle;
+           this.assignedVehicle=assignedVehicle;
             this.siteVisitCode=siteVisitCode;
             this.vehicles = vehicles;
         }
@@ -136,7 +138,7 @@ public class SiteVisit implements Serializable {
                     ", startSiteVisit "+ startSiteVisit+'\''+
                     ", DateRange "+ dateRange+'\''+
                     ", state" +state+'\''+
-
+                    ", AssignedVehicle "+ assignedVehicle+'\''+
                     '}';
         }
 

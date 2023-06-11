@@ -2,10 +2,13 @@
 <!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GatePass" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="72b252bd-dc5e-41dd-8706-54d2e8be62a0">
     <property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-    <parameter name="siteVisitId" class="java.lang.Long"/>
-    <parameter name="scheduledDate" class="java.sql.Date"/>
-    <parameter name="endDate" class="java.sql.Date"/>
+    <parameter name="sitVisitId" class="java.lang.Long"/>
+
+
     <parameter name="jobId" class="java.lang.Long"/>
+    <parameter name="scheduledDate" class="java.util.Date" isForPrompting="false"/>
+    <parameter name="endDate" class="java.util.Date" isForPrompting="false"/>
+
     <queryString>
         <![CDATA[]]>
     </queryString>
@@ -89,22 +92,22 @@
             <textField>
                 <reportElement x="20" y="7" width="360" height="30" uuid="bcb9992a-8eb3-4dfd-bdb6-90c66a9ade26"/>
                 <textElement textAlignment="Justified"/>
-                <textFieldExpression><![CDATA["Site Visit ID : "+$P{siteVisitId}]]></textFieldExpression>
+                <textFieldExpression><![CDATA["Site Visit ID    :    "+$P{sitVisitId}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="20" y="47" width="360" height="30" uuid="670543f7-18e5-408c-a8f7-00bcb4f9eeca"/>
                 <textElement textAlignment="Justified"/>
-                <textFieldExpression><![CDATA["Job ID : "+$P{jobId}]]></textFieldExpression>
+                <textFieldExpression><![CDATA["Job ID    :    "+$P{jobId}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="20" y="87" width="360" height="30" uuid="b5aa3eb1-bb71-46f4-83c2-178f0a17d802"/>
                 <textElement textAlignment="Justified"/>
-                <textFieldExpression><![CDATA["Scheduled Date : "+$P{scheduledDate}]]></textFieldExpression>
+                <textFieldExpression><![CDATA["Scheduled Date    :    "+$P{scheduledDate}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="20" y="127" width="360" height="30" uuid="8ef53d13-10a2-4c2c-9034-6a45e3f2cbc6"/>
                 <textElement textAlignment="Justified"/>
-                <textFieldExpression><![CDATA["End Date : "+$P{endDate}]]></textFieldExpression>
+                <textFieldExpression><![CDATA["End Date   :     "+$P{endDate}]]></textFieldExpression>
             </textField>
         </band>
     </detail>

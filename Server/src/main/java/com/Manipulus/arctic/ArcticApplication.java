@@ -1,5 +1,6 @@
 package com.Manipulus.arctic;
 
+import com.Manipulus.arctic.siteVisit.service.SiteVisitService;
 import net.sf.jasperreports.engine.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,6 +23,7 @@ public class ArcticApplication {
 		SpringApplication.run(ArcticApplication.class, args);
 
 	}
+	
 	@Bean
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -36,4 +40,6 @@ public class ArcticApplication {
 		return new CorsFilter(urlBasedCorsConfigurationSource);
 
 	}
+
+
 }
