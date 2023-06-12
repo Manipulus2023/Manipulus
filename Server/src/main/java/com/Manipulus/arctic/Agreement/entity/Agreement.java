@@ -25,7 +25,7 @@ public class Agreement {
     @Column(name="expired_date",length =10)
     private String expired_date;
 
-    @Column(name="customerId",length = 10)
+    @Column(name="customerId",length = 30)
     private String NIC;
 
 
