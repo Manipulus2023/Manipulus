@@ -1,5 +1,6 @@
 package com.Manipulus.arctic.vehicle.model;
 
+import com.Manipulus.arctic.siteVisit.siteVisit.SiteVisit;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -33,6 +34,12 @@ public class Vehicle implements Serializable {
 
     @Column(name = "vehicle_code")
     private String vehicle_code;
+
+    @ManyToOne
+    @JoinColumn(name = "site_visit_id")
+    private SiteVisit siteVisit;
+
+
 
     public String getVehicle_code() {
         return vehicle_code;

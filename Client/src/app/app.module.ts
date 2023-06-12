@@ -34,6 +34,7 @@ import { RouterModule } from '@angular/router';
 import { AuthInterceptorService } from './services/auth.interceptor.service';
 import { DataTablesModule } from "angular-datatables";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +61,8 @@ import { DataTablesModule } from "angular-datatables";
     HomeComponent,
     AdminComponent,
     HeaderComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+
   ],
   imports: [
     BrowserModule,

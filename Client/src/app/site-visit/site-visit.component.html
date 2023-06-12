@@ -1,1 +1,356 @@
-<p>site-visit works!</p>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <a class="navbar-brand" href="#" style="color:white;" >Site Visit</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+       <ul class="navbar-nav mr-auto">
+
+        <!-- Add "add site Visits" button -->
+          <li class="nav-item active">
+            <a class="nav-link" (click)="onOpenModal(null,'add')" data-toggle="modal" data-target="#exampleModal"  style="background-color: rgb(149, 158, 167); border-color: rgb(80, 9, 15);">Add SiteVisit <span class="sr-only"> </span></a>
+          </li>
+
+        <!-- Add Search Bar -->
+          <li class="nav-item">
+       <form class="form-inline my-2 my-lg-0 ml-auto">
+        <input type="search" (ngModelChange)="searchSiteVisits(key.value)" #key="ngModel" ngModel
+         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search siteVisits..." required>  
+        </form>
+        </li>
+       </ul>
+    </div>
+  </nav>
+<div class="container"id="main-container">
+    <div class="row">
+
+        <!-- Add Total site visit card -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-pattern" style="background-color: rgb(255, 255, 255);">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class="fa fa-archive text-primary h4 ml-3"></i>
+                    </div>
+                    <h5  class="font-size-20 mt-0 pt-1">{{ totalSiteVisitsCount}}</h5>
+                    <p class="text-muted mb-0">Total Site Visits</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Add Completed site visit card -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-pattern" style="background-color: rgb(255, 255, 255);">
+              <div class="card-body">
+                <div class="float-right">
+                  <i class="fa fa-th text-primary h4 ml-3"></i>
+                </div>
+                <h5 class="font-size-20 mt-0 pt-1">{{ completedSiteVisitsCount }}</h5>
+                <p class="text-muted mb-0">Completed Site Visits</p>
+              </div>
+            </div>
+          </div>
+          
+        <!-- Add incompleted site visit card -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-pattern" style="background-color: rgb(255, 255, 255);">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class="fa fa-file text-primary h4 ml-3"></i>
+                    </div>
+                    <h5 class="font-size-20 mt-0 pt-1">{{incompleteSiteVisitsCount}}</h5>
+                    <p class="text-muted mb-0">Pending Site Visits</p>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-xl-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group mb-0">
+                            <label>Search</label>
+                            <div class="input-group mb-0">
+                                <input type="search" (ngModelChange)="searchSiteVisits(key.value)" #key="ngModel"ngModel
+                                class="form-control" placeholder="Search..." aria-describedby="siteVisit-search-addon" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-danger" type="button" id="siteVisit-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- end row -->
+
+    <!-- Create the site visit table -->
+    <div class="row">
+        <div *ngFor="let siteVisit of siteVisits; let i = index" class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive siteVisit-list">
+                        <table class="table siteVisit-table table-centered table-nowrap">
+                            <!-- Create header of the table -->
+                            <thead> 
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Site Visits</th>
+                                    <th scope="col">Scheduled Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Team</th>
+                                    <th scope="col">Vehicle</th>
+                                    <th scope="col">End Date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <!-- Create body of the table -->
+                            <tbody>
+                                <tr>
+                                    <th scope="row">{{i+1}}</th>
+                                    <td>{{siteVisit?.siteVisitId}}</td>
+                                    
+                                    <td>{{siteVisit?.scheduledDate | date: 'yyyy-MM-dd'}}</td>
+
+                                    <td>
+                                        <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i> {{siteVisit?.state}}</span>
+                                    </td>
+                                     <td>{{ siteVisit?.assignedTeamId }}</td> 
+                                    
+
+                                    <td>{{siteVisit?.assignedVehicle}}</td> 
+                                    <!-- <td>
+                                        <ul>
+                                            <li *ngFor="let vehicle of siteVisit.vehicles">{{ vehicle.id }}</li>
+
+                                          <li *ngFor="let vehicle of siteVisit.vehicles">{{ Vehicle. vehicle_name }}</li> 
+                                        </ul>
+                                        </td> -->
+                                    <td>{{siteVisit?.dateRange | date: 'yyyy-MM-dd'}}</td>
+                                    <td>
+                                        <div class="action">
+                                            <td>  <a (click)="onOpenModal(siteVisit,'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" style="background-color: rgb(10, 80, 25); border-color: rgb(9, 80, 22);"> <i class="fa fa-pencil"></i></a></td>
+                                           <td> <a (click)="onOpenModal(siteVisit,'delete')" class="btn btn-secondary tooltips" data-placement="top" title="" data-original-title="delete" style="background-color: rgb(134, 122, 122); border-color: rgb(116, 106, 106);"> <i class="fa fa-remove"></i></a></td>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- end project-list -->
+    
+    
+    
+<!-- Add Site Visit Modal -->
+<div class="modal fade" id="addSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="addSiteVisitModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           <div class="modal-header">
+              <h5 class="modal-title" id="addSiteVisitModalLabel">Add SiteVisit</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+           </div>
+           <div class="modal-body">
+              <form #addForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)">
+           
+            <div class="form-group">
+                 <label for="scheduledDate">Scheduled Date</label>
+                 <input type="date" ngModel name="scheduledDate" class="form-control" id="email" placeholder="scheduledDate" required>
+              </div>
+              <div class="form-group">
+                 <label for="assignedTeamId">Assigned Team Id</label>
+                 <input type="text" ngModel name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId" required>
+              </div>
+              
+                  
+                <table class="table siteVisit-table table-centered table-nowrap">
+                    
+                    <tbody>
+                        <tr>
+                                <div class="form-group">
+                                    <label for="assignedVehicle">Available Vehicles</label>
+                                    <select id="vehicleDropdown" [(ngModel)]="selectedVehicle">
+                                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }}  |   Name: {{ vehicle.vehicle_name }}  |  NoP: {{ vehicle.number_of_passengers }}  |    Ac_State : {{vehicle.active_state}}</option>
+                                    </select>
+                                </div>
+                                    
+                        </tr>
+                        <tr>
+                                <div class="form-group">
+                                    <tr>
+                                <label for="assignedVehicle">Assign Vehicle</label>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        <label for="assignedVehicle">Vehicle No:</label>
+                                        </td>
+                                        <td>
+                                        <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="assignedVehicle" required>
+                                        </td>
+                                </tr>
+                            </div>
+                                  
+                       </tr>
+                    </tbody>
+            </table>
+
+                
+              <div class="form-group">
+                 <label for="dateRange">End Date</label>
+                 <input type="date" ngModel name="dateRange" class="form-control" id="dateRange" placeholder="dateRange" required>
+              </div>
+              <!-- <div class="form-group">
+                <label for="state">Status</label>
+                <input type="text" ngModel name="state" class="form-control" id="state" placeholder="state" required>
+             </div> -->
+
+             <div class="form-group">
+                <label for="state">Status</label>
+                <select id="state" [(ngModel)]="state" name="state" class="form-control" required>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+             
+<!-- EDIT VEHICLE ACTIVE_STATE -->
+
+<!-- SAVE BUTTON -->
+              <div class="modal-footer">
+                 <button type="button" id="add-siteVisit-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                 <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save </button>
+              </div>
+              </form>
+           </div>
+        </div>
+      </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="updateSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="siteVisitEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           <div class="modal-header">
+              <h5 class="modal-title" id="updateSiteVisitModalLabel">Edit Site Visit {{editSiteVisits?.siteVisitId}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+           </div>
+
+           <div class="modal-body">
+              <form #editForm="ngForm">
+                
+                <input type="hidden" ngModel="{{editSiteVisits?.siteVisitId}}" name="siteVisitId" class="form-control" id="SiteVisitId" placeholder="siteVisitId">
+
+                 <div class="form-group">
+                    <label for="scheduledDate">Scheduled Date</label>
+                    <input type="date" ngModel="{{editSiteVisits?.scheduledDate}}" name="scheduledDate" class="form-control" id="scheduledDate" placeholder="scheduledDate">
+                 </div>
+                 <div class="form-group">
+                    <label for="assignedTeamId">Assigned Team Id</label>
+                    <input type="text" ngModel="{{editSiteVisits?.assignedTeamId}}" name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId">
+                 </div>
+                 <!-- <div class="form-group">
+                    <label for="assignedVehicle">Assigned Vehicle</label>
+                    <input type="text" ngModel="{{editSiteVisits?.vehicles}}" name="assignedVehicle" class="form-control" id="assignedVehicle" name="assignedVehicle" placeholder="assignedVehicle">
+                 </div> -->
+
+                 <table class="table siteVisit-table table-centered table-nowrap">
+                    
+                    <tbody>
+                        <tr>
+                                <div class="form-group">
+                                    <label for="assignedVehicle">Available Vehicles</label>
+                                    <select id="vehicleDropdown" [(ngModel)]="selectedVehicle">
+                                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }}  |   Name: {{ vehicle.vehicle_name }}  |  NoP: {{ vehicle.number_of_passengers }}  |    Ac_State : {{vehicle.active_state}}</option>
+                                    </select>
+                                </div>
+                                    
+                        </tr>
+                        <tr>
+                                <div class="form-group">
+                                    <tr>
+                                <label for="assignedVehicle">Assign Vehicle</label>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        <label for="assignedVehicle">Vehicle No:</label>
+                                        </td>
+                                        <td>
+                                        <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="assignedVehicle" required>
+                                        </td>
+                                </tr>
+                            </div>
+                                  
+                       </tr>
+                    </tbody>
+            </table>
+                     
+
+                 <div class="form-group">
+                    <label for="dateRange">End Date</label>
+                    <input type="date" ngModel="{{editSiteVisits?.dateRange}}" name="dateRange" class="form-control" id="dateRange" placeholder="dateRange">
+                 </div>
+                 <!-- <div class="form-group">
+                    <label for="state">Status</label>
+                    <input type="text" ngModel="{{editSiteVisits?.state}}" name="state" class="form-control" id="state" placeholder="state">
+                 </div> -->
+                 <div class="form-group">
+                    <label for="state">Status</label>
+                    <select id="state" [(ngModel)]="state" name="state" class="form-control" required>
+                      <option value="Pending">Pending</option>
+                      <option value="Completed">Completed</option>
+                    </select>
+                  </div>
+                 <div class="modal-footer">
+                    <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                    <button (click)="onUpdateSiteVisit(editForm.value)" data-dismiss="modal" class="btn btn-primary">
+                        Save changes
+                      </button>
+                      <p *ngIf="!editSiteVisits?.siteVisitId" class="text-danger">Please enter a siteVisitId.</p>
+                      
+                 </div>
+              </form>
+           </div>
+        </div>
+     </div>
+</div>
+
+<!-- Delete Modal -->
+    <div class="modal fade" id="deleteSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModelLabel">Delete SiteVisit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete siteVisit {{deleteSiteVisits?.siteVisitId}}?</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button (click)="deleteSiteVisits?.siteVisitId && onDeleteSiteVisit(deleteSiteVisits.siteVisitId)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+
+                    </div>
+                </div>
+           </div>
+        </div>
+    </div>
+
+<!-- Assign Vehicle Modal -->
+
+
+
+     
+  
+            
+  
+

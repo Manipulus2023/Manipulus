@@ -1,0 +1,34 @@
+@import '~bootstrap/dist/css/bootstrap.css';
+@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css';
+
+body{
+    background:#f3f3f3;
+    margin-top:20px;
+    color: #616f80;
+}
+.card {
+   
+    border: none;
+    margin-bottom: 24px;
+    -webkit-box-shadow: 0 0 13px 0 rgba(134, 64, 17, 0.44);
+    box-shadow: 0 0 13px 0 rgba(4, 4, 59, 0.44);
+}
+
+.avatar-xs {
+    height: 2.3rem;
+    width: 2.3rem;
+}
+.navbar {
+    margin-bottom: 30px;
+    width: 99%;
+    padding-left: 2%;
+    padding-right: 2%;
+
+  }
+.nav-link{
+    border-color: #616f80;
+    box-shadow: 0 0 13px 0 rgba(56, 56, 59, 0.44);
+   
+    width: 7rem;
+
+}
