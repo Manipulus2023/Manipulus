@@ -36,6 +36,8 @@ public class AuthConfiguration {
         http.cors().and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeHttpRequests().requestMatchers("/refresh-token/**").permitAll();
+        http.authorizeHttpRequests().requestMatchers("/vehicle/{id}/photo**").permitAll();
+        http.authorizeHttpRequests().requestMatchers("/vehicle/**").permitAll();
         http.authorizeHttpRequests().requestMatchers("/forgot-password/**").permitAll();
         http.authorizeHttpRequests().requestMatchers("/location/add**").permitAll();
         http.authorizeHttpRequests().anyRequest().authenticated();
