@@ -11,7 +11,7 @@
     </header>
 
     <div class="row mt-4">
-        <div class="col-md-4" *ngFor="let AgreementItem of AgreementArray" >
+        <div class="col-md-4" *ngFor="let AgreementItem of AgreementArray">
             <div class="card mb-4">
                 <div class="card-body">
 
@@ -22,6 +22,16 @@
                     <div>
                         <p class="card-text"><strong>Customer NIC:</strong> {{ AgreementItem.nic }}</p>
                     </div>
+
+                    <div>
+                        <button type="button" class="btn btn-primary" (click)="generateAndPreviewPdf()">Generate PDF</button>
+
+                    </div>
+
+                    <div *ngIf="pdfUrl">
+                        <object [data]="pdfUrl" type="application/pdf" width="100%" height="500px"></object>
+                    </div>
+
                     <button type="button" class="btn btn-outline-primary" (click)="passIdForGeneratePdf(AgreementItem)" (click)="navigateToUrl('http://localhost:8080/pdf')">
                         <img src="../../assets/Icon/Customer/pdf2.gif" alt="Bootstrap" width="20" height="20" />
                     </button>

@@ -19,6 +19,11 @@ import Swal from 'sweetalert2';
 
 export class ServiceAgreementComponent implements OnInit{
 
+
+
+  
+
+
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
   ngOnInit(): void {
@@ -126,6 +131,8 @@ export class ServiceAgreementComponent implements OnInit{
     this.getAllNIC();
 
   }
+
+
 
 
 
