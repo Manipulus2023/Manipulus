@@ -11,6 +11,7 @@ import { Unit } from './unit';
 })
 export class UnitComponent implements OnInit, OnDestroy {
   addUnitForm: FormGroup;
+  searchForm: FormGroup;
   unitSubscription: Subscription;
   units: Unit[] = [];
   isAddUnitModalOpen = false;
@@ -18,12 +19,17 @@ export class UnitComponent implements OnInit, OnDestroy {
   selectedUnit: any;
   public editUnit!: Unit;
   public deleteUnit!: Unit;
+  key: string;
 
   //Data Table configs
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
 
-  constructor(private formBuilder: FormBuilder, private unitService: UnitService) {}
+  constructor(private formBuilder: FormBuilder, private unitService: UnitService) {
+    this.searchForm = this.formBuilder.group({
+      key: ['']
+    });
+  }
 
   ngOnInit() {
     this.loadDataTableConfigs();
@@ -83,41 +89,9 @@ export class UnitComponent implements OnInit, OnDestroy {
     });
   }
 
-  // onEditUnitSubmit() {
-  //   if (this.editUnitForm.invalid) {
-  //     return;
-  //   }
-
-  // const updatedUnit = this.editUnitForm.value;
-  // // Update the selected unit in the list
-  // const index = this.units.findIndex(unit => unit === this.selectedUnit);
-  // if (index !== -1) {
-  //   this.units[index] = updatedUnit;
-  // }
-
-  //   this.closeEditUnitModal();
-  // }
-
   openAddUnitModal() {
     this.isAddUnitModalOpen = true;
   }
-
-  // openEditUnitModal(unit: any) {
-  //   this.isEditUnitModalOpen = true;
-  //   this.selectedUnit = unit;
-  //   // Pre-fill the edit form with the selected unit's data
-  //  // this.editUnitForm.patchValue({
-  //   unit_name: unit.unit_name,
-  //   item_name: unit.item_name,
-  //     // Update other customer fields
-  //   });
-  // }
-
-  // closeEditUnitModal() {
-  //   this.isEditUnitModalOpen = false;
-  //   this.editUnitForm.reset();
-  //   this.selectedUnit = null;
-  // }
 
   searchUnit() {
     //const searchKey = this.searchForm.value.key;

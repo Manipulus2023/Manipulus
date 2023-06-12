@@ -27,7 +27,6 @@ public class UserService implements IUserService{
         this.roleRepository = roleRepository;
     }
 
-
     @Autowired
     private RoleDao roleDao;
 

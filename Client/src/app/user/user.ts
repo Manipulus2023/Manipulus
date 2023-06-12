@@ -1,6 +1,6 @@
 export class User
 {
-  id!:Number;
+  id!:number;
   first_name:string;
   last_name:string;
   userName!:string;
@@ -11,6 +11,5 @@ export class User
   status!:string;
   designation!:string;
   group!:string;
-  userRole!:string
-
+  role!:number;
 }

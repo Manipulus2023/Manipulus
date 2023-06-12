@@ -12,5 +12,6 @@ export class Unit{
   warranty_period: string;
   unit_price!: string;
   status!: string;
+  
 }
 

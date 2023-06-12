@@ -19,10 +19,9 @@ export class UserComponent implements OnInit, OnDestroy {
   isAddUserModalOpen = false;
   isEditUserModalOpen = false;
   selectedUser: any;
-  key: string;
-
   public editUser!: User;
   public deleteUser!: User;
+  key: string;
 
   //Data Table configs
   dtoptions: DataTables.Settings = {};
@@ -72,14 +71,26 @@ export class UserComponent implements OnInit, OnDestroy {
       status: this.formBuilder.control(''),
       designation: this.formBuilder.control(''),
       group: this.formBuilder.control(''),
-      userRole: this.formBuilder.control(''),
-
+      role: this.formBuilder.control(''),
     });
   }
 
   onUserAdd() {
+    console.log(this.addUserForm.value['role']);
+    this.addUserForm.value['role'] = +this.addUserForm.value['role'];
     this.userService.addUser(this.addUserForm.value).subscribe(res => {
-      console.log(res);
+      if (res.id > 0) {
+        this.isAddUserModalOpen = false;
+        this.getUserList();
+      }
+    });
+  }
+
+  onDeleteUser() {
+    this.userService.deleteUser(this.deleteUser.id).subscribe(res=>{
+      if(res == null) {
+        this.getUserList();
+      }
     });
   }
 
@@ -127,7 +138,7 @@ export class UserComponent implements OnInit, OnDestroy {
       status: user.status,
       designation: user.designation,
       group: user.group,
-      userRole: user.userRole,
+      role: user.role,
     });
   }
 
