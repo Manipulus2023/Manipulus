@@ -1,6 +1,9 @@
 package com.Manipulus.arctic.role.repository;
 
 import com.Manipulus.arctic.role.model.Role;
+import com.Manipulus.arctic.user.model.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +15,9 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class RoleRepository implements IRoleRepository {
+
+    @PersistenceContext
+    private EntityManager entityManager;
     @Override
     public void flush() {
 
@@ -48,13 +54,17 @@ public class RoleRepository implements IRoleRepository {
     }
 
     @Override
-    public Role getById(Integer integer) {
-        return null;
+    public Role getById(Integer r) {
+        return entityManager.createQuery("SELECT r FROM Role r WHERE r.roleId = :roleId", Role.class)
+                .setParameter("roleId", r)
+                .getSingleResult();
     }
 
     @Override
-    public Role getReferenceById(Integer integer) {
-        return null;
+    public Role getReferenceById(Integer r) {
+        return entityManager.createQuery("SELECT r FROM Role r WHERE r.roleId = :roleId", Role.class)
+                .setParameter("roleId", r)
+                .getSingleResult();
     }
 
     @Override

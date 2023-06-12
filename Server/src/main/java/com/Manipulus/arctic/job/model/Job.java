@@ -26,6 +26,9 @@ public class Job implements Serializable {
     @Column(name = "job_status")
     private String job_status; // The status of the job.
 
+    @Column(name = "location")
+    private String location;
+
     @Column(nullable = false, updatable = false)
     private String jobCode; // A unique code assigned to the job.
 
@@ -61,6 +64,14 @@ public class Job implements Serializable {
         return job_type;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public void setJob_type(String job_type) {
         this.job_type = job_type;
     }
@@ -81,12 +92,13 @@ public class Job implements Serializable {
         this.job_status = job_status;
     }
     // Constructor for the Job class that takes in all the attributes.
-    public Job(Customer customer, String job_type, Date job_date, String job_status, String jobCode) {
+    public Job(Customer customer, String job_type, Date job_date, String job_status, String jobCode , String location) {
         this.customer = customer;
         this.job_type = job_type;
         this.job_date = job_date;
         this.job_status = job_status;
         this.jobCode = jobCode;
+        this.location=location;
     }
     // Overrides the toString() method to return a string representation of the Job object.
     @Override
@@ -97,6 +109,7 @@ public class Job implements Serializable {
                 ", job_type=" + job_type +
                 ", job_date=" + job_date +
                 ", job_status=" + job_status +
+                ", location=" + location +
                 '}';
     }
 }

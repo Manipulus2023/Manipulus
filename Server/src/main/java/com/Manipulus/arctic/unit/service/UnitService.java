@@ -2,43 +2,46 @@ package com.Manipulus.arctic.unit.service;
 
 import com.Manipulus.arctic.unit.exception.UnitNotFoundException;
 import com.Manipulus.arctic.unit.model.Unit;
+import com.Manipulus.arctic.unit.repository.IUnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @Service
 public class UnitService {
 
-    private final com.Manipulus.arctic.unit.repository.UnitRepository UnitRepository;
+    private final IUnitRepository unitRepository;
 
 
     @Autowired
-    public UnitService(com.Manipulus.arctic.unit.repository.UnitRepository unitRepository) {
-        this.UnitRepository= unitRepository;
+    public UnitService(IUnitRepository unitRepository) {
+        this.unitRepository = unitRepository;
     }
 
     public Unit addUnit(Unit unit){
-        unit.setUnitCode(UUID.randomUUID().toString());
-        return UnitRepository.save(unit);
+        return unitRepository.save(unit);
     }
 
     public List<Unit> getUnits(){
-        return UnitRepository.findAll();
+        return unitRepository.findAll();
     }
-    public Unit updateUnit(Long id, Unit unit){
-        return UnitRepository.save(unit);
+    public Unit updateUnit(int id, Unit unit){
+        return unitRepository.save(unit);
     }
-    public Unit findUnitById(Long id){
-        return UnitRepository.findUnitById(id)
+    public Unit findUnitById(int id){
+        return unitRepository.findById(id)
                 .orElseThrow(()-> new UnitNotFoundException(" unit by id"+ id + "was not found"));
     }
 
     @Transactional
-    public void deleteUnitById(Long id){
-        UnitRepository.deleteUnitById(id);
+    public void deleteUnitById(int id){
+        Optional<Unit> existingUnit = unitRepository.findById(id);
+        if (existingUnit != null) {
+            unitRepository.deleteById(id);
+        }
+
     }
 
 

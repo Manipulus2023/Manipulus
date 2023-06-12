@@ -15,7 +15,7 @@ onChange(arg0: any) {
 throw new Error('Method not implemented.');
 }
   // Define class properties
-  
+
   currentDate = new Date();
   public customers: Customer[] = [];
   public editCustomer!: Customer;
@@ -24,15 +24,15 @@ throw new Error('Method not implemented.');
   dtTriger: Subject<any> = new Subject<any>();
 
 
-  
+
   public activeStatus: boolean = true;
 
   // Inject customer service
   constructor(private customerService: CustomerService) {}
- 
+
   ngOnInit(): void {
     // Define DataTables options
-    
+
     this.dtoptions = {
       pagingType: 'full_numbers',
       destroy: true,
@@ -57,9 +57,9 @@ throw new Error('Method not implemented.');
       retrieve: true,
     };
 
-    
+
   }
- 
+
   // Retrieve customer data using customer service
   public getCustomers(): void {
     {
@@ -127,7 +127,7 @@ throw new Error('Method not implemented.');
       }
     );
   }
-  
+
 
 
   // public toggleActiveStatus(){
@@ -155,10 +155,10 @@ throw new Error('Method not implemented.');
     }
   }
 
-public news (){
-  console.log("delete clicked")
-}
-  
+  public news (){
+    console.log("delete clicked")
+  }
+
   // Function to handle opening modal dialog for editing or deleting a customer
   public onOpenModal(customer: Customer, mode: string): void {
     console.log(" open modal called");

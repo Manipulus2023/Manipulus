@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { Job } from './job';
 import { JobService } from './job.service';
 import { Customer } from '../customer/customer';
+import { Locations } from '../location/location';
 @Component({
   selector: 'app-job',
   templateUrl: './job.component.html',
@@ -21,7 +22,7 @@ export class JobComponent implements OnInit {
   public customerId!: number;
   public EditcustomerId!: number;
   public selectedJobType!: string;
-
+  public location!:Locations
 
 
 
@@ -83,6 +84,31 @@ public getCustomers(): void {
 
       public onAddJob(addForm: NgForm): void {
         this.getCustomers();
+
+        const job: Job = {
+          id: 0, // Set the initial ID value (or leave it as undefined)
+          job_type: addForm.value.job_type,
+          job_date: addForm.value.job_date,
+          job_status: '',
+          jobCode: '',
+       
+          customer:addForm.value.customer,
+          //@ts-ignore
+          customer_id: null,
+          location: addForm.value.location,
+        };
+
+
+        this.jobService.addlocation(this.location,job).subscribe(
+          (location: Locations) => {
+            console.log(location)
+            // Handle the success response from the addlocation method
+          },
+          (error: any) => {
+            alert(error.message);
+          }
+        );
+
         const customerId: number = this.customerId;
         // const customerId: number = 5; // Set the desired customer ID here
         this.jobService.addJob(addForm.value, customerId).subscribe(
@@ -139,6 +165,9 @@ public getCustomers(): void {
         }
       );
     }
+   
+    
+
     
 
     public onOpenModal(job:Job, mode:string):void {
