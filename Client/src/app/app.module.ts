@@ -34,7 +34,9 @@ import { RouterModule } from '@angular/router';
 import { AuthInterceptorService } from './services/auth.interceptor.service';
 import { DataTablesModule } from "angular-datatables";
 import { GoogleMapsModule } from '@angular/google-maps';
+
 import { ScheduleModule, RecurrenceEditorModule, DayService , WeekService, MonthService, MonthAgendaService } from '@syncfusion/ej2-angular-schedule';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +63,8 @@ import { ScheduleModule, RecurrenceEditorModule, DayService , WeekService, Month
     HomeComponent,
     AdminComponent,
     HeaderComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    AgreementPdfComponent
   ],
   imports: [
     BrowserModule,
