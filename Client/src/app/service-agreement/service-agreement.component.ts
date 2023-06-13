@@ -52,51 +52,9 @@ export class ServiceAgreementComponent implements OnInit{
   }
 
 
-  showMe: boolean = false
-  
-  toogleTag() {
-    this.showMe = !this.showMe
+  refreshPage(){
+    window.location.reload();
   }
-
-
-  showMeForm: boolean = false
-  ngOnInitForm() {
-
-  }
-  toogleTagForm() {
-    this.showMeForm = !this.showMeForm
-  }
-
-
-
-
-
-
-
-
-
-//...............................................
-  // showMeTitle2: boolean = true
-  // ngOnInitTitle2() {
-
-  // }
-  // toogleTagTitle2() {
-  //   this.showMeTitle2 = !this.showMeTitle2
-  // }
-//
-
-
-
-
-  DontshowMeTable: boolean = true
-  ngOnInitTable() {
-
-  }
-  toogleTagTable() {
-    this.DontshowMeTable = !this.DontshowMeTable
-  }
-
-
 
 
 
@@ -224,7 +182,7 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
 
-    } else if (this.price_per_service <= 0) {
+    } else if (this.price_per_service <= 0 || isNaN(Number(this.price_per_service))) {
       //alert("Please insert the Service Price correctly!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -244,7 +202,7 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
 
-    } else if (this.emergency_service_rate <= 0) {
+    } else if (this.emergency_service_rate <= 0||isNaN(Number(this.emergency_service_rate))) {
       // alert("Please insert the Emergency Service Price correctly!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -278,7 +236,7 @@ export class ServiceAgreementComponent implements OnInit{
           cancelButton: 'btn btn-secondary',
         },
       });
-    } else if (this.initiated_date == '') {
+    } else if (this.initiated_date == null) {
       //alert("Please enter the initial date!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -296,7 +254,26 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
     }
-    else if (this.expired_date == '') {
+
+    else if (this.initiated_date>=this.expired_date) {
+      //alert("Please enter the initial date!");
+      Swal.fire({
+        title: 'Fill The Form Correctly',
+        text: 'Please enter the valid initial date and expired date!',
+        icon: 'error',
+        position: 'top',
+        width: '500px',
+        imageUrl: '../../assets/Icon/303292717_570886498156142_5541375326204770233_n.jpg',
+        imageHeight: '100px',
+        imageWidth: '100px',
+        confirmButtonColor: '#3085d6',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-secondary',
+        },
+      });
+    }
+    else if (this.expired_date == null) {
       // alert("please enter the expire date!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -352,6 +329,11 @@ export class ServiceAgreementComponent implements OnInit{
             cancelButton: 'btn btn-secondary',
           },
         });
+          
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+
         this.getAllAgreement();
 
         this.unitid = 0;
@@ -364,8 +346,8 @@ export class ServiceAgreementComponent implements OnInit{
         this.nic = '';
 
       });
-      this.showMeForm = !this.showMeForm
-      this.DontshowMeTable = !this.DontshowMeTable
+
+
 
 
 
@@ -472,7 +454,7 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
 
-    } else if (this.price_per_service <= 0) {
+    } else if (this.price_per_service <= 0||isNaN(Number(this.price_per_service))) {
       //alert("Please insert the Service Price correctly!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -492,7 +474,7 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
 
-    } else if (this.emergency_service_rate <= 0) {
+    } else if (this.emergency_service_rate <= 0||isNaN(Number(this.emergency_service_rate))) {
       // alert("Please insert the Emergency Service Price correctly!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -526,7 +508,26 @@ export class ServiceAgreementComponent implements OnInit{
           cancelButton: 'btn btn-secondary',
         },
       });
-    } else if (this.initiated_date == '') {
+    } else if (this.initiated_date>=this.expired_date) {
+      //alert("Please enter the initial date!");
+      Swal.fire({
+        title: 'Fill The Form Correctly',
+        text: 'Please enter the valid initial date and expired date!',
+        icon: 'error',
+        position: 'top',
+        width: '500px',
+        imageUrl: '../../assets/Icon/303292717_570886498156142_5541375326204770233_n.jpg',
+        imageHeight: '100px',
+        imageWidth: '100px',
+        confirmButtonColor: '#3085d6',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-secondary',
+        },
+      });
+    }
+    
+    else if (this.initiated_date == null) {
       //alert("Please enter the initial date!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -544,7 +545,7 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
     }
-    else if (this.expired_date == '') {
+    else if (this.expired_date == null) {
       // alert("please enter the expire date!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -599,10 +600,11 @@ export class ServiceAgreementComponent implements OnInit{
           },
         });
 
+        
         setTimeout(() => {
           window.location.reload();
         }, 1500);
-
+      
 
 
         this.getAllAgreement();
@@ -614,7 +616,8 @@ export class ServiceAgreementComponent implements OnInit{
         this.initiated_date = '';
         this.expired_date = '';
         this.nic = '';
-
+      
+        
 
       });
     }
@@ -631,9 +634,7 @@ export class ServiceAgreementComponent implements OnInit{
       this.UpdateRecords();
     }
 
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 30);
+
 
   }
 
@@ -683,21 +684,52 @@ export class ServiceAgreementComponent implements OnInit{
     });
   }
 
-  //
+  
 
   setDelete(data: any) {
-
-
-
-
-
-
-    this.http.delete("http://localhost:8080/api/v1/agreement/deleteagreement" + "/" + data.agreementid, { responseType: 'text' }).subscribe((resultData: any) => {
+    Swal.fire({
+      title: 'Delete Confirmation',
+      text: 'Are you sure you want to delete this agreement?',
+      icon: 'warning',
+      position: 'top',
+      width: '500px',
+      imageUrl: '../../assets/Icon/303292717_570886498156142_5541375326204770233_n.jpg',
+      imageHeight: '100px',
+      imageWidth: '100px',
+      confirmButtonColor: '#3085d6',
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-secondary',
+      },
+      showCancelButton: true,
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Delete',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteAgreement(data.agreementid);
+      }
+    });
+  }
+  
+  deleteAgreement(agreementId: string) {
+    this.http.delete("http://localhost:8080/api/v1/agreement/deleteagreement" + "/" + agreementId, { responseType: 'text' }).subscribe((resultData: any) => {
       console.log(resultData);
-      // alert("Service Agreement Deleted")
-
+      Swal.fire({
+        title: 'Delete is Successful',
+        icon: 'success',
+        position: 'top',
+        width: '500px',
+        imageUrl: '../../assets/Icon/303292717_570886498156142_5541375326204770233_n.jpg',
+        imageHeight: '100px',
+        imageWidth: '100px',
+        confirmButtonColor: '#3085d6',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-secondary',
+        },
+      });
       this.getAllAgreement();
-
+  
       this.unitid = 0;
       this.equipment = '';
       this.price_per_service = 0;
@@ -707,19 +739,10 @@ export class ServiceAgreementComponent implements OnInit{
       this.expired_date = '';
       this.nic = '';
     });
-
   }
+  
 
-  public onOpenModal(mode: string): void {
-    const container = (document.getElementById('main-container') as HTMLInputElement);
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.style.display = 'none';
-    button.setAttribute('data-bs-toggle', 'modal');
 
-    container.appendChild(button);
-    button.click();
-  }
 
 
   apiurl = "http://localhost:8080/api/v1/agreement/passId";
