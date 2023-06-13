@@ -20,7 +20,7 @@ public class PDFGeneratorService {
 
 
     @Autowired
-    private AgreementService agreementService;
+    private com.Manipulus.arctic.Agreement.Service.AgreementService agreementService;
 
     @Autowired
     private CustomerService customerService;
