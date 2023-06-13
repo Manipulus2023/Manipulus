@@ -23,7 +23,7 @@ public class location implements Serializable {
     private String location_title; // The status of the location.
 
     @Column(name = "location_info")
-    private int location_info;
+    private String location_info;
 
     @Column(nullable = false, updatable = false)
     private String locationCode; // A unique code assigned to the location.
@@ -39,7 +39,7 @@ public class location implements Serializable {
     public location() {
     }
 
-    public location(long id, String location_lat, String location_lng, String location_title, int location_info, String locationCode) {
+    public location(long id, String location_lat, String location_lng, String location_title, String location_info, String locationCode) {
         this.id = id;
         this.location_lat = location_lat;
         this.location_lng = location_lng;
@@ -80,11 +80,11 @@ public class location implements Serializable {
         this.location_title = location_title;
     }
 
-    public int getLocation_info() {
+    public String getLocation_info() {
         return location_info;
     }
 
-    public void setLocation_info(int location_info) {
+    public void setLocation_info(String location_info) {
         this.location_info = location_info;
     }
 

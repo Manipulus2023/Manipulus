@@ -20,7 +20,7 @@ public class locationService {
         this.locationRepository = locationRepository;
     }
 
-    public location addlocation(location location) {
+    public location addlocation(location location, Long id) {
         location.setlocationCode(UUID.randomUUID().toString());
         return locationRepository.save(location);
     }

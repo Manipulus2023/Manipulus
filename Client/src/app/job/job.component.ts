@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { Job } from './job';
 import { JobService } from './job.service';
 import { Customer } from '../customer/customer';
-import { Locations } from '../location/locations';
+import { Locations } from '../location/location';
 @Component({
   selector: 'app-job',
   templateUrl: './job.component.html',
@@ -91,18 +91,15 @@ public getCustomers(): void {
           job_date: addForm.value.job_date,
           job_status: '',
           jobCode: '',
-           //@ts-ignore
-          customer:Customer,
-          
-          customer_id: addForm.value.customer_id,
+       
+          customer:addForm.value.customer,
+          //@ts-ignore
+          customer_id: null,
           location: addForm.value.location,
         };
-        console.log(addForm.value);
-        console.log('job in location');
-console.log(job);
-console.log('job in location');
 
-        this.jobService.addlocation(job).subscribe(
+
+        this.jobService.addlocation(this.location,job).subscribe(
           (location: Locations) => {
             console.log(location)
             // Handle the success response from the addlocation method
