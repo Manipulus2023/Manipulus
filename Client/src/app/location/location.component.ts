@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
-import { JobService } from '../job/job.service';
 import { Job } from '../job/job';
 import { HttpErrorResponse } from '@angular/common/http';
+import { locationService } from './location.service';
+import { Locations } from './locations';
 
 @Component({
   selector: 'app-location',
@@ -12,8 +13,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LocationComponent implements OnInit {
 
 
-  public jobs : Job[] =[];
-  constructor(private jobService: JobService) { }
+  public locations : Locations[] =[];
+  constructor(private locationservice: locationService) { }
+
 
   title = 'angular-google-maps-app';
 
@@ -82,7 +84,7 @@ export class LocationComponent implements OnInit {
     })
   }
 
-  eventHandler(event: any ,name:string){
+  eventHandler(event: any ,name:string ){
     console.log(event,name);
     
     // Add marker on double click event
@@ -90,6 +92,9 @@ export class LocationComponent implements OnInit {
       this.dropMarker(event)
     }
   }
+
+  
+
 
   dropMarker(event:any) {
     this.markers.push({
@@ -117,17 +122,6 @@ export class LocationComponent implements OnInit {
   }
 
 
-  public getJobs():void { {
-    this.jobService.getJobList().subscribe(
-      (response: Job[]) =>{
-        this.jobs = response;
-    
-        console.log(this.jobs);
-      },
-      (error: HttpErrorResponse) =>
-         alert(error.message)
-        
-      ); }}
 
 
 }

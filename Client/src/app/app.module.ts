@@ -34,7 +34,9 @@ import { RouterModule } from '@angular/router';
 import { AuthInterceptorService } from './services/auth.interceptor.service';
 import { DataTablesModule } from "angular-datatables";
 import { GoogleMapsModule } from '@angular/google-maps';
-import { AgreementPdfComponent } from './agreement-pdf/agreement-pdf.component';
+
+import { ScheduleModule, RecurrenceEditorModule, DayService , WeekService, MonthService, MonthAgendaService } from '@syncfusion/ej2-angular-schedule';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,10 +77,11 @@ import { AgreementPdfComponent } from './agreement-pdf/agreement-pdf.component';
     RouterModule,
     ReactiveFormsModule,
     DataTablesModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    ScheduleModule, RecurrenceEditorModule
   ],
   providers: [
-    ReactiveFormsModule,
+    ReactiveFormsModule,DayService , WeekService, MonthService, MonthAgendaService ,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
