@@ -3,9 +3,8 @@ import { Customer } from "../customer/customer";
 import { Job } from "../job/job";
 
 export class Locations {
-
-  location_lat: number;
-  location_lng: number;
-  location_title: string;
-  location_info: number;
+  lat: number;
+  lng: number;
+  title: string;
+  info: Customer;
 }
