@@ -162,20 +162,33 @@
               <input type="text" ngModel name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId" required>
             </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <label for="assignedVehicle">Available Vehicles</label>
-                      <select id="vehicleDropdown" [(ngModel)]="selectedVehicle">
-                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }} | Name: {{ vehicle.vehicle_name }} | NoP: {{ vehicle.number_of_passengers }} <br> Ac_State: {{vehicle.active_state}}</option>
+                      <div class="vehicle-dropdown-container">
+                      <select id="vehicleDropdown" [(ngModel)]="selectedVehicle" class="form-control vehicle-dropdown">
+                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }} | Name: {{ vehicle.vehicle_name }} | NoP: {{ vehicle.number_of_passengers }} Ac_State: {{vehicle.active_state}}</option>
                        
                     </select>
                     </div>
-                  
+                    </div> -->
+                    
+                   
                     <div class="form-group">
-                      <label for="assignedVehicle">Assign Vehicle</label>  
-                            <label for="assignedVehicle">Vehicle No:</label>
-                          <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="assignedVehicle" required>
+                        <label for="activeStatus">Active Status of Available Vehicles</label>
+                        <div class="active-status-container">
+                            <div *ngFor="let vehicle of availableVehicles" class="active-status-row">
+                                Vehicle No: {{ vehicle.vehicle_number }} | Active Status: {{ vehicle.active_state }}
+                            </div>
+                        </div>
                     </div>
-            
+
+                    <div class="form-group">
+                        <label for="assignedVehicle">Assign Vehicle</label>  
+                              <label for="assignedVehicle">Vehicle No:</label>
+                            <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="Assign a vehicle" required>
+                      </div>
+
+                      
             <div class="form-group">
               <label for="dateRange">End Date</label>
               <input type="date" ngModel name="dateRange" class="form-control" id="dateRange" placeholder="dateRange" required>
@@ -254,10 +267,7 @@
                     <label for="dateRange">End Date</label>
                     <input type="date" ngModel="{{editSiteVisits?.dateRange}}" name="dateRange" class="form-control" id="dateRange" placeholder="dateRange">
                  </div>
-                 <!-- <div class="form-group">
-                    <label for="state">Status</label>
-                    <input type="text" ngModel="{{editSiteVisits?.state}}" name="state" class="form-control" id="state" placeholder="state">
-                 </div> -->
+                
                  <div class="form-group">
                     <label for="state">Status</label>
                     <select id="state" [(ngModel)]="state" name="state" class="form-control" required>

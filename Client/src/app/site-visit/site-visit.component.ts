@@ -127,18 +127,54 @@ export class SiteVisitComponent implements OnInit {
       // Update the active_state of the existing vehicle
       const vehicleToUpdate = existingVehicle;
       
+      // if (vehicleToUpdate) {
+      //    const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
+      //   let activeState = assignedStatus;
+      //   let preActiveState = activeState;
+      //   if (assignedStatus === 'Assigned') {
+      //     activeState += ` (FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
+      //     vehicleToUpdate.active_state = activeState;
+      //   }else{
+      //     vehicleToUpdate.active_state = vehicleToUpdate.active_state;
+      //   }
+      // }
+      
       if (vehicleToUpdate) {
-         const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
+        const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
         let activeState = assignedStatus;
         let preActiveState = activeState;
         if (assignedStatus === 'Assigned') {
-          activeState += ` (FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
-          vehicleToUpdate.active_state = activeState;
-        }else{
+            const previousAssignedDates = vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+            const currentAssignedDate = `(FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
+    
+            if (previousAssignedDates) {
+                activeState += previousAssignedDates.join(' ');
+                activeState += ' ' + currentAssignedDate;
+            } else {
+                activeState += ' ' + currentAssignedDate;
+            }
+    
+            vehicleToUpdate.active_state = activeState;
+        } else {
+          const previousAssignedDates = vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+          const currentAssignedDate = `(FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
+  
+          if (previousAssignedDates) {  
+            // const datePattern = /\(FROM: (.*?), TO: (.*?)\)/g;
+            // activeState = vehicleToUpdate.active_state.replace(datePattern, '');
+            //  activeState = vehicleToUpdate.active_state.replace(/\(FROM:.*?, TO:.*?\)/g, '');
+            activeState += ' ' + previousAssignedDates.filter(date => !date.includes(`FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange}`)).join(' ');
+            vehicleToUpdate.active_state = activeState;
+            
+        } else {
+           
           vehicleToUpdate.active_state = vehicleToUpdate.active_state;
         }
-      }
-      
+
+       
+        }
+    }
+    
       
       this.siteVisitService.updateVehicles(existingVehicle).subscribe(
         (response: Vehicle) => {

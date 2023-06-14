@@ -68,4 +68,24 @@ body{
         max-height: 200px;
         overflow-y: auto;
     }
+    .vehicle-dropdown-container {
+        width: 100%;
+        overflow-x: auto;
     
+        max-height: 150px;
+        overflow-y: auto;
+    }
+    .vehicle-dropdown-container:focus-within {
+        max-height: none;
+    }
+    .active-status-textarea {
+        resize: vertical;
+    }
+    .active-status-container {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    
+    .active-status-row {
+        margin-bottom: 10px;
+    }
