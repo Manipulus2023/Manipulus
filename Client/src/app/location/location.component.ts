@@ -22,7 +22,7 @@ export class LocationComponent implements OnInit {
   @ViewChild(MapInfoWindow, { static: false })
   info!: MapInfoWindow;
 
-  zoom = 8;
+  zoom = 12;
   maxZoom = 15;
   minZoom = 2;
   center!: google.maps.LatLngLiteral;
@@ -38,23 +38,8 @@ export class LocationComponent implements OnInit {
  
   markers = [{
     position: {
-      lat: 6.703119222637678,
-      lng: 80.04732607841797
-    },
-    label: {
-      color: "blue",
-      fontWeight :'bold',
-      text: "Marker label 1"
-    },
-    title: "Marker title 1",
-    info: "Marker info 1",
-    options: {
-      animation: 2
-    }
-  }, {
-    position: {
-      lat: 6.766877533363286,
-      lng: 79.98003481865234
+      lat:-10.5003747,
+      lng: -10.5003747
     },
     label: {
       color: "blue",
@@ -80,6 +65,8 @@ export class LocationComponent implements OnInit {
         lng: position.coords.longitude,
       }
     })
+    this.getLocations();
+    this.dropMarkers(this.locations);
   }
 
   eventHandler(event: any ,name:string){
@@ -111,11 +98,68 @@ export class LocationComponent implements OnInit {
     console.log(this.markers)
   }
 
+  dropMarkers(locations: Locations[]) {
+    console.log('dropMarkers', locations)
+    // console.log('in drop a',this.locations[1].location_lat);
+    for (const location of locations) {
+      this.markers.push({
+        position: {
+          lat: location.location_lat,
+          lng: location.location_lng,
+        },
+        label: {
+          color: 'blue',
+          fontWeight :'bold',
+          text: 'Marker label ' + (this.markers.length + 1),
+        },
+        title: 'Marker title ' + (this.markers.length + 1),
+        info: 'Marker info ' + (this.markers.length + 1),
+        options: {
+          animation: google.maps.Animation.DROP,
+        },
+      });
+    }
+    console.log(this.markers);
+  }
+  
+
   openInfo(marker: MapMarker, content: string) {
     this.infoContent = content;
     this.info.open(marker)
   }
 
+
+
+  public getLocations(): void {
+    {
+      this.locationservice.getlocationlist().subscribe(
+        (response: Locations[]) => {
+          this.locations = response;
+          for (const location of this.locations) {
+            console.log(location);
+            this.markers.push({
+              position: {
+                lat: location.location_lat,
+                lng: location.location_lng,
+              },
+              label: {
+                color: 'blue',
+                fontWeight :'bold',
+                text: 'Marker label ' + (this.markers.length + 1),
+              },
+              title: location.location_title,
+              info: location.location_info,
+              options: {
+                animation: google.maps.Animation.DROP,
+              },
+            });
+          }
+          console.log("after get locations" , this.markers);
+        },
+        (error: HttpErrorResponse) => alert(error.message)
+      );
+    }
+  }
 
 
 }
