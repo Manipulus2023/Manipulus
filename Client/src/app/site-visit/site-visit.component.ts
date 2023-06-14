@@ -7,6 +7,7 @@ import { Vehicle } from '../vehicle/vehicle';
 import { VehicleServise } from '../vehicle/vehicle.service';
 import { ActivatedRoute } from '@angular/router';
 import { scheduled } from 'rxjs';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-site-visit',
@@ -14,7 +15,7 @@ import { scheduled } from 'rxjs';
   styleUrls: ['./site-visit.component.css']
 })
 export class SiteVisitComponent implements OnInit {
- 
+  title = 'CreatePDF';
   
   public siteVisits: SiteVisit[] ;
   public editSiteVisits: SiteVisit |null= null;
@@ -29,6 +30,7 @@ export class SiteVisitComponent implements OnInit {
   availableVehicles: Vehicle[] = [];
   selectedVehicle: Vehicle | null = null;
   public state: string | undefined;
+  public printGatePasses: any;
 
   //siteVisit: any;
   constructor(private siteVisitService : SiteVisitService,private route: ActivatedRoute) {
@@ -60,7 +62,13 @@ export class SiteVisitComponent implements OnInit {
     });
     
   }
-
+  // generateGatePass(siteVisitId: number): void {
+  //   this.siteVisitService.printSiteVisit(siteVisitId).subscribe((response: Blob) => {
+  //     const file = new Blob([response], { type: 'application/pdf' });
+  //     const fileName = 'GatePass.pdf';
+  //     saveAs(file, fileName);
+  //   });
+  // }
   //Assign Vehicle
   assignVehicle(): void {
     if (this.selectedVehicle) {
@@ -74,7 +82,7 @@ export class SiteVisitComponent implements OnInit {
   countCompletedSiteVisits(siteVisits: SiteVisit[]): number {
     let completedSiteVisitsCount = 0;
       for (let siteVisit of siteVisits) {
-        if (siteVisit.state === 'completed') {
+        if (siteVisit.state === 'Completed') {
           completedSiteVisitsCount++;
         }
       }
@@ -85,7 +93,7 @@ export class SiteVisitComponent implements OnInit {
   countIncompleteSiteVisits(siteVisits: SiteVisit[]): number {
     let incompleteSiteVisitsCount = 0;
       for (let siteVisit of siteVisits) {
-        if (siteVisit.state !== 'completed') {
+        if (siteVisit.state !== 'Completed') {
           incompleteSiteVisitsCount++;
         }
       }
@@ -277,8 +285,51 @@ export class SiteVisitComponent implements OnInit {
     }
   }
   
-
-  public onOpenModal(siteVisit: SiteVisit | null,mode:string): void{ //takes a SiteVisit object and a mode as parameters. It opens a modal window based on the mode passed in as a parameter.
+  downloadPDF() {
+    this.siteVisitService.downloadPDF().subscribe((response: Blob) => {
+      const fileURL = URL.createObjectURL(response);
+      window.open(fileURL);
+    });
+  }
+     //Print Gate Pass
+    //  public onPrintGatePass(siteVisitId: number): void {
+    //   this.siteVisitService.printGatePass(siteVisitId).subscribe(
+    //     (response: void) => {
+    //       console.log(response);
+    //       this.getSiteVisits();
+    //     },
+    //     (error: HttpErrorResponse) => {
+    //       alert(error.message);
+    //     }
+    //   );
+    // }
+    // public onPrintGatePass(siteVisitId: number): void {
+      // this.siteVisitService.printGatePass(siteVisitId).subscribe(
+      //   (response: void) => {
+      //     console.log(response);
+      //     this.getSiteVisits();
+      //   },
+      //   (error: HttpErrorResponse) => {
+      //     alert(error.message);
+      //   }
+      // );
+    // }
+    
+  
+  // generateGatePass(siteVisitId: number): void {
+  //   this.siteVisitService.generateGatePass(siteVisitId).subscribe(
+  //     () => {
+  //       console.log('Gate pass generated successfully');
+  //       // Handle success, e.g., show a success message
+  //     },
+  //     (error) => {
+  //       console.error('Error generating gate pass:', error);
+  //       // Handle error, e.g., show an error message
+  //     }
+  //   );
+  // }
+  
+public onOpenModal(siteVisit: SiteVisit | null,mode:string): void{ //takes a SiteVisit object and a mode as parameters. It opens a modal window based on the mode passed in as a parameter.
     const container=document.getElementById('main-container');
     const button = document.createElement('button');
     button.type='button';
@@ -298,6 +349,15 @@ export class SiteVisitComponent implements OnInit {
      
       button.setAttribute('data-target','#deleteSiteVisitModal');
     }
+    if(mode ==='print'){
+      this.printGatePasses = siteVisit;
+     
+      button.setAttribute('data-target','#printGatePassModal');
+    }
+    // if (mode === 'print') {
+    //   this.printGatePasses = siteVisit;
+    //   button.setAttribute('data-target', '#printGatePassModal');
+    //  }
      
     container?.appendChild(button);
     button.click();

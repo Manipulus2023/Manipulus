@@ -1,87 +1,75 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <ul class="navbar-nav mr-auto">
     <a class="navbar-brand" href="#" style="color:white;" >Site Visit</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarColor02">
-       <ul class="navbar-nav mr-auto">
-
+       
+        <div class="col-xl-6 col-md-6">
         <!-- Add "add site Visits" button -->
           <li class="nav-item active">
             <a class="nav-link" (click)="onOpenModal(null,'add')" data-toggle="modal" data-target="#exampleModal"  style="background-color: rgb(149, 158, 167); border-color: rgb(80, 9, 15);">Add SiteVisit <span class="sr-only"> </span></a>
           </li>
-
+</div>
         <!-- Add Search Bar -->
+        <div class="col-xl-6 col-md-6">
           <li class="nav-item">
        <form class="form-inline my-2 my-lg-0 ml-auto">
         <input type="search" (ngModelChange)="searchSiteVisits(key.value)" #key="ngModel" ngModel
          name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search siteVisits..." required>  
         </form>
         </li>
-       </ul>
+       </div>
     </div>
+</ul>
   </nav>
 <div class="container"id="main-container">
     <div class="row">
 
         <!-- Add Total site visit card -->
         <div class="col-xl-3 col-md-6">
-            <div class="card bg-pattern" style="background-color: rgb(255, 255, 255);">
+            <div class="card-box bg-pattern">
                 <div class="card-body">
-                    <div class="float-right">
-                        <i class="fa fa-archive text-primary h4 ml-3"></i>
+                    
+                    <div class="icon">
+                        <i class="fa fa-table" aria-hidden="true"></i>
                     </div>
-                    <h5  class="font-size-20 mt-0 pt-1">{{ totalSiteVisitsCount}}</h5>
-                    <p class="text-muted mb-0">Total Site Visits</p>
+                    <h3  class="inner">{{ totalSiteVisitsCount}}</h3>
+                    <p class="card-box-footer">Total Site Visits</p>
                 </div>
             </div>
         </div>
         
         <!-- Add Completed site visit card -->
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-pattern" style="background-color: rgb(255, 255, 255);">
-              <div class="card-body">
-                <div class="float-right">
-                  <i class="fa fa-th text-primary h4 ml-3"></i>
-                </div>
-                <h5 class="font-size-20 mt-0 pt-1">{{ completedSiteVisitsCount }}</h5>
-                <p class="text-muted mb-0">Completed Site Visits</p>
-              </div>
-            </div>
-          </div>
-          
-        <!-- Add incompleted site visit card -->
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-pattern" style="background-color: rgb(255, 255, 255);">
+         <div class="col-xl-3 col-md-6">
+            <div class="card-box bg-pattern">
                 <div class="card-body">
-                    <div class="float-right">
-                        <i class="fa fa-file text-primary h4 ml-3"></i>
+                    
+                    <div class="icon">
+                        <i class="fa fa-trophy" aria-hidden="true"></i>
                     </div>
-                    <h5 class="font-size-20 mt-0 pt-1">{{incompleteSiteVisitsCount}}</h5>
-                    <p class="text-muted mb-0">Pending Site Visits</p>
+                    <h3  class="inner">{{ completedSiteVisitsCount }}</h3>
+                    <p class="card-box-footer">Completed Site Visits</p>
                 </div>
             </div>
         </div>
-        <!-- <div class="col-xl-3 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <form>
-                        <div class="form-group mb-0">
-                            <label>Search</label>
-                            <div class="input-group mb-0">
-                                <input type="search" (ngModelChange)="searchSiteVisits(key.value)" #key="ngModel"ngModel
-                                class="form-control" placeholder="Search..." aria-describedby="siteVisit-search-addon" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-danger" type="button" id="siteVisit-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+
+       <!-- Add incompleted site visit card -->
+       <div class="col-xl-3 col-md-6">
+        <div class="card-box bg-pattern">
+            <div class="card-body">
+                
+                <div class="icon">
+                    <i class="fa fa-truck" aria-hidden="true"></i>
                 </div>
+                <h3  class="inner">{{incompleteSiteVisitsCount}}</h3>
+                <p class="card-box-footer">Pending Site Visits</p>
             </div>
         </div>
-    </div> -->
-    <!-- end row -->
+    </div>
+       
+
 
     <!-- Create the site visit table -->
     <div class="row">
@@ -129,8 +117,12 @@
                                     <td>
                                         <div class="action">
                                             <td>  <a (click)="onOpenModal(siteVisit,'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" style="background-color: rgb(10, 80, 25); border-color: rgb(9, 80, 22);"> <i class="fa fa-pencil"></i></a></td>
-                                           <td> <a (click)="onOpenModal(siteVisit,'delete')" class="btn btn-secondary tooltips" data-placement="top" title="" data-original-title="delete" style="background-color: rgb(134, 122, 122); border-color: rgb(116, 106, 106);"> <i class="fa fa-remove"></i></a></td>
-                                        </div>
+                                            <td> <a (click)="onOpenModal(siteVisit,'delete')" class="btn btn-secondary tooltips" data-placement="top" title="" data-original-title="delete" style="background-color: rgb(189, 12, 12); border-color: rgb(116, 106, 106);"> <i class="fa fa-remove"></i></a></td>
+                                            <!-- <td><a (click)="onOpenModal(siteVisit,'print')" class="btn btn-secondary tooltips" data-placement="top" title="print" data-original-title="print" style="background-color: rgb(134, 122, 122); border-color: rgb(116, 106, 106);"><i class="fa fa-print"></i></a></td> -->
+                                            <!-- your-component.component.html -->
+                                            <td><button (click)="downloadPDF()"  class="btn btn-secondary tooltips" data-placement="top" title="Print Gate Pass" data-original-title="print" style="background-color: rgb(134, 122, 122); border-color: rgb(116, 106, 106);"><i class="fa fa-download"></i></button></td>
+
+                                         </div>
                                     </td>
                                 </tr>
 
@@ -150,88 +142,64 @@
 <!-- Add Site Visit Modal -->
 <div class="modal fade" id="addSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="addSiteVisitModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-           <div class="modal-header">
-              <h5 class="modal-title" id="addSiteVisitModalLabel">Add SiteVisit</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              </button>
-           </div>
-           <div class="modal-body">
-              <form #addForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)">
-           
-            <div class="form-group">
-                 <label for="scheduledDate">Scheduled Date</label>
-                 <input type="date" ngModel name="scheduledDate" class="form-control" id="email" placeholder="scheduledDate" required>
-              </div>
-              <div class="form-group">
-                 <label for="assignedTeamId">Assigned Team Id</label>
-                 <input type="text" ngModel name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId" required>
-              </div>
-              
-                  
-                <table class="table siteVisit-table table-centered table-nowrap">
-                    
-                    <tbody>
-                        <tr>
-                                <div class="form-group">
-                                    <label for="assignedVehicle">Available Vehicles</label>
-                                    <select id="vehicleDropdown" [(ngModel)]="selectedVehicle">
-                                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }}  |   Name: {{ vehicle.vehicle_name }}  |  NoP: {{ vehicle.number_of_passengers }}  |    Ac_State : {{vehicle.active_state}}</option>
-                                    </select>
-                                </div>
-                                    
-                        </tr>
-                        <tr>
-                                <div class="form-group">
-                                    <tr>
-                                <label for="assignedVehicle">Assign Vehicle</label>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                        <label for="assignedVehicle">Vehicle No:</label>
-                                        </td>
-                                        <td>
-                                        <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="assignedVehicle" required>
-                                        </td>
-                                </tr>
-                            </div>
-                                  
-                       </tr>
-                    </tbody>
-            </table>
-
-                
-              <div class="form-group">
-                 <label for="dateRange">End Date</label>
-                 <input type="date" ngModel name="dateRange" class="form-control" id="dateRange" placeholder="dateRange" required>
-              </div>
-              <!-- <div class="form-group">
-                <label for="state">Status</label>
-                <input type="text" ngModel name="state" class="form-control" id="state" placeholder="state" required>
-             </div> -->
-
-             <div class="form-group">
-                <label for="state">Status</label>
-                <select id="state" [(ngModel)]="state" name="state" class="form-control" required>
-                  <option value="Pending">Pending</option>
-                  <option value="Completed">Completed</option>
-                </select>
-              </div>
-             
-<!-- EDIT VEHICLE ACTIVE_STATE -->
-
-<!-- SAVE BUTTON -->
-              <div class="modal-footer">
-                 <button type="button" id="add-siteVisit-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                 <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save </button>
-              </div>
-              </form>
-           </div>
+      <div class="modal-content">
+        <form #addForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addSiteVisitModalLabel">Add SiteVisit</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
-</div>
+        <div class="modal-body">
+          <!-- <form #addForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)"> -->
 
+            <div class="form-group">
+              <label for="scheduledDate">Scheduled Date</label>
+              <input type="date" ngModel name="scheduledDate" class="form-control" id="email" placeholder="scheduledDate" required>
+            </div>
+            <div class="form-group">
+              <label for="assignedTeamId">Assigned Team Id</label>
+              <input type="text" ngModel name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId" required>
+            </div>
+
+                    <div class="form-group">
+                      <label for="assignedVehicle">Available Vehicles</label>
+                      <select id="vehicleDropdown" [(ngModel)]="selectedVehicle">
+                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }} | Name: {{ vehicle.vehicle_name }} | NoP: {{ vehicle.number_of_passengers }} <br> Ac_State: {{vehicle.active_state}}</option>
+                       
+                    </select>
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="assignedVehicle">Assign Vehicle</label>  
+                            <label for="assignedVehicle">Vehicle No:</label>
+                          <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="assignedVehicle" required>
+                    </div>
+            
+            <div class="form-group">
+              <label for="dateRange">End Date</label>
+              <input type="date" ngModel name="dateRange" class="form-control" id="dateRange" placeholder="dateRange" required>
+            </div>
+
+            <div class="form-group">
+              <label for="state">Status</label>
+              <select id="state" [(ngModel)]="state" name="state" class="form-control" required>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="add-siteVisit-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Save</button>
+            </div>
+
+          <!-- </form> -->
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
 <!-- Edit Modal -->
 <div class="modal fade" id="updateSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="siteVisitEditModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -261,10 +229,7 @@
                     <input type="text" ngModel="{{editSiteVisits?.vehicles}}" name="assignedVehicle" class="form-control" id="assignedVehicle" name="assignedVehicle" placeholder="assignedVehicle">
                  </div> -->
 
-                 <table class="table siteVisit-table table-centered table-nowrap">
-                    
-                    <tbody>
-                        <tr>
+                   
                                 <div class="form-group">
                                     <label for="assignedVehicle">Available Vehicles</label>
                                     <select id="vehicleDropdown" [(ngModel)]="selectedVehicle">
@@ -272,26 +237,18 @@
                                     </select>
                                 </div>
                                     
-                        </tr>
-                        <tr>
+                       
                                 <div class="form-group">
-                                    <tr>
+                                   
                                 <label for="assignedVehicle">Assign Vehicle</label>
-                                    </tr>
-                                    <tr>
-                                        <td>
+                                    
                                         <label for="assignedVehicle">Vehicle No:</label>
-                                        </td>
-                                        <td>
+                                        
                                         <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="assignedVehicle" required>
-                                        </td>
-                                </tr>
+                                  
                             </div>
                                   
-                       </tr>
-                    </tbody>
-            </table>
-                     
+          
 
                  <div class="form-group">
                     <label for="dateRange">End Date</label>
@@ -344,7 +301,6 @@
         </div>
     </div>
 
-<!-- Assign Vehicle Modal -->
 
 
 
