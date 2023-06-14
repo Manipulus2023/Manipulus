@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UnitService } from './unit.service';
 import { Subject, Subscription } from 'rxjs';
@@ -11,6 +11,7 @@ import { Unit } from './unit';
 })
 export class UnitComponent implements OnInit, OnDestroy {
   addUnitForm: FormGroup;
+  editUnitForm: FormGroup;
   searchForm: FormGroup;
   unitSubscription: Subscription;
   units: Unit[] = [];
@@ -25,6 +26,9 @@ export class UnitComponent implements OnInit, OnDestroy {
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
 
+  @ViewChild('closeDeleteModal') closeDeleteModal: ElementRef
+  @ViewChild('closeEditModal') closeEditModal: ElementRef
+
   constructor(private formBuilder: FormBuilder, private unitService: UnitService) {
     this.searchForm = this.formBuilder.group({
       key: ['']
@@ -35,6 +39,40 @@ export class UnitComponent implements OnInit, OnDestroy {
     this.loadDataTableConfigs();
     this.getUnitList();
     this.initializeUnitForm();
+    this.initializeUnitEditForm();
+  }
+
+  onClickDeleteUnit(unitId: number) {
+    this.selectedUnit = unitId;
+  }
+
+  onClickEditUnit(unitId: number) {
+    this.selectedUnit = unitId;
+    this.loadSelectedUnit(this.selectedUnit);
+  }
+
+  loadSelectedUnit(unitId: number) {
+    const selectedUnit = this.units.filter(u => u.id === unitId);
+    if(selectedUnit != null) {
+      this.setValuesToEditForm(selectedUnit[0]);
+    }
+  }
+
+  setValuesToEditForm(unit: Unit) {
+    this.editUnitForm.setValue({
+      unit_name: unit.unit_name,
+      item_name: unit.item_name,
+      indoor_serial: unit.indoor_serial,
+      outdoor_serial: unit.outdoor_serial,
+      commissioned_date: unit.commissioned_date,
+      owner: unit.owner,
+      installed_location_name: unit.installed_location_name,
+      installed_location_address: unit.installed_location_address,
+      installed_parent_location: unit.installed_parent_location,
+      warranty_period: unit.warranty_period,
+      unit_price: unit.unit_price,
+      status: unit.status
+    });
   }
 
   loadDataTableConfigs() {
@@ -56,35 +94,63 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   initializeUnitForm() {
     this.addUnitForm = this.formBuilder.group({
-      unit_name: this.formBuilder.control(''),
-      item_name: this.formBuilder.control(''),
+      unit_name: this.formBuilder.control('', Validators.required),
+      item_name: this.formBuilder.control('', Validators.required),
       indoor_serial:this.formBuilder.control(''),
       outdoor_serial:this.formBuilder.control(''),
-      commissioned_date:this.formBuilder.control(''),
-      owner:this.formBuilder.control(''),
-      installed_location_name: this.formBuilder.control(''),
-      installed_location_address: this.formBuilder.control(''),
-      installed_parent_location: this.formBuilder.control(''),
-      warranty_period: this.formBuilder.control(''),
-      unit_price: this.formBuilder.control(''),
-      status: this.formBuilder.control(''),
+      commissioned_date:this.formBuilder.control('', Validators.required),
+      owner:this.formBuilder.control('', Validators.required),
+      installed_location_name: this.formBuilder.control('', Validators.required),
+      installed_location_address: this.formBuilder.control('', Validators.required),
+      installed_parent_location: this.formBuilder.control('', Validators.required),
+      warranty_period: this.formBuilder.control('',[Validators.required, Validators.min(0)]),
+      unit_price: this.formBuilder.control('', [Validators.required, Validators.min(0)]),
+      status: this.formBuilder.control('', Validators.required),
+    });
+  }
+
+  initializeUnitEditForm() {
+    this.editUnitForm = this.formBuilder.group({
+      unit_name: this.formBuilder.control('', Validators.required),
+      item_name: this.formBuilder.control('', Validators.required),
+      indoor_serial:this.formBuilder.control(''),
+      outdoor_serial:this.formBuilder.control(''),
+      commissioned_date:this.formBuilder.control('', Validators.required),
+      owner:this.formBuilder.control('', Validators.required),
+      installed_location_name: this.formBuilder.control('', Validators.required),
+      installed_location_address: this.formBuilder.control('', Validators.required),
+      installed_parent_location: this.formBuilder.control('', Validators.required),
+      warranty_period: this.formBuilder.control('',[Validators.required, Validators.min(0)]),
+      unit_price: this.formBuilder.control('', [Validators.required, Validators.min(0)]),
+      status: this.formBuilder.control('', Validators.required),
     });
   }
 
   onUnitAdd() {
-    this.unitService.addUnit(this.addUnitForm.value).subscribe(res =>
-      {
-        if (res.id > 0) {
-          this.isAddUnitModalOpen = false;
-          this.getUnitList();
-        }
-      });
+    this.unitService.addUnit(this.addUnitForm.value).subscribe(res => {
+      if (res.id > 0) {
+        this.isAddUnitModalOpen = false;
+        this.getUnitList();
+      }
+    });
+  }
+
+  onUnitEdit(){
+    this.unitService.editUnit(this.selectedUnit, this.editUnitForm.value).subscribe(res => {
+      if(res.id > 0) {
+        this.getUnitList();
+        this.closeEditModal.nativeElement.click();
+        this.selectedUnit = 0;
+      }
+    });
   }
 
   onDeleteUnit() {
-    this.unitService.deleteUnit(this.deleteUnit.id).subscribe(res=>{
+    this.unitService.deleteUnit(this.selectedUnit).subscribe(res=>{
       if(res == null) {
         this.getUnitList();
+        this.closeDeleteModal.nativeElement.click();
+        this.selectedUnit = 0;
       }
     });
   }
@@ -101,33 +167,5 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unitSubscription?.unsubscribe();
-  }
-
-  public onOpenModal(unit: Unit, mode: string): void {
-    const container = document.getElementById(
-      'main-container'
-    ) as HTMLInputElement;
-
-    // Create a hidden button element
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.style.display = 'none';
-    button.setAttribute('data-bs-toggle', 'modal');
-
-    // If mode is 'edit', set data-bs-target attribute to edit modal and assign unit to editUnit property
-    if (mode === 'edit') {
-      button.setAttribute('data-bs-target', '#exampleModal2');
-      this.editUnit = unit;
-    }
-
-    // If mode is 'delete', set data-bs-target attribute to delete modal and assign unit to deleteUnit property
-    if (mode === 'delete') {
-      button.setAttribute('data-bs-target', '#exampleModal3');
-      this.deleteUnit = unit;
-    }
-
-    // Append button to main container element and trigger a click event
-    container.appendChild(button);
-    button.click();
   }
 }

@@ -68,8 +68,6 @@ import { DataTablesModule } from "angular-datatables";
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    FormsModule,
-    HttpClientModule,
     RouterModule,
     ReactiveFormsModule,
     DataTablesModule,

@@ -20,7 +20,7 @@ export class UnitService {
     return this.httpClient.post<Unit>(`${this.baseUrl}/units`, unit);
   }
 
-  public updateUnit(unitId: Number, unit: Unit): Observable<Unit> {
+  public editUnit(unitId: Number, unit: Unit): Observable<Unit> {
     return this.httpClient.put<Unit>(`${this.baseUrl}/units/${unitId}`, unit);
   }
   public deleteUnit(unitId: Number): Observable<void> {
