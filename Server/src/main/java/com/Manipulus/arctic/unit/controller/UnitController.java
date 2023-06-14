@@ -1,6 +1,8 @@
 package com.Manipulus.arctic.unit.controller;
 
 import com.Manipulus.arctic.unit.model.Unit;
+import com.Manipulus.arctic.unit.model.UnitRequest;
+import com.Manipulus.arctic.unit.model.UnitResponse;
 import com.Manipulus.arctic.unit.service.UnitService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +37,7 @@ public class UnitController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin')")
-    public Unit updateUnit(@PathVariable("id") int id, @RequestBody Unit unit) {
+    public UnitResponse updateUnit(@PathVariable("id") int id, @RequestBody UnitRequest unit) {
         return unitService.updateUnit(id, unit);
     }
 
