@@ -220,64 +220,8 @@ export class SiteVisitComponent implements OnInit {
   
    //Edit asite visit
   public onUpdateSiteVisit(siteVisit: SiteVisit): void {
-    // const assignedVehicle = siteVisit.assignedVehicle;
-    // const state = siteVisit.state;
-  
-    // // Check if the vehicle number already exists in the site visits
-    // const existingVehicle = this.availableVehicles.find(sv => sv.vehicle_number === assignedVehicle);
-    // if (existingVehicle) {
-    //   // Update the active_state of the existing vehicle
-    //   const vehicleToUpdate = existingVehicle;
-      
-    //   if (vehicleToUpdate) {
-    //      const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
-    //     let activeState = assignedStatus;
-    //     let preActiveState = activeState;
-    //     if (assignedStatus === 'Assigned') {
-    //       activeState += ` (FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange})`;
-    //       vehicleToUpdate.active_state = activeState;
-    //     }else if (assignedStatus === 'Available') {
-    //       const dateSetToRemove = `(FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange})`;
-    //       const updatedActiveState = vehicleToUpdate.active_state.replace(dateSetToRemove, '');
-    //       vehicleToUpdate.active_state=updatedActiveState;
-    //       // vehicleToUpdate.active_state=vehicleToUpdate.active_state.replace(` (FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange})`, '');
-      
-  
-    //     }else{
-          
-
-    //       vehicleToUpdate.active_state = vehicleToUpdate.active_state;
-    //     }
-    //   }
-      
-      
-      // this.siteVisitService.updateVehicles(existingVehicle).subscribe(
-      //   (response: Vehicle) => {
-      //     console.log(response);
-      //     this.getSiteVisits();
-      //     addForm.reset();
-      //   },
-      //   (error: HttpErrorResponse) => {
-      //     alert(error.message);
-      //     addForm.reset();
-      //   }
-      // );
-
-      // const existingVehicle = this.availableVehicles.find(sv => sv.vehicle_number === siteVisit.assignedVehicle);
-      // this.siteVisitService.updateVehicles(existingVehicle).subscribe(
-      //   (response: Vehicle) => {
-      //     console.log(response);
-      //     this.getAvailableVehicles();
-          
-        
-      //   },
-      //   (error: HttpErrorResponse) => {
-      //     alert(error.message);
-      //   }
-      // );
-    
    
-  
+   
     this.siteVisitService.updateSiteVisit(siteVisit).subscribe(
       (response: SiteVisit) => {
         console.log(response);

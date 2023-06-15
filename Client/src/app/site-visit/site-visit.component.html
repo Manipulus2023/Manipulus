@@ -152,8 +152,7 @@
         </div>
         <div class="modal-body">
           <!-- <form #addForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)"> -->
-
-            <div class="form-group">
+         <div class="form-group">
               <label for="scheduledDate">Scheduled Date</label>
               <input type="date" ngModel name="scheduledDate" class="form-control" id="email" placeholder="scheduledDate" required>
             </div>
@@ -161,19 +160,7 @@
               <label for="assignedTeamId">Assigned Team Id</label>
               <input type="text" ngModel name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId" required>
             </div>
-
-                    <!-- <div class="form-group">
-                      <label for="assignedVehicle">Available Vehicles</label>
-                      <div class="vehicle-dropdown-container">
-                      <select id="vehicleDropdown" [(ngModel)]="selectedVehicle" class="form-control vehicle-dropdown">
-                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }} | Name: {{ vehicle.vehicle_name }} | NoP: {{ vehicle.number_of_passengers }} Ac_State: {{vehicle.active_state}}</option>
-                       
-                    </select>
-                    </div>
-                    </div> -->
-                    
-                   
-                    <div class="form-group">
+                        <div class="form-group">
                         <label for="activeStatus">Active Status of Available Vehicles</label>
                         <div class="active-status-container">
                             <div *ngFor="let vehicle of availableVehicles" class="active-status-row">
@@ -188,7 +175,6 @@
                             <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="Assign a vehicle" required>
                       </div>
 
-                      
             <div class="form-group">
               <label for="dateRange">End Date</label>
               <input type="date" ngModel name="dateRange" class="form-control" id="dateRange" placeholder="dateRange" required>
@@ -206,17 +192,18 @@
               <button type="button" id="add-siteVisit-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Save</button>
             </div>
-
-          <!-- </form> -->
         </div>
         </form>
       </div>
     </div>
   </div>
+
+
 <!-- Edit Modal -->
 <div class="modal fade" id="updateSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="siteVisitEditModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+             <form #editForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)">
            <div class="modal-header">
               <h5 class="modal-title" id="updateSiteVisitModalLabel">Edit Site Visit {{editSiteVisits?.siteVisitId}}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -225,14 +212,11 @@
            </div>
 
            <div class="modal-body">
-              <form #editForm="ngForm">
+              <!-- <form #editForm="ngForm"> -->
                 
                 <input type="hidden" ngModel="{{editSiteVisits?.siteVisitId}}" name="siteVisitId" class="form-control" id="SiteVisitId" placeholder="siteVisitId">
 
-                 <div class="form-group">
-                    <label for="scheduledDate">Scheduled Date</label>
-                    <input type="date" ngModel="{{editSiteVisits?.scheduledDate}}" name="scheduledDate" class="form-control" id="scheduledDate" placeholder="scheduledDate">
-                 </div>
+                
                  <div class="form-group">
                     <label for="assignedTeamId">Assigned Team Id</label>
                     <input type="text" ngModel="{{editSiteVisits?.assignedTeamId}}" name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId">
@@ -243,29 +227,27 @@
                  </div> -->
 
                    
-                                <div class="form-group">
-                                    <label for="assignedVehicle">Available Vehicles</label>
-                                    <select id="vehicleDropdown" [(ngModel)]="selectedVehicle">
-                                        <option *ngFor="let vehicle of availableVehicles" [value]="vehicle">No: {{ vehicle.vehicle_number }}  |   Name: {{ vehicle.vehicle_name }}  |  NoP: {{ vehicle.number_of_passengers }}  |    Ac_State : {{vehicle.active_state}}</option>
-                                    </select>
-                                </div>
-                                    
-                       
-                                <div class="form-group">
-                                   
-                                <label for="assignedVehicle">Assign Vehicle</label>
-                                    
-                                        <label for="assignedVehicle">Vehicle No:</label>
-                                        
-                                        <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="assignedVehicle" required>
-                                  
-                            </div>
-                                  
-          
+                 <div class="form-group">
+                    <label for="activeStatus">Active Status of Available Vehicles</label>
+                    <div class="active-status-container">
+                        <div *ngFor="let vehicle of availableVehicles" class="active-status-row">
+                            Vehicle No: {{ vehicle.vehicle_number }} | Active Status: {{ vehicle.active_state }}
+                        </div>
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <label for="assignedVehicle">Assign Vehicle</label>  
+                          <label for="assignedVehicle">Vehicle No:</label>
+                        <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="Assign a vehicle" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="scheduledDate">Scheduled Date</label>
+                    <input type="date" ngModel="{{editSiteVisits?.scheduledDate}}" name="scheduledDate" class="form-control" id="scheduledDate" placeholder="Schedule a Date">
+                 </div>
                  <div class="form-group">
                     <label for="dateRange">End Date</label>
-                    <input type="date" ngModel="{{editSiteVisits?.dateRange}}" name="dateRange" class="form-control" id="dateRange" placeholder="dateRange">
+                    <input type="date" ngModel="{{editSiteVisits?.dateRange}}" name="dateRange" class="form-control" id="dateRange" placeholder="End Date">
                  </div>
                 
                  <div class="form-group">
@@ -283,8 +265,9 @@
                       <p *ngIf="!editSiteVisits?.siteVisitId" class="text-danger">Please enter a siteVisitId.</p>
                       
                  </div>
-              </form>
+            
            </div>
+        </form>
         </div>
      </div>
 </div>
