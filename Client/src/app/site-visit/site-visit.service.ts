@@ -45,6 +45,8 @@ public deleteSiteVisit(siteVisitId: number):Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/siteVisit/delete/${siteVisitId}`);
 
 }
+
+
 // public printGatePass(siteVisitId: number):Observable<void> {
   
 //   return this.http.get<void>(`${this.apiServerUrl}/gate-pass/printGatePass/${siteVisitId}`);

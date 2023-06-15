@@ -203,7 +203,7 @@
 <div class="modal fade" id="updateSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="siteVisitEditModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-             <form #editForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)">
+             <form #editForm="ngForm" >
            <div class="modal-header">
               <h5 class="modal-title" id="updateSiteVisitModalLabel">Edit Site Visit {{editSiteVisits?.siteVisitId}}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -219,7 +219,7 @@
                 
                  <div class="form-group">
                     <label for="assignedTeamId">Assigned Team Id</label>
-                    <input type="text" ngModel="{{editSiteVisits?.assignedTeamId}}" name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId">
+                    <input  ngModel="{{editSiteVisits?.assignedTeamId}}" name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId">
                  </div>
                  <!-- <div class="form-group">
                     <label for="assignedVehicle">Assigned Vehicle</label>
@@ -228,7 +228,8 @@
 
                    
                  <div class="form-group">
-                    <label for="activeStatus">Active Status of Available Vehicles</label>
+                    <br>
+                    <i>Active Status of Available Vehicles</i>
                     <div class="active-status-container">
                         <div *ngFor="let vehicle of availableVehicles" class="active-status-row">
                             Vehicle No: {{ vehicle.vehicle_number }} | Active Status: {{ vehicle.active_state }}
@@ -239,15 +240,18 @@
                 <div class="form-group">
                     <label for="assignedVehicle">Assign Vehicle</label>  
                           <label for="assignedVehicle">Vehicle No:</label>
-                        <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="Assign a vehicle" required>
+                        <input  ngModel="{{editSiteVisits?.assignedVehicle}}" name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="Assign a vehicle" required>
                   </div>
+                  <br>
+                 <i>If you wish to edit dates Please enter the Status as completed and save it. After that Enter the dates you wish to edit and Save.</i>
+                 
                   <div class="form-group">
                     <label for="scheduledDate">Scheduled Date</label>
-                    <input type="date" ngModel="{{editSiteVisits?.scheduledDate}}" name="scheduledDate" class="form-control" id="scheduledDate" placeholder="Schedule a Date">
+                    <input ngModel="{{editSiteVisits?.scheduledDate}}" name="scheduledDate" class="form-control" id="scheduledDate" placeholder="Schedule a Date">
                  </div>
                  <div class="form-group">
                     <label for="dateRange">End Date</label>
-                    <input type="date" ngModel="{{editSiteVisits?.dateRange}}" name="dateRange" class="form-control" id="dateRange" placeholder="End Date">
+                    <input ngModel="{{editSiteVisits?.dateRange}}" name="dateRange" class="form-control" id="dateRange" placeholder="End Date">
                  </div>
                 
                  <div class="form-group">
@@ -293,7 +297,7 @@
            </div>
         </div>
     </div>
-
+</div>
 
 
 

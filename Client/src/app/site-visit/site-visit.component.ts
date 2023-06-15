@@ -52,6 +52,7 @@ export class SiteVisitComponent implements OnInit {
     });
 
   }
+
   getSiteVisit(): void {
     const siteVisitId = this.route.snapshot.paramMap.get('siteVisitId');
     this.siteVisitService.getSiteVisits().subscribe(siteVisits => { // fetches all site visits
@@ -114,6 +115,7 @@ export class SiteVisitComponent implements OnInit {
         );
   }
 
+  
   //add a new site visit
   public onAddSiteVisit(addForm: NgForm): void {
     document.getElementById('add-siteVisit-form')?.click();
@@ -127,26 +129,16 @@ export class SiteVisitComponent implements OnInit {
       // Update the active_state of the existing vehicle
       const vehicleToUpdate = existingVehicle;
       
-      // if (vehicleToUpdate) {
-      //    const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
-      //   let activeState = assignedStatus;
-      //   let preActiveState = activeState;
-      //   if (assignedStatus === 'Assigned') {
-      //     activeState += ` (FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
-      //     vehicleToUpdate.active_state = activeState;
-      //   }else{
-      //     vehicleToUpdate.active_state = vehicleToUpdate.active_state;
-      //   }
-      // }
-      
       if (vehicleToUpdate) {
         const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
         let activeState = assignedStatus;
         let preActiveState = activeState;
         if (assignedStatus === 'Assigned') {
-            const previousAssignedDates = vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+            // const previousAssignedDates = vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+            // const currentAssignedDate = `(FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
+            const previousAssignedDates = vehicleToUpdate.active_state && vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
             const currentAssignedDate = `(FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
-    
+            
             if (previousAssignedDates) {
                 activeState += previousAssignedDates.join(' ');
                 activeState += ' ' + currentAssignedDate;
@@ -156,7 +148,8 @@ export class SiteVisitComponent implements OnInit {
     
             vehicleToUpdate.active_state = activeState;
         } else {
-          const previousAssignedDates = vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+          // const previousAssignedDates = vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+          const previousAssignedDates = vehicleToUpdate.active_state && vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
           const currentAssignedDate = `(FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
   
           if (previousAssignedDates) {  
@@ -174,8 +167,6 @@ export class SiteVisitComponent implements OnInit {
        
         }
     }
-    
-      
       this.siteVisitService.updateVehicles(existingVehicle).subscribe(
         (response: Vehicle) => {
           console.log(response);
@@ -221,13 +212,62 @@ export class SiteVisitComponent implements OnInit {
    //Edit asite visit
   public onUpdateSiteVisit(siteVisit: SiteVisit): void {
    
-   
+
+      const assignedVehicle = siteVisit.assignedVehicle;
+      const state = siteVisit.state;
+    
+      const existingVehicle = this.availableVehicles.find(sv => sv.vehicle_number === assignedVehicle);
+      if (existingVehicle) {
+        const vehicleToUpdate = existingVehicle;
+        if (vehicleToUpdate) {
+          const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
+          let activeState = assignedStatus;
+          let preActiveState = activeState;
+          if (assignedStatus === 'Assigned') {
+            const previousAssignedDates = vehicleToUpdate.active_state && vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+            const currentAssignedDate = `(FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange})`;
+            
+            if (previousAssignedDates) {
+              
+              activeState += previousAssignedDates.join(' ');
+              activeState += ' ' + currentAssignedDate;
+            } else {
+              activeState += ' ' + currentAssignedDate;
+            }
+    
+            vehicleToUpdate.active_state = activeState;
+          } else {
+            const previousAssignedDates = vehicleToUpdate.active_state && vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+            const currentAssignedDate = `(FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange})`;
+    
+            if (previousAssignedDates) {  
+              activeState += ' ' + previousAssignedDates.filter(date => !date.includes(`FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange}`)).join(' ');
+              vehicleToUpdate.active_state = activeState;
+            } else {
+              vehicleToUpdate.active_state = vehicleToUpdate.active_state;
+            }
+          }
+        }
+      
+    
+      this.siteVisitService.updateVehicles(existingVehicle).subscribe(
+        (response: Vehicle) => {
+          console.log(response);
+          this.getSiteVisits();
+         
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        
+        }
+      );
+    }
+    
     this.siteVisitService.updateSiteVisit(siteVisit).subscribe(
       (response: SiteVisit) => {
         console.log(response);
         this.getSiteVisits();
-        
-      
+     
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
