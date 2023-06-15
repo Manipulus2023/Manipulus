@@ -305,12 +305,14 @@ export class SiteVisitComponent implements OnInit {
     }
   }
   
-  downloadPDF() {
-    this.siteVisitService.downloadPDF().subscribe((response: Blob) => {
+  downloadPDF(siteVisitId: number) {
+    this.siteVisitService.downloadPDF(siteVisitId).subscribe((response: Blob) => {
       const fileURL = URL.createObjectURL(response);
       window.open(fileURL);
     });
   }
+  
+  
      //Print Gate Pass
     //  public onPrintGatePass(siteVisitId: number): void {
     //   this.siteVisitService.printGatePass(siteVisitId).subscribe(

@@ -45,19 +45,17 @@ public deleteSiteVisit(siteVisitId: number):Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/siteVisit/delete/${siteVisitId}`);
 
 }
-
-
 // public printGatePass(siteVisitId: number):Observable<void> {
   
 //   return this.http.get<void>(`${this.apiServerUrl}/gate-pass/printGatePass/${siteVisitId}`);
 
 // }
 
-downloadPDF(): Observable<Blob> {
-  const url = 'http://localhost:8080/gate-pass/printGatePass/1';
+
+public downloadPDF(siteVisitId: number): Observable<Blob> {
+  const url = `${this.apiServerUrl}/gate-pass/printGatePass/${siteVisitId}`;
   return this.http.get(url, { responseType: 'blob' });
 }
-
 // generateGatePass(siteVisitId:number): Observable<void> {
 //   const headers = new HttpHeaders().set('Accept', 'application/pdf');
 //   return this.http.get<any>(`${this.apiServerUrl}/gate-pass/printGatePass/${siteVisitId}`, {
