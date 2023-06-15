@@ -44,17 +44,17 @@ public class UnitService {
         Unit existingUnit=findUnitById(id);
         if(existingUnit != null) {
 
-            existingUnit.setUnit_name(unit.unitName);
-            existingUnit.setItem_name(unit.itemName);
-            existingUnit.setIndoor_serial(unit.indoorSerial);
-            existingUnit.setOutdoor_serial(unit.outdoorSerial);
-            existingUnit.setCommissioned_date(unit.commissionedDate);
+            existingUnit.setUnit_name(unit.unit_name);
+            existingUnit.setItem_name(unit.item_name);
+            existingUnit.setIndoor_serial(unit.indoor_serial);
+            existingUnit.setOutdoor_serial(unit.outdoor_serial);
+            existingUnit.setCommissioned_date(unit.commissioned_date);
             existingUnit.setOwner(unit.owner);
-            existingUnit.setInstalled_location_name(unit.installedLocationName);
-            existingUnit.setInstalled_location_address(unit.installedLocationAddress);
-            existingUnit.setInstalled_parent_location(unit.installedParentLocation);
-            existingUnit.setWarranty_period(unit.warrantyPeriod);
-            existingUnit.setUnit_price(unit.unitPrice);
+            existingUnit.setInstalled_location_name(unit.installed_location_name);
+            existingUnit.setInstalled_location_address(unit.installed_location_address);
+            existingUnit.setInstalled_parent_location(unit.installed_parent_location);
+            existingUnit.setWarranty_period(unit.warranty_period);
+            existingUnit.setUnit_price(unit.unit_price);
             existingUnit.setStatus(unit.status);
 
             Unit updatedUnit = unitRepository.save(existingUnit);

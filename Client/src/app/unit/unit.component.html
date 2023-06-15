@@ -436,8 +436,8 @@
                         <div class="mb-3">
                           <select formControlName="status" class="form-control" required>
                             <option value="">Select status</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
                           </select>
                           <div *ngIf="
                               addUnitForm.controls['status'].invalid &&
@@ -456,7 +456,7 @@
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                   </button>
-                  <button [disabled]="addUnitForm.invalid" type="submit" class="btn btn-primary">
+                  <button #closeAddModal [disabled]="addUnitForm.invalid" type="submit" class="btn btn-primary">
                     Submit
                   </button>
                 </div>

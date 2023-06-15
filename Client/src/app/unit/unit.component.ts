@@ -26,6 +26,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
 
+  @ViewChild('closeAddModal') closeAddModal: ElementRef
   @ViewChild('closeDeleteModal') closeDeleteModal: ElementRef
   @ViewChild('closeEditModal') closeEditModal: ElementRef
 
@@ -131,6 +132,7 @@ export class UnitComponent implements OnInit, OnDestroy {
       if (res.id > 0) {
         this.isAddUnitModalOpen = false;
         this.getUnitList();
+        this.closeAddModal.nativeElement.click();
       }
     });
   }
