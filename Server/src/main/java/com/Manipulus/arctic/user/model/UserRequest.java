@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRequest {
-    public String userName;
-    public String firstName;
-    public String lastName;
+    public String user_name;
+    public String first_name;
+    public String last_name;
     public String address;
     public String email;
-    public String mobileNumber;
+    public String mobile_number;
     public String password;
     public String status;
     public String designation;
-    public Integer role;
+   // public String group;
+    public Integer roles;
 }

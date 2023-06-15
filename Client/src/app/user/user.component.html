@@ -35,11 +35,13 @@
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
-              <th>Mobile</th>
+              <th>Mobile No.</th>
               <th>Designation</th>
+               <th>Address</th>
+              <th>Role</th>
+              <!-- <th>Group</th> -->
+              <!-- <th>Password</th> -->
               <th>Status</th>
-              <th></th>
-              <th></th>
             </tr>
           </thead>
 
@@ -56,7 +58,7 @@
               <td>
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ user.userName }}</p>
+                    <p class="fw-bold mb-1">{{ user.user_name }}</p>
                   </div>
                 </div>
               </td>
@@ -85,7 +87,7 @@
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
                     <p class="fw-bold mb-1">
-                      {{ user.mobileNumber }}
+                      {{ user.mobile_number }}
                     </p>
                   </div>
                 </div>
@@ -102,6 +104,35 @@
               <td>
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.address }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.roles[0].roleName }}</p>
+                  </div>
+                </div>
+              </td>
+              <!-- <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.group }}</p>
+                  </div>
+                </div>
+              </td> -->
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.password }}</p>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
                     <p class="fw-bold mb-1">{{ user.status }}</p>
                   </div>
                 </div>
@@ -109,7 +140,8 @@
 
               <!-- delete user button -->
               <td>
-                <button type="button" class="btn btn-link btn-sm btn-rounded" (click)="onOpenModal(user, 'delete')">
+                <button type="button" class="btn btn-link btn-sm btn-rounded" data-bs-toggle="modal"
+                  data-bs-target="#deleteModal" (click)="onClickDeleteUser(user.id)">
                   <img src="../../assets/Icon/Customer/delete_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
                     height="20" />
                 </button>
@@ -117,7 +149,8 @@
 
               <!-- edit user button -->
               <td>
-                <button type="button" class="btn btn-outline-primary" (click)="onOpenModal(user, 'edit')">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                  (click)="onClickEditUser(user.id)">
                   <img src="../../assets/Icon/Customer/edit_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
                     height="20" />
                 </button>
@@ -151,13 +184,13 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="firstName" class="form-control" required />
+                          <input type="text" formControlName="first_name" class="form-control" required />
                           <div *ngIf="
-                              addUserForm.controls['firstName'].invalid &&
-                              (addUserForm.controls['firstName'].dirty ||
-                                addUserForm.controls['firstName'].touched)
+                              addUserForm.controls['first_name'].invalid &&
+                              (addUserForm.controls['first_name'].dirty ||
+                                addUserForm.controls['first_name'].touched)
                             ">
-                            <small class="text-danger" *ngIf="addUserForm.controls['firstName'].errors?.['required']">
+                            <small class="text-danger" *ngIf="addUserForm.controls['first_name'].errors?.['required']">
                               First Name is required.
                             </small>
                           </div>
@@ -173,13 +206,13 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="lastName" class="form-control" required />
+                          <input type="text" formControlName="last_name" class="form-control" required />
                           <div *ngIf="
-                              addUserForm.controls['lastName'].invalid &&
-                              (addUserForm.controls['lastName'].dirty ||
-                                addUserForm.controls['lastName'].touched)
+                              addUserForm.controls['last_name'].invalid &&
+                              (addUserForm.controls['last_name'].dirty ||
+                                addUserForm.controls['last_name'].touched)
                             ">
-                            <small class="text-danger" *ngIf="addUserForm.controls['lastName'].errors?.['required']">
+                            <small class="text-danger" *ngIf="addUserForm.controls['last_name'].errors?.['required']">
                               Last Name is required.
                             </small>
                           </div>
@@ -195,13 +228,13 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="userName" class="form-control" required />
+                          <input type="text" formControlName="user_name" class="form-control" required />
                           <div *ngIf="
-                              addUserForm.controls['userName'].invalid &&
-                              (addUserForm.controls['userName'].dirty ||
-                                addUserForm.controls['userName'].touched)
+                              addUserForm.controls['user_name'].invalid &&
+                              (addUserForm.controls['user_name'].dirty ||
+                                addUserForm.controls['user_name'].touched)
                             ">
-                            <small class="text-danger" *ngIf="addUserForm.controls['userName'].errors?.['required']">
+                            <small class="text-danger" *ngIf="addUserForm.controls['user_name'].errors?.['required']">
                               User Name is required.
                             </small>
                           </div>
@@ -239,18 +272,18 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="mobileNumber" class="form-control" ngModel required
+                          <input type="text" formControlName="mobile_number" class="form-control" ngModel required
                             pattern="^[0-9]{10}$'" />
                           <div *ngIf="
-                              addUserForm.controls['mobileNumber'].invalid &&
-                              (addUserForm.controls['mobileNumber'].dirty ||
-                                addUserForm.controls['mobileNumber'].touched)
+                              addUserForm.controls['mobile_number'].invalid &&
+                              (addUserForm.controls['mobile_number'].dirty ||
+                                addUserForm.controls['mobile_number'].touched)
                             ">
                             <small class="text-danger"
-                              *ngIf="addUserForm.controls['mobileNumber'].errors?.['required']">
+                              *ngIf="addUserForm.controls['mobile_number'].errors?.['required']">
                               Mobile Number is required.
                             </small>
-                            <small class="text-danger" *ngIf="addUserForm.controls['mobileNumber'].errors?.['pattern']">
+                            <small class="text-danger" *ngIf="addUserForm.controls['mobile_number'].errors?.['pattern']">
                               Mobile number must be a 10-digit number.
                             </small>
                           </div>
@@ -357,7 +390,7 @@
                       </div>
                     </div>
 
-                    <div class="row">
+                    <!-- <div class="row">
                       <div class="col-lg-6">
                         <div class="mb-3">
                           <label class="form-label">User Group:</label>
@@ -377,7 +410,7 @@
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="row">
                       <div class="col-lg-6">
@@ -387,19 +420,20 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="role" class="form-control" required />
+                          <input type="text" formControlName="roles" class="form-control" required />
                           <div *ngIf="
-                              addUserForm.controls['role'].invalid &&
-                              (addUserForm.controls['role'].dirty ||
-                                addUserForm.controls['role'].touched)
+                              addUserForm.controls['roles'].invalid &&
+                              (addUserForm.controls['roles'].dirty ||
+                                addUserForm.controls['roles'].touched)
                             ">
-                            <small class="text-danger" *ngIf="addUserForm.controls['role'].errors?.['required']">
+                            <small class="text-danger" *ngIf="addUserForm.controls['roles'].errors?.['required']">
                               User Role is required.
                             </small>
                           </div>
                         </div>
                       </div>
                     </div>
+
                   </div>
                 </div>
               </div>

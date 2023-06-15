@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from './user';
+import { User, UserResponse } from './user';
 import { UserService } from './user.service';
 
 
@@ -13,19 +13,24 @@ import { UserService } from './user.service';
 export class UserComponent implements OnInit, OnDestroy {
 
   addUserForm: FormGroup;
+  editUserForm: FormGroup;
   searchForm: FormGroup;
   userSubscription: Subscription;
-  users: User[] = [];
+  users: UserResponse[] = [];
   isAddUserModalOpen = false;
   isEditUserModalOpen = false;
   selectedUser: any;
-  public editUser!: User;
-  public deleteUser!: User;
+  public editUser!: UserResponse;
+  public deleteUser!: UserResponse;
   key: string;
 
   //Data Table configs
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
+
+  @ViewChild('closeAddModal') closeAddModal: ElementRef
+  @ViewChild('closeDeleteModal') closeDeleteModal: ElementRef
+  @ViewChild('closeEditModal') closeEditModal: ElementRef
 
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.searchForm = this.formBuilder.group({
@@ -34,9 +39,41 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loadDataTableConfigs();
     this.getUserList();
     this.initializeUserForm();
-    this.loadDataTableConfigs();
+    this.initializeUserEditForm();
+  }
+
+  onClickDeleteUser(userId: number) {
+    this.selectedUser = userId;
+  }
+  onClickEditUser(userId: number) {
+    this.selectedUser = userId;
+    this.loadSelectedUser(this.selectedUser);
+  }
+
+  loadSelectedUser(userId: number) {
+    const selectedUser = this.users.filter(u => u.id === userId);
+    if (selectedUser != null) {
+      this.setValuesToEditForm(selectedUser[0]);
+    }
+  }
+
+  setValuesToEditForm(user: UserResponse) {
+    this.editUserForm.setValue({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      user_name: user.user_name,
+      address: user.address,
+      mobile_number: user.mobile_number,
+      email: user.email,
+      password: user.password,
+      status: user.status,
+      designation: user.designation,
+      //group: user.group,
+      roles: user.roles,
+    })
   }
 
   loadDataTableConfigs() {
@@ -61,122 +98,73 @@ export class UserComponent implements OnInit, OnDestroy {
 
   initializeUserForm() {
     this.addUserForm = this.formBuilder.group({
-      firstName: this.formBuilder.control('', Validators.required),
-      lastName: this.formBuilder.control('', Validators.required),
-      userName: this.formBuilder.control('', Validators.required),
+      first_name: this.formBuilder.control('', Validators.required),
+      last_name: this.formBuilder.control('', Validators.required),
+      user_name: this.formBuilder.control('', Validators.required),
       address: this.formBuilder.control('', Validators.required),
-      mobileNumber: this.formBuilder.control(''),
+      mobile_number: this.formBuilder.control(''),
       email: this.formBuilder.control(''),
       password: this.formBuilder.control(''),
       status: this.formBuilder.control(''),
       designation: this.formBuilder.control(''),
-      group: this.formBuilder.control(''),
-      role: this.formBuilder.control(''),
+      // group: this.formBuilder.control(''),
+      roles: this.formBuilder.control(''),
+    });
+  }
+
+  initializeUserEditForm() {
+    this.editUserForm = this.formBuilder.group({
+      first_name: this.formBuilder.control('', Validators.required),
+      last_name: this.formBuilder.control('', Validators.required),
+      user_name: this.formBuilder.control('', Validators.required),
+      address: this.formBuilder.control('', Validators.required),
+      mobile_number: this.formBuilder.control(''),
+      email: this.formBuilder.control(''),
+      password: this.formBuilder.control(''),
+      status: this.formBuilder.control(''),
+      designation: this.formBuilder.control(''),
+      //group: this.formBuilder.control(''),
+      roles: this.formBuilder.control(''),
     });
   }
 
   onUserAdd() {
-    console.log(this.addUserForm.value['role']);
-    this.addUserForm.value['role'] = +this.addUserForm.value['role'];
     this.userService.addUser(this.addUserForm.value).subscribe(res => {
       if (res.id > 0) {
         this.isAddUserModalOpen = false;
         this.getUserList();
+        this.closeAddModal.nativeElement.click();
+      }
+    });
+  }
+
+  onUserEdit() {
+    this.userService.editUser(this.selectedUser, this.editUserForm.value).subscribe(res => {
+      if (res.id > 0) {
+        this.getUserList();
+        this.closeEditModal.nativeElement.click();
+        this.selectedUser = 0;
       }
     });
   }
 
   onDeleteUser() {
-    this.userService.deleteUser(this.deleteUser.id).subscribe(res=>{
-      if(res == null) {
+    this.userService.deleteUser(this.selectedUser).subscribe(res => {
+      if (res == null) {
         this.getUserList();
+        this.closeDeleteModal.nativeElement.click();
+        this.selectedUser = 0;
       }
     });
-  }
-
-  onAddUserSubmit() {
-    if (this.addUserForm.invalid) {
-      return;
-    }
-    const newUser = this.addUserForm.value;
-    this.users.push(newUser);
-    this.closeAddUserModal();
-  }
-
-  onEditUserSubmit() {
-    if (this.addUserForm.invalid) {
-      return;
-    }
-    const updatedUser = this.addUserForm.value;
-    // Update the selected user in the list
-    const index = this.users.findIndex(user => user === this.selectedUser);
-    if (index !== -1) {
-      this.users[index] = updatedUser;
-    }
-    this.closeEditUserModal();
   }
 
   openAddUserModal() {
     this.isAddUserModalOpen = true;
   }
 
-  closeAddUserModal() {
-    this.isAddUserModalOpen = false;
-    this.addUserForm.reset();
-  }
-  openEditUserModal(user: any) {
-    this.isEditUserModalOpen = true;
-    this.selectedUser = user;
-    this.addUserForm.patchValue({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      userName: user.userName,
-      address: user.address,
-      mobileNumber: user.mobileNumber,
-      email: user.email,
-      password: user.password,
-      status: user.status,
-      designation: user.designation,
-      group: user.group,
-      role: user.role,
-    });
-  }
-
-  closeEditUserModal() {
-    this.isEditUserModalOpen = false;
-    this.addUserForm.reset();
-    this.selectedUser = null;
-  }
-
-  searchUser(value: string) {
-    const searchKey = this.searchForm.value.key;
-  }
-
-  public onOpenModal(user: User, mode: string): void {
-    const container = document.getElementById(
-      'main-container'
-    ) as HTMLInputElement;
-
-    // Create a hidden button element
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.style.display = 'none';
-    button.setAttribute('data-bs-toggle', 'modal');
-
-    // If mode is 'edit', set data-bs-target attribute to edit modal and assign user to edituser property
-    if (mode === 'edit') {
-      button.setAttribute('data-bs-target', '#exampleModal2');
-      this.editUser = user;
-    }
-
-    // If mode is 'delete', set data-bs-target attribute to delete modal and assign user to deleteuser property
-    if (mode === 'delete') {
-      button.setAttribute('data-bs-target', '#exampleModal3');
-      this.deleteUser = user;
-    }
-
-    // Append button to main container element and trigger a click event
-    container.appendChild(button);
-    button.click();
-  }
+  //   searchUser(value: string) {
+  //     const searchKey = this.searchForm.value.key;
+  //   }
 }
+
+
