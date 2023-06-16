@@ -286,6 +286,7 @@
                 id="add-job-form"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
+                (click)="reload()"
               >
                 Close
               </button>
@@ -451,28 +452,15 @@
 
                     <div class="col-lg-6">
                       <div class="mb-3">
-                        <label class="form-label">Job location :</label>
                         <input
-                          type="text"
+                          type="hidden"
                           class="form-control"
                           id="location"
                           ngModel ={{editJob?.location}}
                           name="location"
                           required
                         />
-                        <div
-                          *ngIf="
-                            addForm.controls['location'].invalid &&
-                            (addForm.controls['location'].dirty ||
-                              addForm.controls['location'].touched)
-                          "
-                        >
-                          <small
-                            class="text-danger"
-                            *ngIf="addForm.controls['location'].errors?.['required']"
-                            >Job due date is required.</small
-                          >
-                        </div>
+                       
                       </div>
                     </div>
 

@@ -86,7 +86,7 @@ export class JobComponent implements OnInit {
   }
 
   public onAddJob(addForm: NgForm): void {
-    window.location.reload();
+ 
     this.getCustomers();
 
     const job: Job = {
@@ -126,7 +126,9 @@ export class JobComponent implements OnInit {
         alert(error.message);
       });
   }
-
+public reload(): void {
+  window.location.reload();
+}
   public onDeleteJob(jobID: number): void {
     this.jobService.deleteJob(jobID).subscribe(
       (response: void) => {
