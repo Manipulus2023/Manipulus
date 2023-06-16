@@ -22,7 +22,7 @@ export class LocationComponent implements OnInit {
   @ViewChild(MapInfoWindow, { static: false })
   info!: MapInfoWindow;
 
-  zoom = 12;
+  zoom = 9;
   maxZoom = 15;
   minZoom = 2;
   center!: google.maps.LatLngLiteral;
@@ -46,8 +46,8 @@ export class LocationComponent implements OnInit {
       fontWeight :'bold',
       text: "Marker label 2"
     },
-    title: "Marker title 2",
-    info: "Marker info 2",
+    title: "",
+    info: "",
     options: {
       animation: 2
     }
@@ -143,12 +143,12 @@ export class LocationComponent implements OnInit {
                 lng: location.location_lng,
               },
               label: {
-                color: 'blue',
-                fontWeight :'bold',
-                text: 'Marker label ' + (this.markers.length + 1),
+                color: 'white',
+                fontWeight :' italic',
+                text: (location.location_info.job_type)+' job @ Customer ' + (location.location_info.customer.name),
               },
               title: location.location_title,
-              info: location.location_info,
+              info: (location.location_info.job_type)+' job @ Customer ' + (location.location_info.customer.name)  +' Contact Number: ' +(location.location_info.customer.contactNumber),
               options: {
                 animation: google.maps.Animation.DROP,
               },

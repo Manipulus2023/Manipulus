@@ -44,7 +44,7 @@ export class JobService {
     return this.httpClient.get<Customer[]>(`${this.baseUrl}/customer/all`); // Get a list of all customers from the server
   }
 
-  public addlocation( job: Job): Observable<Locations> {
+  public addlocation( job: Job, id: number): Observable<Locations> {
     const locationToAdd: Locations = {
       location_title: '',
       //@ts-ignore
@@ -54,7 +54,8 @@ export class JobService {
     };
   
     locationToAdd.location_title = job.job_type; 
-    locationToAdd.location_info = job.customer_id; 
+    //@ts-ignore
+    locationToAdd.location_info = null; 
     const regex = /@(-?\d+\.?\d*),(-?\d+\.?\d*),/;
     const matches = job.location.match(regex);
     
@@ -67,7 +68,7 @@ export class JobService {
       locationToAdd.location_lng = 0;
     }
     
-    return this.httpClient.post<Locations>(`${this.baseUrl}/location/add`, locationToAdd);
+    return this.httpClient.post<Locations>(`${this.baseUrl}/location/add?id=${id}`, locationToAdd);
   }
   
 
