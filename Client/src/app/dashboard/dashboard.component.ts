@@ -8,99 +8,82 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css','.../../../../assets/Css/nucleo-icons.css',]
+  styleUrls: [
+    './dashboard.component.css',
+    '.../../../../assets/Css/nucleo-icons.css',
+  ],
 })
 export class DashboardComponent implements OnInit {
-
   public customers: Customer[] = [];
   public customersList: Customer[] = [];
-  public jobs : Job[] =[];
-  constructor(private customerService: CustomerService , private jobService: JobService) {}
-  public filteredJobs: Job[] = [];
+  public jobs: Job[] = [];
+  constructor(
+    private customerService: CustomerService,
+    private jobService: JobService
+  ) {}
+  public InstallationfilteredJobs: Job[] = [];
+  public BreakdownsfilteredJobs: Job[] = [];
+  
   public customerId!: number;
- public jobstypes : String[]=["Inspection",
-"Service",
-"Installation",
-"Breakdowns",
-"Upgrades",
-"Remove"
-];
-addForm: NgForm;
+  public jobstypes: String[] = [
+    'Inspection',
+    'Service',
+    'Installation',
+    'Breakdowns',
+    'Upgrades',
+    'Remove',
+  ];
+  addForm: NgForm;
   ngOnInit(): void {
-    this.getCustomers();
-    this.getJobs();
-
+    // this.getCustomers();
+    // this.getJobs();
+    
+    // this.InstallationfilteredJobs = this.jobs.filter((job) => job.job_type == "Installation");
+    // this.BreakdownsfilteredJobs = this.jobs.filter((job) => job.job_type == 'Breakdowns');
+    // console.log(this.BreakdownsfilteredJobs);
   }
 
+//   public getCustomers(): void {
+//     {
+//       this.customerService.getCustomerList().subscribe(
+//         (response: Customer[]) => {
+//           this.customers = response;
+//           this.customersList = response.filter(
+//             (customer) => customer.active_status
+//           );
+//           console.log(this.customers);
+//         },
+//         (error: HttpErrorResponse) => alert(error.message)
+//       );
+//     }
+//   }
 
+//   public getJobs(): void {
+//     {
+//       this.jobService.getJobList().subscribe(
+//         (response: Job[]) => {
+//           this.jobs = response;
 
-  public getCustomers(): void {
-    {
-      this.customerService.getCustomerList().subscribe(
-        (response: Customer[]) => {
-          this.customers = response;
-          this.customersList = response.filter(customer => customer.active_status);
-          console.log(this.customers);
-        },
-        (error: HttpErrorResponse) => alert(error.message)
-      );
-    }
-  }
+//           console.log(this.jobs);
+//         },
+//         (error: HttpErrorResponse) => alert(error.message)
+//       );
+//     }
+//   }
 
-  public getJobs():void { {
-    this.jobService.getJobList().subscribe(
-      (response: Job[]) =>{
-        this.jobs = response;
+//   public onAddCustomer(addForm: NgForm): void {
+//     this.customerService.addCustomer(addForm.value).subscribe(
+//       (response: Customer) => {
+//         console.log(response);
+//         this.getCustomers();
 
-        console.log(this.jobs);
-      },
-      (error: HttpErrorResponse) =>
-         alert(error.message)
-
-      ); }}
-
-      public filterJobs(event: Event): void {
-        const jobType = (event.target as HTMLSelectElement).value;
-        if (jobType === '') {
-          this.filteredJobs = this.jobs;
-        } else {
-          this.filteredJobs = this.jobs.filter(job => job.job_type === jobType);
-        }
-      }
-
-
-
- public onAddCustomer(addForm: NgForm): void {
-    this.customerService.addCustomer(addForm.value).subscribe(
-      (response: Customer) => {
-        console.log(response);
-        this.getCustomers();
-
-
-        addForm.reset();
-        // window.location.reload();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-  }
-
-  // public onAddJob(addForm: NgForm): void {
-  //   this.getCustomers();
-  //   const customerId: number = this.customerId;
-  //   // const customerId: number = 5; // Set the desired customer ID here
-  //   this.jobService.addJob(addForm.value, customerId).subscribe(
-  //     (response: Job) => {
-  //       console.log(response);
-  //       this.getJobs();
-
-  //       addForm.reset();
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //   );
-  // }
-
+//         addForm.reset();
+//         // window.location.reload();
+//       },
+//       (error: HttpErrorResponse) => {
+//         alert(error.message);
+//       }
+//     );
+//   }
+// 
 }
