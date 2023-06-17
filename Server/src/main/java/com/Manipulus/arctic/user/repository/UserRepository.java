@@ -1,5 +1,6 @@
 package com.Manipulus.arctic.user.repository;
 
+import com.Manipulus.arctic.unit.model.Unit;
 import com.Manipulus.arctic.user.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -59,6 +60,9 @@ public class UserRepository implements IUserRepository {
 
     }
 
+    public <S extends User> S update(S entity) {
+        return entityManager.merge(entity);
+    }
     @Override
     public User getOne(Integer s) {
         return null;

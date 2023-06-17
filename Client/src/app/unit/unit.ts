@@ -9,8 +9,9 @@ export class Unit{
   installed_location_name!: string;
   installed_location_address!: string;
   installed_parent_location!: string;
-  warranty_period: string;
-  unit_price!: string;
+  warranty_period: number;
+  unit_price!: number;
   status!: string;
+
 }
 

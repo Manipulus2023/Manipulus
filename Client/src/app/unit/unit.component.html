@@ -7,145 +7,166 @@
       <header class="py-3 border-bottom">
         <div class="container d-flex flex-wrap justify-content-center">
           <a class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-            <span class="fs-8 me-1">Units</span>
+            <span class="fs-8 me-1">Units </span>
             <span class="badge rounded-pill bg-info unitCount text-muted">
-              {{ units.length }}</span>
+              {{ units.length }}
+            </span>
           </a>
-          <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0">
-          <input type="search" (ngModelChange)="searchUnit(key.value)" #key="ngModel" ngModel name="key"
-            class="form-control" placeholder="Search..." aria-label="Search" required />
-        </form> -->
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0">
+            <input type="search" [(ngModel)]="key" name="key" class="form-control" placeholder="Search..."
+              aria-label="Search" required />
+          </form>
 
-          <button type="button" class="btn btn-primary p-2 m-2 justify-content-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button type="button" class="btn btn-primary p-2 m-2 justify-content-end" data-bs-toggle="modal"
+            data-bs-target="#addModal">
             <img src="../../assets/Icon/Customer/person_add_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
               height="20" />
             Add Unit
           </button>
         </div>
       </header>
+    </div>
+    <!-- unit data table -->
+    <div>
+      <table datatable [dtTrigger]="dtTriger" [dtOptions]="dtoptions" class="table align-middle mb-0 bg-white">
+        <!-- no units in the tabel -->
+        <!-- <div *ngIf="units?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+            <div class="alert alert-info" role="alert">
+              <h4 class="alert-heading">NO UNITS!</h4>
+              <p>No Unit Were Found.</p>
+            </div>
+          </div> -->
 
-      <!-- unit data table -->
-      <div>
-        <table datatable [dtTrigger]="dtTriger" [dtOptions]="dtoptions" class="table align-middle mb-0 bg-white">
-          <!-- table header -->
-          <thead class="bg-light m-2">
-            <tr>
-              <th>Id</th>
-              <th>Item Name</th>
-              <th>Commisioned Date</th>
-              <th>Status</th>
-              <th>Installed Location</th>
-              <th>Parent Location</th>
-              <th>Outdoor Serial</th>
-              <th>Indoor Serial</th>
-              <th>Warranty</th>
-              <th>Unit price</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
+        <!-- table header -->
+        <thead class="bg-light m-2">
+          <tr>
+            <th>Id</th>
+            <th>Unit Name</th>
+            <th>Item Name</th>
+            <th>Commisioned Date</th>
+            <th>Status</th>
+            <th>Installed Location</th>
+            <th>Parent Location</th>
+            <th>Outdoor Serial</th>
+            <th>Indoor Serial</th>
+            <th>Warranty</th>
+            <th>Unit price</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
 
-          <!-- table body with a for loop for each of the customers in backends -->
-          <tbody>
-            <tr *ngFor="let unit of units">
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ unit.id }}</p>
-                  </div>
+        <!-- table body with a for loop for each of the units in backends -->
+        <tbody>
+          <tr *ngFor="let unit of units">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ unit.id }}</p>
                 </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ unit.item_name }}</p>
-                  </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ unit.unit_name }}</p>
                 </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ unit.commissioned_date }}</p>
-                  </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ unit.item_name }}</p>
                 </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ unit.status }}</p>
-                  </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ unit.commissioned_date }}</p>
                 </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">
-                      {{ unit.installed_location_name }}
-                    </p>
-                  </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ unit.status }}</p>
                 </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">
-                      {{ unit.installed_parent_location }}
-                    </p>
-                  </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">
+                    {{ unit.installed_location_name }}
+                  </p>
                 </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ unit.outdoor_serial }}</p>
-                  </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">
+                    {{ unit.installed_parent_location }}
+                  </p>
                 </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ unit.indoor_serial }}</p>
-                  </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ unit.outdoor_serial }}</p>
                 </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ unit.warranty_period }}</p>
-                  </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ unit.indoor_serial }}</p>
                 </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">{{ unit.unit_price }}</p>
-                  </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ unit.warranty_period }}</p>
                 </div>
-              </td>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ unit.unit_price }}</p>
+                </div>
+              </div>
+            </td>
 
-              <!-- delete unit button -->
-              <td>
-                <button type="button" class="btn btn-link btn-sm btn-rounded" (click)="onOpenModal(unit, 'delete')">
-                  <img src="../../assets/Icon/Customer/delete_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
-                    height="20" />
-                </button>
-              </td>
+            <!-- delete unit button -->
+            <td>
+              <button type="button" class="btn btn-link btn-sm btn-rounded" data-bs-toggle="modal"
+                data-bs-target="#deleteModal" (click)="onClickDeleteUnit(unit.id)">
+                <img src="../../assets/Icon/Customer/delete_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
+                  height="20" />
+              </button>
+            </td>
 
-              <!-- edit unit button -->
-              <td>
-                <button type="button" class="btn btn-outline-primary" (click)="onOpenModal(unit, 'edit')">
-                  <img src="../../assets/Icon/Customer/edit_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
-                    height="20" />
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            <!-- edit unit button -->
+            <td>
+              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal"
+                (click)="onClickEditUnit(unit.id)">
+                <img src="../../assets/Icon/Customer/edit_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
+                  height="20" />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
+    <!-- Add unit modal -->
+    <div>
       <form [formGroup]="addUnitForm" (ngSubmit)="onUnitAdd()" class="unit-form">
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLable" aria-hidden="true"
           data-bs-backdrop="static">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -168,11 +189,19 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="unit_name" class="form-control" />
+                          <input type="text" formControlName="unit_name" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['unit_name'].invalid &&
+                              (addUnitForm.controls['unit_name'].dirty ||
+                                addUnitForm.controls['unit_name'].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['unit_name'].errors?.['required']">Unit name is
+                              required.</small>
+                          </div>
                         </div>
                       </div>
                     </div>
-
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="mb-3">
@@ -181,7 +210,16 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="item_name" class="form-control" />
+                          <input type="text" formControlName="item_name" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['item_name'].invalid &&
+                              (addUnitForm.controls['item_name'].dirty ||
+                                addUnitForm.controls['item_name'].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['item_name'].errors?.['required']">Item name is
+                              required.</small>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -220,7 +258,20 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="commissioned_date" class="form-control" />
+                          <input type="date" formControlName="commissioned_date" class="form-control" ngModel name="j"
+                            required />
+                          <div *ngIf="
+                              addUnitForm.controls['commissioned_date']
+                                .invalid &&
+                              (addUnitForm.controls['commissioned_date']
+                                .dirty ||
+                                addUnitForm.controls['commissioned_date']
+                                  .touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['commissioned_date'].errors?.['required']">Commissioned date
+                              is required.</small>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -233,7 +284,15 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="owner" class="form-control" />
+                          <input type="text" formControlName="owner" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['owner'].invalid &&
+                              (addUnitForm.controls['owner'].dirty ||
+                                addUnitForm.controls['owner'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUnitForm.controls['owner'].errors?.['required']">Owner
+                              is required.</small>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -246,7 +305,19 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="installed_location_name" class="form-control" />
+                          <input type="text" formControlName="installed_location_name" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['installed_location_name']
+                                .invalid &&
+                              (addUnitForm.controls['installed_location_name']
+                                .dirty ||
+                                addUnitForm.controls['installed_location_name']
+                                  .touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['installed_location_name'].errors?.['required']">Installed
+                              Location Name is required.</small>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -259,7 +330,22 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="installed_location_address" class="form-control" />
+                          <input type="text" formControlName="installed_location_address" class="form-control"
+                            required />
+                          <div *ngIf="
+                              addUnitForm.controls['installed_location_address']
+                                .invalid &&
+                              (addUnitForm.controls[
+                                'installed_location_address'
+                              ].dirty ||
+                                addUnitForm.controls[
+                                  'installed_location_address'
+                                ].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['installed_location_address'].errors?.['required']">Installed
+                              Location Address is required.</small>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -272,7 +358,21 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="installed_parent_location" class="form-control" />
+                          <input type="text" formControlName="installed_parent_location" class="form-control"
+                            required />
+                          <div *ngIf="
+                              addUnitForm.controls['installed_parent_location']
+                                .invalid &&
+                              (addUnitForm.controls['installed_parent_location']
+                                .dirty ||
+                                addUnitForm.controls[
+                                  'installed_parent_location'
+                                ].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['installed_parent_location'].errors?.['required']">Installed
+                              Parent Location is required.</small>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -285,7 +385,21 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="warranty_period" class="form-control" />
+                          <input type="number" formControlName="warranty_period" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['warranty_period'].invalid &&
+                              (addUnitForm.controls['warranty_period'].dirty ||
+                                addUnitForm.controls['warranty_period'].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['warranty_period'].errors?.['required']">Warranty Period is
+                              required.</small>
+                            <small class="text-danger" *ngIf="
+                                addUnitForm.controls['warranty_period'].value <
+                                0
+                              ">Warranty Period cannot be negative.
+                            </small>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -298,7 +412,21 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="unit_price" class="form-control" />
+                          <input type="text" formControlName="unit_price" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['unit_price'].invalid &&
+                              (addUnitForm.controls['unit_price'].dirty ||
+                                addUnitForm.controls['unit_price'].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['unit_price'].errors?.['required']">Unit Price is
+                              required.</small>
+                              <small class="text-danger" *ngIf="
+                                addUnitForm.controls['unit_price'].value <
+                                0
+                              ">Unit Price cannot be negative.
+                            </small>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -311,44 +439,367 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="status" class="form-control" />
+                          <select formControlName="status" class="form-control" required>
+                            <option value="">Select status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                          </select>
+                          <div *ngIf="
+                              addUnitForm.controls['status'].invalid &&
+                              (addUnitForm.controls['status'].dirty ||
+                                addUnitForm.controls['status'].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['status'].errors?.['required']">Status is required.</small>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                  Close
-                </button>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="modal-footer">
+                  <button #closeAddModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button [disabled]="addUnitForm.invalid" type="submit" class="btn btn-primary">
+                    Submit
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </form>
+    </div>
 
-    <div class="modal delete" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal3" aria-hidden="true">
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabelDelete" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabedelete">Detele Unit</h5>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete unit</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            Are you want to delete unit?
-          </div>
+          <div class="modal-body">Confirm deleting unit?</div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              No
-            </button>
-            <button (click)="onDeleteCustomer()" class="btn btn-danger" data-bs-dismiss="modal">
-              Yes
-            </button>
+            <button #closeDeleteModal type="button" class="btn btn-secondary" data-bs-dismiss="modal"> No </button>
+            <button type="button" class="btn btn-primary" (click)="onDeleteUnit()">Yes</button>
           </div>
         </div>
       </div>
+    </div>
+
+
+    <!-- Edit Modal -->
+    <div>
+      <form [formGroup]="editUnitForm" (ngSubmit)="onUnitEdit()" class="unit-form">
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editodalLable" aria-hidden="true"
+          data-bs-backdrop="static">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelEdit">Unit Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <div>
+                      <h3 class="h6 mb-4">Basic Information</h3>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Unit Name:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="unit_name" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['unit_name'].invalid &&
+                              (addUnitForm.controls['unit_name'].dirty ||
+                                addUnitForm.controls['unit_name'].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['unit_name'].errors?.['required']">Unit
+                              name is
+                              required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Item Name:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="item_name" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['item_name'].invalid &&
+                              (addUnitForm.controls['item_name'].dirty ||
+                                addUnitForm.controls['item_name'].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['item_name'].errors?.['required']">Item
+                              name is
+                              required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Indoor Serial:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="indoor_serial" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Outdoor Serial:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="outdoor_serial" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Commissioned date:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="date" formControlName="commissioned_date" class="form-control" ngModel name="j"
+                            required />
+                          <div *ngIf="
+                              addUnitForm.controls['commissioned_date']
+                                .invalid &&
+                              (addUnitForm.controls['commissioned_date']
+                                .dirty ||
+                                addUnitForm.controls['commissioned_date']
+                                  .touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['commissioned_date'].errors?.['required']">Commissioned date
+                              is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Owner:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="owner" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['owner'].invalid &&
+                              (addUnitForm.controls['owner'].dirty ||
+                                addUnitForm.controls['owner'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUnitForm.controls['owner'].errors?.['required']">Owner
+                              is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Installed Location Name:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="installed_location_name" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['installed_location_name']
+                                .invalid &&
+                              (addUnitForm.controls['installed_location_name']
+                                .dirty ||
+                                addUnitForm.controls['installed_location_name']
+                                  .touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['installed_location_name'].errors?.['required']">Installed
+                              Location Name is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Installed Location Address:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="installed_location_address" class="form-control"
+                            required />
+                          <div *ngIf="
+                              addUnitForm.controls['installed_location_address']
+                                .invalid &&
+                              (addUnitForm.controls[
+                                'installed_location_address'
+                              ].dirty ||
+                                addUnitForm.controls[
+                                  'installed_location_address'
+                                ].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['installed_location_address'].errors?.['required']">Installed
+                              Location Address is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Installed Parent Location:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="installed_parent_location" class="form-control"
+                            required />
+                          <div *ngIf="
+                              addUnitForm.controls['installed_parent_location']
+                                .invalid &&
+                              (addUnitForm.controls['installed_parent_location']
+                                .dirty ||
+                                addUnitForm.controls[
+                                  'installed_parent_location'
+                                ].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['installed_parent_location'].errors?.['required']">Installed
+                              Parent Location is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Warranty Period:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="number" formControlName="warranty_period" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['warranty_period'].invalid &&
+                              (addUnitForm.controls['warranty_period'].dirty ||
+                                addUnitForm.controls['warranty_period'].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['warranty_period'].errors?.['required']">Warranty Period is
+                              required.</small>
+                            <small class="text-danger" *ngIf="
+                                addUnitForm.controls['warranty_period'].value <
+                                0
+                              ">Warranty Period cannot be negative.
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Unit Price:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="unit_price" class="form-control" required />
+                          <div *ngIf="
+                              addUnitForm.controls['unit_price'].invalid &&
+                              (addUnitForm.controls['unit_price'].dirty ||
+                                addUnitForm.controls['unit_price'].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['unit_price'].errors?.['required']">Unit Price is
+                              required.</small>
+                              <small class="text-danger" *ngIf="
+                                addUnitForm.controls['unit_price'].value <
+                                0
+                              ">Unit Price cannot be negative.
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Status:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <select formControlName="status" class="form-control" required>
+                            <option value="">Select status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                          </select>
+                          <div *ngIf="
+                              addUnitForm.controls['status'].invalid &&
+                              (addUnitForm.controls['status'].dirty ||
+                                addUnitForm.controls['status'].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUnitForm.controls['status'].errors?.['required']">Status
+                              is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                  </button>
+                  <button #closeEditModal [disabled]="editUnitForm.invalid" type="submit" class="btn btn-primary">
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

@@ -70,8 +70,6 @@ import { AgreementPdfComponent } from './agreement-pdf/agreement-pdf.component';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    FormsModule,
-    HttpClientModule,
     RouterModule,
     ReactiveFormsModule,
     DataTablesModule,

@@ -3,6 +3,8 @@ package com.Manipulus.arctic.user.model;
 import com.Manipulus.arctic.role.model.Role;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -39,6 +41,7 @@ public class User implements Serializable {
     @Column(name = "designation", nullable = false)
     private String designation;
 
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
     joinColumns = {
@@ -62,8 +65,8 @@ public class User implements Serializable {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String user_name) {
+        this.userName = user_name;
     }
 
     public String getFirst_name() {
@@ -80,6 +83,22 @@ public class User implements Serializable {
 
     public void setLast_name(String last_name) {
         this.lastName = last_name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobile_number) {
+        this.mobileNumber = mobile_number;
     }
 
     public String getEmail() {
@@ -105,13 +124,6 @@ public class User implements Serializable {
     public void setRoles(Set<Role> role) {
         this.roles = role;
     }
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
 
     public String getStatus() {
         return status;
@@ -129,14 +141,19 @@ public class User implements Serializable {
         this.designation = designation;
     }
 
-    public String getUserEmail() {
-       return email;
-    }
-   public String getUserPassword() {
-      return password;
+//    public String getGroup() {return group;}
+//
+//    public void setGroup(String group) {
+//        this.group = group;
+//    }
+
+    public String getUserPassword() { return password;}
+
+    public void getUserPassword(String password) {
+        this.password = password;
     }
 
-    public User UserRequestMapper(String first_name, String last_name, String user_name, String address, String mobile_number, String email, String password, String status, String designation, Set<Role> roles){
+    public User UserRequestMapper(String first_name, String last_name, String user_name, String address, String mobile_number, String email, String password, String status, String designation,Set<Role> roles){
         this.firstName=first_name;
         this.lastName=last_name;
         this.userName=user_name;
@@ -146,20 +163,47 @@ public class User implements Serializable {
         this.password=password;
         this.status=status;
         this.designation=designation;
+       // this.group=group;
         this.roles = roles;
         return this;
     }
 
-    public UserResponse UserResponseMapper(String first_name, String last_name, String user_name, String email, String status, String designation){
+    public UserResponse UserResponseMapper(String first_name, String last_name, String user_name,String address,String mobile_number, String email,String password, String status, String designation,Set<Role> roles){
         UserResponse response = new UserResponse();
-        response.firstName=first_name;
-        response.lastName=last_name;
-        response.userName=user_name;
+        response.first_name=first_name;
+        response.last_name=last_name;
+        response.user_name=user_name;
         response.address=address;
+        response.mobile_number=mobile_number;
         response.email=email;
         response.password=password;
         response.status=status;
         response.designation=designation;
+        //response.group=group;
+        response.roles = new ArrayList<String>(){};
+        for (Role role:
+             roles) {
+            response.roles.add(role.getRoleName());
+        }
+        return response;
+    }
+
+    public UserResponse EditUserResponseMapper(String first_name, String last_name, String user_name,String address,String mobile_number, String email, String status, String designation,Set<Role> roles){
+        UserResponse response = new UserResponse();
+        response.first_name=first_name;
+        response.last_name=last_name;
+        response.user_name=user_name;
+        response.address=address;
+        response.mobile_number=mobile_number;
+        response.email=email;
+        response.status=status;
+        response.designation=designation;
+        //response.group=group;
+        response.roles = new ArrayList<String>(){};
+        for (Role role:
+                roles) {
+            response.roles.add(role.getRoleName());
+        }
         return response;
     }
 

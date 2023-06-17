@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from './user';
+import { UserResponse } from './user';
 import { UserService } from './user.service';
-
 
 @Component({
   selector: 'app-user',
@@ -13,13 +12,24 @@ import { UserService } from './user.service';
 export class UserComponent implements OnInit, OnDestroy {
 
   addUserForm: FormGroup;
+  editUserForm: FormGroup;
   searchForm: FormGroup;
   userSubscription: Subscription;
-  users: User[] = [];
+  users: UserResponse[] = [];
   isAddUserModalOpen = false;
   isEditUserModalOpen = false;
   selectedUser: any;
+  public editUser!: UserResponse;
+  public deleteUser!: UserResponse;
   key: string;
+
+  //Data Table configs
+  dtoptions: DataTables.Settings = {};
+  dtTriger: Subject<any> = new Subject<any>();
+
+  @ViewChild('closeAddModal') closeAddModal: ElementRef
+  @ViewChild('closeDeleteModal') closeDeleteModal: ElementRef
+  @ViewChild('closeEditModal') closeEditModal: ElementRef
 
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.searchForm = this.formBuilder.group({
@@ -28,8 +38,58 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loadDataTableConfigs();
     this.getUserList();
     this.initializeUserForm();
+    this.initializeUserEditForm();
+  }
+
+  onClickDeleteUser(userId: number) {
+    this.selectedUser = userId;
+  }
+  onClickEditUser(userId: number) {
+    this.selectedUser = userId;
+    this.loadSelectedUser(this.selectedUser);
+  }
+
+  loadSelectedUser(userId: number) {
+    const selectedUser = this.users.filter(u => u.id === userId);
+    if (selectedUser != null) {
+      this.setValuesToEditForm(selectedUser[0]);
+    }
+  }
+
+  setValuesToEditForm(user: UserResponse) {
+    const userRole = this.setUserRole(user.roles[0].roleName);
+    this.editUserForm.setValue({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      user_name: user.userName,
+      address: user.address,
+      mobile_number: user.mobileNumber,
+      email: user.email,
+      status: user.status,
+      designation: user.designation,
+      //group: user.group,
+      roles: userRole,
+    })
+  }
+
+  setUserRole(userRole: string): string {
+    if(userRole === 'Admin') {
+      return '1';
+    }
+    return '2';
+  }
+
+  loadDataTableConfigs() {
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      destroy: true,
+    };
+    this.dtoptions = {
+      retrieve: true,
+    };
   }
 
   ngOnDestroy(): void {
@@ -44,83 +104,74 @@ export class UserComponent implements OnInit, OnDestroy {
 
   initializeUserForm() {
     this.addUserForm = this.formBuilder.group({
-      firstName: this.formBuilder.control('', Validators.required),
-      lastName: this.formBuilder.control('', Validators.required),
-      userName: this.formBuilder.control('', Validators.required),
+      first_name: this.formBuilder.control('', Validators.required),
+      last_name: this.formBuilder.control('', Validators.required),
+      user_name: this.formBuilder.control('', Validators.required),
       address: this.formBuilder.control('', Validators.required),
-      mobileNumber: this.formBuilder.control(''),
+      mobile_number: this.formBuilder.control('', [
+        Validators.required,
+        Validators.pattern('^[0-9]{10}$')
+      ]),
       email: this.formBuilder.control(''),
       password: this.formBuilder.control(''),
       status: this.formBuilder.control(''),
       designation: this.formBuilder.control(''),
-      group: this.formBuilder.control(''),
-      userRole: this.formBuilder.control(''),
+      // group: this.formBuilder.control(''),
+      roles: this.formBuilder.control(''),
+    });
+  }
 
+  initializeUserEditForm() {
+    this.editUserForm = this.formBuilder.group({
+      first_name: this.formBuilder.control('', Validators.required),
+      last_name: this.formBuilder.control('', Validators.required),
+      user_name: this.formBuilder.control('', Validators.required),
+      address: this.formBuilder.control('', Validators.required),
+      mobile_number: this.formBuilder.control('', [
+        Validators.required,
+        Validators.pattern('^[0-9]{10}$')
+      ]),
+      email: this.formBuilder.control(''),
+      //password: this.formBuilder.control(''),
+      status: this.formBuilder.control(''),
+      designation: this.formBuilder.control(''),
+      //group: this.formBuilder.control(''),
+      roles: this.formBuilder.control(''),
     });
   }
 
   onUserAdd() {
-    console.log(this.addUserForm.value);
     this.userService.addUser(this.addUserForm.value).subscribe(res => {
-      console.log(res);
+      if (res != null) {
+        this.closeAddModal.nativeElement.click();
+        this.getUserList();
+      }
     });
   }
 
-  onAddUserSubmit() {
-    if (this.addUserForm.invalid) {
-      return;
-    }
-    const newUser = this.addUserForm.value;
-    this.users.push(newUser);
-    this.closeAddUserModal();
-  }
-
-  onEditUserSubmit() {
-    if (this.addUserForm.invalid) {
-      return;
-    }
-    const updatedUser = this.addUserForm.value;
-    // Update the selected user in the list
-    const index = this.users.findIndex(user => user === this.selectedUser);
-    if (index !== -1) {
-      this.users[index] = updatedUser;
-    }
-    this.closeEditUserModal();
-  }
-
-  openAddUserModal() {
-    this.isAddUserModalOpen = true;
-  }
-
-  closeAddUserModal() {
-    this.isAddUserModalOpen = false;
-    this.addUserForm.reset();
-  }
-  openEditUserModal(user: any) {
-    this.isEditUserModalOpen = true;
-    this.selectedUser = user;
-    this.addUserForm.patchValue({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      userName: user.userName,
-      address: user.address,
-      mobileNumber: user.mobileNumber,
-      email: user.email,
-      password: user.password,
-      status: user.status,
-      designation: user.designation,
-      group: user.group,
-      userRole: user.userRole,
+  onUserEdit() {
+    this.userService.editUser(this.selectedUser, this.editUserForm.value).subscribe(res => {
+      if (res != null) {
+        this.getUserList();
+        this.closeEditModal.nativeElement.click();
+        this.selectedUser = 0;
+      }
     });
   }
 
-  closeEditUserModal() {
-    this.isEditUserModalOpen = false;
-    this.addUserForm.reset();
-    this.selectedUser = null;
+  onDeleteUser() {
+    this.userService.deleteUser(this.selectedUser).subscribe(res => {
+      if (res == null) {
+        this.getUserList();
+        this.closeDeleteModal.nativeElement.click();
+        this.selectedUser = 0;
+      }
+    });
   }
 
-  searchUser(value: string) {
-    const searchKey = this.searchForm.value.key;
-  }
+  //   searchUser(value: string) {
+  //     const searchKey = this.searchForm.value.key;
+  //   }
 }
+
+

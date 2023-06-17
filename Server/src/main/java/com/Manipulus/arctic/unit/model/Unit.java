@@ -1,5 +1,6 @@
 package com.Manipulus.arctic.unit.model;
 
+import com.Manipulus.arctic.user.model.UserResponse;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -41,10 +42,10 @@ public class Unit implements Serializable {
     private String installedParentLocation;
 
     @Column(name = "warranty_period")
-    private String warrantyPeriod;
+    private int warrantyPeriod;
 
     @Column(name = "unit_price")
-    private String unitPrice;
+    private float unitPrice;
 
     @Column(name = "status")
     private String status;
@@ -75,6 +76,14 @@ public class Unit implements Serializable {
 
     public void setId(int id) {
         this.unitId = id;
+    }
+
+    public String getUnit_name() {
+        return unitName;
+    }
+
+    public void setUnit_name(String unit_name) {
+        this.unitName = unit_name;
     }
 
     public String getItem_name() {
@@ -141,19 +150,19 @@ public class Unit implements Serializable {
         this.installedParentLocation = installed_parent_location;
     }
 
-    public String getWarranty_period() {
+    public int getWarranty_period() {
         return warrantyPeriod;
     }
 
-    public void setWarranty_period(String warranty_period) {
+    public void setWarranty_period(int warranty_period) {
         this.warrantyPeriod = warranty_period;
     }
 
-    public String getUnit_price() {
+    public float getUnit_price() {
         return unitPrice;
     }
 
-    public void setUnit_price(String unit_price) {
+    public void setUnit_price(float unit_price) {
         this.unitPrice = unit_price;
     }
 
@@ -165,22 +174,55 @@ public class Unit implements Serializable {
         this.status = status;
     }
 
-    @Override
-    public String toString(){
-        return "Unit{"+
-                "id="+unitId+
-                "unitName="+unitName +
-                "itemName="+itemName+
-                "indoorSerial="+indoorSerial+
-                "outdoorSerial="+outdoorSerial+
-                "commissionedDate="+commissionedDate+
-                "owner="+owner+
-                "installedLocationName="+installedLocationName+
-                "installedLocationAddress="+installedLocationAddress+
-                "installedParentLocation="+installedParentLocation+
-                "warrantyPeriod="+warrantyPeriod+
-                "unitPrice="+unitPrice+
-                "status="+status+
-                '}';
+//    public Unit UnitRequestMapper(String unit_name,String item_name,String indoor_serial,String outdoor_serial,String commissioned_date,String owner,String installed_location_name,String installed_location_address,String installed_parent_location,int warranty_period,float unit_price,String status){
+//        this.unitName=unit_name;
+//        this.itemName=item_name;
+//        this.indoorSerial=indoor_serial;
+//        this.outdoorSerial=outdoor_serial;
+//        this.commissionedDate=commissioned_date;
+//        this.owner=owner;
+//        this.installedLocationName=installed_location_name;
+//        this.installedLocationAddress=installed_location_address;
+//        this.installedParentLocation=installed_parent_location;
+//        this.warrantyPeriod=warranty_period;
+//        this.unitPrice=unit_price;
+//        this.status=status;
+//        return this;
+//    }
+
+    public UnitResponse UnitResponseMapper(String unit_name,String item_name,String indoor_serial,String outdoor_serial,String commissioned_date,String owner,String installed_location_name,String installed_location_address,String installed_parent_location,int warranty_period,float unit_price,String status){
+        UnitResponse response = new UnitResponse();
+        response.unitName=unit_name;
+        response.itemName=item_name;
+        response.indoorSerial=indoor_serial;
+        response.outdoorSerial=outdoor_serial;
+        response.commissionedDate=commissioned_date;
+        response.owner=owner;
+        response.installedLocationName=installed_location_name;
+        response.installedLocationAddress=installed_location_address;
+        response.installedParentLocation=installed_parent_location;
+        response.warrantyPeriod=warranty_period;
+        response.unitPrice=unit_price;
+        response.status=status;
+        return response;
     }
+
+//    @Override
+//    public String toString(){
+//        return "Unit{"+
+//                "id="+unitId+
+//                "unitName="+unitName +
+//                "itemName="+itemName+
+//                "indoorSerial="+indoorSerial+
+//                "outdoorSerial="+outdoorSerial+
+//                "commissionedDate="+commissionedDate+
+//                "owner="+owner+
+//                "installedLocationName="+installedLocationName+
+//                "installedLocationAddress="+installedLocationAddress+
+//                "installedParentLocation="+installedParentLocation+
+//                "warrantyPeriod="+warrantyPeriod+
+//                "unitPrice="+unitPrice+
+//                "status="+status+
+//                '}';
+//    }
 }
