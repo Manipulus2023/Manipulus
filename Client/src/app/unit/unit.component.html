@@ -421,6 +421,11 @@
                             <small class="text-danger"
                               *ngIf="addUnitForm.controls['unit_price'].errors?.['required']">Unit Price is
                               required.</small>
+                              <small class="text-danger" *ngIf="
+                                addUnitForm.controls['unit_price'].value <
+                                0
+                              ">Unit Price cannot be negative.
+                            </small>
                           </div>
                         </div>
                       </div>
@@ -745,6 +750,11 @@
                             <small class="text-danger"
                               *ngIf="addUnitForm.controls['unit_price'].errors?.['required']">Unit Price is
                               required.</small>
+                              <small class="text-danger" *ngIf="
+                                addUnitForm.controls['unit_price'].value <
+                                0
+                              ">Unit Price cannot be negative.
+                            </small>
                           </div>
                         </div>
                       </div>
