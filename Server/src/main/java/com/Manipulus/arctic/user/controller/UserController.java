@@ -2,6 +2,7 @@ package com.Manipulus.arctic.user.controller;
 
 import com.Manipulus.arctic.auth.helpers.JWTHelper;
 import com.Manipulus.arctic.role.model.Role;
+import com.Manipulus.arctic.user.model.EditUserRequest;
 import com.Manipulus.arctic.user.model.User;
 import com.Manipulus.arctic.user.model.UserRequest;
 import com.Manipulus.arctic.user.model.UserResponse;
@@ -66,7 +67,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin')")
-    public UserResponse updateUser(@PathVariable("id") int id, @RequestBody UserRequest user) {
+    public UserResponse updateUser(@PathVariable("id") int id, @RequestBody EditUserRequest user) {
         return userService.updateUser(id, user);
     }
 

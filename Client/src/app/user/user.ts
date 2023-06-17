@@ -9,7 +9,7 @@ export class User {
   password!: string;
   status!: string;
   designation!: string;
-  group!: string;
+ // group!: string;
   roles!: number;
 }
 
@@ -18,14 +18,14 @@ export class UserResponse {
   id!: number;
   first_name: string;
   last_name: string;
-  user_name!: string;
+  userName!: string;
   address!: string;
-  mobile_number!: string;
+  mobileNumber!: string;
   email!: string;
   password!: string;
   status!: string;
   designation!: string;
-  group!: string;
+  //group!: string;
   roles!: UserRole[];
 }
 

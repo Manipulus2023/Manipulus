@@ -4,6 +4,7 @@ import com.Manipulus.arctic.role.model.Role;
 import com.Manipulus.arctic.role.repository.IRoleRepository;
 import com.Manipulus.arctic.user.dao.RoleDao;
 import com.Manipulus.arctic.user.exception.UserNotFoundException;
+import com.Manipulus.arctic.user.model.EditUserRequest;
 import com.Manipulus.arctic.user.model.User;
 import com.Manipulus.arctic.user.model.UserRequest;
 import com.Manipulus.arctic.user.model.UserResponse;
@@ -55,7 +56,7 @@ public class UserService implements IUserService{
         return null;
     }
 
-    public UserResponse updateUser(int id, UserRequest user) {
+    public UserResponse updateUser(int id, EditUserRequest user) {
         User existingUser = findUserById(id);
         if(existingUser != null) {
             Set<Role> userRoles = new HashSet<>();
@@ -63,8 +64,8 @@ public class UserService implements IUserService{
             existingUser.setFirst_name(user.first_name);
             existingUser.setLast_name(user.last_name);
             existingUser.setUserName(user.user_name);
+            existingUser.setPassword(existingUser.getPassword());
             existingUser.setAddress(user.address);
-            existingUser.setPassword(getEncodedPassword(user.password));
             existingUser.setEmail(user.email);
             existingUser.setDesignation(user.designation);
             //existingUser.setRoles(userRoles);

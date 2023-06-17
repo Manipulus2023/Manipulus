@@ -1,9 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User, UserResponse } from './user';
+import { UserResponse } from './user';
 import { UserService } from './user.service';
-
 
 @Component({
   selector: 'app-user',
@@ -61,19 +60,26 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   setValuesToEditForm(user: UserResponse) {
+    const userRole = this.setUserRole(user.roles[0].roleName);
     this.editUserForm.setValue({
       first_name: user.first_name,
       last_name: user.last_name,
-      user_name: user.user_name,
+      user_name: user.userName,
       address: user.address,
-      mobile_number: user.mobile_number,
+      mobile_number: user.mobileNumber,
       email: user.email,
-      password: user.password,
       status: user.status,
       designation: user.designation,
       //group: user.group,
-      roles: user.roles,
+      roles: userRole,
     })
+  }
+
+  setUserRole(userRole: string): string {
+    if(userRole === 'Admin') {
+      return '1';
+    }
+    return '2';
   }
 
   loadDataTableConfigs() {
@@ -120,7 +126,7 @@ export class UserComponent implements OnInit, OnDestroy {
       address: this.formBuilder.control('', Validators.required),
       mobile_number: this.formBuilder.control(''),
       email: this.formBuilder.control(''),
-      password: this.formBuilder.control(''),
+      //password: this.formBuilder.control(''),
       status: this.formBuilder.control(''),
       designation: this.formBuilder.control(''),
       //group: this.formBuilder.control(''),
@@ -130,17 +136,16 @@ export class UserComponent implements OnInit, OnDestroy {
 
   onUserAdd() {
     this.userService.addUser(this.addUserForm.value).subscribe(res => {
-      if (res.id > 0) {
-        this.isAddUserModalOpen = false;
-        this.getUserList();
+      if (res != null) {
         this.closeAddModal.nativeElement.click();
+        this.getUserList();
       }
     });
   }
 
   onUserEdit() {
     this.userService.editUser(this.selectedUser, this.editUserForm.value).subscribe(res => {
-      if (res.id > 0) {
+      if (res != null) {
         this.getUserList();
         this.closeEditModal.nativeElement.click();
         this.selectedUser = 0;
@@ -156,10 +161,6 @@ export class UserComponent implements OnInit, OnDestroy {
         this.selectedUser = 0;
       }
     });
-  }
-
-  openAddUserModal() {
-    this.isAddUserModalOpen = true;
   }
 
   //   searchUser(value: string) {

@@ -188,4 +188,23 @@ public class User implements Serializable {
         return response;
     }
 
+    public UserResponse EditUserResponseMapper(String first_name, String last_name, String user_name,String address,String mobile_number, String email, String status, String designation,Set<Role> roles){
+        UserResponse response = new UserResponse();
+        response.first_name=first_name;
+        response.last_name=last_name;
+        response.user_name=user_name;
+        response.address=address;
+        response.mobile_number=mobile_number;
+        response.email=email;
+        response.status=status;
+        response.designation=designation;
+        //response.group=group;
+        response.roles = new ArrayList<String>(){};
+        for (Role role:
+                roles) {
+            response.roles.add(role.getRoleName());
+        }
+        return response;
+    }
+
 }
