@@ -130,7 +130,6 @@ export class UnitComponent implements OnInit, OnDestroy {
   onUnitAdd() {
     this.unitService.addUnit(this.addUnitForm.value).subscribe(res => {
       if (res.id > 0) {
-        this.isAddUnitModalOpen = false;
         this.getUnitList();
         this.closeAddModal.nativeElement.click();
       }
@@ -155,10 +154,6 @@ export class UnitComponent implements OnInit, OnDestroy {
         this.selectedUnit = 0;
       }
     });
-  }
-
-  openAddUnitModal() {
-    this.isAddUnitModalOpen = true;
   }
 
   searchUnit() {

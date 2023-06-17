@@ -453,10 +453,10 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  <button #closeAddModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                   </button>
-                  <button #closeAddModal [disabled]="addUnitForm.invalid" type="submit" class="btn btn-primary">
+                  <button [disabled]="addUnitForm.invalid" type="submit" class="btn btn-primary">
                     Submit
                   </button>
                 </div>
@@ -792,3 +792,4 @@
       </form>
     </div>
   </div>
+</div>
