@@ -1,0 +1,98 @@
+.outer-container{
+   
+}
+.position-absolute{
+    background-color: #2C294B;
+    width: 82vw;
+    height: 25%;
+    z-index: 2;
+}
+
+.main-container{
+    display: flex;
+    background-color: #E6ECFF;
+}
+.add-button{
+    margin-top:  4%;
+    width: 23vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+.addbutton{
+    background-color: #fafafa;
+    width: 10vw;
+    height: 14vh;
+    margin: 2%;
+}
+
+.uper-container{
+    display: flex;
+    width: 60vw;
+}
+.job-count{
+    display: flex;
+    margin-top: 7%;
+    margin-left: 2%;
+    margin-right: 2%;
+    
+}
+.job-counts{
+   
+    height: 15vh;
+    width: 12vw;
+    background-color: #fafafa;
+    margin-inline: 2%;
+    border-radius: 5%;
+    text-align: center;
+}
+.job-table{
+    height: 32vh;
+    margin: 2%;
+    background-color: #fafafa;
+}
+
+.lower-container{
+    width: 60vw;
+    height: 40vh;
+    display: flex;
+}
+
+.right-container{
+    width: 40vw;
+}
+.right-upper{
+    margin-top: 10.7%;
+    margin-left: 2%;
+}
+.customer-table{
+    background-color:  #fafafa;
+    height: 73vh;
+    margin: 2%;
+}
+
+.graph-container{
+    width: 60vw;
+    margin: 1%;
+    background-color: #fafafa;
+}
+
+.summary-container{
+    width: 36vw;
+    margin-right: 3%;
+    margin-left: 1%;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    background-color:  #fafafa;
+}
+
+.left-container{
+    z-index: 5;
+}
+.right-container{
+    z-index: 5;
+}
+p{
+    margin-bottom: 0;
+}

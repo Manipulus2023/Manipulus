@@ -54,3 +54,14 @@
 .vehicle_details_button_delete{
   margin-left: 10px;
 }
+p{
+  margin: 0;
+}
+
+.button{
+  margin-top: 2%;
+  width: 12vw;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+}
