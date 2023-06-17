@@ -272,8 +272,7 @@
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <input type="text" formControlName="mobile_number" class="form-control" ngModel required
-                            pattern="^[0-9]{10}$'" />
+                          <input type="text" formControlName="mobile_number" class="form-control" />
                           <div *ngIf="
                               addUserForm.controls['mobile_number'].invalid &&
                               (addUserForm.controls['mobile_number'].dirty ||
@@ -445,7 +444,7 @@
                 <button  #closeAddModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button [disabled]="addUserForm.invalid" type="submit" class="btn btn-primary">Submit</button>
               </div>
             </div>
           </div>
@@ -512,9 +511,7 @@
                     <div>
                       <h3 class="h6 mb-4">Basic Information</h3>
                     </div>
-                  </div>
-                </div>
-              </div>
+
               <div class="row">
                 <div class="col-lg-6">
                   <div class="mb-3">
@@ -610,7 +607,7 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
-                    <input type="text" formControlName="mobile_number" class="form-control" ngModel required
+                    <input type="text" formControlName="mobile_number" class="form-control" required pattern="^[0-9]{10}$"
                        />
                     <div *ngIf="
                   editUserForm.controls['mobile_number'].invalid &&
@@ -725,6 +722,10 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
               <div class="modal-footer">
                 <button #closeEditModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   Cancel

@@ -108,7 +108,10 @@ export class UserComponent implements OnInit, OnDestroy {
       last_name: this.formBuilder.control('', Validators.required),
       user_name: this.formBuilder.control('', Validators.required),
       address: this.formBuilder.control('', Validators.required),
-      mobile_number: this.formBuilder.control(''),
+      mobile_number: this.formBuilder.control('', [
+        Validators.required,
+        Validators.pattern('^[0-9]{10}$')
+      ]),
       email: this.formBuilder.control(''),
       password: this.formBuilder.control(''),
       status: this.formBuilder.control(''),
@@ -124,7 +127,10 @@ export class UserComponent implements OnInit, OnDestroy {
       last_name: this.formBuilder.control('', Validators.required),
       user_name: this.formBuilder.control('', Validators.required),
       address: this.formBuilder.control('', Validators.required),
-      mobile_number: this.formBuilder.control(''),
+      mobile_number: this.formBuilder.control('', [
+        Validators.required,
+        Validators.pattern('^[0-9]{10}$')
+      ]),
       email: this.formBuilder.control(''),
       //password: this.formBuilder.control(''),
       status: this.formBuilder.control(''),
