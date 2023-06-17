@@ -28,9 +28,9 @@ public class locationController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<location> addlocation(@RequestBody location location , @RequestParam("id" )Long id) {
+    public ResponseEntity<location> addlocation(@RequestBody location location ,@RequestParam("id" )Long id) {
         // Add a new location using the location  Service
-        location newlocation = locationService.addlocation(location, id);
+        location newlocation = locationService.addlocation(location,id);
         // Return the newly added location and the status code 201 (CREATED)
         return new ResponseEntity<>(newlocation, HttpStatus.CREATED);
     }

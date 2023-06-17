@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
-import { JobService } from '../job/job.service';
 import { Job } from '../job/job';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { locationService } from './location.service';
+import { Locations } from './locations';
 @Component({
   selector: 'app-location',
   templateUrl: './location.component.html',
@@ -12,8 +12,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LocationComponent implements OnInit {
 
 
-  public jobs : Job[] =[];
-  constructor(private jobService: JobService) { }
+  public locations : Locations[] =[];
+  constructor(private locationservice: locationService) { }
 
   title = 'angular-google-maps-app';
 
@@ -22,7 +22,7 @@ export class LocationComponent implements OnInit {
   @ViewChild(MapInfoWindow, { static: false })
   info!: MapInfoWindow;
 
-  zoom = 8;
+  zoom = 9;
   maxZoom = 15;
   minZoom = 2;
   center!: google.maps.LatLngLiteral;
@@ -38,31 +38,16 @@ export class LocationComponent implements OnInit {
  
   markers = [{
     position: {
-      lat: 6.703119222637678,
-      lng: 80.04732607841797
-    },
-    label: {
-      color: "blue",
-      fontWeight :'bold',
-      text: "Marker label 1"
-    },
-    title: "Marker title 1",
-    info: "Marker info 1",
-    options: {
-      animation: 2
-    }
-  }, {
-    position: {
-      lat: 6.766877533363286,
-      lng: 79.98003481865234
+      lat:-10.5003747,
+      lng: -10.5003747
     },
     label: {
       color: "blue",
       fontWeight :'bold',
       text: "Marker label 2"
     },
-    title: "Marker title 2",
-    info: "Marker info 2",
+    title: "",
+    info: "",
     options: {
       animation: 2
     }
@@ -80,6 +65,8 @@ export class LocationComponent implements OnInit {
         lng: position.coords.longitude,
       }
     })
+    this.getLocations();
+    this.dropMarkers(this.locations);
   }
 
   eventHandler(event: any ,name:string){
@@ -111,23 +98,68 @@ export class LocationComponent implements OnInit {
     console.log(this.markers)
   }
 
+  dropMarkers(locations: Locations[]) {
+    console.log('dropMarkers', locations)
+    // console.log('in drop a',this.locations[1].location_lat);
+    for (const location of locations) {
+      this.markers.push({
+        position: {
+          lat: location.location_lat,
+          lng: location.location_lng,
+        },
+        label: {
+          color: 'blue',
+          fontWeight :'bold',
+          text: 'Marker label ' + (this.markers.length + 1),
+        },
+        title: 'Marker title ' + (this.markers.length + 1),
+        info: 'Marker info ' + (this.markers.length + 1),
+        options: {
+          animation: google.maps.Animation.DROP,
+        },
+      });
+    }
+    console.log(this.markers);
+  }
+  
+
   openInfo(marker: MapMarker, content: string) {
     this.infoContent = content;
     this.info.open(marker)
   }
 
 
-  public getJobs():void { {
-    this.jobService.getJobList().subscribe(
-      (response: Job[]) =>{
-        this.jobs = response;
-    
-        console.log(this.jobs);
-      },
-      (error: HttpErrorResponse) =>
-         alert(error.message)
-        
-      ); }}
+
+  public getLocations(): void {
+    {
+      this.locationservice.getlocationlist().subscribe(
+        (response: Locations[]) => {
+          this.locations = response;
+          for (const location of this.locations) {
+            console.log(location);
+            this.markers.push({
+              position: {
+                lat: location.location_lat,
+                lng: location.location_lng,
+              },
+              label: {
+                color: 'white',
+                fontWeight :' italic',
+                text: (location.location_info.job_type)+' job @ Customer ' + (location.location_info.customer.name),
+              },
+              title: location.location_title,
+              info: (location.location_info.job_type)+' job @ Customer ' + (location.location_info.customer.name)  +' Contact Number: ' +(location.location_info.customer.contactNumber),
+              options: {
+                animation: google.maps.Animation.DROP,
+              },
+            });
+          }
+          console.log("after get locations" , this.markers);
+        },
+        (error: HttpErrorResponse) => alert(error.message)
+      );
+    }
+  }
 
 
 }

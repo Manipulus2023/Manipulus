@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Job } from './job';
 import { Customer } from '../customer/customer';
-import { Locations } from '../location/location';
+import { Locations } from '../location/locations';
 
 @Injectable({
   providedIn: 'root',
@@ -44,30 +44,31 @@ export class JobService {
     return this.httpClient.get<Customer[]>(`${this.baseUrl}/customer/all`); // Get a list of all customers from the server
   }
 
-  public addlocation(location: Locations, job: Job): Observable<Locations> {
+  public addlocation( job: Job, id: number): Observable<Locations> {
     const locationToAdd: Locations = {
-      title: '',
+      location_title: '',
       //@ts-ignore
-      info: '',
-      lat: 0,
-      lng: 0
+      location_info: '',
+      location_lat: 0,
+      location_lng: 0
     };
   
-    locationToAdd.title = job.job_type; 
-    locationToAdd.info = job.customer; 
+    locationToAdd.location_title = job.job_type; 
+    //@ts-ignore
+    locationToAdd.location_info = null; 
     const regex = /@(-?\d+\.?\d*),(-?\d+\.?\d*),/;
     const matches = job.location.match(regex);
     
     if (matches && matches.length >= 3) {
-      locationToAdd.lat = parseFloat(matches[1]);
-      locationToAdd.lng = parseFloat(matches[2]);
+      locationToAdd.location_lat = parseFloat(matches[1]);
+      locationToAdd.location_lng = parseFloat(matches[2]);
     } else {
       // Handle the case where the URL format is invalid
-      locationToAdd.lat = 0;
-      locationToAdd.lng = 0;
+      locationToAdd.location_lat = 0;
+      locationToAdd.location_lng = 0;
     }
     
-    return this.httpClient.post<Locations>(`${this.baseUrl}/location/add`, locationToAdd);
+    return this.httpClient.post<Locations>(`${this.baseUrl}/location/add?id=${id}`, locationToAdd);
   }
   
 
