@@ -1,0 +1,48 @@
+
+<div class="row">
+  <div class="col-sm-2">
+    <app-side-nav></app-side-nav>
+  </div>
+  <div class="col-sm-10 ps-3 mt-2">
+    <div class="card">
+      <h2 class="card-header">My Profile
+      </h2>
+{{user|json}} 
+      <div class="card-body">
+        <div class="container">
+          <div class="container text-center" >
+            <img src="assets/default-profile.jpg" alt="default pic" class="profile-image" >
+            <h3 class="mt20">
+                Admin Person
+            </h3>
+          </div>
+
+          <div class="row">
+            <div class="col-md-10 offset-md-1">
+              <table class="table text-center"  >
+                <tr>
+                  <td>Username</td>
+                  <td>admin123</td>
+                </tr>
+                <tr>
+                  <td>Password</td>
+                  <td>admin@pass</td>
+                </tr>
+
+              </table>
+            </div>
+
+          </div>
+
+
+          <div class="card-footer d-flex justify-content-end">
+            <div class="ml-auto">
+              <button class="btn btn-primary">Update</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
