@@ -75,6 +75,7 @@ export class VehicleComponent implements OnInit {
         (Response: Vehicle[]) => {
           this.vehicle = Response;
           console.log(this.vehicle);
+          
         },
         (error: HttpErrorResponse) => alert(error.message)
       );
@@ -85,6 +86,7 @@ export class VehicleComponent implements OnInit {
     (document.getElementById('add-vehicle-form') as HTMLElement).click();
     this.vehicleService.addVehicle(addForm.value).subscribe(
       (Response: Vehicle) => {
+        
         console.log(Response);
         this.getVehicles();
         addForm.reset();

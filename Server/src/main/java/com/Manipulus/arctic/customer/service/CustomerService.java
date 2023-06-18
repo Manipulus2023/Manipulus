@@ -24,7 +24,7 @@ public class CustomerService {
         // Generate a unique customer code
         customer.setCreatedAt(LocalDateTime.now());
         customer.setCustomerCode(UUID.randomUUID().toString());
-        customer.setActive_status(true);
+        customer.setActive_status(false);
         // Save the new customer to the database
         return CustomerRepository.save(customer);
     }
