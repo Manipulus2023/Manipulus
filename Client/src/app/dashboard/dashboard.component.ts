@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit {
 
         // Store the last five jobs in ascending order
         const lastIndex = this.jobs.length - 1;
-        const startIndex = Math.max(0, lastIndex - 3);
+        const startIndex = Math.max(0, lastIndex - 2);
         this.lastFiveJobs = this.jobs
           .slice(startIndex, lastIndex + 1)
           .sort((a, b) => a.id - b.id);
@@ -102,6 +102,7 @@ export class DashboardComponent implements OnInit {
         this.BreakdownsfilteredJobs = this.jobs.filter(
           (job) => job.job_type == 'Breakdowns'
         );
+        
         console.log(this.BreakdownsfilteredJobs);
 
         // Calculate job counts by type

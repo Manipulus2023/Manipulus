@@ -61,6 +61,7 @@
 
 .right-container{
     width: 40vw;
+    margin-top: 2%;
 }
 .right-upper{
     margin-top: 10.7%;
@@ -79,9 +80,9 @@
 }
 
 .summary-container{
-    width: 36vw;
+    width: 59vw;
     margin-right: 3%;
-    margin-left: 1%;
+    margin-left: 2%;
     margin-bottom: 1%;
     margin-top: 1%;
     background-color:  #fafafa;

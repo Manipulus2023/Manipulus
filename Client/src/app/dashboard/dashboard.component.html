@@ -8,43 +8,19 @@
       <div class="main-container">
         <div class="left-container">
           <div class="uper-container">
-            <div class="add-button">
-              <div
-                class="btn addbutton btn-outline-primary p-2 m-2 justify-content-end"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModaljob"
-              >
-                <img
-                  src="../../assets/Icon/Customer/person_add_FILL0_wght400_GRAD0_opsz48.png"
-                  alt="Bootstrap"
-                  width="20"
-                  height="20"
-                />
-                Add Job
-              </div>
-              <div
-                class="btn addbutton btn-primary justify-content-end"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
-                <img
-                  src="../../assets/Icon/Customer/person_add_FILL0_wght400_GRAD0_opsz48.png"
-                  alt="Bootstrap"
-                  width="20"
-                  height="20"
-                />
-                Add Customer
-              </div>
-              <div class="btn addbutton">Add 3</div>
-              <div class="btn addbutton">Add 4</div>
-              <div class="btn addbutton">Add 5</div>
-              <div class="btn addbutton">Add 6</div>
-            </div>
             <div class="job-table-container">
               <div class="job-count">
                 <div class="job-counts">
                   TOTAL INSTALLATION JOBS
                   {{ InstallationfilteredJobs.length }}
+                </div>
+                <div class="job-counts">
+                  TOTAL BREAKDOWNS JOBS
+                  {{ BreakdownsfilteredJobs.length }}
+                </div>
+                <div class="job-counts">
+                  TOTAL BREAKDOWNS JOBS
+                  {{ BreakdownsfilteredJobs.length }}
                 </div>
                 <div class="job-counts">
                   TOTAL BREAKDOWNS JOBS
@@ -80,7 +56,7 @@
             </div>
           </div>
           <div class="lower-container">
-            <div class="graph-container">asda</div>
+            <!-- <div class="graph-container">asda</div> -->
             <div class="summary-container">
               <div style="display: block ">
               <canvas baseChart
