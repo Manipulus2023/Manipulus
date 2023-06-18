@@ -114,9 +114,9 @@ public class UserService implements IUserService{
                 User adminUser = new User();
                 adminUser.setFirst_name("Admin");
                 adminUser.setLast_name("Person");
-                adminUser.setUserName("admin123");
+                adminUser.setUserName("admin");
                 adminUser.setEmail("admin.user@test.lk");
-                adminUser.setPassword(getEncodedPassword("admin@pass"));
+                adminUser.setPassword(getEncodedPassword("admin"));
                 adminUser.setRoles(adminRoles);
                 adminUser.setMobileNumber("011255444");
                 adminUser.setDesignation("Admin");

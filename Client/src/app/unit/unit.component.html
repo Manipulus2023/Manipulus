@@ -19,6 +19,7 @@
 
           <button type="button" class="btn btn-primary p-2 m-2 justify-content-end" data-bs-toggle="modal"
             data-bs-target="#addModal">
+
             <img src="../../assets/Icon/Customer/person_add_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
               height="20" />
             Add Unit
@@ -181,11 +182,15 @@
                       <h3 class="h6 mb-4">Basic Information</h3>
                     </div>
 
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="mb-3">
-                          <label class="form-label">Unit Name:</label>
+        <form [formGroup]="addUnitForm" (ngSubmit)="onUnitAdd()" class="unit-form">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Unit Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
@@ -224,31 +229,32 @@
                       </div>
                     </div>
 
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="mb-3">
-                          <label class="form-label">Indoor Serial:</label>
-                        </div>
-                      </div>
-                      <div class="col-lg-6">
-                        <div class="mb-3">
-                          <input type="text" formControlName="indoor_serial" class="form-control" />
-                        </div>
-                      </div>
-                    </div>
 
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="mb-3">
-                          <label class="form-label">Outdoor Serial:</label>
-                        </div>
-                      </div>
-                      <div class="col-lg-6">
-                        <div class="mb-3">
-                          <input type="text" formControlName="outdoor_serial" class="form-control" />
-                        </div>
-                      </div>
-                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Item Name:</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <input type="text" formControlName="item_name" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Indoor Serial:</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <input type="text" formControlName="indoor_serial" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
 
                     <div class="row">
                       <div class="col-lg-6">
@@ -431,11 +437,35 @@
                       </div>
                     </div>
 
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="mb-3">
-                          <label class="form-label">Status:</label>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Unit Price:</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <input type="text" formControlName="unit_price" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Status:</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <input type="text" formControlName="status" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                       </div>
                       <div class="col-lg-6">
                         <div class="mb-3">
@@ -453,10 +483,9 @@
                               *ngIf="addUnitForm.controls['status'].errors?.['required']">Status is required.</small>
                           </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
+
                 <div class="modal-footer">
                   <button #closeAddModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
@@ -486,8 +515,8 @@
             <button type="button" class="btn btn-primary" (click)="onDeleteUnit()">Yes</button>
           </div>
         </div>
-      </div>
     </div>
+
 
 
     <!-- Edit Modal -->
@@ -803,3 +832,4 @@
     </div>
   </div>
 </div>
+

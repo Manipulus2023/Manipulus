@@ -10,4 +10,5 @@ export class Job{
     customer_id!: number;
     location:string;
      type: any;
+
 }

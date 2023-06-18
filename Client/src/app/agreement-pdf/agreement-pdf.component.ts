@@ -13,64 +13,22 @@ export class AgreementPdfComponent implements OnInit{
 
 
   
-  //DataTabele.....................................
-    dtoptions: DataTables.Settings = {};
-    dtTriger: Subject<any> = new Subject<any>();
-    ngOnInit(): void {
-      // Define DataTables options
-      
-      this.dtoptions = {
-        pagingType: 'full_numbers',
-        destroy: true,
-     
-      };
-      // Call getCustomers method to retrieve customer data
-      this.getAllAgreement();
-      this.dtoptions = {
-        retrieve: true,
-      };
-  
-      
-    }
-  
-  //from......................................
-    showMe: boolean = false
-    
-    toogleTag() {
-      this.showMe = !this.showMe
-    }
-  
-  
-    showMeForm: boolean = false
-    ngOnInitForm() {
-  
-    }
-    toogleTagForm() {
-      this.showMeForm = !this.showMeForm
-    }
-  
-    pdfDownloadLink: string;
-  
-  
-    DontshowMeTable: boolean = true
-    ngOnInitTable() {
-  
-    }
-    toogleTagTable() {
-      this.DontshowMeTable = !this.DontshowMeTable
-    }
-  
-  
-  
+
+
   
   //get agreement details from agreement table........................
     AgreementArray: any[] = [];
+    searchAgreementArray: any[] = [];
+    searchAgreementArrayBynic: any[] = [];
+    searchAgreementArrayByid: any[] = [];
     CustomerArray: any[] = [];
     isResultLoaded = false;
     isUpdateFormActive = false;
   
   
     unitid: number = 0;
+
+    item: string='';
     equipment: string = "";
     price_per_service: number = 0;
     emergency_service_rate: number = 0;
@@ -78,6 +36,10 @@ export class AgreementPdfComponent implements OnInit{
     initiated_date: string ;
     expired_date: string;
     nic: string = "";
+
+    searchnic:string="";
+    searchid:string="";
+
   
   
   
@@ -90,9 +52,88 @@ export class AgreementPdfComponent implements OnInit{
       this.getAllNIC();
   
     }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
   
+
+
+  searchID(searchid:string){
+      
+    this.searchAgreementArray=[];
+   let j=0;
+    for(let i=0;i<this.AgreementArray.length;i++){
+       if(this.AgreementArray[i].agreementid==this.searchid ){
+       this.searchAgreementArray[j]=this.AgreementArray[i];
+       j++;
+       }
+
+       this.searchAgreementArrayByid=this.searchAgreementArray;
+    }
+
+    if(this.searchid==''&& this.searchnic=='' ){
+      this.searchAgreementArray=this.AgreementArray;
+   }
+
+   if(this.searchid=='' && !(this.searchnic=='')){
+     this.searchNIC(this.searchnic);
+   }
+
+   if(!(this.searchnic=='') && !(this.searchid=='')){
+    this.searchAgreementArray=[];
+    let j=0;
+     for(let i=0;i<this.AgreementArray.length;i++){
+        if(this.AgreementArray[i].nic==this.searchnic && this.AgreementArray[i].agreementid==this.searchid){
+        this.searchAgreementArray[j]=this.AgreementArray[i];
+        j++;
+        }
+        this.searchAgreementArrayBynic=this.searchAgreementArray;
+    }
+}
+
   
+}
   
+
+
+  searchNIC(searchnic:string){
+
+       this.searchAgreementArray=[];
+      let j=0;
+       for(let i=0;i<this.AgreementArray.length;i++){
+          if(this.AgreementArray[i].nic==this.searchnic ){
+          this.searchAgreementArray[j]=this.AgreementArray[i];
+          j++;
+          }
+          this.searchAgreementArrayBynic=this.searchAgreementArray;
+       }
+
+       if(this.searchnic=='' && this.searchid=='' ){
+         this.searchAgreementArray=this.AgreementArray;
+      }
+      
+      if(this.searchnic=='' && !(this.searchid=='')){
+         this.searchID(this.searchid);
+         
+      }
+
+      if(!(this.searchnic=='') && !(this.searchid=='')){
+        this.searchAgreementArray=[];
+        let j=0;
+         for(let i=0;i<this.AgreementArray.length;i++){
+            if(this.AgreementArray[i].nic==this.searchnic && this.AgreementArray[i].agreementid==this.searchid){
+            this.searchAgreementArray[j]=this.AgreementArray[i];
+            j++;
+            }
+            this.searchAgreementArrayBynic=this.searchAgreementArray;
+         }
+     }
+
+  }
+
+
+
+
   
   
   
@@ -104,7 +145,9 @@ export class AgreementPdfComponent implements OnInit{
           this.isResultLoaded = true;
           console.log(resultData);
           this.AgreementArray = resultData;
-          this.dtTriger.next(null);
+          this.searchAgreementArray=resultData;
+          
+
         });
     }
   
@@ -143,42 +186,15 @@ export class AgreementPdfComponent implements OnInit{
           },
         });
   
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
-  
-  
+
+      
+
   
       });
     }
   
   
-    //pdf preview...............................................
-    pdfUrl: string = 'http://localhost:8080/pdf';
-  
-    generateAndPreviewPdf() {
-      this.http.get('http://localhost:8080/pdf', { responseType: 'blob' })
-        .subscribe((response: Blob) => {
-          this.pdfUrl = URL.createObjectURL(response);
-        });
-    }
-  
-  //...............................................................
-  
-  //...............................................................
-  
-  
-    public onOpenModal(mode: string): void {
-      const container = (document.getElementById('main-container') as HTMLInputElement);
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.style.display = 'none';
-      button.setAttribute('data-bs-toggle', 'modal');
-  
-      container.appendChild(button);
-      button.click();
-    }
-  
+
   
     //get customer nic from customer table................
   
@@ -190,8 +206,7 @@ export class AgreementPdfComponent implements OnInit{
   
     navigateToUrl(url: string): void {
       window.location.href = url;
-  
-      
+
     }
   
   
@@ -204,7 +219,9 @@ export class AgreementPdfComponent implements OnInit{
           this.isResultLoaded = true;
           console.log(resultData);
           this.CustomerArray = resultData;
-        });
+
+      });
+
     }
   
   }

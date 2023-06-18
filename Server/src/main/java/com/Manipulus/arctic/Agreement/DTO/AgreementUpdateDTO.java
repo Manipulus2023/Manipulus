@@ -3,6 +3,8 @@ package com.Manipulus.arctic.Agreement.DTO;
 public class AgreementUpdateDTO {
     private int agreementid;
     private int unitid;
+
+    private String item;
     private String equipment;
     private float price_per_service;
     private float emergency_service_rate;
@@ -12,9 +14,10 @@ public class AgreementUpdateDTO {
     private String NIC;
 
 
-    public AgreementUpdateDTO(int agreementid, int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
+    public AgreementUpdateDTO(int agreementid, String item,int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
         this.agreementid = agreementid;
         this.unitid = unitid;
+        this.item=item;
         this.equipment = equipment;
         this.price_per_service = price_per_service;
         this.emergency_service_rate = emergency_service_rate;
@@ -35,6 +38,7 @@ public class AgreementUpdateDTO {
         this.NIC = NIC;
     }
 
+
     public int getAgreementid() {
         return agreementid;
     }
@@ -49,6 +53,14 @@ public class AgreementUpdateDTO {
 
     public void setUnitid(int unitid) {
         this.unitid = unitid;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getEquipment() {
@@ -101,9 +113,10 @@ public class AgreementUpdateDTO {
 
     @Override
     public String toString() {
-        return "AgreementDTO{" +
+        return "AgreementUpdateDTO{" +
                 "agreementid=" + agreementid +
                 ", unitid=" + unitid +
+                ", item='" + item + '\'' +
                 ", equipment='" + equipment + '\'' +
                 ", price_per_service=" + price_per_service +
                 ", emergency_service_rate=" + emergency_service_rate +

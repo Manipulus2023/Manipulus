@@ -1,8 +1,10 @@
 package com.Manipulus.arctic.location.service;
 
+
 import com.Manipulus.arctic.customer.exception.CustomerNotFoundException;
 import com.Manipulus.arctic.job.model.Job;
 import com.Manipulus.arctic.job.repository.JobRepository;
+
 import com.Manipulus.arctic.location.model.location;
 import com.Manipulus.arctic.location.repository.locationRepository;
 import com.Manipulus.arctic.customer.repository.CustomerRepository;
@@ -16,6 +18,7 @@ import java.util.UUID;
 @Service
 public class locationService {
     private final locationRepository locationRepository;
+
     private final com.Manipulus.arctic.job.repository.JobRepository JobRepository;
 
 
@@ -35,6 +38,7 @@ public class locationService {
     public location addlocation(location location ,Long id) {
         location.setlocationCode(UUID.randomUUID().toString());
         location.setLocation_info(findJobById(id));
+
         return locationRepository.save(location);
     }
 

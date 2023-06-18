@@ -40,7 +40,7 @@ public class PDFExportController {
         String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey ="Content-Disposition";
-        String headerValue ="attachment; filename=pdf_" + currentDateTime+".pdf";
+        String headerValue = "inline; filename=pdf_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
 
         this.pdfGeneratorService.export(response);

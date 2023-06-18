@@ -12,6 +12,10 @@ public class Agreement {
     private int agreementid;
     @Column(name="unit_id",length =50)
     private int unitid;
+
+    @Column(name="item",length =50)
+    private String item;
+
     @Column(name="equipments",length =250)
     private String equipment;
     @Column(name="price_per_service",length =20)
@@ -31,9 +35,10 @@ public class Agreement {
 
 
 
-    public Agreement(int agreementid,int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
+    public Agreement(int agreementid,String item,int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
         this.agreementid = agreementid;
         this.unitid = unitid;
+        this.item=item;
         this.equipment = equipment;
         this.price_per_service = price_per_service;
         this.emergency_service_rate = emergency_service_rate;
@@ -48,9 +53,10 @@ public class Agreement {
 
     }
 
-    public Agreement(int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
+    public Agreement(int unitid, String item,String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
 
         this.unitid = unitid;
+        this.item=item;
         this.equipment = equipment;
         this.price_per_service = price_per_service;
         this.emergency_service_rate = emergency_service_rate;
@@ -61,7 +67,21 @@ public class Agreement {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Agreement{" +
+                "agreementid=" + agreementid +
+                ", unitid=" + unitid +
+                ", item='" + item + '\'' +
+                ", equipment='" + equipment + '\'' +
+                ", price_per_service=" + price_per_service +
+                ", emergency_service_rate=" + emergency_service_rate +
+                ", type_of_the_service='" + type_of_the_service + '\'' +
+                ", initiated_date='" + initiated_date + '\'' +
+                ", expired_date='" + expired_date + '\'' +
+                ", NIC='" + NIC + '\'' +
+                '}';
+    }
 
     public int getAgreementid() {
         return agreementid;
@@ -77,6 +97,13 @@ public class Agreement {
 
     public void setUnitid(int unitid) {
         this.unitid = unitid;
+    }
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getEquipment() {
@@ -134,25 +161,6 @@ public class Agreement {
     public void setNIC(String NIC) {
         this.NIC = NIC;
     }
-
-    @Override
-    public String toString() {
-        return "Agreement{" +
-                "agreementid=" + agreementid +
-                ", unitid=" + unitid +
-                ", equipment='" + equipment + '\'' +
-                ", price_per_service=" + price_per_service +
-                ", emergency_service_rate=" + emergency_service_rate +
-                ", type_of_the_service='" + type_of_the_service + '\'' +
-                ", initiated_date='" + initiated_date + '\'' +
-                ", expired_date='" + expired_date + '\'' +
-                ", NIC='" + NIC + '\'' +
-                '}';
-    }
-
-
-
-
 
 
 }

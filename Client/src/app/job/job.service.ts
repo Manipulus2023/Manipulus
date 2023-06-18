@@ -6,6 +6,7 @@ import { Job } from './job';
 import { Customer } from '../customer/customer';
 import { Locations } from '../location/locations';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -44,6 +45,7 @@ export class JobService {
     return this.httpClient.get<Customer[]>(`${this.baseUrl}/customer/all`); // Get a list of all customers from the server
   }
 
+
   public addlocation( job: Job, id: number): Observable<Locations> {
     const locationToAdd: Locations = {
       location_title: '',
@@ -60,6 +62,7 @@ export class JobService {
     const matches = job.location.match(regex);
     
     if (matches && matches.length >= 3) {
+
       locationToAdd.location_lat = parseFloat(matches[1]);
       locationToAdd.location_lng = parseFloat(matches[2]);
     } else {
