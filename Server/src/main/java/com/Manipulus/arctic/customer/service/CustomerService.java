@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,6 +19,7 @@ public class CustomerService {
     public CustomerService(CustomerRepository customerRepository) {
         this.CustomerRepository= customerRepository;
     }
+
 
     // Add a new customer
     public Customer addCustomer(Customer customer){
