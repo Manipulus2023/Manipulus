@@ -52,6 +52,9 @@ public class JobService {
         return JobRepository.findJobById(id)
                 .orElseThrow(()-> new CustomerNotFoundException(" job by id"+ id + "was not found"));
     }
+
+
+
     @Transactional
     public void deleteJobById(Long id) {
         JobRepository.deleteJobById(id);
