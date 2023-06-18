@@ -46,6 +46,14 @@ public class JobService {
         job.setJob_status("Not Complete");
         return JobRepository.save(job);
     }
+    public Job findJobById(Long id){
+        // Find the customer with the given ID in the database
+        // Throw a CustomerNotFoundException if the customer is not found
+        return JobRepository.findJobById(id)
+                .orElseThrow(()-> new CustomerNotFoundException(" job by id"+ id + "was not found"));
+    }
+
+
 
     @Transactional
     public void deleteJobById(Long id) {

@@ -117,8 +117,10 @@ td {
 th {
     width: 5px;
     /* set the width of the cell */
+
 }
 
 .custom-form-control {
     width: 300px;
+
 }

@@ -6,7 +6,6 @@ body {
     box-sizing: border-box;
 }
 
-
 /* Button used to open the contact form - fixed at the bottom of the page */
 
 .open-button {
@@ -22,7 +21,6 @@ body {
     width: 280px;
 }
 
-
 /* The popup form - hidden by default */
 
 .form-popup {
@@ -34,7 +32,6 @@ body {
     z-index: 9;
 }
 
-
 /* Add styles to the form container */
 
 .form-container {
@@ -42,7 +39,6 @@ body {
     padding: 10px;
     background-color: white;
 }
-
 
 /* Full-width input fields */
 
@@ -55,7 +51,6 @@ body {
     background: #f1f1f1;
 }
 
-
 /* When the inputs get focus, do something */
 
 .form-container input[type=text]:focus,
@@ -63,7 +58,6 @@ body {
     background-color: #ddd;
     outline: none;
 }
-
 
 /* Set a style for the submit/login button */
 
@@ -78,13 +72,11 @@ body {
     opacity: 0.8;
 }
 
-
 /* Add a red background color to the cancel button */
 
 .form-container .cancel {
     background-color: red;
 }
-
 
 /* Add some hover effects to buttons */
 
@@ -108,6 +100,7 @@ td {
 th {
     width: 5px;
     /* set the width of the cell */
+
 }
 
 .formclass {
@@ -118,4 +111,5 @@ th {
 
 .addbutton {
     margin-left: 50px;
+
 }

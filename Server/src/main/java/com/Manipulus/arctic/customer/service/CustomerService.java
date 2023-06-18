@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,12 +20,13 @@ public class CustomerService {
         this.CustomerRepository= customerRepository;
     }
 
+
     // Add a new customer
     public Customer addCustomer(Customer customer){
         // Generate a unique customer code
         customer.setCreatedAt(LocalDateTime.now());
         customer.setCustomerCode(UUID.randomUUID().toString());
-        customer.setActive_status(true);
+        customer.setActive_status(false);
         // Save the new customer to the database
         return CustomerRepository.save(customer);
     }

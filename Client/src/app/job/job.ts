@@ -9,4 +9,6 @@ export class Job{
     customer!:Customer;
     customer_id!: number;
     location:string;
+     type: any;
+
 }

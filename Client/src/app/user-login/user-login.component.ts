@@ -32,7 +32,7 @@ export class UserLoginComponent implements OnInit {
       },
       error: err => {
         console.log(err);
-        this.errorMessage = "Error occurred"
+        this.errorMessage = "Invalid credentials"
       }
     });
   }

@@ -34,6 +34,14 @@ public class UnitRepository implements IUnitRepository {
         return null;
     }
 
+
+
+    public <S extends Unit> S update(S entity) {
+        return entityManager.merge(entity);
+    }
+
+
+
     @Override
     public void deleteAllInBatch(Iterable<Unit> entities) {
 

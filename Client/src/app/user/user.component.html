@@ -3,256 +3,741 @@
     <app-side-nav></app-side-nav>
   </div>
   <div class="col-sm-10 ps-3 mt-2">
-    <header class="py-3 border-bottom">
-      <div class="container d-flex flex-wrap justify-content-center">
-        <a
-          class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
-        >
-          <span class="fs-8">User</span>
-          <span class="badge rounded-pill bg-info userCount text-muted"
-            >100</span
-          >
-        </a>
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0">
-          <input
-            type="search"
-            [(ngModel)]="key"
-            name="key"
-            class="form-control"
-            placeholder="Search..."
-            aria-label="Search"
-            required
-          />
-        </form>
-        <button
-          type="button"
-          class="btn btn-outline-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          <img
-            src="../../assets/Icon/Customer/person_add_FILL0_wght400_GRAD0_opsz48.png"
-            alt="Bootstrap"
-            width="20"
-            height="20"
-          />
-          Add User
-        </button>
+    <div class="tabel-containt" id="main-container">
+      <header class="py-3 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+          <a class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+            <span class="fs-8 me-2">User</span>
+            <span class="badge rounded-pill bg-info userCount text-muted">
+              {{ users.length }}
+            </span>
+          </a>
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0">
+            <input type="search" [(ngModel)]="key" name="key" class="form-control" placeholder="Search..."
+              aria-label="Search" required />
+          </form>
+          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <img src="../../assets/Icon/Customer/person_add_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
+              height="20" />
+            Add User
+          </button>
+        </div>
+      </header>
+
+      <!-- user data table -->
+      <div>
+        <table datatable [dtTrigger]="dtTriger" [dtOptions]="dtoptions" class="table align-middle mb-0 bg-white">
+          <!-- table header -->
+          <thead class="bg-light m-2">
+            <tr>
+              <th>Id</th>
+              <th>Username</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Mobile No.</th>
+              <th>Designation</th>
+              <th>Address</th>
+              <th>Role</th>
+              <!-- <th>Group</th> -->
+              <!-- <th>Password</th> -->
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <!-- table body with a for loop for each of the users in backends -->
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.id }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.userName }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.first_name }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.last_name }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.email }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">
+                      {{ user.mobileNumber }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">
+                      {{ user.designation }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.address }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.roles[0 ].roleName }}</p>
+                  </div>
+                </div>
+              </td>
+              <!-- <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.group }}</p>
+                  </div>
+                </div>
+              </td> -->
+              <!-- <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.password }}</p>
+                  </div>
+                </div>
+              </td> -->
+
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ user.status }}</p>
+                  </div>
+                </div>
+              </td>
+
+              <!-- delete user button -->
+              <td>
+                <button type="button" class="btn btn-link btn-sm btn-rounded" data-bs-toggle="modal"
+                  data-bs-target="#deleteModal" (click)="onClickDeleteUser(user.id)">
+                  <img src="../../assets/Icon/Customer/delete_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
+                    height="20" />
+                </button>
+              </td>
+
+              <!-- edit user button -->
+              <td>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal"
+                  (click)="onClickEditUser(user.id)">
+                  <img src="../../assets/Icon/Customer/edit_FILL0_wght400_GRAD0_opsz48.png" alt="Bootstrap" width="20"
+                    height="20" />
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </header>
 
-    <form [formGroup]="addUserForm" (ngSubmit)="onUserAdd()" class="user-form">
-      <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-        data-bs-backdrop="static"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">User Details</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="card mb-4">
-                <div class="card-body">
-                  <div>
-                    <h3 class="h6 mb-4">Basic Information</h3>
-                  </div>
+      <form [formGroup]="addUserForm" (ngSubmit)="onUserAdd()" class="user-form">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+          data-bs-backdrop="static">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">User Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <div>
+                      <h3 class="h6 mb-4">Basic Information</h3>
+                    </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label class="form-label">First Name:</label>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">First Name:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="first_name" class="form-control" required />
+                          <div *ngIf="
+                              addUserForm.controls['first_name'].invalid &&
+                              (addUserForm.controls['first_name'].dirty ||
+                                addUserForm.controls['first_name'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUserForm.controls['first_name'].errors?.['required']">
+                              First Name is required.
+                            </small>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <input
-                          type="text"
-                          formControlName="firstName"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label class="form-label">Last Name:</label>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Last Name:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="last_name" class="form-control" required />
+                          <div *ngIf="
+                              addUserForm.controls['last_name'].invalid &&
+                              (addUserForm.controls['last_name'].dirty ||
+                                addUserForm.controls['last_name'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUserForm.controls['last_name'].errors?.['required']">
+                              Last Name is required.
+                            </small>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <input
-                          type="text"
-                          formControlName="lastName"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label class="form-label">Personal Address:</label>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">User Name:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="user_name" class="form-control" required />
+                          <div *ngIf="
+                              addUserForm.controls['user_name'].invalid &&
+                              (addUserForm.controls['user_name'].dirty ||
+                                addUserForm.controls['user_name'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUserForm.controls['user_name'].errors?.['required']">
+                              User Name is required.
+                            </small>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <input
-                          type="text"
-                          formControlName="address"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label class="form-label">Mobile Number:</label>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Personal Address:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="address" class="form-control" required />
+                          <div *ngIf="
+                              addUserForm.controls['address'].invalid &&
+                              (addUserForm.controls['address'].dirty ||
+                                addUserForm.controls['address'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUserForm.controls['address'].errors?.['required']">
+                              Personal Address is required.
+                            </small>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <input
-                          type="text"
-                          formControlName="mobileNumber"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label class="form-label">Email Address:</label>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Mobile Number:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="mobile_number" class="form-control" />
+                          <div *ngIf="
+                              addUserForm.controls['mobile_number'].invalid &&
+                              (addUserForm.controls['mobile_number'].dirty ||
+                                addUserForm.controls['mobile_number'].touched)
+                            ">
+                            <small class="text-danger"
+                              *ngIf="addUserForm.controls['mobile_number'].errors?.['required']">
+                              Mobile Number is required.
+                            </small>
+                            <small class="text-danger"
+                              *ngIf="addUserForm.controls['mobile_number'].errors?.['pattern']">
+                              Mobile number must be a 10-digit number.
+                            </small>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <input
-                          type="text"
-                          formControlName="email"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label class="form-label">Password:</label>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Email Address:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="email" class="form-control" ngModel required email />
+                          <div *ngIf="
+                              addUserForm.controls['email'].invalid &&
+                              (addUserForm.controls['email'].dirty ||
+                                addUserForm.controls['email'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUserForm.controls['email'].errors?.['required']">
+                              Email Address is required.
+                            </small>
+                            <small class="text-danger" *ngIf="addUserForm.controls['email'].errors?.['email']">
+                              Invalid e-mail format.
+                            </small>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <input
-                          type="text"
-                          formControlName="password"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label class="form-label">Status:</label>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Password:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="password" formControlName="password" class="form-control" required />
+                          <div *ngIf="
+                              addUserForm.controls['password'].invalid &&
+                              (addUserForm.controls['password'].dirty ||
+                                addUserForm.controls['password'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUserForm.controls['password'].errors?.['required']">
+                              Password is required.
+                            </small>
+                            <small class="text-danger" *ngIf="addUserForm.controls['password'].errors?.['pattern']">
+                              Password must contain at least one number and one
+                              special character.
+                            </small>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <input
-                          type="text"
-                          formControlName="status"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label class="form-label">Designation:</label>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Status:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <select formControlName="status" class="form-control" required>
+                            <option value="">Select status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                          </select>
+                          <div *ngIf="
+                              addUserForm.controls['status'].invalid &&
+                              (addUserForm.controls['status'].dirty ||
+                                addUserForm.controls['status'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUserForm.controls['status'].errors?.['required']">
+                              Status is required.
+                            </small>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <input
-                          type="text"
-                          formControlName="designation"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label class="form-label">User Group:</label>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">Designation:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="designation" class="form-control" required />
+                          <div *ngIf="
+                              addUserForm.controls['designation'].invalid &&
+                              (addUserForm.controls['designation'].dirty ||
+                                addUserForm.controls['designation'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUserForm.controls['designation'].errors?.['required']">
+                              Designation is required.
+                            </small>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <input
-                          type="text"
-                          formControlName="group"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label class="form-label">User Role:</label>
+                    <!-- <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">User Group:</label>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <input
-                          type="text"
-                          formControlName="userRole"
-                          class="form-control"
-                        />
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <input type="text" formControlName="group" class="form-control" required />
+                          <div *ngIf="
+                              addUserForm.controls['group'].invalid &&
+                              (addUserForm.controls['group'].dirty ||
+                                addUserForm.controls['group'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUserForm.controls['group'].errors?.['required']">
+                              User Group is required.
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <label class="form-label">User Role:</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="mb-3">
+                          <select formControlName="roles" class="form-control" required>
+                            <option value="">Select role</option>
+                            <option value="1">Admin</option>
+                            <option value="2">User</option>
+                          </select>
+                          <div *ngIf="
+                              addUserForm.controls['roles'].invalid &&
+                              (addUserForm.controls['roles'].dirty ||
+                                addUserForm.controls['roles'].touched)
+                            ">
+                            <small class="text-danger" *ngIf="addUserForm.controls['roles'].errors?.['required']">
+                              User Role is required.
+                            </small>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="modal-footer">
+                <button  #closeAddModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button [disabled]="addUserForm.invalid" type="submit" class="btn btn-primary">Submit</button>
+              </div>
             </div>
+          </div>
+        </div>
+      </form>
+      <div class="modal delete" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal3" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabedelete">
+                Detele User
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">Are you want to delete user?</div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
+              <button #closeEditModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                No
               </button>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button (click)="onDeleteUser()" class="btn btn-danger" data-bs-dismiss="modal">
+                Yes
+              </button>
             </div>
           </div>
         </div>
       </div>
-    </form>
+    </div>
+
+
+
+
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabelDelete" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete unit</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">Confirm deleting user?</div>
+          <div class="modal-footer">
+            <button #closeDeleteModal type="button" class="btn btn-secondary" data-bs-dismiss="modal"> No </button>
+            <button type="button" class="btn btn-primary" (click)="onDeleteUser()">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div>
+      <form [formGroup]="editUserForm" (ngSubmit)="onUserEdit()" class="unit-form">
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editodalLable" aria-hidden="true"
+          data-bs-backdrop="static">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelEdit">User Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <div>
+                      <h3 class="h6 mb-4">Basic Information</h3>
+                    </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">First Name:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="first_name" class="form-control" required />
+                    <div *ngIf="
+                  editUserForm.controls['first_name'].invalid &&
+                  (editUserForm.controls['first_name'].dirty ||
+                  editUserForm.controls['first_name'].touched)
+                ">
+                      <small class="text-danger" *ngIf="editUserForm.controls['first_name'].errors?.['required']">
+                        First Name is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Last Name:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="last_name" class="form-control" required />
+                    <div *ngIf="
+                  editUserForm.controls['last_name'].invalid &&
+                  (editUserForm.controls['last_name'].dirty ||
+                    editUserForm.controls['last_name'].touched)
+                ">
+                      <small class="text-danger" *ngIf="editUserForm.controls['last_name'].errors?.['required']">
+                        Last Name is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">User Name:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="user_name" class="form-control" required />
+                    <div *ngIf="
+                  editUserForm.controls['user_name'].invalid &&
+                  (editUserForm.controls['user_name'].dirty ||
+                    editUserForm.controls['user_name'].touched)
+                ">
+                      <small class="text-danger" *ngIf="editUserForm.controls['user_name'].errors?.['required']">
+                        User Name is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Personal Address:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="address" class="form-control" required />
+                    <div *ngIf="
+                  editUserForm.controls['address'].invalid &&
+                  (editUserForm.controls['address'].dirty ||
+                    editUserForm.controls['address'].touched)
+                ">
+                      <small class="text-danger" *ngIf="editUserForm.controls['address'].errors?.['required']">
+                        Personal Address is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Mobile Number:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="mobile_number" class="form-control" required pattern="^[0-9]{10}$"
+                       />
+                    <div *ngIf="
+                  editUserForm.controls['mobile_number'].invalid &&
+                  (editUserForm.controls['mobile_number'].dirty ||
+                    editUserForm.controls['mobile_number'].touched)
+                ">
+                      <small class="text-danger" *ngIf="editUserForm.controls['mobile_number'].errors?.['required']">
+                        Mobile Number is required.
+                      </small>
+                      <small class="text-danger" *ngIf="editUserForm.controls['mobile_number'].errors?.['pattern']">
+                        Mobile number must be a 10-digit number.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Email Address:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="email" class="form-control" ngModel required email />
+                    <div *ngIf="
+                  editUserForm.controls['email'].invalid &&
+                  (editUserForm.controls['email'].dirty ||
+                    editUserForm.controls['email'].touched)
+                ">
+                      <small class="text-danger" *ngIf="editUserForm.controls['email'].errors?.['required']">
+                        Email Address is required.
+                      </small>
+                      <small class="text-danger" *ngIf="editUserForm.controls['email'].errors?.['email']">
+                        Invalid e-mail format.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Status:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <select formControlName="status" class="form-control" required>
+                      <option value="">Select status</option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                    <div *ngIf="
+                  editUserForm.controls['status'].invalid &&
+                  (editUserForm.controls['status'].dirty ||
+                    editUserForm.controls['status'].touched)
+                ">
+                      <small class="text-danger" *ngIf="editUserForm.controls['status'].errors?.['required']">
+                        Status is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Designation:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <input type="text" formControlName="designation" class="form-control" required />
+                    <div *ngIf="
+                  editUserForm.controls['designation'].invalid &&
+                  (editUserForm.controls['designation'].dirty ||
+                    editUserForm.controls['designation'].touched)
+                ">
+                      <small class="text-danger" *ngIf="editUserForm.controls['designation'].errors?.['required']">
+                        Designation is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">User Role:</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <select formControlName="roles" class="form-control" required>
+                      <option value="">Select role</option>
+                      <option value="1">Admin</option>
+                      <option value="2">User</option>
+                    </select>
+                    <div *ngIf="
+                  editUserForm.controls['roles'].invalid &&
+                  (editUserForm.controls['roles'].dirty ||
+                    editUserForm.controls['roles'].touched)
+                ">
+                      <small class="text-danger" *ngIf="editUserForm.controls['roles'].errors?.['required']">
+                        User Role is required.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+              <div class="modal-footer">
+                <button #closeEditModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Cancel
+                </button>
+                <button [disabled]="editUserForm.invalid" type="submit" class="btn btn-primary">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

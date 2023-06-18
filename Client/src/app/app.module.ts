@@ -35,6 +35,10 @@ import { AuthInterceptorService } from './services/auth.interceptor.service';
 import { DataTablesModule } from "angular-datatables";
 import { GoogleMapsModule } from '@angular/google-maps';
 import { AgreementPdfComponent } from './agreement-pdf/agreement-pdf.component';
+
+import { NgChartsModule } from 'ng2-charts';
+import { FullCalendarModule } from '@fullcalendar/angular';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,12 +74,13 @@ import { AgreementPdfComponent } from './agreement-pdf/agreement-pdf.component';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    FormsModule,
-    HttpClientModule,
     RouterModule,
     ReactiveFormsModule,
     DataTablesModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    NgChartsModule,
+    FullCalendarModule 
+
   ],
   providers: [
     ReactiveFormsModule,

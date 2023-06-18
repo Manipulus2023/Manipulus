@@ -4,6 +4,7 @@ import com.Manipulus.arctic.role.model.Role;
 import com.Manipulus.arctic.role.repository.IRoleRepository;
 import com.Manipulus.arctic.user.dao.RoleDao;
 import com.Manipulus.arctic.user.exception.UserNotFoundException;
+import com.Manipulus.arctic.user.model.EditUserRequest;
 import com.Manipulus.arctic.user.model.User;
 import com.Manipulus.arctic.user.model.UserRequest;
 import com.Manipulus.arctic.user.model.UserResponse;
@@ -27,7 +28,6 @@ public class UserService implements IUserService{
         this.roleRepository = roleRepository;
     }
 
-
     @Autowired
     private RoleDao roleDao;
 
@@ -35,15 +35,15 @@ public class UserService implements IUserService{
         String encodedPassword = getEncodedPassword(user.password);
         Set<Role> userRoles = new HashSet<>();
         User newUser = new User();
-        Role role = roleRepository.getById(user.role);
+        Role role = roleRepository.getById(user.roles);
         if(role != null)
         {
             userRoles.add(role);
             newUser.setRoles(userRoles);
         }
-        User newUser1 = newUser.UserRequestMapper(user.firstName, user.lastName, user.userName, user.address, user.mobileNumber, user.email, encodedPassword, user.status, user.designation, userRoles);
+        User newUser1 = newUser.UserRequestMapper(user.first_name, user.last_name, user.user_name, user.address, user.mobile_number, user.email, encodedPassword, user.status, user.designation, userRoles);
         User addedUser = userRepository.save(newUser1);
-        UserResponse response = addedUser.UserResponseMapper(addedUser.getFirst_name(),addedUser.getLast_name(),addedUser.getUserName(),addedUser.getEmail(),addedUser.getStatus(),addedUser.getDesignation());
+        UserResponse response = addedUser.UserResponseMapper(addedUser.getFirst_name(),addedUser.getLast_name(),addedUser.getUserName(),addedUser.getAddress(),addedUser.getMobileNumber(), addedUser.getEmail(), addedUser.getUserPassword(),addedUser.getStatus(),addedUser.getDesignation(),addedUser.getRoles());
         return response;
     }
 
@@ -56,26 +56,32 @@ public class UserService implements IUserService{
         return null;
     }
 
-    public UserResponse updateUser(int id, UserRequest user) {
+    public UserResponse updateUser(int id, EditUserRequest user) {
         User existingUser = findUserById(id);
         if(existingUser != null) {
             Set<Role> userRoles = new HashSet<>();
 
-            existingUser.setFirst_name(user.firstName);
-            existingUser.setLast_name(user.lastName);
-            existingUser.setPassword(getEncodedPassword(user.password));
+            existingUser.setFirst_name(user.first_name);
+            existingUser.setLast_name(user.last_name);
+            existingUser.setUserName(user.user_name);
+            existingUser.setPassword(existingUser.getPassword());
+            existingUser.setAddress(user.address);
             existingUser.setEmail(user.email);
             existingUser.setDesignation(user.designation);
-            existingUser.setMobileNumber(user.mobileNumber);
+            //existingUser.setRoles(userRoles);
+            existingUser.setMobileNumber(user.mobile_number);
+            existingUser.setStatus(user.status);
 
-            Role role = roleRepository.getById(user.role);
+            //existingUser.setGroup(user.group);
+
+            Role role = roleRepository.getById(user.roles);
             if(role != null)
             {
                 userRoles.add(role);
                 existingUser.setRoles(userRoles);
             }
             User updatedUser = userRepository.save(existingUser);
-            UserResponse response = updatedUser.UserResponseMapper(updatedUser.getFirst_name(),updatedUser.getLast_name(),updatedUser.getUserName(),updatedUser.getEmail(),updatedUser.getStatus(),updatedUser.getDesignation());
+            UserResponse response = updatedUser.UserResponseMapper(updatedUser.getFirst_name(),updatedUser.getLast_name(),updatedUser.getUserName(), updatedUser.getAddress(), updatedUser.getEmail(), updatedUser.getMobileNumber(), updatedUser.getUserPassword(), updatedUser.getStatus(),updatedUser.getDesignation(), updatedUser.getRoles());
             return response;
         }
         throw new UserNotFoundException(" user by id"+ id + "was not found");

@@ -27,6 +27,7 @@ export class AgreementPdfComponent implements OnInit{
   
   
     unitid: number = 0;
+
     item: string='';
     equipment: string = "";
     price_per_service: number = 0;
@@ -35,8 +36,10 @@ export class AgreementPdfComponent implements OnInit{
     initiated_date: string ;
     expired_date: string;
     nic: string = "";
+
     searchnic:string="";
     searchid:string="";
+
   
   
   
@@ -130,6 +133,7 @@ export class AgreementPdfComponent implements OnInit{
 
 
 
+
   
   
   
@@ -143,6 +147,7 @@ export class AgreementPdfComponent implements OnInit{
           this.AgreementArray = resultData;
           this.searchAgreementArray=resultData;
           
+
         });
     }
   
@@ -181,16 +186,15 @@ export class AgreementPdfComponent implements OnInit{
           },
         });
   
+
       
+
   
       });
     }
   
   
-  
-  
-  
-  
+
   
     //get customer nic from customer table................
   
@@ -202,6 +206,7 @@ export class AgreementPdfComponent implements OnInit{
   
     navigateToUrl(url: string): void {
       window.location.href = url;
+
     }
   
   
@@ -214,7 +219,9 @@ export class AgreementPdfComponent implements OnInit{
           this.isResultLoaded = true;
           console.log(resultData);
           this.CustomerArray = resultData;
+
       });
+
     }
   
   }
