@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-sm-2">
+        <app-side-nav></app-side-nav>
+    </div>
+    <div class="col-sm-10 ps-3 mt-2">
+        <div style="margin: 0 10px 0 30px;">
+
+            <head>
+                <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0 "></script>
+            </head>
+
+            <div class="container mt-4">
+                <header class="py-3 border-bottom">
+                    Agreements PDF
+                </header>
+
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="text " [(ngModel)]="searchnic " [ngModelOptions]="{ standalone: true } " class="form-control custom-form-control" id="searchnic " (ngModelChange)="searchNIC($event)" placeholder="Search by NIC " />
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text " [(ngModel)]="searchid " [ngModelOptions]="{ standalone: true } " class="form-control custom-form-control" id="searchid " (ngModelChange)="searchID($event)" placeholder="Search by Agreement No: " />
+                    </div>
+                </div>
+
+
+
+                <div class="row mt-4">
+                    <div class="col-md-4" *ngFor="let AgreementItem of searchAgreementArray">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div>
+                                    <h5 class="card-title">Agreement No: {{ AgreementItem.agreementid }}</h5>
+                                </div>
+                                <div>
+                                    <p class="card-text"><strong>Customer NIC:</strong> {{ AgreementItem.nic }}</p>
+                                </div>
+                                <button type="button" class="btn btn-outline-primary" (click)="passIdForGeneratePdf(AgreementItem); navigateToUrl('http://localhost:8080/pdf')">
+                                    Generate PDF  <img src="../../assets/Icon/Customer/pdf2.gif" alt="Bootstrap" width="20" height="20" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="!isResultLoaded && AgreementArray.length === 0" class="col-lg-12 col-md-12 col-xl-12">
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading">NO Agreements PDF!</h4>
+                        <p>No PDFs were found.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -33,7 +33,8 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptorService } from './services/auth.interceptor.service';
 import { DataTablesModule } from "angular-datatables";
-
+import { GoogleMapsModule } from '@angular/google-maps';
+import { AgreementPdfComponent } from './agreement-pdf/agreement-pdf.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +61,8 @@ import { DataTablesModule } from "angular-datatables";
     HomeComponent,
     AdminComponent,
     HeaderComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    AgreementPdfComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +75,7 @@ import { DataTablesModule } from "angular-datatables";
     RouterModule,
     ReactiveFormsModule,
     DataTablesModule,
+    GoogleMapsModule
   ],
   providers: [
     ReactiveFormsModule,

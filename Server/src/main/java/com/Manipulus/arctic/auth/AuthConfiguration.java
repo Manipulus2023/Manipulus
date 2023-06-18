@@ -36,7 +36,14 @@ public class AuthConfiguration {
         http.cors().and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeHttpRequests().requestMatchers("/refresh-token/**").permitAll();
+        http.authorizeHttpRequests().requestMatchers("/vehicle/{id}/photo**").permitAll();
+        http.authorizeHttpRequests().requestMatchers("/vehicle/**").permitAll();
+        http.authorizeHttpRequests().requestMatchers("/pdf/**").permitAll();
         http.authorizeHttpRequests().requestMatchers("/forgot-password/**").permitAll();
+        http.authorizeHttpRequests().requestMatchers("/location/add**").permitAll();
+        //http.authorizeHttpRequests().anyRequest().permitAll();
+
+
         http.authorizeHttpRequests().anyRequest().authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)),jwtHelper));
         http.addFilterBefore(new JWTAuthorizationFilter(jwtHelper), UsernamePasswordAuthenticationFilter.class);
@@ -50,11 +57,14 @@ public class AuthConfiguration {
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
+
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Headers","Access-Control-Allow-Origin","Access-Control-Request-Method","Access-Control-Request-Headers","Origin","Cache-Control","Content-Type","Authorization"));
         corsConfiguration.setAllowedMethods(Arrays.asList("DELETE","GET","POST","PATCH","PUT"));
+
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",corsConfiguration);
         return source;

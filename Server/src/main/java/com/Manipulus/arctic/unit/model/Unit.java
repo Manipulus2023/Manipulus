@@ -81,6 +81,14 @@ public class Unit implements Serializable {
         return itemName;
     }
 
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
+
     public void setItem_name(String item_name) {
         this.itemName = item_name;
     }

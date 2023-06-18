@@ -9,6 +9,8 @@ public class AgreementDTO {
 
     private int agreementid;
     private int unitid;
+
+    private String item;
     private String equipment;
     private float price_per_service;
     private float emergency_service_rate;
@@ -33,9 +35,10 @@ public class AgreementDTO {
      */
 
 
-    public AgreementDTO(int agreementid, int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
+    public AgreementDTO(int agreementid, int unitid,String item, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
         this.agreementid = agreementid;
         this.unitid = unitid;
+        this.item=item;
         this.equipment = equipment;
         this.price_per_service = price_per_service;
         this.emergency_service_rate = emergency_service_rate;
@@ -81,6 +84,14 @@ public class AgreementDTO {
 
     public void setUnitid(int unitid) {
         this.unitid = unitid;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getEquipment() {
@@ -144,13 +155,14 @@ public class AgreementDTO {
         return "AgreementDTO{" +
                 "agreementid=" + agreementid +
                 ", unitid=" + unitid +
+                ", item='" + item + '\'' +
                 ", equipment='" + equipment + '\'' +
                 ", price_per_service=" + price_per_service +
                 ", emergency_service_rate=" + emergency_service_rate +
                 ", type_of_the_service='" + type_of_the_service + '\'' +
                 ", initiated_date='" + initiated_date + '\'' +
                 ", expired_date='" + expired_date + '\'' +
-                ", expired_date='" + expired_date + '\'' +
+                ", NIC='" + NIC + '\'' +
                 '}';
     }
 }

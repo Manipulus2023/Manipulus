@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Job } from './job';
 import { Customer } from '../customer/customer';
+import { Locations } from '../location/location';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,7 @@ export class JobService {
   // Adds a new job
   public addJob(job: Job, id: number): Observable<Job> {
     return this.httpClient.post<Job>(`${this.baseUrl}/job/add?id=${id}`, job);
+
   }
   
   // Updates an existing job
@@ -42,5 +44,31 @@ export class JobService {
     return this.httpClient.get<Customer[]>(`${this.baseUrl}/customer/all`); // Get a list of all customers from the server
   }
 
+  public addlocation(location: Locations, job: Job): Observable<Locations> {
+    const locationToAdd: Locations = {
+      title: '',
+      //@ts-ignore
+      info: '',
+      lat: 0,
+      lng: 0
+    };
+  
+    locationToAdd.title = job.job_type; 
+    locationToAdd.info = job.customer; 
+    const regex = /@(-?\d+\.?\d*),(-?\d+\.?\d*),/;
+    const matches = job.location.match(regex);
+    
+    if (matches && matches.length >= 3) {
+      locationToAdd.lat = parseFloat(matches[1]);
+      locationToAdd.lng = parseFloat(matches[2]);
+    } else {
+      // Handle the case where the URL format is invalid
+      locationToAdd.lat = 0;
+      locationToAdd.lng = 0;
+    }
+    
+    return this.httpClient.post<Locations>(`${this.baseUrl}/location/add`, locationToAdd);
+  }
+  
 
 }

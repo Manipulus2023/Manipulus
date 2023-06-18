@@ -4,6 +4,8 @@ public class AgreementSaveDTO {
 
 
     private int unitid;
+
+    private String item;
     private String equipment;
     private float price_per_service;
     private float emergency_service_rate;
@@ -14,9 +16,10 @@ public class AgreementSaveDTO {
     private String NIC;
 
 
-    public AgreementSaveDTO(int unitid, String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
+    public AgreementSaveDTO(int unitid, String item,String equipment, float price_per_service, float emergency_service_rate, String type_of_the_service, String initiated_date, String expired_date,String NIC) {
 
         this.unitid = unitid;
+        this.item=item;
         this.equipment = equipment;
         this.price_per_service = price_per_service;
         this.emergency_service_rate = emergency_service_rate;
@@ -42,8 +45,17 @@ public class AgreementSaveDTO {
         return unitid;
     }
 
+
     public void setUnitid(int unitid) {
         this.unitid = unitid;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getEquipment() {
@@ -97,8 +109,8 @@ public class AgreementSaveDTO {
     @Override
     public String toString() {
         return "AgreementSaveDTO{" +
-
-                ", unitid=" + unitid +
+                "unitid=" + unitid +
+                ", item='" + item + '\'' +
                 ", equipment='" + equipment + '\'' +
                 ", price_per_service=" + price_per_service +
                 ", emergency_service_rate=" + emergency_service_rate +

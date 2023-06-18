@@ -52,61 +52,21 @@ export class ServiceAgreementComponent implements OnInit{
   }
 
 
-  showMe: boolean = false
-  
-  toogleTag() {
-    this.showMe = !this.showMe
+  refreshPage(){
+    window.location.reload();
   }
-
-
-  showMeForm: boolean = false
-  ngOnInitForm() {
-
-  }
-  toogleTagForm() {
-    this.showMeForm = !this.showMeForm
-  }
-
-
-
-
-
-
-
-
-
-//...............................................
-  // showMeTitle2: boolean = true
-  // ngOnInitTitle2() {
-
-  // }
-  // toogleTagTitle2() {
-  //   this.showMeTitle2 = !this.showMeTitle2
-  // }
-//
-
-
-
-
-  DontshowMeTable: boolean = true
-  ngOnInitTable() {
-
-  }
-  toogleTagTable() {
-    this.DontshowMeTable = !this.DontshowMeTable
-  }
-
-
 
 
 
   AgreementArray: any[] = [];
   CustomerArray: any[] = [];
+  UnitArray: any[]=[];
   isResultLoaded = false;
   isUpdateFormActive = false;
 
 
   unitid: number = 0;
+  item ?: string="";
   equipment: string = "";
   price_per_service: number = 0;
   emergency_service_rate: number = 0;
@@ -114,8 +74,9 @@ export class ServiceAgreementComponent implements OnInit{
   initiated_date: string ;
   expired_date: string;
   nic: string = "";
-
  
+
+
 
   currentAgreementID = "";
 
@@ -124,6 +85,7 @@ export class ServiceAgreementComponent implements OnInit{
   constructor(private http: HttpClient) {
     this.getAllAgreement();
     this.getAllNIC();
+    this.getAllUnits();
 
   }
 
@@ -144,9 +106,17 @@ export class ServiceAgreementComponent implements OnInit{
 
   register() {
 
+
+    for(let i=0;i<this.UnitArray.length;i++){
+      if(this.UnitArray[i].id==this.unitid){
+        this.item=this.UnitArray[i].item_name;
+      }
+    }
+
     let bodyData = {
 
       "unitid": this.unitid,
+      "item":this.item,
       "buttoId": this.unitid,
       "equipment": this.equipment,
       "price_per_service": this.price_per_service,
@@ -158,7 +128,7 @@ export class ServiceAgreementComponent implements OnInit{
     };
 
 
-    if (this.unitid == 0 && this.equipment == '' && this.price_per_service <= 0 && this.emergency_service_rate <= 0 && this.type_of_the_service == '' && this.initiated_date == '' && this.expired_date == '' && this.nic == '') {
+    if (this.unitid == 0 && this.item=='' &&this.equipment == '' && this.price_per_service <= 0 && this.emergency_service_rate <= 0 && this.type_of_the_service == '' && this.initiated_date == '' && this.expired_date == '' && this.nic == '') {
 
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -179,7 +149,7 @@ export class ServiceAgreementComponent implements OnInit{
       });
 
     }
-    else if (this.unitid == 0) {
+    else if (this.unitid == 0 || isNaN(Number(this.unitid))) {
       // alert("Please insert an existing UnitId!");
 
 
@@ -201,16 +171,16 @@ export class ServiceAgreementComponent implements OnInit{
           cancelButton: 'btn btn-secondary',
         },
       });
+    } 
+    
+    else if (this.item == ''||this.item=="choose an existing item...") {
+      // alert("Please insert an existing UnitId!");
 
 
 
-
-
-    } else if (this.equipment == '') {
-      // alert("Please insert the Equipment!");
       Swal.fire({
         title: 'Fill The Form Correctly',
-        text: 'Please insert the Equipment!',
+        text: 'Please insert an existing Item Name!',
         icon: 'error',
         position: 'top',
         width: '500px',
@@ -223,8 +193,26 @@ export class ServiceAgreementComponent implements OnInit{
           cancelButton: 'btn btn-secondary',
         },
       });
+    } 
+    else if (this.equipment == '') {
+      // alert("Please insert the Description!");
+      Swal.fire({
+        title: 'Fill The Form Correctly',
+        text: 'Please insert the Equipment!',
+        icon: 'error',
+        position: 'top',
+        width: '500px',
+        imageUrl: '../../assets/Icon/303292717_570886498156142_5541375326204770233_n.jpg',
+        imageHeight: '100px',
+        imageWidth: '100px',
+        confirmButtonColor: '#3085d6',
+        customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-secondary',
+        },
+      });
 
-    } else if (this.price_per_service <= 0) {
+    } else if (this.price_per_service <= 0 || isNaN(Number(this.price_per_service))) {
       //alert("Please insert the Service Price correctly!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -244,7 +232,7 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
 
-    } else if (this.emergency_service_rate <= 0) {
+    } else if (this.emergency_service_rate <= 0||isNaN(Number(this.emergency_service_rate))) {
       // alert("Please insert the Emergency Service Price correctly!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -278,7 +266,7 @@ export class ServiceAgreementComponent implements OnInit{
           cancelButton: 'btn btn-secondary',
         },
       });
-    } else if (this.initiated_date == '') {
+    } else if (this.initiated_date == null) {
       //alert("Please enter the initial date!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -296,7 +284,26 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
     }
-    else if (this.expired_date == '') {
+
+    else if (this.initiated_date>=this.expired_date) {
+      //alert("Please enter the initial date!");
+      Swal.fire({
+        title: 'Fill The Form Correctly',
+        text: 'Please enter the valid initial date and expired date!',
+        icon: 'error',
+        position: 'top',
+        width: '500px',
+        imageUrl: '../../assets/Icon/303292717_570886498156142_5541375326204770233_n.jpg',
+        imageHeight: '100px',
+        imageWidth: '100px',
+        confirmButtonColor: '#3085d6',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-secondary',
+        },
+      });
+    }
+    else if (this.expired_date == null) {
       // alert("please enter the expire date!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -313,7 +320,7 @@ export class ServiceAgreementComponent implements OnInit{
           cancelButton: 'btn btn-secondary',
         },
       });
-    } else if (this.nic == '') {
+    } else if (this.nic == ''||this.nic=="choose an existing customer...") {
       // alert("Please insert an existing NIC number!")
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -352,9 +359,15 @@ export class ServiceAgreementComponent implements OnInit{
             cancelButton: 'btn btn-secondary',
           },
         });
+          
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+
         this.getAllAgreement();
 
         this.unitid = 0;
+        this.item='';
         this.equipment = '';
         this.price_per_service = 0;
         this.emergency_service_rate = 0;
@@ -364,8 +377,8 @@ export class ServiceAgreementComponent implements OnInit{
         this.nic = '';
 
       });
-      this.showMeForm = !this.showMeForm
-      this.DontshowMeTable = !this.DontshowMeTable
+
+
 
 
 
@@ -377,6 +390,7 @@ export class ServiceAgreementComponent implements OnInit{
   setUpdate(data: any) {
 
     this.unitid = data.unitid;
+    this.item=data.item;
     this.equipment = data.equipment;
     this.price_per_service = data.price_per_service;
     this.emergency_service_rate = data.emergency_service_rate;
@@ -390,11 +404,21 @@ export class ServiceAgreementComponent implements OnInit{
   }
 
   UpdateRecords() {
+
+
+
+
+    for(let i=0;i<this.UnitArray.length;i++){
+      if(this.UnitArray[i].id==this.unitid){
+        this.item=this.UnitArray[i].item_name;
+      }
+    }
+
     let bodyData = {
 
       "agreementid": this.currentAgreementID,
       "unitid": this.unitid,
-      "buttoId": this.unitid,
+      "item": this.item,
       "equipment": this.equipment,
       "price_per_service": this.price_per_service,
       "emergency_service_rate": this.emergency_service_rate,
@@ -406,7 +430,7 @@ export class ServiceAgreementComponent implements OnInit{
     };
 
 
-    if (this.unitid == 0 && this.equipment == '' && this.price_per_service <= 0 && this.emergency_service_rate <= 0 && this.type_of_the_service == '' && this.initiated_date == '' && this.expired_date == '' && this.nic == '') {
+    if (this.unitid == 0 && this.item=='' && this.equipment == '' && this.price_per_service <= 0 && this.emergency_service_rate <= 0 && this.type_of_the_service == '' && this.initiated_date == '' && this.expired_date == '' && this.nic == '') {
 
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -427,7 +451,7 @@ export class ServiceAgreementComponent implements OnInit{
       });
 
     }
-    else if (this.unitid == 0) {
+    else if (this.unitid == 0|| isNaN(Number(this.unitid))) {
       // alert("Please insert an existing UnitId!");
 
 
@@ -450,12 +474,37 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
 
+    } 
+    
+    else if (this.item == ''||this.item=="choose an existing item...") {
+      // alert("Please insert an existing UnitId!");
+
+
+
+      Swal.fire({
+        title: 'Fill The Form Correctly',
+        text: 'Please insert an existing Item name!',
+        icon: 'error',
+        position: 'top',
+        width: '500px',
+        imageUrl: '../../assets/Icon/303292717_570886498156142_5541375326204770233_n.jpg',
+        imageHeight: '100px',
+        imageWidth: '100px',
+        confirmButtonColor: '#3085d6',
+
+
+        customClass: {
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-secondary',
+        },
+      });
+
 
 
 
 
     } else if (this.equipment == '') {
-      // alert("Please insert the Equipment!");
+      // alert("Please insert the Description!");
       Swal.fire({
         title: 'Fill The Form Correctly',
         text: 'Please insert the Equipment!',
@@ -472,7 +521,7 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
 
-    } else if (this.price_per_service <= 0) {
+    } else if (this.price_per_service <= 0||isNaN(Number(this.price_per_service))) {
       //alert("Please insert the Service Price correctly!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -492,7 +541,7 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
 
-    } else if (this.emergency_service_rate <= 0) {
+    } else if (this.emergency_service_rate <= 0||isNaN(Number(this.emergency_service_rate))) {
       // alert("Please insert the Emergency Service Price correctly!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -526,7 +575,26 @@ export class ServiceAgreementComponent implements OnInit{
           cancelButton: 'btn btn-secondary',
         },
       });
-    } else if (this.initiated_date == '') {
+    } else if (this.initiated_date>=this.expired_date) {
+      //alert("Please enter the initial date!");
+      Swal.fire({
+        title: 'Fill The Form Correctly',
+        text: 'Please enter the valid initial date and expired date!',
+        icon: 'error',
+        position: 'top',
+        width: '500px',
+        imageUrl: '../../assets/Icon/303292717_570886498156142_5541375326204770233_n.jpg',
+        imageHeight: '100px',
+        imageWidth: '100px',
+        confirmButtonColor: '#3085d6',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-secondary',
+        },
+      });
+    }
+    
+    else if (this.initiated_date == null) {
       //alert("Please enter the initial date!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -544,7 +612,7 @@ export class ServiceAgreementComponent implements OnInit{
         },
       });
     }
-    else if (this.expired_date == '') {
+    else if (this.expired_date == null) {
       // alert("please enter the expire date!");
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -561,7 +629,7 @@ export class ServiceAgreementComponent implements OnInit{
           cancelButton: 'btn btn-secondary',
         },
       });
-    } else if (this.nic == '') {
+    } else if (this.nic == '' || this.nic=="choose an existing customer...") {
       // alert("Please insert an existing NIC number!")
       Swal.fire({
         title: 'Fill The Form Correctly',
@@ -599,14 +667,16 @@ export class ServiceAgreementComponent implements OnInit{
           },
         });
 
+        
         setTimeout(() => {
           window.location.reload();
         }, 1500);
-
+      
 
 
         this.getAllAgreement();
         this.unitid = 0;
+        this.item='';
         this.equipment = '';
         this.price_per_service = 0;
         this.emergency_service_rate = 0;
@@ -614,7 +684,8 @@ export class ServiceAgreementComponent implements OnInit{
         this.initiated_date = '';
         this.expired_date = '';
         this.nic = '';
-
+      
+        
 
       });
     }
@@ -631,9 +702,7 @@ export class ServiceAgreementComponent implements OnInit{
       this.UpdateRecords();
     }
 
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 30);
+
 
   }
 
@@ -683,22 +752,54 @@ export class ServiceAgreementComponent implements OnInit{
     });
   }
 
-  //
+  
 
   setDelete(data: any) {
-
-
-
-
-
-
-    this.http.delete("http://localhost:8080/api/v1/agreement/deleteagreement" + "/" + data.agreementid, { responseType: 'text' }).subscribe((resultData: any) => {
+    Swal.fire({
+      title: 'Delete Confirmation',
+      text: 'Are you sure you want to delete this agreement?',
+      icon: 'warning',
+      position: 'top',
+      width: '500px',
+      imageUrl: '../../assets/Icon/303292717_570886498156142_5541375326204770233_n.jpg',
+      imageHeight: '100px',
+      imageWidth: '100px',
+      confirmButtonColor: '#3085d6',
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-secondary',
+      },
+      showCancelButton: true,
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Delete',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteAgreement(data.agreementid);
+      }
+    });
+  }
+  
+  deleteAgreement(agreementId: string) {
+    this.http.delete("http://localhost:8080/api/v1/agreement/deleteagreement" + "/" + agreementId, { responseType: 'text' }).subscribe((resultData: any) => {
       console.log(resultData);
-      // alert("Service Agreement Deleted")
-
+      Swal.fire({
+        title: 'Delete is Successful',
+        icon: 'success',
+        position: 'top',
+        width: '500px',
+        imageUrl: '../../assets/Icon/303292717_570886498156142_5541375326204770233_n.jpg',
+        imageHeight: '100px',
+        imageWidth: '100px',
+        confirmButtonColor: '#3085d6',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-secondary',
+        },
+      });
       this.getAllAgreement();
-
+  
       this.unitid = 0;
+      this.item='';
       this.equipment = '';
       this.price_per_service = 0;
       this.emergency_service_rate = 0;
@@ -707,19 +808,10 @@ export class ServiceAgreementComponent implements OnInit{
       this.expired_date = '';
       this.nic = '';
     });
-
   }
+  
 
-  public onOpenModal(mode: string): void {
-    const container = (document.getElementById('main-container') as HTMLInputElement);
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.style.display = 'none';
-    button.setAttribute('data-bs-toggle', 'modal');
 
-    container.appendChild(button);
-    button.click();
-  }
 
 
   apiurl = "http://localhost:8080/api/v1/agreement/passId";
@@ -734,8 +826,6 @@ export class ServiceAgreementComponent implements OnInit{
     // setTimeout(() => {
     //   window.location.reload();
     // }, 500);
-
-
   }
 
 
@@ -748,6 +838,17 @@ export class ServiceAgreementComponent implements OnInit{
         this.isResultLoaded = true;
         console.log(resultData);
         this.CustomerArray = resultData;
+      });
+  }
+
+  getAllUnits() {
+
+    this.http.get("http://localhost:8080/units")
+
+      .subscribe((resultData: any) => {
+        this.isResultLoaded = true;
+        console.log(resultData);
+        this.UnitArray = resultData;
       });
   }
 

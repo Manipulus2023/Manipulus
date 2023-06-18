@@ -21,6 +21,7 @@ public class AgreementServiceIMP implements AgreementService{
     public int addAgreement(AgreementSaveDTO agreementSaveDTO) {
         Agreement agreement = new Agreement(
                 agreementSaveDTO.getUnitid(),
+                agreementSaveDTO.getItem(),
                 agreementSaveDTO.getEquipment(),
                 agreementSaveDTO.getPrice_per_service(),
                 agreementSaveDTO.getEmergency_service_rate(),
@@ -43,6 +44,7 @@ public class AgreementServiceIMP implements AgreementService{
             AgreementDTO agreementDTO = new AgreementDTO(
                     a.getAgreementid(),
                     a.getUnitid(),
+                    a.getItem(),
                     a.getEquipment(),
                     a.getPrice_per_service(),
                     a.getEmergency_service_rate(),
@@ -67,6 +69,7 @@ public class AgreementServiceIMP implements AgreementService{
             Agreement agreement = agreementRepo.getById(agreementUpdateDTO.getAgreementid());
 
             agreement.setUnitid(agreementUpdateDTO.getUnitid());
+            agreement.setItem(agreementUpdateDTO.getItem());
             agreement.setEquipment(agreementUpdateDTO.getEquipment());
             agreement.setPrice_per_service(agreementUpdateDTO.getPrice_per_service());
             agreement.setEmergency_service_rate(agreementUpdateDTO.getEmergency_service_rate());
