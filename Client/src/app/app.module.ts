@@ -36,6 +36,7 @@ import { DataTablesModule } from "angular-datatables";
 import { GoogleMapsModule } from '@angular/google-maps';
 import { AgreementPdfComponent } from './agreement-pdf/agreement-pdf.component';
 import { NgChartsModule } from 'ng2-charts';
+import { FullCalendarModule } from '@fullcalendar/angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,7 +76,8 @@ import { NgChartsModule } from 'ng2-charts';
     ReactiveFormsModule,
     DataTablesModule,
     GoogleMapsModule,
-    NgChartsModule
+    NgChartsModule,
+    FullCalendarModule 
   ],
   providers: [
     ReactiveFormsModule,
