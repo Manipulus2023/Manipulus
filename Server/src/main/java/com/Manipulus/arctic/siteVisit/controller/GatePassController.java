@@ -47,6 +47,7 @@ public class GatePassController {
 
         return ResponseEntity.ok()
                 .headers(headers)
+
                 .body(reportStream.toByteArray());
     }
     @GetMapping("/printGatePass/{siteVisitId}")

@@ -7,6 +7,8 @@ import { Vehicle } from '../vehicle/vehicle';
 import { VehicleService } from '../vehicle/vehicle.service';
 import { ActivatedRoute } from '@angular/router';
 import { scheduled } from 'rxjs';
+import { saveAs } from 'file-saver';
+
 
 @Component({
   selector: 'app-site-visit',
@@ -14,9 +16,9 @@ import { scheduled } from 'rxjs';
   styleUrls: ['./site-visit.component.css']
 })
 export class SiteVisitComponent implements OnInit {
- 
+  title = 'CreatePDF';
   
-  public siteVisits: SiteVisit[] ;
+  public siteVisits: SiteVisit[]=[] ;
   public editSiteVisits: SiteVisit |null= null;
   public deleteSiteVisits: any;
   public completedSiteVisitsCount: number = 0;
@@ -29,6 +31,7 @@ export class SiteVisitComponent implements OnInit {
   availableVehicles: Vehicle[] = [];
   selectedVehicle: Vehicle | null = null;
   public state: string | undefined;
+  public printGatePasses: any;
 
   //siteVisit: any;
   constructor(private siteVisitService : SiteVisitService,private route: ActivatedRoute) {
@@ -36,20 +39,18 @@ export class SiteVisitComponent implements OnInit {
     
    }
 
-
-
   ngOnInit(): void {
-    
-    
     this.getSiteVisit();
     this.getAvailableVehicles();
   }
+
   getAvailableVehicles() {
     this.siteVisitService.getAvailableVehicles().subscribe((vehicles: Vehicle[]) => {
       this.availableVehicles = vehicles;
     });
 
   }
+
   getSiteVisit(): void {
     const siteVisitId = this.route.snapshot.paramMap.get('siteVisitId');
     this.siteVisitService.getSiteVisits().subscribe(siteVisits => { // fetches all site visits
@@ -74,7 +75,7 @@ export class SiteVisitComponent implements OnInit {
   countCompletedSiteVisits(siteVisits: SiteVisit[]): number {
     let completedSiteVisitsCount = 0;
       for (let siteVisit of siteVisits) {
-        if (siteVisit.state === 'completed') {
+        if (siteVisit.state === 'Completed') {
           completedSiteVisitsCount++;
         }
       }
@@ -85,7 +86,7 @@ export class SiteVisitComponent implements OnInit {
   countIncompleteSiteVisits(siteVisits: SiteVisit[]): number {
     let incompleteSiteVisitsCount = 0;
       for (let siteVisit of siteVisits) {
-        if (siteVisit.state !== 'completed') {
+        if (siteVisit.state !== 'Completed') {
           incompleteSiteVisitsCount++;
         }
       }
@@ -106,6 +107,7 @@ export class SiteVisitComponent implements OnInit {
         );
   }
 
+  
   //add a new site visit
   public onAddSiteVisit(addForm: NgForm): void {
     document.getElementById('add-siteVisit-form')?.click();
@@ -120,18 +122,43 @@ export class SiteVisitComponent implements OnInit {
       const vehicleToUpdate = existingVehicle;
       
       if (vehicleToUpdate) {
-         const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
+        const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
         let activeState = assignedStatus;
         let preActiveState = activeState;
         if (assignedStatus === 'Assigned') {
-          activeState += ` (FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
-          vehicleToUpdate.active_state = activeState;
-        }else{
+            // const previousAssignedDates = vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+            // const currentAssignedDate = `(FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
+            const previousAssignedDates = vehicleToUpdate.active_state && vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+            const currentAssignedDate = `(FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
+            
+            if (previousAssignedDates) {
+                activeState += previousAssignedDates.join(' ');
+                activeState += ' ' + currentAssignedDate;
+            } else {
+                activeState += ' ' + currentAssignedDate;
+            }
+    
+            vehicleToUpdate.active_state = activeState;
+        } else {
+          // const previousAssignedDates = vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+          const previousAssignedDates = vehicleToUpdate.active_state && vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+          const currentAssignedDate = `(FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange})`;
+  
+          if (previousAssignedDates) {  
+            // const datePattern = /\(FROM: (.*?), TO: (.*?)\)/g;
+            // activeState = vehicleToUpdate.active_state.replace(datePattern, '');
+            //  activeState = vehicleToUpdate.active_state.replace(/\(FROM:.*?, TO:.*?\)/g, '');
+            activeState += ' ' + previousAssignedDates.filter(date => !date.includes(`FROM: ${addForm.value.scheduledDate}, TO: ${addForm.value.dateRange}`)).join(' ');
+            vehicleToUpdate.active_state = activeState;
+            
+        } else {
+           
           vehicleToUpdate.active_state = vehicleToUpdate.active_state;
         }
-      }
-      
-      
+
+       
+        }
+    }
       this.siteVisitService.updateVehicles(existingVehicle).subscribe(
         (response: Vehicle) => {
           console.log(response);
@@ -176,70 +203,63 @@ export class SiteVisitComponent implements OnInit {
   
    //Edit asite visit
   public onUpdateSiteVisit(siteVisit: SiteVisit): void {
-    // const assignedVehicle = siteVisit.assignedVehicle;
-    // const state = siteVisit.state;
-  
-    // // Check if the vehicle number already exists in the site visits
-    // const existingVehicle = this.availableVehicles.find(sv => sv.vehicle_number === assignedVehicle);
-    // if (existingVehicle) {
-    //   // Update the active_state of the existing vehicle
-    //   const vehicleToUpdate = existingVehicle;
-      
-    //   if (vehicleToUpdate) {
-    //      const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
-    //     let activeState = assignedStatus;
-    //     let preActiveState = activeState;
-    //     if (assignedStatus === 'Assigned') {
-    //       activeState += ` (FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange})`;
-    //       vehicleToUpdate.active_state = activeState;
-    //     }else if (assignedStatus === 'Available') {
-    //       const dateSetToRemove = `(FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange})`;
-    //       const updatedActiveState = vehicleToUpdate.active_state.replace(dateSetToRemove, '');
-    //       vehicleToUpdate.active_state=updatedActiveState;
-    //       // vehicleToUpdate.active_state=vehicleToUpdate.active_state.replace(` (FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange})`, '');
-      
-  
-    //     }else{
-          
-
-    //       vehicleToUpdate.active_state = vehicleToUpdate.active_state;
-    //     }
-    //   }
-      
-      
-      // this.siteVisitService.updateVehicles(existingVehicle).subscribe(
-      //   (response: Vehicle) => {
-      //     console.log(response);
-      //     this.getSiteVisits();
-      //     addForm.reset();
-      //   },
-      //   (error: HttpErrorResponse) => {
-      //     alert(error.message);
-      //     addForm.reset();
-      //   }
-      // );
-
-      // const existingVehicle = this.availableVehicles.find(sv => sv.vehicle_number === siteVisit.assignedVehicle);
-      // this.siteVisitService.updateVehicles(existingVehicle).subscribe(
-      //   (response: Vehicle) => {
-      //     console.log(response);
-      //     this.getAvailableVehicles();
-          
-        
-      //   },
-      //   (error: HttpErrorResponse) => {
-      //     alert(error.message);
-      //   }
-      // );
-    
    
-  
+
+      const assignedVehicle = siteVisit.assignedVehicle;
+      const state = siteVisit.state;
+    
+      const existingVehicle = this.availableVehicles.find(sv => sv.vehicle_number === assignedVehicle);
+      if (existingVehicle) {
+        const vehicleToUpdate = existingVehicle;
+        if (vehicleToUpdate) {
+          const assignedStatus = state !== 'Completed' ? 'Assigned' : 'Available';
+          let activeState = assignedStatus;
+          let preActiveState = activeState;
+          if (assignedStatus === 'Assigned') {
+            const previousAssignedDates = vehicleToUpdate.active_state && vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+            const currentAssignedDate = `(FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange})`;
+            
+            if (previousAssignedDates) {
+              
+              activeState += previousAssignedDates.join(' ');
+              activeState += ' ' + currentAssignedDate;
+            } else {
+              activeState += ' ' + currentAssignedDate;
+            }
+    
+            vehicleToUpdate.active_state = activeState;
+          } else {
+            const previousAssignedDates = vehicleToUpdate.active_state && vehicleToUpdate.active_state.match(/\(FROM: (.*?), TO: (.*?)\)/g);
+            const currentAssignedDate = `(FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange})`;
+    
+            if (previousAssignedDates) {  
+              activeState += ' ' + previousAssignedDates.filter(date => !date.includes(`FROM: ${siteVisit.scheduledDate}, TO: ${siteVisit.dateRange}`)).join(' ');
+              vehicleToUpdate.active_state = activeState;
+            } else {
+              vehicleToUpdate.active_state = vehicleToUpdate.active_state;
+            }
+          }
+        }
+      
+    
+      this.siteVisitService.updateVehicles(existingVehicle).subscribe(
+        (response: Vehicle) => {
+          console.log(response);
+          this.getSiteVisits();
+         
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        
+        }
+      );
+    }
+    
     this.siteVisitService.updateSiteVisit(siteVisit).subscribe(
       (response: SiteVisit) => {
         console.log(response);
         this.getSiteVisits();
-        
-      
+     
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -277,29 +297,48 @@ export class SiteVisitComponent implements OnInit {
     }
   }
   
-
-  public onOpenModal(siteVisit: SiteVisit | null,mode:string): void{ //takes a SiteVisit object and a mode as parameters. It opens a modal window based on the mode passed in as a parameter.
-    const container=document.getElementById('main-container');
+  downloadPDF(siteVisitId: number) {
+    this.siteVisitService.downloadPDF(siteVisitId).subscribe((response: Blob) => {
+      const fileURL = URL.createObjectURL(response);
+      window.open(fileURL);
+    });
+  }
+  
+  
+public onOpenModal(siteVisit: SiteVisit,mode:string): void{ //takes a SiteVisit object and a mode as parameters. It opens a modal window based on the mode passed in as a parameter.
+  const container=document.getElementById(
+    'main-container'
+    )as HTMLInputElement;
     const button = document.createElement('button');
     button.type='button';
     button.style.display='none';
-    button.setAttribute('data-toggle','modal');
+    button.setAttribute('data-bs-toggle','modal');
     if(mode ==='add'){
-      button.setAttribute('data-target','#addSiteVisitModal');
+       console.log("***");
+      button.setAttribute('data-bs-target','#addSiteVisitModal');
       
     }
     if(mode ==='edit'){
       
       this.editSiteVisits=siteVisit;
-      button.setAttribute('data-target','#updateSiteVisitModal');
+      button.setAttribute('data-bs-target','#updateSiteVisitModal');
     }
     if(mode ==='delete'){
       this.deleteSiteVisits = siteVisit;
      
-      button.setAttribute('data-target','#deleteSiteVisitModal');
+      button.setAttribute('data-bs-target','#deleteSiteVisitModal');
     }
+    if(mode ==='print'){
+      this.printGatePasses = siteVisit;
      
-    container?.appendChild(button);
+      button.setAttribute('data-bs-target','#printGatePassModal');
+    }
+    // if (mode === 'print') {
+    //   this.printGatePasses = siteVisit;
+    //   button.setAttribute('data-target', '#printGatePassModal');
+    //  }
+     
+    container.appendChild(button);
     button.click();
 
   }

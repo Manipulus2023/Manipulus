@@ -5,12 +5,12 @@ import com.Manipulus.arctic.siteVisit.service.SiteVisitService;
 import com.Manipulus.arctic.siteVisit.siteVisit.SiteVisit;
 import com.Manipulus.arctic.vehicle.model.Vehicle;
 import com.Manipulus.arctic.vehicle.repository.VehicleRepository;
-
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.io.IOException;
 import java.util.List;
 
 @RestController
