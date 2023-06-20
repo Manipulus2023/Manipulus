@@ -1,25 +1,30 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-    <ul class="navbar-nav mr-auto">
-    <a class="navbar-brand" href="#" style="color:white;" >Site Visit</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+<div class="row">
+  <div class="col-sm-2">
+    <app-side-nav></app-side-nav>
+  </div>
+  <div class="col-sm-10"> 
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary" style="margin: 1%;">
+    <ul class="navbar-nav modal-header">
+    <a class="navbar-brand"  style="color:rgb(255, 255, 255); margin-left: 10px; font-size: x-large;" > Site Visit</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarColor02">
        
-        <div class="col-xl-6 col-md-6">
+        <div class="col-xl-12 col-md-12">
         <!-- Add "add site Visits" button -->
           <li class="nav-item active">
             <button 
             type="button"
             class="btn btn-outline-primary"
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal55">Site Visit</button>
+            data-bs-target="#exampleModal55" style="background-color: rgb(138, 250, 198); border-color: rgb(59, 194, 95); font-size: large; color: rgb(4, 2, 14); font-family:Verdana, Geneva, Tahoma, sans-serif;">Add Site Visit </button>
             <!-- <a class="nav-link" (click)="onOpenModal(null,'add')" data-bs-toggle="modal" data-bs-target="#exampleModal"  style="background-color: rgb(149, 158, 167); border-color: rgb(80, 9, 15);">Add SiteVisit <span class="sr-only"> </span></a> -->
             <!-- <a class="nav-link" (click)="onOpenModal(null,'add')" data-toggle="modal" data-target="#exampleModal"  style="background-color: rgb(149, 158, 167); border-color: rgb(80, 9, 15);">Add SiteVisit <span class="sr-only"> </span></a> -->
           </li>
 </div>
         <!-- Add Search Bar -->
-        <div class="col-xl-6 col-md-6">
+        <div class="col-xl-24 col-md-12">
           <li class="nav-item">
        <form class="form-inline my-2 my-lg-0 ml-auto">
         <input type="search" (ngModelChange)="searchSiteVisits(key.value)" #key="ngModel" ngModel
@@ -30,11 +35,13 @@
     </div>
 </ul>
   </nav>
+  
+
 <div class="container"id="main-container">
     <div class="row">
 
         <!-- Add Total site visit card -->
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl-4 col-md-6">
             <div class="card-box bg-pattern">
                 <div class="card-body">
                     
@@ -48,7 +55,7 @@
         </div>
         
         <!-- Add Completed site visit card -->
-         <div class="col-xl-3 col-md-6">
+         <div class="col-xl-4 col-md-6">
             <div class="card-box bg-pattern">
                 <div class="card-body">
                     
@@ -62,7 +69,7 @@
         </div>
 
        <!-- Add incompleted site visit card -->
-       <div class="col-xl-3 col-md-6">
+       <div class="col-xl-4 col-md-6">
         <div class="card-box bg-pattern">
             <div class="card-body">
                 
@@ -153,7 +160,7 @@
 </div>
 
     <!-- end project-list -->
-   
+</div>
 <!-- Add Site Visit Modal -->
 <form #addForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)">
 <div class="modal fade" 
@@ -164,7 +171,7 @@
     aria-hidden="true"
     >
 
-    <div class="modal-dialog">
+    <div class="modal-dialog"  role="document">
       <div class="modal-content"> 
         <!-- <form #addForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)"> -->
         <div class="modal-header">
@@ -174,8 +181,9 @@
           class="btn-close" 
           data-dismiss="modal" 
           aria-label="Close">
-            <!-- <span aria-hidden="true">&times;</span> -->
+            <span aria-hidden="true">&times;</span>
           </button>
+          
         </div>
         <div class="modal-body">
             <div class="card mb-4">
@@ -218,18 +226,29 @@
                 <option value="Completed">Completed</option>
               </select>
             </div>
-
-            <div class="modal-footer">
-              <button type="button" id="add-siteVisit-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Save</button>
-            </div>
-        </div>
+                    </div>
                 </div>
             </div>
         </div>
-      </div>
+            <div class="modal-footer">
+              <button 
+              type="button" 
+              id="add-siteVisit-form" 
+              class="btn btn-secondary" 
+              data-dismiss="modal">
+              Close
+            </button>
+              <button 
+              [disabled]="addForm.invalid" 
+              type="submit" 
+              class="btn btn-primary">
+              Save
+            </button>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+           
 </form>
 
 <!-- Edit Modal -->
@@ -245,6 +264,9 @@
            </div>
 
            <div class="modal-body">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
               <!-- <form #editForm="ngForm"> -->
                 
                 <input type="hidden" ngModel="{{editSiteVisits?.siteVisitId}}" name="siteVisitId" class="form-control" id="SiteVisitId" placeholder="siteVisitId">
@@ -302,35 +324,57 @@
                       <p *ngIf="!editSiteVisits?.siteVisitId" class="text-danger">Please enter a siteVisitId.</p>
                       
                  </div>
-            
+                    </div>
+                   
+            </div>
+           </div>
            </div>
         </form>
         </div>
      </div>
 </div>
 
+
 <!-- Delete Modal -->
-    <div class="modal fade" id="deleteSiteVisitModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" 
+    id="deleteSiteVisitModal" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="deleteModelLabel" 
+    aria-hidden="true"
+    >
+        <div class="modal-dialog" 
+        role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModelLabel">Delete SiteVisit</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <button 
+                    type="button" 
+                    class="close" 
+                    data-dismiss="modal" 
+                    aria-label="Close">
+                    <!-- <span aria-hidden="true">&times;</span> -->
                     </button>
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to delete siteVisit {{deleteSiteVisits?.siteVisitId}}?</p>
+                </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        <button (click)="deleteSiteVisits?.siteVisitId && onDeleteSiteVisit(deleteSiteVisits.siteVisitId)" class="btn btn-danger" data-dismiss="modal">Yes</button>
-
-                    </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            No
+                        </button>
+                        <button 
+                        (click)="deleteSiteVisits?.siteVisitId && onDeleteSiteVisit(deleteSiteVisits.siteVisitId)" 
+                        class="btn btn-danger" 
+                       >
+                       Yes</button>
+                     </div>
                 </div>
            </div>
         </div>
     </div>
-    </div>
+  </div>
+ 
 
 
 

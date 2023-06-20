@@ -19,7 +19,7 @@ export class SiteVisitComponent implements OnInit {
   title = 'CreatePDF';
   
   public siteVisits: SiteVisit[]=[] ;
-  public editSiteVisits: SiteVisit |null= null;
+  public editSiteVisits: SiteVisit |undefined;
   public deleteSiteVisits: any;
   public completedSiteVisitsCount: number = 0;
   public incompleteSiteVisitsCount: number = 0;
@@ -313,11 +313,11 @@ public onOpenModal(siteVisit: SiteVisit,mode:string): void{ //takes a SiteVisit 
     button.type='button';
     button.style.display='none';
     button.setAttribute('data-bs-toggle','modal');
-    if(mode ==='add'){
-       console.log("***");
-      button.setAttribute('data-bs-target','#addSiteVisitModal');
+    // if(mode ==='add'){
+   
+    //   button.setAttribute('data-bs-target','#addSiteVisitModal');
       
-    }
+    // }
     if(mode ==='edit'){
       
       this.editSiteVisits=siteVisit;
