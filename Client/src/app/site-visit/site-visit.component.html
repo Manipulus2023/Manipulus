@@ -9,16 +9,16 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarColor02">
-       
-        <div class="col-xl-12 col-md-12">
+       <div class="col-xl-12 col-md-12">
         <!-- Add "add site Visits" button -->
           <li class="nav-item active">
             <button 
             type="button"
             class="btn btn-outline-primary"
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal55" style="background-color: rgb(138, 250, 198); border-color: rgb(59, 194, 95); font-size: large; color: rgb(4, 2, 14); font-family:Verdana, Geneva, Tahoma, sans-serif;">Add Site Visit </button>
+            data-bs-target="#exampleModal55" style="background-color: rgb(208, 239, 241); border-color: rgb(182, 234, 241); font-size: large; color: rgb(4, 2, 14); font-family:Verdana, Geneva, Tahoma, sans-serif;">Add Site Visit </button>
             <!-- <a class="nav-link" (click)="onOpenModal(null,'add')" data-bs-toggle="modal" data-bs-target="#exampleModal"  style="background-color: rgb(149, 158, 167); border-color: rgb(80, 9, 15);">Add SiteVisit <span class="sr-only"> </span></a> -->
             <!-- <a class="nav-link" (click)="onOpenModal(null,'add')" data-toggle="modal" data-target="#exampleModal"  style="background-color: rgb(149, 158, 167); border-color: rgb(80, 9, 15);">Add SiteVisit <span class="sr-only"> </span></a> -->
           </li>
@@ -36,7 +36,9 @@
 </ul>
   </nav>
   
-
+<div class="space_in_siteVisit"></div>
+<div class="siteVisit_loop">
+    
 <div class="container"id="main-container">
     <div class="row">
 
@@ -158,15 +160,16 @@
         </div>
     </div>
 </div>
-
+</div>
     <!-- end project-list -->
 </div>
+
 <!-- Add Site Visit Modal -->
 <form #addForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)">
 <div class="modal fade" 
     id="exampleModal55" 
     tabindex="-1" 
-    role="dialog" 
+    role="dialog"
     aria-labelledby="exampleModalLabel" 
     aria-hidden="true"
     >
@@ -179,7 +182,7 @@
           <button 
           type="button" 
           class="btn-close" 
-          data-dismiss="modal" 
+          data-bs-dismiss="modal" 
           aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -195,28 +198,29 @@
               <label for="scheduledDate">Scheduled Date</label>
               <input type="date" ngModel name="scheduledDate" class="form-control" id="email" placeholder="scheduledDate" required>
             </div>
+            
+            <div class="form-group">
+                <label for="dateRange">End Date</label>
+                <input type="date" ngModel name="dateRange" class="form-control" id="dateRange" placeholder="dateRange" required>
+              </div>
+
             <div class="form-group">
               <label for="assignedTeamId">Assigned Team Id</label>
               <input type="text" ngModel name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId" required>
             </div>
-                        <div class="form-group">
-                        <label for="activeStatus">Active Status of Available Vehicles</label>
-                        <div class="active-status-container">
-                            <div *ngFor="let vehicle of availableVehicles" class="active-status-row">
-                                Vehicle No: {{ vehicle.vehicle_number }} | Active Status: {{ vehicle.active_state }}
-                            </div>
+             <div class="form-group">
+               <label for="activeStatus">Active Status of Available Vehicles</label>
+                    <div class="active-status-container">
+                        <div *ngFor="let vehicle of availableVehicles" class="active-status-row" style="font-size: small;">
+                            Vehicle No: {{ vehicle.vehicle_number }} | NoP: {{vehicle.number_of_passengers}} | Active Status: {{ vehicle.active_state }}
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="assignedVehicle">Assign Vehicle</label>  
-                              <label for="assignedVehicle">Vehicle No:</label>
-                            <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="Assign a vehicle" required>
-                      </div>
-
+                </div>
             <div class="form-group">
-              <label for="dateRange">End Date</label>
-              <input type="date" ngModel name="dateRange" class="form-control" id="dateRange" placeholder="dateRange" required>
+                <label >Assign Vehicle</label>  
+                <br>
+                <label for="assignedVehicle">Vehicle No:</label>
+                <input type="text" ngModel name="assignedVehicle" class="form-control" id="assignedVehicle" placeholder="Assign a vehicle" required>
             </div>
 
             <div class="form-group">
@@ -235,7 +239,7 @@
               type="button" 
               id="add-siteVisit-form" 
               class="btn btn-secondary" 
-              data-dismiss="modal">
+              data-bs-dismiss="modal">
               Close
             </button>
               <button 
@@ -258,7 +262,7 @@
              <form #editForm="ngForm" >
            <div class="modal-header">
               <h5 class="modal-title" id="updateSiteVisitModalLabel">Edit Site Visit {{editSiteVisits?.siteVisitId}}</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
               </button>
            </div>
@@ -317,7 +321,7 @@
                     </select>
                   </div>
                  <div class="modal-footer">
-                    <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                    <button type="button" id="" data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
                     <button (click)="onUpdateSiteVisit(editForm.value)" data-dismiss="modal" class="btn btn-primary">
                         Save changes
                       </button>
@@ -351,7 +355,7 @@
                     <button 
                     type="button" 
                     class="close" 
-                    data-dismiss="modal" 
+                    data-bs-dismiss="modal" 
                     aria-label="Close">
                     <!-- <span aria-hidden="true">&times;</span> -->
                     </button>
@@ -360,7 +364,7 @@
                     <p>Are you sure you want to delete siteVisit {{deleteSiteVisits?.siteVisitId}}?</p>
                 </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             No
                         </button>
                         <button 
