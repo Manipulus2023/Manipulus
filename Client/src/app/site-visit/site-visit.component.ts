@@ -8,7 +8,9 @@ import { VehicleService } from '../vehicle/vehicle.service';
 import { ActivatedRoute } from '@angular/router';
 import { scheduled } from 'rxjs';
 import { saveAs } from 'file-saver';
-
+import { Job } from '../job/job';
+import { FormGroup, FormControl } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-site-visit',
@@ -24,14 +26,12 @@ export class SiteVisitComponent implements OnInit {
   public completedSiteVisitsCount: number = 0;
   public incompleteSiteVisitsCount: number = 0;
   public totalSiteVisitsCount: number = 0;
-  // public assignVehicle: Vehicle | null = null;
-  // public vehicles: Vehicle[] = [];
-  // Add a new property for the available vehicles
-  //vehicleService: any;
   availableVehicles: Vehicle[] = [];
+  availableJobs: Job[]=[];
   selectedVehicle: Vehicle | null = null;
   public state: string | undefined;
   public printGatePasses: any;
+  
 
   //siteVisit: any;
   constructor(private siteVisitService : SiteVisitService,private route: ActivatedRoute) {
@@ -42,15 +42,20 @@ export class SiteVisitComponent implements OnInit {
   ngOnInit(): void {
     this.getSiteVisit();
     this.getAvailableVehicles();
+    this.getAvailableJobs();
   }
 
   getAvailableVehicles() {
     this.siteVisitService.getAvailableVehicles().subscribe((vehicles: Vehicle[]) => {
       this.availableVehicles = vehicles;
     });
-
   }
 
+  getAvailableJobs() {
+    this.siteVisitService.getAvailableJobs().subscribe((jobs: Job[]) => {
+      this.availableJobs = jobs;
+    });
+  }
   getSiteVisit(): void {
     const siteVisitId = this.route.snapshot.paramMap.get('siteVisitId');
     this.siteVisitService.getSiteVisits().subscribe(siteVisits => { // fetches all site visits
@@ -173,14 +178,21 @@ export class SiteVisitComponent implements OnInit {
 
       const siteVisit: SiteVisit = {
         scheduledDate: addForm.value.scheduledDate,
-        assignedTeamId: addForm.value.assignedTeamId,
+        tMemberOne: addForm.value.tMemberOne,
         assignedVehicle: assignedVehicle,
         startSiteVisit: false,
         dateRange: addForm.value.dateRange,
         state: state,
         vehicles: [],
         siteVisitName: '',
-        siteVisitId: 0
+        siteVisitId: 0,
+        job: [],
+        assignedJob: addForm.value.assignedJob,
+        memberOne: addForm.value.memberOne,
+        memberTwo:  addForm.value.memberTwo,
+        memberThree:  addForm.value.memberThree,
+        memberFour:  addForm.value.memberFour,
+        memberFive:  addForm.value.memberFive
       };
       
       this.siteVisitService.addSiteVisit(siteVisit).subscribe(

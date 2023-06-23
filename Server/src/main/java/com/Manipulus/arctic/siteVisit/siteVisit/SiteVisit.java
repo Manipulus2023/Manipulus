@@ -1,5 +1,6 @@
 package com.Manipulus.arctic.siteVisit.siteVisit;
 
+import com.Manipulus.arctic.job.model.Job;
 import com.Manipulus.arctic.vehicle.model.Vehicle;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,11 +24,21 @@ public class SiteVisit implements Serializable {
         private Long siteVisitId;
     @Column(name = "scheduledDate" )
         private Date scheduledDate;
-    @Column(name = "assignedTeamId" )
-        private Long assignedTeamId;
 
     @Column(name = "assignedVehicle" )
         private String assignedVehicle;
+    @Column(name = "assignedJob" )
+    private String assignedJob;
+    @Column(name = "memberOne" )
+    private String memberOne;
+    @Column(name = "memberTwo" )
+    private String memberTwo;
+    @Column(name = "memberThree" )
+    private String memberThree;
+    @Column(name = "memberFour" )
+    private String memberFour;
+    @Column(name = "memberFive" )
+    private String memberFive;
     @Column(name = "startSiteVisit" )
         private boolean startSiteVisit;
     @Column(name = "dateRange" )
@@ -44,6 +55,8 @@ public class SiteVisit implements Serializable {
 */
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "siteVisit")
   private List<Vehicle> vehicles;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "siteVisit")
+    private List<Job> jobs;
 
 public SiteVisit(){
     super();
@@ -58,15 +71,26 @@ public SiteVisit(){
 
 
 
-        public SiteVisit(Date scheduledDate, Long assignedTeamId, String assignedVehicle, List<Vehicle> vehicles,boolean startSiteVisit, Date dateRange, String state, String siteVisitCode){
+        public SiteVisit(Date scheduledDate, String assignedVehicle,String assignedJob,
+                         String memberOne,String memberTwo,String memberThree,String memberFour,String memberFive,
+                         List<Job> jobs, List<Vehicle> vehicles,boolean startSiteVisit, Date dateRange,
+                         String state, String siteVisitCode){
             this.scheduledDate=scheduledDate;
-            this.assignedTeamId=assignedTeamId;
+//            this.assignedTeamId=assignedTeamId;
             this.startSiteVisit=startSiteVisit;
             this.dateRange=dateRange;
             this.state=state;
            this.assignedVehicle=assignedVehicle;
             this.siteVisitCode=siteVisitCode;
             this.vehicles = vehicles;
+            this.jobs=jobs;
+            this.assignedJob=assignedJob;
+            this.memberOne=memberOne;
+            this.memberTwo=memberTwo;
+            this.memberThree=memberThree;
+            this.memberFour=memberFour;
+            this.memberFive=memberFive;
+
         }
 
         public Long getSiteVisitId(){
@@ -82,13 +106,52 @@ public SiteVisit(){
         public void setAssignedVehicle(String assignedVehicle){
             this.assignedVehicle=assignedVehicle;
         }
+    public String getAssignedJob(){
+        return  assignedJob;
+    }
+    public void setAssignedJob(String assignedJob){
+        this.assignedJob=assignedJob;
+    }
+    public String getMemberOne() {return memberOne;}
+    public void setMemberOne(String memberOne) { this.memberOne = memberOne;}
 
-        public Long getAssignedTeamId(){
-            return  assignedTeamId;
-        }
-        public void setAssignedTeamId(long assignedTeamId){
-            this.assignedTeamId=assignedTeamId;
-        }
+    public String getMemberTwo() {
+        return memberTwo;
+    }
+
+    public void setMemberTwo(String memberTwo) {
+        this.memberTwo = memberTwo;
+    }
+
+    public String getMemberThree() {
+        return memberThree;
+    }
+
+    public void setMemberThree(String memberThree) {
+        this.memberThree = memberThree;
+    }
+
+    public String getMemberFour() {
+        return memberFour;
+    }
+
+    public void setMemberFour(String memberFour) {
+        this.memberFour = memberFour;
+    }
+
+    public String getMemberFive() {
+        return memberFive;
+    }
+
+    public void setMemberFive(String memberFive) {
+        this.memberFive = memberFive;
+    }
+    //        public Long getAssignedTeamId(){
+//            return  assignedTeamId;
+//        }
+//        public void setAssignedTeamId(long assignedTeamId){
+//            this.assignedTeamId=assignedTeamId;
+//        }
 
         public boolean getStartSiteVisit(){
             return  startSiteVisit;
@@ -117,27 +180,37 @@ public SiteVisit(){
         public void setState(String state){
             this.state=state;
         }
-    public List<Vehicle> getVehicles() {
-        return vehicles;
+        public List<Vehicle> getVehicles() {
+            return vehicles;
+        }
+        public void setVehicles(List<Vehicle> vehicles) {
+            this.vehicles = vehicles;
+        }
+    public List<Job> getJobs() {
+        return jobs;
     }
 
-    public void setVehicles(List<Vehicle> vehicles) {
-        this.vehicles = vehicles;
+    public void setJobs(List<Job> Jobs) {
+        this.jobs = jobs;
     }
 
-
-
-        @Override
+    @Override
         public String toString(){
             return "SiteVisit{" +
                     "SiteVisitId="+ siteVisitId+'\''+
                     ", ScheduledDate"+ scheduledDate+'\''+
-                    ", AssignedTeamId"+assignedTeamId+'\''+
                     ", Vehicles"+ vehicles+'\''+
+                    ", Jobs"+ jobs+'\''+
                     ", startSiteVisit "+ startSiteVisit+'\''+
                     ", DateRange "+ dateRange+'\''+
                     ", state" +state+'\''+
                     ", AssignedVehicle "+ assignedVehicle+'\''+
+                    ", AssignedJob "+ assignedJob+'\''+
+                    ", MemberOne "+ memberOne+'\''+
+                    ", MemberTwo "+ memberTwo+'\''+
+                    ", MemberThree "+ memberThree+'\''+
+                    ", MemberFour "+ memberFour+'\''+
+                    ", MemberFive "+ memberFive+'\''+
                     '}';
         }
 

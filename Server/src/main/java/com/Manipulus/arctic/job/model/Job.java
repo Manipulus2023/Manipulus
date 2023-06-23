@@ -1,9 +1,11 @@
 package com.Manipulus.arctic.job.model;
 
+import com.Manipulus.arctic.siteVisit.siteVisit.SiteVisit;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import com.Manipulus.arctic.customer.model.Customer;
+import com.Manipulus.arctic.siteVisit.siteVisit.SiteVisit;
 
 @Entity
 @Table(name = "job")
@@ -28,6 +30,10 @@ public class Job implements Serializable {
 
     @Column(nullable = false, updatable = false)
     private String jobCode; // A unique code assigned to the job.
+
+    @ManyToOne
+    @JoinColumn(name = "site_visit_id")
+    private SiteVisit siteVisit;
 
     public String getJobCode() {
         return jobCode;

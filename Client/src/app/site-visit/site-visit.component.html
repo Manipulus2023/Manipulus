@@ -98,9 +98,10 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Site Visits</th>
+                                    <th scope="col">Job ID</th>
                                     <th scope="col">Scheduled Date</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Team</th>
+                                  
                                     <th scope="col">Vehicle</th>
                                     <th scope="col">End Date</th>
                                     <th scope="col">Action</th>
@@ -111,23 +112,17 @@
                                 <tr>
                                     <th scope="row">{{i+1}}</th>
                                     <td>{{siteVisit?.siteVisitId}}</td>
-                                    
+                                    <td>{{siteVisit?.assignedJob}}</td>
                                     <td>{{siteVisit?.scheduledDate | date: 'yyyy-MM-dd'}}</td>
 
                                     <td>
                                         <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i> {{siteVisit?.state}}</span>
                                     </td>
-                                     <td>{{ siteVisit?.assignedTeamId }}</td> 
+                                     
                                     
 
                                     <td>{{siteVisit?.assignedVehicle}}</td> 
-                                    <!-- <td>
-                                        <ul>
-                                            <li *ngFor="let vehicle of siteVisit.vehicles">{{ vehicle.id }}</li>
-
-                                          <li *ngFor="let vehicle of siteVisit.vehicles">{{ Vehicle. vehicle_name }}</li> 
-                                        </ul>
-                                        </td> -->
+                                  
                                     <td>{{siteVisit?.dateRange | date: 'yyyy-MM-dd'}}</td>
                                     <td>
                                         <div class="action">
@@ -136,11 +131,7 @@
                                             </td>
                                             <td> <a (click)="onOpenModal(siteVisit,'delete')" class="btn btn-secondary tooltips" data-placement="top" title="" data-original-title="delete" style="background-color: rgb(189, 12, 12); border-color: rgb(116, 106, 106);"> <i class="fas fa-trash"></i>
                                             </a></td>
-                                            <!-- <td><a (click)="onOpenModal(siteVisit,'print')" class="btn btn-secondary tooltips" data-placement="top" title="print" data-original-title="print" style="background-color: rgb(134, 122, 122); border-color: rgb(116, 106, 106);"><i class="fa fa-print"></i></a></td> -->
-                                            <!-- your-component.component.html -->
-                                            <!-- <td><button (click)="downloadPDF()"  class="btn btn-secondary tooltips" data-placement="top" title="Print Gate Pass" data-original-title="print" style="background-color: rgb(134, 122, 122); border-color: rgb(116, 106, 106);"><i class="fa fa-download"></i></button></td> -->
-                                            
-
+                                           
                                             <td>
                                                 <button (click)="downloadPDF(siteVisit.siteVisitId)" class="btn btn-secondary tooltips" data-placement="top" title="Print Gate Pass" data-original-title="print" style="background-color: rgb(134, 122, 122); border-color: rgb(116, 106, 106);">
                                                   <i class="fa fa-download"></i>
@@ -194,6 +185,21 @@
                     <div class="row">
 
           <!-- <form #addForm="ngForm" (ngSubmit)="onAddSiteVisit(addForm)"> -->
+            <div class="form-group" style="color: rgb(129, 125, 62) ;">
+                <label >Available Jobs</label>
+                     <div class="job-status-container">
+                         <div *ngFor="let job of availableJobs" class="job-status-row" style="font-size: small;">
+                             Job Id: {{ job.id }} | Type: {{job.job_type }} | Address: {{ job.customer.address}}
+                         </div>
+                     </div>
+                 </div>
+                 <div class="form-group">
+                    <label >Assign Job</label>  
+                    <br>
+                    <label for="assignedJob">Job ID: </label>
+                    <input type="text" ngModel name="assignedJob" class="form-control" id="assignedJob" placeholder="Assign a job" required>
+                </div>
+              
          <div class="form-group">
               <label for="scheduledDate">Scheduled Date</label>
               <input type="date" ngModel name="scheduledDate" class="form-control" id="email" placeholder="scheduledDate" required>
@@ -204,14 +210,30 @@
                 <input type="date" ngModel name="dateRange" class="form-control" id="dateRange" placeholder="dateRange" required>
               </div>
 
-            <div class="form-group">
-              <label for="assignedTeamId">Assigned Team Id</label>
-              <input type="text" ngModel name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId" required>
-            </div>
+              <div class="form-group">
+                <label >Assign memberOne</label>  
+                <br>
+                <label for="memberOne">MemberOne :  </label>
+                <input type="text" ngModel name="memberOne" class="form-control" id="memberOne" placeholder="Assign memberOne" required>
+                <br>
+                <label for="memberTwo">memberTwo :  </label>
+                <input type="text" ngModel name="memberTwo" class="form-control" id="memberTwo" placeholder="Assign memberTwo" >
+                <br>
+                <label for="memberThree">memberThree :  </label>
+                <input type="text" ngModel name="memberThree" class="form-control" id="memberThree" placeholder="Assign memberThree" >
+                <br>
+                <label for="memberFour">memberFour :  </label>
+                <input type="text" ngModel name="memberFour" class="form-control" id="memberFour" placeholder="Assign memberFour" >
+                <br>
+                <label for="memberFive">memberFive :  </label>
+                <input type="text" ngModel name="memberFive" class="form-control" id="memberFive" placeholder="Assign memberFive" >
+            
+              </div>
+
              <div class="form-group">
-               <label for="activeStatus">Active Status of Available Vehicles</label>
+               <label style="color: darkolivegreen;">Active Status of Available Vehicles</label>
                     <div class="active-status-container">
-                        <div *ngFor="let vehicle of availableVehicles" class="active-status-row" style="font-size: small;">
+                        <div *ngFor="let vehicle of availableVehicles" class="active-status-row"  style="color: darkolivegreen; font-size: small;">
                             Vehicle No: {{ vehicle.vehicle_number }} | NoP: {{vehicle.number_of_passengers}} | Active Status: {{ vehicle.active_state }}
                         </div>
                     </div>
@@ -274,12 +296,81 @@
               <!-- <form #editForm="ngForm"> -->
                 
                 <input type="hidden" ngModel="{{editSiteVisits?.siteVisitId}}" name="siteVisitId" class="form-control" id="SiteVisitId" placeholder="siteVisitId">
-
+           
+                <!-- <div class="form-group">
+              <table>
+             
+                <tr>
+                    <label >Team member 1</label>
+                    <td>
+                    
+                            <label for="tMember1">Member 1 name:</label>
+                            <input  ngModel="{{editSiteVisits?.tMember1}}" name="tMember1" class="form-control" id="tMember1" placeholder="Member 1 Name" required>
+                    </td><td>
+                            <label for="tMember1Id">Member 1 Id:</label>
+                            <input  ngModel="{{editSiteVisits?.tMember1Id}}"  name="tMember1Id" class="form-control" id="tMember1Id" placeholder="Member 1 ID" required>
+                       
+                   </td>
+                </tr>
                 
-                 <div class="form-group">
-                    <label for="assignedTeamId">Assigned Team Id</label>
-                    <input  ngModel="{{editSiteVisits?.assignedTeamId}}" name="assignedTeamId" class="form-control" id="assignedTeamId" placeholder="assignedTeamId">
-                 </div>
+         
+                  <tr>
+                    <label >Team member 2</label>
+                      <td>
+                      
+                              <label for="tMember2">Member 2 name:</label>
+                              <input  ngModel="{{editSiteVisits?.tMember2}}"  name="tMember2" class="form-control" id="tMember2" placeholder="Member 2 Name" >
+                      </td><td>
+                              <label for="tMember2Id">Member 2 Id:</label>
+                              <input  ngModel="{{editSiteVisits?.tMember2Id}}"  name="tMember2Id" class="form-control" id="tMember2Id" placeholder="Member 2 ID">
+                         
+                     </td>
+                  </tr>
+                
+              
+                  <tr>
+                    <label >Team member 3</label>
+                      <td>
+                      
+                              <label for="tMember3">Member 3 name:</label>
+                              <input ngModel="{{editSiteVisits?.tMember3}}"  name="tMember3" class="form-control" id="tMember3" placeholder="Member 3 Name" >
+                      </td><td>
+                              <label for="tMember3Id">Member 3 Id:</label>
+                              <input ngModel="{{editSiteVisits?.tMember3Id}}"  name="tMember3Id" class="form-control" id="tMember3Id" placeholder="Member 3 ID">
+                         
+                     </td>
+                  </tr>
+                
+              
+                 
+                  <tr>
+                    <label >Team member 4</label>
+                      <td>
+                      
+                              <label for="tMember4">Member 4 name:</label>
+                              <input ngModel="{{editSiteVisits?.tMember4}}"  name="tMember4" class="form-control" id="tMember4" placeholder="Member 4 Name" >
+                      </td><td>
+                              <label for="tMember4Id">Member 4 Id:</label>
+                              <input ngModel="{{editSiteVisits?.tMember4Id}}"  name="tMember4Id" class="form-control" id="tMember4Id" placeholder="Member 4 ID">
+                    </td>
+                  </tr>
+               
+                 
+                  <tr>
+                    <label >Team member 5</label>
+                      <td>
+                      
+                              <label for="tMember5">Member 5 name:</label>
+                              <input ngModel="{{editSiteVisits?.tMember5}}"  name="tMember5" class="form-control" id="tMember5" placeholder="Member 5 Name" >
+                      </td><td>
+                              <label for="tMember5Id">Member 5 Id:</label>
+                              <input  ngModel="{{editSiteVisits?.tMember5Id}}"  name="tMember5Id" class="form-control" id="tMember5Id" placeholder="Member 5 ID">
+                         
+                     </td>
+                  </tr>
+                </table> 
+              </div> -->
+
                  <!-- <div class="form-group">
                     <label for="assignedVehicle">Assigned Vehicle</label>
                     <input type="text" ngModel="{{editSiteVisits?.vehicles}}" name="assignedVehicle" class="form-control" id="assignedVehicle" name="assignedVehicle" placeholder="assignedVehicle">

@@ -1,5 +1,7 @@
 import { scheduled } from "rxjs";
 import { Vehicle } from "../vehicle/vehicle";
+import { Job } from "../job/job";
+import { Customer } from "../customer/customer";
 
 export interface SiteVisit{
    
@@ -7,14 +9,30 @@ export interface SiteVisit{
     siteVisitName: string;
     siteVisitId: number;
     scheduledDate: Date;
-    assignedTeamId: number;
+    tMemberOne: string;
+    // tMember2:string;
+    // tMember3:string;
+    // tMember4:string;
+    // tMember5:string;
+    // tMember1Id:number;
+    // tMember2Id:number;
+    // tMember3Id:number;
+    // tMember4Id:number;
+    // tMember5Id:number;
     assignedVehicle: string;
     startSiteVisit: boolean;
     dateRange: Date;
     state:string;
     vehicles: Vehicle[];
+    job:Job[];
+    assignedJob: string;
+    memberOne: string;
+    memberTwo: string;
+    memberThree: string;
+    memberFour: string;
+    memberFive: string;
     
-    
+
 }
 
 export { Vehicle };
