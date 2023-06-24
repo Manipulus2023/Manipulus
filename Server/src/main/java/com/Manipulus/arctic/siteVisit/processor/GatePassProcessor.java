@@ -34,7 +34,7 @@ public class GatePassProcessor {
         List<SiteVisit> siteVisits = siteVisitRepo.findAll();
 
         // Load the JasperReport template
-        String filePath = "C:\\Manipulus 7.0\\Manipulus\\Server\\src\\main\\resources\\template\\gatePass.jrxml";
+        String filePath = "src\\main\\resources\\template\\gatePass.jrxml";
         JasperReport jasperReport = JasperCompileManager.compileReport(filePath);
 
         // Prepare parameters for the report
@@ -50,42 +50,22 @@ public class GatePassProcessor {
         // Export the report to a ByteArrayOutputStream
         ByteArrayOutputStream reportStream = new ByteArrayOutputStream();
         JasperExportManager.exportReportToPdfStream(jasperPrint, reportStream);
-        //    List<SiteVisit>siteVisit=siteVisitRepo.findAll();
-//       parameters.put("siteVisitId", 123L);
-//        parameters.put("jobId", 456L);
-//        parameters.put("scheduledDate", java.sql.Date.valueOf("2022-07-07"));
-//        parameters.put("endDate", java.sql.Date.valueOf("2022-07-08"));
 
-
-        // ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
-//        JRPdfExporter exporter=new JRPdfExporter();
-//        SimplePdfExporterConfiguration configuration=new SimplePdfExporterConfiguration();
-//        configuration.setCompressed(true);
-//        exporter.setConfiguration(configuration);
-//        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-//        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(reportStream));
-//        exporter.exportReport();
         return reportStream;
     }
 
     public ByteArrayOutputStream generateReportBySiteVisitId(Long siteVisitId) throws JRException {
+
         SiteVisit siteVisit = siteVisitService.findSiteVisitBySiteVisitId(siteVisitId); // Replace siteVisitId with the actual ID of the site visit you want to display
         List<SiteVisit> siteVisits = new ArrayList<>();
         siteVisits.add(siteVisit);
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(siteVisits);
-
-       // List<SiteVisit> siteVisits = siteVisitRepo.findAll();// Retrieve the site visits from the repository
-
-        // Retrieve the site visit details based on the siteVisitId
-     //   SiteVisit siteVisit = siteVisitService.findSiteVisitBySiteVisitId(siteVisitId);
-
-
-        // Check if the site visit exists
+            // Check if the site visit exists
         if (siteVisit == null) {
             throw new IllegalArgumentException("Invalid site visit ID");
         }
         // Load the JasperReport template
-        String filePath = "C:\\Manipulus 7.0\\Manipulus\\Server\\src\\main\\resources\\template\\gatePass.jrxml";
+        String filePath = "src\\main\\resources\\template\\gatePass.jrxml";
         JasperReport jasperReport = JasperCompileManager.compileReport(filePath);
 
 
@@ -97,7 +77,21 @@ public class GatePassProcessor {
         parameters.put("sitVisitId", siteVisitId);
         parameters.put("scheduledDate", siteVisit.getScheduledDate());
         parameters.put("endDate", siteVisit.getDateRange());
-        parameters.put("jobId",5656L );
+        parameters.put("assignedJob",siteVisit.getAssignedJob() );
+        parameters.put("assignedVehicle",siteVisit.getAssignedVehicle());
+        parameters.put("memberOne",siteVisit.getMemberOne() );
+        parameters.put("memberTwo",siteVisit.getMemberTwo() );
+        parameters.put("memberThree",siteVisit.getMemberThree() );
+        parameters.put("memberFour",siteVisit.getMemberFour());
+        parameters.put("memberFive",siteVisit.getMemberFive() );
+        parameters.put("memberIdOne",siteVisit.getMemberIdOne() );
+        parameters.put("memberIdTwo",siteVisit.getMemberIdTwo() );
+        parameters.put("memberIdThree",siteVisit.getMemberIdThree() );
+        parameters.put("memberIdFour",siteVisit.getMemberIdFour() );
+        parameters.put("memberIdFive",siteVisit.getMemberIdFive() );
+
+
+
 
 
 

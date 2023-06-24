@@ -137,7 +137,11 @@
                                                   <i class="fa fa-download"></i>
                                                 </button>
                                               </td>
-                                              
+                                             <td>
+                                                <button (click)="downloadJobCard(siteVisit.siteVisitId)" class="btn btn-secondary tooltips" data-placement="top" title="Print Job Card" data-original-title="downLoad" style="background-color: rgb(17, 161, 17); border-color: rgb(124, 201, 73);">
+                                                  <i class="fa fa-download"></i>
+                                                </button>
+                                              </td>  
   
                                          </div>
                                     </td>
@@ -211,23 +215,61 @@
               </div>
 
               <div class="form-group">
-                <label >Assign memberOne</label>  
-                <br>
-                <label for="memberOne">MemberOne :  </label>
-                <input type="text" ngModel name="memberOne" class="form-control" id="memberOne" placeholder="Assign memberOne" required>
-                <br>
-                <label for="memberTwo">memberTwo :  </label>
-                <input type="text" ngModel name="memberTwo" class="form-control" id="memberTwo" placeholder="Assign memberTwo" >
-                <br>
-                <label for="memberThree">memberThree :  </label>
-                <input type="text" ngModel name="memberThree" class="form-control" id="memberThree" placeholder="Assign memberThree" >
-                <br>
-                <label for="memberFour">memberFour :  </label>
-                <input type="text" ngModel name="memberFour" class="form-control" id="memberFour" placeholder="Assign memberFour" >
-                <br>
+                <table>
+                  <tbody>
+                    <label >Assign Team</label>  
+                    <tr>
+                      <td>
+                        <label for="memberOne">MemberOne :  </label>
+                        <input type="text" ngModel name="memberOne" class="form-control" id="memberOne" placeholder="Assign memberOne" required>
+                     </td>
+                      <td>
+                        <label for="memberIdOne">Member One Id :  </label>
+                        <input type="text" ngModel name="memberIdOne" class="form-control" id="memberIdOne" placeholder="Assign member One Id" required>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="memberTwo">memberTwo :  </label>
+                        <input type="text" ngModel name="memberTwo" class="form-control" id="memberTwo" placeholder="Assign memberTwo" >
+                      </td>
+                      <td>
+                        <label for="memberIdTwo">Member Two Id :  </label>
+                        <input type="text" ngModel name="memberIdTwo" class="form-control" id="memberIdTwo" placeholder="Assign member Two Id" >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="memberThree">memberThree :  </label>
+                        <input type="text" ngModel name="memberThree" class="form-control" id="memberThree" placeholder="Assign memberThree" >
+                      </td>
+                      <td>
+                        <label for="memberIdThree">Member memberThree Id :  </label>
+                        <input type="text" ngModel name="memberIdThree" class="form-control" id="memberIdThree" placeholder="Assign member Three Id" >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="memberFour">memberFour :  </label>
+                        <input type="text" ngModel name="memberFour" class="form-control" id="memberFour" placeholder="Assign memberFour" >
+                      </td>
+                      <td>
+                        <label for="memberIdFour">Member Four Id :  </label>
+                        <input type="text" ngModel name="memberIdFour" class="form-control" id="memberIdFour" placeholder="Assign member Four Id" >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
                 <label for="memberFive">memberFive :  </label>
                 <input type="text" ngModel name="memberFive" class="form-control" id="memberFive" placeholder="Assign memberFive" >
-            
+                      </td>
+                     <td>
+                      <label for="memberIdFive">Member Five Id :  </label>
+                      <input type="text" ngModel name="memberIdFive" class="form-control" id="memberIdFive" placeholder="Assign member Five Id" >
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
              <div class="form-group">
@@ -296,85 +338,64 @@
               <!-- <form #editForm="ngForm"> -->
                 
                 <input type="hidden" ngModel="{{editSiteVisits?.siteVisitId}}" name="siteVisitId" class="form-control" id="SiteVisitId" placeholder="siteVisitId">
-           
-                <!-- <div class="form-group">
-              <table>
-             
-                <tr>
-                    <label >Team member 1</label>
-                    <td>
-                    
-                            <label for="tMember1">Member 1 name:</label>
-                            <input  ngModel="{{editSiteVisits?.tMember1}}" name="tMember1" class="form-control" id="tMember1" placeholder="Member 1 Name" required>
-                    </td><td>
-                            <label for="tMember1Id">Member 1 Id:</label>
-                            <input  ngModel="{{editSiteVisits?.tMember1Id}}"  name="tMember1Id" class="form-control" id="tMember1Id" placeholder="Member 1 ID" required>
-                       
-                   </td>
-                </tr>
-                
-         
-                  <tr>
-                    <label >Team member 2</label>
-                      <td>
-                      
-                              <label for="tMember2">Member 2 name:</label>
-                              <input  ngModel="{{editSiteVisits?.tMember2}}"  name="tMember2" class="form-control" id="tMember2" placeholder="Member 2 Name" >
-                      </td><td>
-                              <label for="tMember2Id">Member 2 Id:</label>
-                              <input  ngModel="{{editSiteVisits?.tMember2Id}}"  name="tMember2Id" class="form-control" id="tMember2Id" placeholder="Member 2 ID">
-                         
-                     </td>
-                  </tr>
-                
-              
-                  <tr>
-                    <label >Team member 3</label>
-                      <td>
-                      
-                              <label for="tMember3">Member 3 name:</label>
-                              <input ngModel="{{editSiteVisits?.tMember3}}"  name="tMember3" class="form-control" id="tMember3" placeholder="Member 3 Name" >
-                      </td><td>
-                              <label for="tMember3Id">Member 3 Id:</label>
-                              <input ngModel="{{editSiteVisits?.tMember3Id}}"  name="tMember3Id" class="form-control" id="tMember3Id" placeholder="Member 3 ID">
-                         
-                     </td>
-                  </tr>
-                
-              
-                 
-                  <tr>
-                    <label >Team member 4</label>
-                      <td>
-                      
-                              <label for="tMember4">Member 4 name:</label>
-                              <input ngModel="{{editSiteVisits?.tMember4}}"  name="tMember4" class="form-control" id="tMember4" placeholder="Member 4 Name" >
-                      </td><td>
-                              <label for="tMember4Id">Member 4 Id:</label>
-                              <input ngModel="{{editSiteVisits?.tMember4Id}}"  name="tMember4Id" class="form-control" id="tMember4Id" placeholder="Member 4 ID">
-                    </td>
-                  </tr>
-               
-                 
-                  <tr>
-                    <label >Team member 5</label>
-                      <td>
-                      
-                              <label for="tMember5">Member 5 name:</label>
-                              <input ngModel="{{editSiteVisits?.tMember5}}"  name="tMember5" class="form-control" id="tMember5" placeholder="Member 5 Name" >
-                      </td><td>
-                              <label for="tMember5Id">Member 5 Id:</label>
-                              <input  ngModel="{{editSiteVisits?.tMember5Id}}"  name="tMember5Id" class="form-control" id="tMember5Id" placeholder="Member 5 ID">
-                         
-                     </td>
-                  </tr>
-                </table> 
-              </div> -->
-
-                 <!-- <div class="form-group">
-                    <label for="assignedVehicle">Assigned Vehicle</label>
-                    <input type="text" ngModel="{{editSiteVisits?.vehicles}}" name="assignedVehicle" class="form-control" id="assignedVehicle" name="assignedVehicle" placeholder="assignedVehicle">
-                 </div> -->
+                <div class="form-group">
+                  <table>
+                    <tbody>
+                      <label >Assign memberOne</label>  
+                      <tr>
+                        <td>
+                          <label for="memberOne">MemberOne :  </label>
+                          <input ngModel="{{editSiteVisits?.memberOne}}" name="memberOne" class="form-control" id="memberOne" placeholder="Assign memberOne" required>
+                       </td>
+                        <td>
+                          <label for="memberIdOne">Member One Id :  </label>
+                          <input ngModel="{{editSiteVisits?.memberIdOne}}" name="memberIdOne" class="form-control" id="memberIdOne" placeholder="Assign member One Id" required>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label for="memberTwo">memberTwo :  </label>
+                          <input ngModel="{{editSiteVisits?.memberTwo}}" name="memberTwo" class="form-control" id="memberTwo" placeholder="Assign memberTwo" >
+                        </td>
+                        <td>
+                          <label for="memberIdTwo">Member Two Id :  </label>
+                          <input ngModel="{{editSiteVisits?.memberIdTwo}}" name="memberIdTwo" class="form-control" id="memberIdTwo" placeholder="Assign member Two Id" >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label for="memberThree">memberThree :  </label>
+                          <input ngModel="{{editSiteVisits?.memberThree}}" name="memberThree" class="form-control" id="memberThree" placeholder="Assign memberThree" >
+                        </td>
+                        <td>
+                          <label for="memberIdThree">Member memberThree Id :  </label>
+                          <input ngModel="{{editSiteVisits?.memberIdThree}}" name="memberIdThree" class="form-control" id="memberIdThree" placeholder="Assign member Three Id" >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label for="memberFour">memberFour :  </label>
+                          <input ngModel="{{editSiteVisits?.memberFour}}" name="memberFour" class="form-control" id="memberFour" placeholder="Assign memberFour" >
+                        </td>
+                        <td>
+                          <label for="memberIdFour">Member Four Id :  </label>
+                          <input ngModel="{{editSiteVisits?.memberIdFour}}" name="memberIdFour" class="form-control" id="memberIdFour" placeholder="Assign member Four Id" >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                  <label for="memberFive">memberFive :  </label>
+                  <input ngModel="{{editSiteVisits?.memberFive}}" name="memberFive" class="form-control" id="memberFive" placeholder="Assign memberFive" >
+                        </td>
+                       <td>
+                        <label for="memberIdFive">Member Five Id :  </label>
+                        <input ngModel="{{editSiteVisits?.memberIdFive}}" name="memberIdFive" class="form-control" id="memberIdFive" placeholder="Assign member Five Id" >
+                      </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+  
 
                    
                  <div class="form-group">

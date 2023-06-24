@@ -39,6 +39,17 @@ public class SiteVisit implements Serializable {
     private String memberFour;
     @Column(name = "memberFive" )
     private String memberFive;
+    @Column(name = "memberIdOne" )
+    private int memberIdOne;
+    @Column(name = "memberIdTwo" )
+    private int memberIdTwo;
+    @Column(name = "memberIdThree" )
+    private int memberIdThree;
+    @Column(name = "memberIdFour" )
+    private int memberIdFour;
+    @Column(name = "memberIdFive" )
+    private int memberIdFive;
+
     @Column(name = "startSiteVisit" )
         private boolean startSiteVisit;
     @Column(name = "dateRange" )
@@ -73,6 +84,7 @@ public SiteVisit(){
 
         public SiteVisit(Date scheduledDate, String assignedVehicle,String assignedJob,
                          String memberOne,String memberTwo,String memberThree,String memberFour,String memberFive,
+                         int memberIdOne,int memberIdTwo,int memberIdThree,int memberIdFour,int memberIdFive,
                          List<Job> jobs, List<Vehicle> vehicles,boolean startSiteVisit, Date dateRange,
                          String state, String siteVisitCode){
             this.scheduledDate=scheduledDate;
@@ -90,6 +102,12 @@ public SiteVisit(){
             this.memberThree=memberThree;
             this.memberFour=memberFour;
             this.memberFive=memberFive;
+            this.memberIdOne=memberIdOne;
+            this.memberIdTwo=memberIdTwo;
+            this.memberIdThree=memberIdThree;
+            this.memberIdFour=memberIdFour;
+            this.memberIdFive=memberIdFive;
+
 
         }
 
@@ -141,6 +159,46 @@ public SiteVisit(){
 
     public String getMemberFive() {
         return memberFive;
+    }
+
+    public int getMemberIdOne() {
+        return memberIdOne;
+    }
+
+    public void setMemberIdOne(int memberIdOne) {
+        this.memberIdOne = memberIdOne;
+    }
+
+    public int getMemberIdTwo() {
+        return memberIdTwo;
+    }
+
+    public void setMemberIdTwo(int memberIdTwo) {
+        this.memberIdTwo = memberIdTwo;
+    }
+
+    public int getMemberIdThree() {
+        return memberIdThree;
+    }
+
+    public void setMemberIdThree(int memberIdThree) {
+        this.memberIdThree = memberIdThree;
+    }
+
+    public int getMemberIdFour() {
+        return memberIdFour;
+    }
+
+    public void setMemberIdFour(int memberIdFour) {
+        this.memberIdFour = memberIdFour;
+    }
+
+    public int getMemberIdFive() {
+        return memberIdFive;
+    }
+
+    public void setMemberIdFive(int memberIdFive) {
+        this.memberIdFive = memberIdFive;
     }
 
     public void setMemberFive(String memberFive) {
@@ -211,6 +269,13 @@ public SiteVisit(){
                     ", MemberThree "+ memberThree+'\''+
                     ", MemberFour "+ memberFour+'\''+
                     ", MemberFive "+ memberFive+'\''+
+                    ", MemberIdOne "+ memberIdOne+'\''+
+                    ", MemberIdTwo "+ memberIdTwo+'\''+
+                    ", MemberIdThree "+ memberIdThree+'\''+
+                    ", MemberIdFour "+ memberIdFour+'\''+
+                    ", MemberIdFive "+ memberIdFive+'\''+
+
+
                     '}';
         }
 

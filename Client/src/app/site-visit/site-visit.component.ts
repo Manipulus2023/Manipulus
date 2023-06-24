@@ -31,6 +31,7 @@ export class SiteVisitComponent implements OnInit {
   selectedVehicle: Vehicle | null = null;
   public state: string | undefined;
   public printGatePasses: any;
+  public printJobCards:any
   
 
   //siteVisit: any;
@@ -189,10 +190,15 @@ export class SiteVisitComponent implements OnInit {
         job: [],
         assignedJob: addForm.value.assignedJob,
         memberOne: addForm.value.memberOne,
-        memberTwo:  addForm.value.memberTwo,
-        memberThree:  addForm.value.memberThree,
-        memberFour:  addForm.value.memberFour,
-        memberFive:  addForm.value.memberFive
+        memberTwo: addForm.value.memberTwo,
+        memberThree: addForm.value.memberThree,
+        memberFour: addForm.value.memberFour,
+        memberFive: addForm.value.memberFive,
+        memberIdOne: addForm.value.memberIdOne,
+        memberIdTwo: addForm.value.memberIdTwo,
+        memberIdThree: addForm.value.memberIdThree,
+        memberIdFour: addForm.value.memberIdFour,
+        memberIdFive: addForm.value.memberIdFive
       };
       
       this.siteVisitService.addSiteVisit(siteVisit).subscribe(
@@ -315,7 +321,12 @@ export class SiteVisitComponent implements OnInit {
       window.open(fileURL);
     });
   }
-  
+  downloadJobCard(siteVisitId: number) {
+    this.siteVisitService.downloadJobCard(siteVisitId).subscribe((response: Blob) => {
+      const fileURL = URL.createObjectURL(response);
+      window.open(fileURL);
+    });
+  }
   
 public onOpenModal(siteVisit: SiteVisit,mode:string): void{ //takes a SiteVisit object and a mode as parameters. It opens a modal window based on the mode passed in as a parameter.
   const container=document.getElementById(
@@ -344,6 +355,11 @@ public onOpenModal(siteVisit: SiteVisit,mode:string): void{ //takes a SiteVisit 
       this.printGatePasses = siteVisit;
      
       button.setAttribute('data-bs-target','#printGatePassModal');
+    }
+    if(mode ==='downLoad'){
+      this.printJobCards = siteVisit;
+     
+      button.setAttribute('data-bs-target','#printJobCardModal');
     }
     // if (mode === 'print') {
     //   this.printGatePasses = siteVisit;

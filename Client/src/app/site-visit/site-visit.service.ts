@@ -11,6 +11,10 @@ import { Job } from '../job/job';
   providedIn: 'root'
 })
 export class SiteVisitService {
+  downloadJobCard(siteVisitId: number) {
+    const url = `${this.apiServerUrl}/job-card/printJobCard/${siteVisitId}`;
+    return this.http.get(url, { responseType: 'blob' });;
+  }
   siteVisitService: any;
  
 
@@ -54,6 +58,7 @@ public downloadPDF(siteVisitId: number): Observable<Blob> {
   const url = `${this.apiServerUrl}/gate-pass/printGatePass/${siteVisitId}`;
   return this.http.get(url, { responseType: 'blob' });
 }
+
 
 }
 

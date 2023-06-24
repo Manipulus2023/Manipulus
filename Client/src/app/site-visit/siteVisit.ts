@@ -31,6 +31,12 @@ export interface SiteVisit{
     memberThree: string;
     memberFour: string;
     memberFive: string;
+    memberIdOne:number;
+    memberIdTwo:number;
+    memberIdThree:number;
+    memberIdFour:number;
+    memberIdFive:number;
+
     
 
 }
