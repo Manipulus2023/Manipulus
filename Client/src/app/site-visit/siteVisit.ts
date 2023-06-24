@@ -25,7 +25,7 @@ export interface SiteVisit{
     state:string;
     vehicles: Vehicle[];
     job:Job[];
-    assignedJob: string;
+    assignedJob: number;
     memberOne: string;
     memberTwo: string;
     memberThree: string;

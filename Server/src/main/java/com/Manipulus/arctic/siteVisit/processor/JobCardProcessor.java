@@ -1,5 +1,7 @@
 package com.Manipulus.arctic.siteVisit.processor;
 
+import com.Manipulus.arctic.customer.model.Customer;
+import com.Manipulus.arctic.job.repository.JobRepository;
 import com.Manipulus.arctic.siteVisit.SiteVisitResource;
 import com.Manipulus.arctic.siteVisit.repo.SiteVisitRepo;
 import com.Manipulus.arctic.siteVisit.service.SiteVisitService;
@@ -30,6 +32,8 @@ public class JobCardProcessor {
     private SiteVisitService siteVisitService;
     @Autowired
     private SiteVisitResource siteVisitResource;
+    @Autowired
+    public JobRepository jobRepository;
 
     public ByteArrayOutputStream generateReport() throws JRException {
         List<SiteVisit> siteVisits = siteVisitRepo.findAll();
@@ -76,8 +80,20 @@ public class JobCardProcessor {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("sitVisitId", siteVisitId);
         parameters.put("assignedJob",siteVisit.getAssignedJob() );
-//        Job job = siteVisit.getAssignedJob().getJob(); // Assuming there is a method to retrieve the job from the assigned job
-//        parameters.put("customer", job.getCustomer()); // Assuming there is a method to retrieve the customer from the job
+//        parameters.put("job",siteVisit.getJobs() );
+
+        // Find the job and customer by assigned job ID
+//      Job assignedJob = siteVisit.getAssignedJob();
+        Job job = jobRepository.findById(siteVisit.getAssignedJob()).orElseThrow(() -> new IllegalArgumentException("Invalid assigned job ID"));
+        Customer customer = job.getCustomer();
+
+        parameters.put("customerName", customer.getName());
+        parameters.put("customerAddress", customer.getAddress());
+        parameters.put("customerEmail", customer.getEmail());
+        parameters.put("customerContactNumber", customer.getContactNumber());
+        parameters.put("customerDesignation", customer.getDesignation());
+        parameters.put("contactPersonName", customer.getContactPersonName());
+
 
 // Create an empty data source (since the report doesn't require any specific data source)
         //JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(siteVisits);

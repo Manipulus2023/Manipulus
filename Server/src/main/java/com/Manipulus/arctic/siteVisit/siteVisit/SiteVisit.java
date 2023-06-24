@@ -28,7 +28,7 @@ public class SiteVisit implements Serializable {
     @Column(name = "assignedVehicle" )
         private String assignedVehicle;
     @Column(name = "assignedJob" )
-    private String assignedJob;
+    private Long assignedJob;
     @Column(name = "memberOne" )
     private String memberOne;
     @Column(name = "memberTwo" )
@@ -82,7 +82,7 @@ public SiteVisit(){
 
 
 
-        public SiteVisit(Date scheduledDate, String assignedVehicle,String assignedJob,
+        public SiteVisit(Date scheduledDate, String assignedVehicle,Long assignedJob,
                          String memberOne,String memberTwo,String memberThree,String memberFour,String memberFive,
                          int memberIdOne,int memberIdTwo,int memberIdThree,int memberIdFour,int memberIdFive,
                          List<Job> jobs, List<Vehicle> vehicles,boolean startSiteVisit, Date dateRange,
@@ -124,10 +124,10 @@ public SiteVisit(){
         public void setAssignedVehicle(String assignedVehicle){
             this.assignedVehicle=assignedVehicle;
         }
-    public String getAssignedJob(){
+    public Long getAssignedJob(){
         return  assignedJob;
     }
-    public void setAssignedJob(String assignedJob){
+    public void setAssignedJob(Long assignedJob){
         this.assignedJob=assignedJob;
     }
     public String getMemberOne() {return memberOne;}
