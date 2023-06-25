@@ -1,9 +1,10 @@
 package com.Manipulus.arctic.location.service;
 
 import com.Manipulus.arctic.customer.exception.CustomerNotFoundException;
+import com.Manipulus.arctic.customer.model.Customer;
 import com.Manipulus.arctic.job.model.Job;
 import com.Manipulus.arctic.job.repository.JobRepository;
-import com.Manipulus.arctic.location.model.location;
+import com.Manipulus.arctic.location.model.Location;
 import com.Manipulus.arctic.location.repository.locationRepository;
 import com.Manipulus.arctic.customer.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,29 +17,49 @@ import java.util.UUID;
 @Service
 public class locationService {
     private final locationRepository locationRepository;
-    private final com.Manipulus.arctic.job.repository.JobRepository JobRepository;
+    private final com.Manipulus.arctic.customer.repository.CustomerRepository CustomerRepository;
 
 
     @Autowired
-    public locationService(locationRepository locationRepository , JobRepository jobRepository ) {
+    public locationService(locationRepository locationRepository  , CustomerRepository CustomerRepository) {
         this.locationRepository = locationRepository;
-        this.JobRepository = jobRepository;
+        this.CustomerRepository = CustomerRepository;
     }
 
-    public Job findJobById(Long id){
+    public Customer findCustomerById(Long id){
         // Find the customer with the given ID in the database
         // Throw a CustomerNotFoundException if the customer is not found
-        return JobRepository.findJobById(id)
-                .orElseThrow(()-> new CustomerNotFoundException(" job by id"+ id + "was not found"));
+        return CustomerRepository.findCustomerById(id)
+                .orElseThrow(()-> new CustomerNotFoundException(" customer by id"+ id + "was not found"));
     }
 
-    public location addlocation(location location ,Long id) {
+    public Location add_location_customer(Location location , Long id) {
         location.setlocationCode(UUID.randomUUID().toString());
-        location.setLocation_info(findJobById(id));
+        location.setLocation_customer(findCustomerById(id));
         return locationRepository.save(location);
     }
 
-    public List<location> findAlllocations() {
+//    public List<location> findLocationsByCustomerId(Long customerId) {
+//        return locationRepository.findByLocation_customerId(customerId);
+//    }
+public List<Long> findLocationIdsByCustomerId(Long customerId) {
+    return locationRepository.findLocationIdsByCustomerId(customerId);
+}
+
+
+    public Location findLocationById(Long id){
+        // Find the customer with the given ID in the database
+        // Throw a CustomerNotFoundException if the customer is not found
+        return locationRepository.findLocationById(id)
+                .orElseThrow(()-> new CustomerNotFoundException(" Location by id"+ id + "was not found"));
+    }
+
+    public List<Location> findAlllocations() {
         return locationRepository.findAll();
+    }
+
+    @Transactional
+    public void deleteCustomerById(Long id){
+        CustomerRepository.deleteCustomerById(id);
     }
 }

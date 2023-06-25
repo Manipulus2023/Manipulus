@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject, firstValueFrom } from 'rxjs';
-import { Job } from './job';
+import { Job,  } from './job';
 import { JobService } from './job.service';
 import { Customer } from '../customer/customer';
 import { Locations } from '../location/locations';
@@ -18,13 +18,19 @@ export class JobComponent implements OnInit {
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
   public customers!: Customer;
+  public locations!: Locations;
+
   public customersList: Customer[] = [];
+
+  public locationList: Locations[] = [];
   public customerId!: number;
+  public LocationId!: number;
   public EditcustomerId!: number;
   public selectedJobType!: string;
   public location!: Locations;
   public job_count!: number;
   public last_job_id!: number;
+  currentPage: number = 1; 
   constructor(private jobService: JobService) {}
 
   ngOnInit(): void {
@@ -32,20 +38,9 @@ export class JobComponent implements OnInit {
       pagingType: 'full_numbers',
       destroy: true,
     };
-    this.getJobs();
-    this.getCustomers();
-  }
 
-  public findCustomerById(customerId: number): void {
-    {
-      this.jobService.findCustomerById(customerId).subscribe(
-        (response: Customer) => {
-          this.customers = response;
-          console.log(this.customers);
-        },
-        (error: HttpErrorResponse) => alert(error.message)
-      );
-    }
+    this.getCustomers();
+    console.log(this.customersList , "all cuso");
   }
 
   public getCustomers(): void {
@@ -55,7 +50,64 @@ export class JobComponent implements OnInit {
           this.customersList = response.filter(
             (customer) => customer.active_status
           );
-          // console.log(this.customersList);
+          console.log(this.customersList) ;
+        },
+        (error: HttpErrorResponse) => alert(error.message)
+      );
+    }
+  }
+
+
+  onClickNext() {
+    // Handle logic when the "Next" button is clicked on the first page
+    // You can add your custom code here
+    // For example:
+    console.log('Next button clicked');
+  }
+
+  nextPage() {
+    this.onClickNext(); // Call the custom function before moving to the next page
+    this.currentPage = 2; 
+    console.log('Next button clicked' , this.customerId);
+    // Move to the next page
+  }
+
+  previousPage() {
+    this.currentPage = 1; // Move to the previous page
+  }
+
+ 
+
+  public getLocations(): void {
+    {
+      this.jobService.getlocationlist().subscribe(
+        (response: Locations[]) => {
+          this.locationList = response;
+          console.log(this.locationList);
+        },
+        (error: HttpErrorResponse) => alert(error.message)
+      );
+    }
+  }
+
+  public findLocationByCustomerId(customerId: number): void {
+    {
+      this.jobService.findLocationByCustomerId(customerId).subscribe(
+        (response: Locations) => {
+          this.locations = response;
+          console.log(this.locations);
+        },
+        (error: HttpErrorResponse) => alert(error.message)
+      );
+    }
+  }
+
+  public findCustomerById(customerId: number): void {
+    {
+      this.jobService.findCustomerById(customerId).subscribe(
+        (response: Customer) => {
+          this.customers = response;
+          console.log(this.customers);
         },
         (error: HttpErrorResponse) => alert(error.message)
       );
@@ -85,47 +137,30 @@ export class JobComponent implements OnInit {
     }
   }
 
-  public onAddJob(addForm: NgForm): void {
- 
-    this.getCustomers();
+  // public onAddJob(addForm: NgForm): void {
+  //     console.log("add job");
 
-    const job: Job = {
-      id: 0,
-      job_type: addForm.value.job_type,
-      job_date: addForm.value.job_date,
-      job_status: '',
-      jobCode: '',
-      //@ts-ignore
-      customer: Customer,
+  //     const jobData:NewJob = {
+  //       job_type: addForm.value.job_type,
+  //       job_date: addForm.value.job_date,
+  //     }
+  //     console.log(jobData, "job data log");
 
-      customer_id: addForm.value.customer_id,
-      location: addForm.value.location,
-    };
-    console.log('before adding job',this.jobs);
-    const customerId: number = this.customerId;
-    firstValueFrom(this.jobService.addJob(addForm.value, customerId))
-    .then((job: Job) => {
-        console.log(location);
-       
-        const jobID = this.last_job_id;
-        console.log(this.last_job_id);
-        this.getJobs(); 
-        // const customerId: number = 5; // Set the desired customer ID here
-        firstValueFrom(this.jobService.addlocation(job, jobID)).then((location: Locations) => {
-            console.log('after adding job',this.jobs);
-            this.getJobs();
-            this.dtoptions = {
-              retrieve: true,
-            };
-            addForm.reset();
-          }).catch((error: HttpErrorResponse) => {
-            alert(error.message);
-          });
-      })
-      .catch((error: any) => {
-        alert(error.message);
-      });
-  }
+  //     this.jobService.addJob(jobData, this.customerId).subscribe(
+  //       (response: NewJob) => {
+
+  //        console.log(response);
+  //       // Perform any additional actions after successfully adding the location
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       console.error(error);
+  //       // Handle any errors that occur during the request
+  //     }
+  //   );
+  
+  //   // Reset the form after submission if needed
+  //   addForm.reset();
+  // }
 public reload(): void {
   window.location.reload();
 }
@@ -182,3 +217,7 @@ public reload(): void {
     button.click();
   }
 }
+
+
+// back end eka hari
+//front end eke, job ekak create karannna location id eka pass karanna oni'ekata find method eka haduwa. id eka ganna finf by customer id eka, customer map karala eken selecr karana customer location tiken hari eka select laranna

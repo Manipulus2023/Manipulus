@@ -1,25 +1,13 @@
 
 <div class="row">
   <div class="col-sm-2">
-    <app-side-nav></app-side-nav>
+    <app-side-nav>ada</app-side-nav>
   </div>
   <div class="col-sm-10 ps-3 mt-2">
     <div class="tabel-containt" id="main-container">
-      <button
-        type="button"
-        class="btn btn-outline-primary p-2 m-2 justify-content-end"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        <img
-          src="../../assets/Icon/Customer/person_add_FILL0_wght400_GRAD0_opsz48.png"
-          alt="Bootstrap"
-          width="20"
-          height="20"
-        />
-        Add Job
-      </button>
-    
+     
+     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addJobModal">Add Job</button>
+
       <table
         datatable
         [dtOptions]="dtoptions"
@@ -40,7 +28,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let job of jobs">
-            <td>
+            <td >
               <div class="d-flex align-items-center">
                 <div class="ms-3">
                   <p class="fw-bold mb-1">{{ job.id }}</p>
@@ -48,7 +36,7 @@
               </div>
             </td>
             <td>
-              <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center" >
                 <div class="ms-3">
                   <p class="fw-bold mb-1">{{ job.customer.name }}</p>
                   <p class="text-muted mb-0">{{ job.customer.contactNumber }}</p>
@@ -130,7 +118,7 @@
     </div>
     
     <!-- Modal add -->
-    <form #addForm="ngForm" (ngSubmit)="onAddJob(addForm)">
+    <!-- <form #addForm="ngForm" (ngSubmit)="onAddJob(addForm)">
       <div
         class="modal fade"
         id="exampleModal"
@@ -151,6 +139,9 @@
               ></button>
             </div>
             <div class="modal-body">
+
+
+              
               <div class="card mb-4">
                 <div class="card-body">
                   <div>
@@ -173,7 +164,7 @@
                           <option value="Breakdowns">Breakdowns</option>
                           <option value="Upgrades">Upgrades</option>
                           <option value="Remove">Remove</option>
-                          <!-- Add more options as needed -->
+                     
                         </select>
                         <div
                           *ngIf="
@@ -252,26 +243,33 @@
                     </div>
                     <div class="col-lg-6">
                       <div class="mb-3">
-                        <label class="form-label">Job location :</label>
-                        <input
-                          type="text"
+                        <label class="form-label">Customer Location:</label>
+                        <select
                           class="form-control"
-                          id="location"
-                          ngModel
-                          name="location"
+                          id="customer_id"
+                          [(ngModel)]="LocationId"
+                          name="customer_id"
                           required
-                        />
+                        >
+                          <option
+                            *ngFor="let customer of customersList"
+                            [value]="customer.id"
+                          >
+                            {{ customer.name }}
+                          </option>
+                        </select>
+    
                         <div
                           *ngIf="
-                            addForm.controls['location'].invalid &&
-                            (addForm.controls['location'].dirty ||
-                              addForm.controls['location'].touched)
+                            addForm.controls['customer_id'].invalid &&
+                            (addForm.controls['customer_id'].dirty ||
+                              addForm.controls['customer_id'].touched)
                           "
                         >
                           <small
                             class="text-danger"
-                            *ngIf="addForm.controls['location'].errors?.['required']"
-                            >Job due date is required.</small
+                            *ngIf="addForm.controls['customer_id'].errors?.['required']"
+                            >Customer ID is required.</small
                           >
                         </div>
                       </div>
@@ -301,7 +299,68 @@
           </div>
         </div>
       </div>
-    </form>
+    </form> -->
+   <!-- Add Job Modal -->
+<!-- Add Job Modal -->
+<div class="modal fade" id="addJobModal" tabindex="-1" role="dialog" aria-labelledby="addJobModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addJobModalLabel">Add Job</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Section 1: Select Customer -->
+        <section id="section1" [style.display]="currentPage === 1 ? 'block' : 'none'">
+          <form #myForm="ngForm" (ngSubmit)="nextPage()">
+          <h6>Step 1: Select Customer</h6>
+          <div class="mb-3">
+            <label for="customerSelect" class="form-label">Customer</label>
+            <select [(ngModel)]="customerId" name="customerId">
+              <option *ngFor="let customer of customersList" [value]="customer.id">{{ customer.name }}</option>
+            </select>
+            
+          </div>
+          <button class="btn btn-primary" (click)="nextPage()">Next</button>
+        </form>
+        </section>
+        <!-- End of Section 1 -->
+
+        <!-- Section 2: Job Details -->
+        <section id="section2" [style.display]="currentPage === 2 ? 'block' : 'none'">
+          <h6>Step 2: Enter Job Details</h6>
+          <div class="mb-3">
+            <label for="jobLocation" class="form-label">Job Location</label>
+            <input type="text" class="form-control" id="jobLocation" placeholder="Enter job location" required [(ngModel)]="location" name="location">
+          </div>
+          <div class="mb-3">
+            <label for="jobType" class="form-label">Job Type</label>
+            <select class="form-select" id="jobType" required [(ngModel)]="selectedJobType" name="jobType">
+              <option value="" disabled selected>Select job type</option>
+              <option value="Type 1">Type 1</option>
+              <option value="Type 2">Type 2</option>
+              <option value="Type 3">Type 3</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="jobDueDate" class="form-label">Job Due Date</label>
+            <input type="date" class="form-control" id="jobDueDate" required>
+          </div>
+          <button class="btn btn-secondary" (click)="previousPage()">Previous</button>
+          <button class="btn btn-primary" (click)="previousPage()">Add Job</button>
+        </section>
+        <!-- End of Section 2 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Add Job Modal -->
+
+<!-- End of Add Job Modal -->
+
     
     <form #editForm="ngForm">
       <div
@@ -402,14 +461,14 @@
     
                         <div
                           *ngIf="
-                            addForm.controls['customer_id'].invalid &&
-                            (addForm.controls['customer_id'].dirty ||
-                              addForm.controls['customer_id'].touched)
+                            editForm.controls['customer_id'].invalid &&
+                            (editForm.controls['customer_id'].dirty ||
+                              editForm.controls['customer_id'].touched)
                           "
                         >
                           <small
                             class="text-danger"
-                            *ngIf="addForm.controls['customer_id'].errors?.['required']"
+                            *ngIf="editForm.controls['customer_id'].errors?.['required']"
                             >Customer ID is required.</small
                           >
                         </div>
@@ -436,14 +495,14 @@
                         </select>
                         <div
                         *ngIf="
-                          addForm.controls['job_type'].invalid &&
-                          (addForm.controls['job_type'].dirty ||
-                            addForm.controls['job_type'].touched)
+                          editForm.controls['job_type'].invalid &&
+                          (editForm.controls['job_type'].dirty ||
+                            editForm.controls['job_type'].touched)
                         "
                       >
                         <small
                           class="text-danger"
-                          *ngIf="addForm.controls['job_type'].errors?.['required']"
+                          *ngIf="editForm.controls['job_type'].errors?.['required']"
                           >Job type is required.</small
                         >
                       </div>

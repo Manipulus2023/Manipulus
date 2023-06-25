@@ -4,12 +4,17 @@
       <app-side-nav></app-side-nav>
     </div>
     <div class="col-sm-10 ps-3 mt-2">
+
+
+      
+        
+  
       <google-map
   
       #myGoogleMap
     
       height="100vh"
-      width="100%"
+      width="60%"
       [zoom]="zoom"
       [center]="center"
       [options]="options"
@@ -34,5 +39,47 @@
     
       <map-info-window>{{ infoContent }}</map-info-window>
     </google-map>
+
+    <div>
+      <div class="form">
+        <!-- ...existing code... -->
+        <form #myForm="ngForm" (ngSubmit)="submitForm(myForm)">
+          <div class="mb-3">
+            <label for="location_lat" class="form-label">Latitude</label>
+            <input type="text" id="location_lat" class="form-control" [(ngModel)]="lastClickedLat" name="latitude" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="location_lng" class="form-label">Longitude</label>
+            <input type="text" id="location_lng" class="form-control" [(ngModel)]="lastClickedLng" name="longitude" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">title :</label>
+            <input
+              type="text"
+              class="form-control"
+              id="location_title"
+              ngModel
+              name="location_title"
+              
+            />
+          
+          </div>
+
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <label class="form-label">Customer Name:</label>
+              <!-- Example using a dropdown list -->
+<select [(ngModel)]="customerId" name="customerId">
+  <option *ngFor="let customer of customersList" [value]="customer.id">{{ customer.name }}</option>
+</select>
+
+                
+
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+      </div>
     </div>
   </div>

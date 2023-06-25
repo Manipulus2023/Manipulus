@@ -39,7 +39,7 @@ public class AuthConfiguration {
         http.authorizeHttpRequests().requestMatchers("/vehicle/{id}/photo**").permitAll();
         http.authorizeHttpRequests().requestMatchers("/vehicle/**").permitAll();
         http.authorizeHttpRequests().requestMatchers("/forgot-password/**").permitAll();
-        http.authorizeHttpRequests().requestMatchers("/location/add**").permitAll();
+        http.authorizeHttpRequests().requestMatchers("/location/**").permitAll();
         http.authorizeHttpRequests().anyRequest().authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)),jwtHelper));
         http.addFilterBefore(new JWTAuthorizationFilter(jwtHelper), UsernamePasswordAuthenticationFilter.class);
