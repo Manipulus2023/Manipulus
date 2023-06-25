@@ -10,6 +10,10 @@ import { Locations } from '../location/locations';
   providedIn: 'root',
 })
 export class JobService {
+  
+  public findLocationById(location_id : Number): Observable<Locations> {
+    return this.httpClient.get<Locations>(`${this.baseUrl}/location/find/${location_id}`);
+  }
   // Initialize the base URL from the environment variable
   private baseUrl = environment.baseurl;
 
@@ -43,8 +47,8 @@ export class JobService {
     return this.httpClient.get<Customer[]>(`${this.baseUrl}/customer/all`); // Get a list of all customers from the server
   }
 
-  public findLocationByCustomerId(customerId: Number): Observable<Locations[]>{
-    return this.httpClient.get<Locations[]>(`${this.baseUrl}/location/customer/${customerId}/location-ids`);
+  public findLocationByCustomerId(customerId: Number): Observable<Number[]>{
+    return this.httpClient.get<Number[]>(`${this.baseUrl}/location/customer/${customerId}/location-ids`);
   }
 
    public getlocationlist(): Observable<Locations[]> {

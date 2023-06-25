@@ -18,11 +18,14 @@ export class JobComponent implements OnInit {
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
   public customers!: Customer;
-  public locations: Locations[] = [];
+  public locations: Number[] = [];
 
   public customersList: Customer[] = [];
 
   public locationList: Locations[] = [];
+  public customer_locationList: Locations[] = [];
+  public customer_location: Locations;
+
   public customerId!: number;
   public LocationId!: number;
   public EditcustomerId!: number;
@@ -71,14 +74,31 @@ export class JobComponent implements OnInit {
     console.log('Next button clicked' , this.customerId);
 
     this.jobService.findLocationByCustomerId(customerId).subscribe(
-      (response: Locations[]) => {
+      (response: Number[]) => {
         this.locations = response;
         console.log(this.locations);
+        console.log(this.locations[1] ,"firste" );
+        for (let i = 0; i < this.locations.length; i++) {
+          this.jobService.findLocationById(this.locations[i]).subscribe(
+            (response: Locations) => {
+              this.customer_location = response;
+              console.log(this.customer_location);
+              this.customer_locationList.push(this.customer_location);
+            },
+            (error: HttpErrorResponse) => alert(error.message)
+          );
+        }
+
       },
       (error: HttpErrorResponse) => alert(error.message)
     );
 
     console.log('Next button clicked locations' , this.locations);
+
+    
+    
+
+    console.log(this.customer_locationList, 'customerlocation_List');
 
     // Move to the next page
   }
@@ -104,8 +124,9 @@ export class JobComponent implements OnInit {
   public findLocationByCustomerId(customerId: number): void {
     {
       this.jobService.findLocationByCustomerId(customerId).subscribe(
-        (response: Locations[]) => {
+        (response: Number[]) => {
           this.locations = response;
+
           console.log(this.locations);
         },
         (error: HttpErrorResponse) => alert(error.message)

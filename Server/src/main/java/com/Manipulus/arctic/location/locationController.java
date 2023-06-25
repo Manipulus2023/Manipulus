@@ -25,11 +25,11 @@ public class locationController {
         return new ResponseEntity<>(locations, HttpStatus.OK);
     }
 
-//    @GetMapping("/find/{id}")
-//    public ResponseEntity<location> getLocationById(@PathVariable("id") Long id) {
-//        location location = locationService.findLocationById(id);
-//        return new ResponseEntity<>(location, HttpStatus.OK);
-//    }
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Location> getLocationById(@PathVariable("id") Long id) {
+        Location location = locationService.findLocationById(id);
+        return new ResponseEntity<>(location, HttpStatus.OK);
+    }
 //    @GetMapping("/customer/{customerId}")
 //    public ResponseEntity<List<location>> getLocationsByCustomerId(@PathVariable Long customerId) {
 //        List<location> locations = locationService.findLocationsByCustomerId(customerId);
