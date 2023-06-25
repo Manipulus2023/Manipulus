@@ -402,7 +402,7 @@
                     <br>
                     <i>Active Status of Available Vehicles</i>
                     <div class="active-status-container">
-                        <div *ngFor="let vehicle of availableVehicles" class="active-status-row">
+                        <div *ngFor="let vehicle of availableVehicles" class="active-status-row"  style="color: darkolivegreen; font-size: small;">
                             Vehicle No: {{ vehicle.vehicle_number }} | Active Status: {{ vehicle.active_state }}
                         </div>
                     </div>
