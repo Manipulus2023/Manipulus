@@ -75,9 +75,11 @@ export class ProfileComponent implements OnInit {
       if(res) {
         this.updatedProfile = res;
       }
+      window.location.reload();
     });
     this.setValuesToTheForm(this.updatedProfile);
   }
+
 }
 
 //Create a form named profileForm in the HTML

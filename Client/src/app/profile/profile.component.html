@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                   <td>Password</td>
-                  <td>{{currentProfile?.password}}</td>
+                  <td >For privacy reasons we are not showing your current password.</td>
                   <!-- {{currentUser.password}}-->
                 </tr>
               </table>
@@ -171,7 +171,7 @@
               <button #closeProfileForm type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 Close
               </button>
-              <button [disabled]="profileForm.invalid" type="submit" class="btn btn-primary">
+              <button [disabled]="profileForm.invalid" type="submit" class="btn btn-primary" data-bs-dismiss="modal">
                 Submit
               </button>
             </div>
