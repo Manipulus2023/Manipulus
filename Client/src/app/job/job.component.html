@@ -328,29 +328,56 @@
 
         <!-- Section 2: Job Details -->
         <section id="section2" [style.display]="currentPage === 2 ? 'block' : 'none'">
-          <form #myForm="ngForm" (ngSubmit)="previousPage()">
-          <h6>Step 2: Enter Job Details</h6>
-          <div class="mb-3">
-            <label for="jobLocation" class="form-label">Job Location</label>
-            <input type="text" class="form-control" id="jobLocation" placeholder="Enter job location" required [(ngModel)]="location" name="location">
+          <form #myForm1="ngForm" (ngSubmit)="submitForm1(myForm1)">
+            <h6>Step 2: Enter Job Details</h6>
+            <div class="mb-3">
+              <label for="jobLocation" class="form-label">Job Location</label>
+              <select ngModel  name="locationId">
+                <option *ngFor="let job of customer_locationList" [value]="job.location_id">{{ job.location_title }}</option>
+              </select>
+            </div>
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <label class="form-label">Job type:</label>
+              <select
+                class="form-control"
+                id="job_type"
+                ngModel
+                name="job_type"
+                required
+              >
+                <option value="Inspection" >Inspection</option>
+                <option value="Service">Service</option>
+                <option value="Installation">Installation</option>
+                <option value="Breakdowns">Breakdowns</option>
+                <option value="Upgrades">Upgrades</option>
+                <option value="Remove">Remove</option>
+           
+              </select>
+             
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="jobType" class="form-label">Job Type</label>
-            <select class="form-select" id="jobType" required [(ngModel)]="selectedJobType" name="jobType">
-              <option value="" disabled selected>Select job type</option>
-              <option value="Type 1">Type 1</option>
-              <option value="Type 2">Type 2</option>
-              <option value="Type 3">Type 3</option>
-            </select>
+          
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <label class="form-label">Job due date :</label>
+              <input
+                type="date"
+                class="form-control"
+                id="job_date"
+                ngModel
+                name="job_date"
+                required
+              />
+              
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="jobDueDate" class="form-label">Job Due Date</label>
-            <input type="date" class="form-control" id="jobDueDate" required>
-          </div>
-          <button class="btn btn-secondary" (click)="previousPage()">Previous</button>
-          <button class="btn btn-primary" (click)="previousPage()">Add Job</button>
-        </form>
-        </section>
+         
+    <button class="btn btn-secondary" (click)="previousPage()">Previous</button>
+    <button class="btn btn-primary" type="submit">Add Job</button>
+  </form>
+</section>
+       
         <!-- End of Section 2 -->
       </div>
       <div class="modal-footer">
@@ -590,6 +617,9 @@
     
   </div>
 </div> 
+
+
+
 
 
 

@@ -11,6 +11,7 @@ export class Job{
     customer_id!: number;
     location:Locations; //
     type: any;
+
 }
 
 export class NewJob{

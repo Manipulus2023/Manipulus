@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject, firstValueFrom } from 'rxjs';
-import { Job,  } from './job';
+import { Job, NewJob,  } from './job';
 import { JobService } from './job.service';
 import { Customer } from '../customer/customer';
 import { Locations } from '../location/locations';
@@ -27,6 +27,8 @@ export class JobComponent implements OnInit {
   public customer_location: Locations;
 
   public customerId!: number;
+  public locationId!: number;
+
   public LocationId!: number;
   public EditcustomerId!: number;
   public selectedJobType!: string;
@@ -169,30 +171,33 @@ export class JobComponent implements OnInit {
     }
   }
 
-  // public onAddJob(addForm: NgForm): void {
-  //     console.log("add job");
 
-  //     const jobData:NewJob = {
-  //       job_type: addForm.value.job_type,
-  //       job_date: addForm.value.job_date,
-  //     }
-  //     console.log(jobData, "job data log");
+ submitForm1(form: NgForm) {
+  console.log(form.value);
 
-  //     this.jobService.addJob(jobData, this.customerId).subscribe(
-  //       (response: NewJob) => {
+  const jobData: NewJob = {
+    job_date: form.value.job_date,
+    job_type: form.value.job_type
+  };
 
-  //        console.log(response);
-  //       // Perform any additional actions after successfully adding the location
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       console.error(error);
-  //       // Handle any errors that occur during the request
-  //     }
-  //   );
-  
-  //   // Reset the form after submission if needed
-  //   addForm.reset();
-  // }
+  console.log("locationData", jobData, "locationData");
+
+  this.jobService.addJob(jobData, form.value.locationId).subscribe(
+    (response: NewJob) => {
+      console.log(response);
+      // Perform any additional actions after successfully adding the location
+    },
+    (error: HttpErrorResponse) => {
+      console.error(error);
+      // Handle any errors that occur during the request
+    }
+  );
+
+  // Reset the form after submission if needed
+  form.reset();
+}
+
+
 public reload(): void {
   window.location.reload();
 }
@@ -249,7 +254,3 @@ public reload(): void {
     button.click();
   }
 }
-
-
-// back end eka hari
-//front end eke, job ekak create karannna location id eka pass karanna oni'ekata find method eka haduwa. id eka ganna finf by customer id eka, customer map karala eken selecr karana customer location tiken hari eka select laranna
