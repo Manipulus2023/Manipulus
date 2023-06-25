@@ -143,6 +143,7 @@ export class UnitComponent implements OnInit, OnDestroy {
         this.closeEditModal.nativeElement.click();
         this.selectedUnit = 0;
       }
+      window.location.reload();
     });
   }
 
