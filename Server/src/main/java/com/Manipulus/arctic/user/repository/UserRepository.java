@@ -2,6 +2,7 @@ package com.Manipulus.arctic.user.repository;
 
 import com.Manipulus.arctic.unit.model.Unit;
 import com.Manipulus.arctic.user.model.User;
+import com.Manipulus.arctic.user.model.UserProfile;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.domain.Example;
@@ -186,5 +187,9 @@ public class UserRepository implements IUserRepository {
     @Override
     public Page<User> findAll(Pageable pageable) {
         return null;
+    }
+
+    public UserProfile updateUserProfile(UserProfile userProfile) {
+        return entityManager.merge(userProfile);
     }
 }
