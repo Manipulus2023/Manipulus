@@ -13,7 +13,7 @@ export class Job{
     type: any;
 }
 
-// export class NewJob{
-//     job_type!: string; //
-//     job_date!: Date; //
-// }
+export class NewJob{
+    job_type!: string; //
+    job_date!: Date; //
+}

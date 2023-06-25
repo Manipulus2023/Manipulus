@@ -312,7 +312,7 @@
       <div class="modal-body">
         <!-- Section 1: Select Customer -->
         <section id="section1" [style.display]="currentPage === 1 ? 'block' : 'none'">
-          <form #myForm="ngForm" (ngSubmit)="nextPage()">
+          <form #myForm="ngForm" (ngSubmit)="nextPage1(customerId)">
           <h6>Step 1: Select Customer</h6>
           <div class="mb-3">
             <label for="customerSelect" class="form-label">Customer</label>
@@ -321,13 +321,14 @@
             </select>
             
           </div>
-          <button class="btn btn-primary" (click)="nextPage()">Next</button>
+          <button class="btn btn-primary" (click)="nextPage1(customerId)">Next</button>
         </form>
         </section>
         <!-- End of Section 1 -->
 
         <!-- Section 2: Job Details -->
         <section id="section2" [style.display]="currentPage === 2 ? 'block' : 'none'">
+          <form #myForm="ngForm" (ngSubmit)="previousPage()">
           <h6>Step 2: Enter Job Details</h6>
           <div class="mb-3">
             <label for="jobLocation" class="form-label">Job Location</label>
@@ -348,6 +349,7 @@
           </div>
           <button class="btn btn-secondary" (click)="previousPage()">Previous</button>
           <button class="btn btn-primary" (click)="previousPage()">Add Job</button>
+        </form>
         </section>
         <!-- End of Section 2 -->
       </div>

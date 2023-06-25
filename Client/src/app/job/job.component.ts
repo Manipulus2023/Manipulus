@@ -18,7 +18,7 @@ export class JobComponent implements OnInit {
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
   public customers!: Customer;
-  public locations!: Locations;
+  public locations: Locations[] = [];
 
   public customersList: Customer[] = [];
 
@@ -65,10 +65,21 @@ export class JobComponent implements OnInit {
     console.log('Next button clicked');
   }
 
-  nextPage() {
+  nextPage1(customerId: number) {
     this.onClickNext(); // Call the custom function before moving to the next page
     this.currentPage = 2; 
     console.log('Next button clicked' , this.customerId);
+
+    this.jobService.findLocationByCustomerId(customerId).subscribe(
+      (response: Locations[]) => {
+        this.locations = response;
+        console.log(this.locations);
+      },
+      (error: HttpErrorResponse) => alert(error.message)
+    );
+
+    console.log('Next button clicked locations' , this.locations);
+
     // Move to the next page
   }
 
@@ -93,7 +104,7 @@ export class JobComponent implements OnInit {
   public findLocationByCustomerId(customerId: number): void {
     {
       this.jobService.findLocationByCustomerId(customerId).subscribe(
-        (response: Locations) => {
+        (response: Locations[]) => {
           this.locations = response;
           console.log(this.locations);
         },

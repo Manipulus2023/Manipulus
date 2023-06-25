@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Job,  } from './job';
+import { Job, NewJob,  } from './job';
 import { Customer } from '../customer/customer';
 import { Locations } from '../location/locations';
 
@@ -21,9 +21,9 @@ export class JobService {
   }
 
   // Adds a new job
-  // public addJob(job: NewJob, id: number): Observable<NewJob> {
-  //   return this.httpClient.post<NewJob>(`${this.baseUrl}/job/add/${id}`, job);
-  // }
+  public addJob(job: NewJob, id: number): Observable<NewJob> {
+    return this.httpClient.post<NewJob>(`${this.baseUrl}/job/add/${id}`, job);
+  }
   
   // Updates an existing job
   public updateJob(job: Job, id: number): Observable<Job> {
@@ -43,8 +43,8 @@ export class JobService {
     return this.httpClient.get<Customer[]>(`${this.baseUrl}/customer/all`); // Get a list of all customers from the server
   }
 
-  public findLocationByCustomerId(customerId: Number): Observable<Locations>{
-    return this.httpClient.get<Locations>(`${this.baseUrl}/location/customer/${customerId}/location-ids`);
+  public findLocationByCustomerId(customerId: Number): Observable<Locations[]>{
+    return this.httpClient.get<Locations[]>(`${this.baseUrl}/location/customer/${customerId}/location-ids`);
   }
 
    public getlocationlist(): Observable<Locations[]> {
