@@ -62,7 +62,8 @@ import { ProfileComponent } from './profile/profile.component';
     AdminComponent,
     HeaderComponent,
     ForbiddenComponent,
-    ProfileComponent
+    ProfileComponent,
+
   ],
   imports: [
     BrowserModule,

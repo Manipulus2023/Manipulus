@@ -2,7 +2,7 @@ export class LoggedUser {
   constructor (
     public username: string,
     public roles: string[],
-    private _token: string,
+    public _token: string,
     public _expiration: Date,
     public userType: string | undefined
     ) { }
