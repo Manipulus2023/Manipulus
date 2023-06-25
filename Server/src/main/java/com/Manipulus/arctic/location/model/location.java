@@ -1,5 +1,6 @@
 package com.Manipulus.arctic.location.model;
 
+
 import com.Manipulus.arctic.job.model.Job;
 import jakarta.persistence.*;
 import java.io.Serializable;
@@ -16,12 +17,14 @@ public class location implements Serializable {
 
     @Column(name = "location_lat")
     private Double location_lat; // The type of the location.
-
+  
     @Column(name = "location_lng")
     private Double location_lng; // The date when the location was created.
 
+
     @Column(name = "location_title")
     private String location_title; // The status of the location.
+
 
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "location_info")
@@ -44,7 +47,9 @@ public class location implements Serializable {
     public location() {
     }
 
+
     public location(long id, Double location_lat, Double location_lng, String location_title, Job location_info, String locationCode) {
+
         this.id = id;
         this.location_lat = location_lat;
         this.location_lng = location_lng;
@@ -61,6 +66,7 @@ public class location implements Serializable {
         this.id = id;
     }
 
+
     public Double getLocation_lat() {
         return location_lat;
     }
@@ -74,6 +80,7 @@ public class location implements Serializable {
     }
 
     public void setLocation_lng(Double location_lng) {
+
         this.location_lng = location_lng;
     }
 
@@ -90,6 +97,7 @@ public class location implements Serializable {
     }
 
     public void setLocation_info(Job location_info) {
+
         this.location_info = location_info;
     }
 

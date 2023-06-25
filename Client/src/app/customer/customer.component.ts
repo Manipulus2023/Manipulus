@@ -30,6 +30,8 @@ throw new Error('Method not implemented.');
   // Inject customer service
   constructor(private customerService: CustomerService) {}
 
+ 
+
   ngOnInit(): void {
     // Define DataTables options
 

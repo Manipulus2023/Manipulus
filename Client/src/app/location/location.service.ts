@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {  Locations } from './locations';
 
+
 @Injectable({
   providedIn: 'root',
 })

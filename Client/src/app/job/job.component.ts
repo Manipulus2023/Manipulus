@@ -6,6 +6,7 @@ import { Job } from './job';
 import { JobService } from './job.service';
 import { Customer } from '../customer/customer';
 import { Locations } from '../location/locations';
+
 @Component({
   selector: 'app-job',
   templateUrl: './job.component.html',
@@ -26,6 +27,7 @@ export class JobComponent implements OnInit {
   public job_count!: number;
   public last_job_id!: number;
   constructor(private jobService: JobService) {}
+
 
   ngOnInit(): void {
     this.dtoptions = {
@@ -89,6 +91,7 @@ export class JobComponent implements OnInit {
  
     this.getCustomers();
 
+
     const job: Job = {
       id: 0,
       job_type: addForm.value.job_type,
@@ -110,6 +113,7 @@ export class JobComponent implements OnInit {
         const jobID = this.last_job_id;
         console.log(this.last_job_id);
         this.getJobs(); 
+
         // const customerId: number = 5; // Set the desired customer ID here
         firstValueFrom(this.jobService.addlocation(job, jobID)).then((location: Locations) => {
             console.log('after adding job',this.jobs);
@@ -174,6 +178,7 @@ public reload(): void {
       button.setAttribute('data-bs-target', '#exampleModal2');
       this.editJob = job;
     }
+
     if (mode === 'delete') {
       button.setAttribute('data-bs-target', '#exampleModal3');
       this.deleteJob = job;

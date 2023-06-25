@@ -16,6 +16,7 @@
 }
 .vehicle_loop_class{
   width: 299px;
+
   
 }
 .vehicle_details_container{
@@ -24,6 +25,7 @@
   flex-wrap: wrap;
   
 }
+
 
 .vehicle_image{
   display: block;
@@ -53,6 +55,7 @@
 
 .vehicle_details_button_delete{
   margin-left: 10px;
+
 }
 p{
   margin: 0;
