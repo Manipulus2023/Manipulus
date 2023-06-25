@@ -10,7 +10,7 @@ import { JobCardComponent } from './job-card/job-card.component';
 import { LocationComponent } from './location/location.component';
 import { RepairPartsComponent } from './repair-parts/repair-parts.component';
 import { ServiceAgreementComponent } from './service-agreement/service-agreement.component';
-
+import { AgreementPdfComponent } from './agreement-pdf/agreement-pdf.component';
 
 
 import { SiteVisitComponent } from './site-visit/site-visit.component';
@@ -38,6 +38,7 @@ const routes: Routes = [
   { path: 'repair-parts', component: RepairPartsComponent },
   { path: 'service-agreement', component: ServiceAgreementComponent },
   {path:'profile',component:ProfileComponent},
+  { path: 'agreement-pdf', component: AgreementPdfComponent},
 
 
 

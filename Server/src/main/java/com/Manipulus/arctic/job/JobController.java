@@ -1,5 +1,6 @@
 package com.Manipulus.arctic.job;
 
+import com.Manipulus.arctic.customer.model.Customer;
 import com.Manipulus.arctic.job.model.Job;
 import com.Manipulus.arctic.job.service.JobService;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,12 @@ public class JobController {
         return new ResponseEntity<>(jobs, HttpStatus.OK);
     }
 
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Job> getCustomerById(@PathVariable("id") Long id) {
+        Job job = jobService.findJobById(id);
+        return new ResponseEntity<>(job, HttpStatus.OK);
+    }
     @PostMapping("/add")
     public ResponseEntity<Job> addJob(@RequestBody Job job , @RequestParam("id" )Long id) {
         // Add a new job using the job  Service

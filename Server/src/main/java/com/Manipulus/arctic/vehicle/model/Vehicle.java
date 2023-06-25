@@ -29,7 +29,7 @@ public class Vehicle implements Serializable {
     private byte[] vehicle_image;
 
     @Column(name = "ImageAPI")
-    private String imageapi;
+    private String imageapi = "https://img.freepik.com/premium-vector/car-vector-illustration-classic-red-car-cartoon-transportation_648083-206.jpg?w=740";
 
     @Column(name = "vehicle_code")
     private String vehicle_code;

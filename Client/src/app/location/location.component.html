@@ -4,6 +4,35 @@
       <app-side-nav></app-side-nav>
     </div>
     <div class="col-sm-10 ps-3 mt-2">
-      <p>location works!</p>
+      <google-map
+  
+      #myGoogleMap
+    
+      height="100vh"
+      width="100%"
+      [zoom]="zoom"
+      [center]="center"
+      [options]="options"
+      (mapClick)="eventHandler($event,'mapClick')"
+      (mapDblclick)="eventHandler($event,'mapDblclick')"
+      (mapDrag)="eventHandler($event,'mapDrag')"
+      (mapDragend)="eventHandler($event,'mapDragend')"
+      (mapRightclick)="eventHandler($event,'mapRightclick')"
+      (positionChanged)="eventHandler($event,'marker_positionChanged')"
+      (zoomChanged)="eventHandler($event,'zoomChanged')"
+    >
+      <map-marker
+        #markerElem="mapMarker"
+        *ngFor="let marker of markers"
+        [position]="marker.position"
+        [label]="marker.label"
+        [title]="marker.title" 
+        [options]="marker.options"
+        (mapClick)="openInfo(markerElem, marker.info)"
+      >
+      </map-marker>
+    
+      <map-info-window>{{ infoContent }}</map-info-window>
+    </google-map>
     </div>
   </div>

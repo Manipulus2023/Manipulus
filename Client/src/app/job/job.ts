@@ -8,4 +8,6 @@ export class Job{
     jobCode!: String;
     customer!:Customer;
     customer_id!: number;
+    location:string;
+     type: any;
 }
