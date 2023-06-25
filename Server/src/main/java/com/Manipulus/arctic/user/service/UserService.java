@@ -4,10 +4,7 @@ import com.Manipulus.arctic.role.model.Role;
 import com.Manipulus.arctic.role.repository.IRoleRepository;
 import com.Manipulus.arctic.user.dao.RoleDao;
 import com.Manipulus.arctic.user.exception.UserNotFoundException;
-import com.Manipulus.arctic.user.model.EditUserRequest;
-import com.Manipulus.arctic.user.model.User;
-import com.Manipulus.arctic.user.model.UserRequest;
-import com.Manipulus.arctic.user.model.UserResponse;
+import com.Manipulus.arctic.user.model.*;
 import com.Manipulus.arctic.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -161,8 +158,52 @@ public class UserService implements IUserService{
             }
 
 
-        public User loadUserByUsername (String username) {
-            return userRepository.findUserByUserName(username);
+        public User loadUserByUsername (String userName) {
+            return userRepository.findUserByUserName(userName);
         }
 
+        public UserProfile loadUserProfile(String userName) {
+            User user = userRepository.findUserByUserName(userName);
+            return user.UserProfileMapper(user);
+        }
+
+        public UserProfile updateUserProfile(String userName, UserProfile userProfile){
+            User existingUser = userRepository.findUserByUserName(userName);
+            if (existingUser != null) {
+                existingUser.setFirst_name(userProfile.getFirst_name());
+                existingUser.setLast_name(userProfile.getLast_name());
+                existingUser.setEmail(userProfile.getEmail());
+                existingUser.setPassword(getEncodedPassword(userProfile.getPassword()));
+
+                User updatedUser = userRepository.save(existingUser);
+                UserProfile updatedProfile = new UserProfile();
+                updatedProfile.first_name = updatedUser.getFirst_name();
+                updatedProfile.last_name = updatedUser.getLast_name();
+                updatedProfile.email = updatedUser.getEmail();
+                updatedProfile.password = updatedUser.getPassword();
+                return updatedProfile;
+            } else {
+                throw new RuntimeException("User profile not found for username: " + userName);
+            }
+        }
     }
+    // public UserResponse updateUser(int id, EditUserRequest user) {
+//        User existingUser = findUserById(id);
+//        if(existingUser != null) {
+//            Set<Role> userRoles = new HashSet<>();
+ //           existingUser.setFirst_name(user.first_name);
+//
+//            existingUser.setFirst_name(user.first_name);
+//
+//            Role role = roleRepository.getById(user.roles);
+//            if(role != null)
+//            {
+//                userRoles.add(role);
+//                existingUser.setRoles(userRoles);
+//            }
+//            User updatedUser = userRepository.save(existingUser);
+//            UserResponse response = updatedUser.UserResponseMapper(updatedUser.getFirst_name(),updatedUser.getLast_name(),updatedUser.getUserName(), updatedUser.getAddress(), updatedUser.getEmail(), updatedUser.getMobileNumber(), updatedUser.getUserPassword(), updatedUser.getStatus(),updatedUser.getDesignation(), updatedUser.getRoles());
+//            return response;
+//        }
+//        throw new UserNotFoundException(" user by id"+ id + "was not found");
+//    }

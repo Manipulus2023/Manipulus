@@ -2,10 +2,7 @@ package com.Manipulus.arctic.user.controller;
 
 import com.Manipulus.arctic.auth.helpers.JWTHelper;
 import com.Manipulus.arctic.role.model.Role;
-import com.Manipulus.arctic.user.model.EditUserRequest;
-import com.Manipulus.arctic.user.model.User;
-import com.Manipulus.arctic.user.model.UserRequest;
-import com.Manipulus.arctic.user.model.UserResponse;
+import com.Manipulus.arctic.user.model.*;
 import com.Manipulus.arctic.user.service.UserService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -15,6 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -99,6 +98,19 @@ public class UserController {
             throw new RuntimeException("Refresh token required");
         }
     }
+
+    @GetMapping("/profile/{username}")
+    @PreAuthorize("hasAnyAuthority('Admin','User')")
+    public UserProfile getUserProfileData(@PathVariable String username) {
+        return userService.loadUserProfile(username);
+    }
+    @PutMapping("/update-profile/{username}")
+    public ResponseEntity<UserProfile> updateUserProfile(@PathVariable String username, @RequestBody UserProfile userProfile) {
+        UserProfile updatedUser = userService.updateUserProfile(username, userProfile);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+    }
+    
+
 }
 
     /*@PostMapping("/login")

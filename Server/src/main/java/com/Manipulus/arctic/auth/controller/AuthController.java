@@ -6,6 +6,8 @@ import com.Manipulus.arctic.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,18 @@ public class AuthController {
         this.userService = userService;
     }
 
+    //return the details of the current user
+    @GetMapping("/current-user")
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof User) {
+            return (User) authentication.getPrincipal();
+        } else {
+            // Handle the case when the current user is not authenticated or does not exist
+            return null;
+        }
+    }
+
     @PostMapping("/forgot-password")
     public boolean ForgotPassword(@RequestBody String email) {
         User user = userService.loadUserByEmail(email);
@@ -26,6 +40,9 @@ public class AuthController {
         }
         return false;
     }
+
+
+
 
     /*@PostMapping("/signin")
     public ResponseEntity<?> authenticatedUser(@RequestBody LoginRequest loginRequest) {

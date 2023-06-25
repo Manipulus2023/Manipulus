@@ -33,6 +33,8 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptorService } from './services/auth.interceptor.service';
 import { DataTablesModule } from "angular-datatables";
+
+import { ProfileComponent } from './profile/profile.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { AgreementPdfComponent } from './agreement-pdf/agreement-pdf.component';
 import { NgChartsModule } from 'ng2-charts';
@@ -64,7 +66,9 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     AdminComponent,
     HeaderComponent,
     ForbiddenComponent,
+    ProfileComponent,
     AgreementPdfComponent
+
   ],
   imports: [
     BrowserModule,

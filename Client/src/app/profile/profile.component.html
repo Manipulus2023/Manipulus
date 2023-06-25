@@ -1,0 +1,183 @@
+<div class="row">
+  <div class="col-sm-2">
+    <app-side-nav></app-side-nav>
+  </div>
+  <div class="col-sm-10 ps-3 mt-2">
+    <div class="card">
+      <h2 class="card-header">My Profile
+      </h2>
+      <div class="card-body">
+        <div class="container">
+          <div class="container text-center">
+            <img src="assets/default-profile.jpg" alt="default pic" class="profile-image">
+            <h3 class="mt20">
+              {{currentUser.username}}
+              <!-- {{currentUser.firstname}} {{currentUser.lastname}}-->
+            </h3>
+          </div>
+
+          <div class="row">
+            <div class="col-md-10 offset-md-1">
+              <table class="table text-center">
+                <tr>
+                  <td>First Name</td>
+                  <td>{{currentProfile?.first_name}}</td>
+                </tr>
+                <tr>
+                  <td>Last Name</td>
+                  <td>{{currentProfile?.last_name}}</td>
+
+                </tr>
+                <tr>
+                  <td>E-mail</td>
+                  <td>{{currentProfile?.email}}</td>
+
+                </tr>
+                <tr>
+                  <td>Password</td>
+                  <td>{{currentProfile?.password}}</td>
+                  <!-- {{currentUser.password}}-->
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div>
+    <div class="card-footer d-flex justify-content-end">
+      <div class="ml-auto">
+        <button type="button" class="btn btn-primary p-2 m-2 justify-content-end" data-bs-toggle="modal"
+          data-bs-target="#updateModal">Update</button>
+      </div>
+    </div>
+    <!-- Update modal -->
+
+
+    <form [formGroup]="profileForm" (ngSubmit)="onUpdate()" class="update-form">
+      <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLable" aria-hidden="true"
+        data-bs-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Update Profile</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <label class="form-label">Username:</label>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <input type="text" formControlName="user_name" class="form-control" required />
+                  <div *ngIf="profileForm.controls['user_name'].invalid &&
+                              (profileForm.controls['user_name'].dirty ||
+                              profileForm.controls['user_name'].touched)">
+                    <small class="text-danger" *ngIf="profileForm.controls['user_name'].errors?.['required']">User name
+                      is
+                      required.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <label class="form-label">First Name:</label>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <input type="text" formControlName="first_name" class="form-control" required />
+                  <div *ngIf="
+                          profileForm.controls['first_name'].invalid &&
+                              (profileForm.controls['first_name'].dirty ||
+                              profileForm.controls['first_name'].touched)
+                            ">
+                    <small class="text-danger" *ngIf="profileForm.controls['first_name'].errors?.['required']">User name
+                      is
+                      required.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <label class="form-label">Last Name:</label>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <input type="text" formControlName="last_name" class="form-control" required />
+                  <div *ngIf="
+                          profileForm.controls['last_name'].invalid &&
+                              (profileForm.controls['last_name'].dirty ||
+                              profileForm.controls['last_name'].touched)
+                            ">
+                    <small class="text-danger" *ngIf="profileForm.controls['last_name'].errors?.['required']">User name
+                      is
+                      required.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <label class="form-label">Password:</label>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <input type="text" formControlName="password" class="form-control" required placeholder="For privacy reasons we are not showing your current password." />
+                  <div *ngIf="
+                          profileForm.controls['password'].invalid &&
+                              (profileForm.controls['password'].dirty ||
+                              profileForm.controls['password'].touched)
+                            ">
+                    <small class="text-danger" *ngIf="profileForm.controls['password'].errors?.['required']">Password
+                      is
+                      required.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <label class="form-label">Email:</label>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <input type="text" formControlName="email" class="form-control" required />
+                  <div *ngIf="
+                          profileForm.controls['email'].invalid &&
+                              (profileForm.controls['email'].dirty ||
+                              profileForm.controls['email'].touched)
+                            ">
+                    <small class="text-danger" *ngIf="profileForm.controls['email'].errors?.['required']">User email is
+                      required.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button #closeProfileForm type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+              <button [disabled]="profileForm.invalid" type="submit" class="btn btn-primary">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

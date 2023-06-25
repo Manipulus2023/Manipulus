@@ -25,6 +25,7 @@ import { AdminComponent } from './admin/admin.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { ForgetPasswordComponent } from './user-login/forget-password/forget-password.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -36,9 +37,10 @@ const routes: Routes = [
   { path: 'location', component: LocationComponent },
   { path: 'repair-parts', component: RepairPartsComponent },
   { path: 'service-agreement', component: ServiceAgreementComponent },
+  {path:'profile',component:ProfileComponent},
   { path: 'agreement-pdf', component: AgreementPdfComponent},
 
-  
+
 
   { path: 'site-visit', component: SiteVisitComponent },
   { path: 'sub-location', component: SubLocationComponent },

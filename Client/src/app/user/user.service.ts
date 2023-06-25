@@ -3,12 +3,13 @@ import { environment } from "src/environments/environment";
 import { User, UserResponse } from "./user";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { UserProfile } from "../models/user-profile.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = environment.baseurl;
+    private baseUrl = environment.baseurl;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -27,11 +28,12 @@ export class UserService {
     return this.httpClient.delete<void>(`${this.baseUrl}/users/${userId}`);
   }
 
+  getUserInformation(username: string ) {
+    return this.httpClient.get<UserProfile>(`${this.baseUrl}/users/profile/${username}`);
+  }
 
-  public userMapper ()
-  {
-
-
+  updateUserProfile(userProfile: UserProfile, username: string ) {
+    return this.httpClient.put<UserProfile>(`${this.baseUrl}/users/update-profile/${username}`,userProfile);
   }
 }
 

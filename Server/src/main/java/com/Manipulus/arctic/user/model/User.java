@@ -188,6 +188,15 @@ public class User implements Serializable {
         return response;
     }
 
+    public UserProfile UserProfileMapper(User user) {
+        UserProfile userProfile = new UserProfile ();
+        userProfile.user_name = user.getUserName();
+        userProfile.first_name = user.getFirst_name();
+        userProfile.last_name = user.getLast_name();
+        userProfile.email = user.getEmail();
+        return userProfile;
+    }
+
     public UserResponse EditUserResponseMapper(String first_name, String last_name, String user_name,String address,String mobile_number, String email, String status, String designation,Set<Role> roles){
         UserResponse response = new UserResponse();
         response.first_name=first_name;
@@ -206,5 +215,7 @@ public class User implements Serializable {
         }
         return response;
     }
+
+
 
 }
