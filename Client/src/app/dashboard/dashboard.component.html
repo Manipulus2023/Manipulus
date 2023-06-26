@@ -4,7 +4,7 @@
   </div>
   <div class="col-sm-10 ps-3 mt-2">
     <div class="outer-container">
-      <div class="position-absolute">Dashboard</div>
+      <div class="position-absolute text-white Dashboard-text">Dashboard</div>
       <div class="main-container">
         <div class="left-container">
           <div class="uper-container">
@@ -26,7 +26,8 @@
                   TOTAL BREAKDOWNS JOBS
                   {{ BreakdownsfilteredJobs.length }}
                 </div>
-                <div class="job-counts">1</div>
+                <div class="job-counts">TOTAL JOBS <div>  {{ jobs.length }}</div>
+                </div>
               </div>
               <div class="job-table">
                 <table class="table table-striped">
@@ -40,7 +41,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let job of lastFiveJobs">
-                      <th scope="row">1</th>
+                      <th scope="row">{{job.id}}</th>
                       <td> <p>
                         {{job.customer.name}}
                       </p>
@@ -71,7 +72,8 @@
           </div>
         </div>
         <div class="right-container">
-          <div class="job-counts right-upper">asda</div>
+          <div class="job-counts right-upper"> TOTAL CUSTOMERS
+            <div>  {{ customers.length }}</div></div>
           <div class="customer-table">
             <h6 >Recent Customers</h6>
             <table class="table table-striped">
@@ -96,6 +98,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- <form #addForm="ngForm" (ngSubmit)="onAddCustomer(addForm)">
   <div
