@@ -84,7 +84,7 @@ export class LocationComponent implements OnInit {
   }
  
  
-  markers = [{
+  markers = {
     position: {
       lat:-10.5003747,
       lng: -10.5003747
@@ -99,13 +99,12 @@ export class LocationComponent implements OnInit {
     options: {
       animation: 2
     }
-  }]  as  any;
+  } as  any;
   
   infoContent = ''
 
   eventHandler(event: any ,name:string){
     console.log(event,name);
-    
     // Add marker on double click event
     if(name === 'mapClick'){
       this.dropMarker(event)
@@ -116,7 +115,7 @@ export class LocationComponent implements OnInit {
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
   
-    this.markers.push({
+    this.markers = ({
       position: {
         lat: lat,
         lng: lng,

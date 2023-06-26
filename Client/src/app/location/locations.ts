@@ -1,6 +1,6 @@
 import { Customer } from "../customer/customer";
 export class Locations {
-  location_id!: number;
+  id!: number;
   location_lat: number;
   location_lng: number;
   location_customer: Customer;

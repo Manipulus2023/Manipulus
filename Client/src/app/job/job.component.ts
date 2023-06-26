@@ -29,7 +29,6 @@ export class JobComponent implements OnInit {
   public customerId!: number;
   public locationId!: number;
 
-  public LocationId!: number;
   public EditcustomerId!: number;
   public selectedJobType!: string;
   public location!: Locations;
@@ -45,6 +44,7 @@ export class JobComponent implements OnInit {
     };
 
     this.getCustomers();
+    this.getJobs();
     console.log(this.customersList , "all cuso");
   }
 
@@ -105,6 +105,14 @@ export class JobComponent implements OnInit {
     // Move to the next page
   }
 
+  nextPage2(){
+    this.currentPage = 3; 
+    console.log('Next button clicked' , this.locationId);
+
+  }
+
+
+
   previousPage() {
     this.currentPage = 1; // Move to the previous page
   }
@@ -148,6 +156,10 @@ export class JobComponent implements OnInit {
     }
   }
 
+  onclick(){
+    console.log(this.locationId)
+  }
+
   public getJobs(): void {
     {
       this.jobService.getJobList().subscribe(
@@ -180,9 +192,9 @@ export class JobComponent implements OnInit {
     job_type: form.value.job_type
   };
 
-  console.log("locationData", jobData, "locationData");
-
-  this.jobService.addJob(jobData, form.value.locationId).subscribe(
+  // console.log("locationData", jobData, "locationData");
+  console.log("locationID", this.locationId, "locationID");
+  this.jobService.addJob(jobData,this.locationId).subscribe(
     (response: NewJob) => {
       console.log(response);
       // Perform any additional actions after successfully adding the location
@@ -195,6 +207,7 @@ export class JobComponent implements OnInit {
 
   // Reset the form after submission if needed
   form.reset();
+  this.reload();
 }
 
 

@@ -1,4 +1,12 @@
-.form{
-    width: 222px;
-    margin-left: 425px;
+
+.google_map_container{
+    display: flex;
+}
+
+.google-container{
+    width: 60vw;
+}
+.map_form{
+    width: 40vw;
+    padding: 50px;
 }

@@ -35,4 +35,8 @@ export class CustomerService {
       `${this.baseUrl}/customer/delete/${customerId}`
     ); // Delete a customer with the specified ID from the server
   }
+
+  public findlocationCustomerId(customerId: Number): Observable<Customer>{
+    return this.httpClient.get<Customer>(`${this.baseUrl}/location/customer/${customerId}/location-ids`);
+  }
 }

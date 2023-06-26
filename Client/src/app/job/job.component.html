@@ -38,15 +38,15 @@
             <td>
               <div class="d-flex align-items-center" >
                 <div class="ms-3">
-                  <p class="fw-bold mb-1">{{ job.customer.name }}</p>
-                  <p class="text-muted mb-0">{{ job.customer.contactNumber }}</p>
+                  <p class="fw-bold mb-1">{{ job.location.location_customer.name }}</p>
+                  <p class="text-muted mb-0">{{ job.location.location_customer.nic_number }}</p>
                 </div>
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <p class="fw-bold mb-1">{{ job.customer.address }}</p>
+                  <p class="fw-bold mb-1">{{ job.location.location_customer.address }}</p>
                 </div>
               </div>
             </td>
@@ -319,23 +319,35 @@
             <select [(ngModel)]="customerId" name="customerId">
               <option *ngFor="let customer of customersList" [value]="customer.id">{{ customer.name }}</option>
             </select>
-            
+          
           </div>
           <button class="btn btn-primary" (click)="nextPage1(customerId)">Next</button>
         </form>
         </section>
         <!-- End of Section 1 -->
 
+         <!-- Section 1: Select Customer -->
+         <section id="section2" [style.display]="currentPage === 2 ? 'block' : 'none'">
+          <form #myForm4="ngForm" (ngSubmit)="nextPage2()">
+          <h6>Step 1: Select Customer</h6>
+          <div class="mb-3">
+            <label for="jobLocation" class="form-label">Job Location</label>
+              <select [(ngModel)]="locationId" name="locationId" >
+                <option *ngFor="let customer_location of customer_locationList" [value]="customer_location.id">{{ customer_location.location_title }}</option>
+              </select>
+          
+          </div>
+          <button class="btn btn-primary" (click)="nextPage2()">Next</button>
+        </form>
+        </section>
+        <!-- End of Section 1 -->
+
         <!-- Section 2: Job Details -->
-        <section id="section2" [style.display]="currentPage === 2 ? 'block' : 'none'">
+        <section id="section3" [style.display]="currentPage === 3 ? 'block' : 'none'">
           <form #myForm1="ngForm" (ngSubmit)="submitForm1(myForm1)">
             <h6>Step 2: Enter Job Details</h6>
-            <div class="mb-3">
-              <label for="jobLocation" class="form-label">Job Location</label>
-              <select ngModel  name="locationId">
-                <option *ngFor="let job of customer_locationList" [value]="job.location_id">{{ job.location_title }}</option>
-              </select>
-            </div>
+          
+            <button (click)="onclick()" >click</button>
           <div class="col-lg-6">
             <div class="mb-3">
               <label class="form-label">Job type:</label>
@@ -379,6 +391,22 @@
 </section>
        
         <!-- End of Section 2 -->
+
+
+        <!-- <section id="section1" [style.display]="currentPage === 1 ? 'block' : 'none'">
+          <form #myForm="ngForm" (ngSubmit)="nextPage1(customerId)">
+          <h6>Step 1: Select Customer</h6>
+          <div class="mb-3">
+            <label for="customerSelect" class="form-label">Customer</label>
+            <select [(ngModel)]="customerId" name="customerId">
+              <option *ngFor="let customer of customersList" [value]="customer.id">{{ customer.name }}</option>
+            </select>
+          
+          </div>
+          <button class="btn btn-primary" (click)="nextPage1(customerId)">Next</button>
+        </form>
+        </section> -->
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

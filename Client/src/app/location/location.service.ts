@@ -37,6 +37,8 @@ export class locationService {
     return this.httpClient.get<Customer>(`${this.baseUrl}/customer/find/${customerId}`);
   }
 
+
+
   public getCustomerList(): Observable<Customer[]> {
     return this.httpClient.get<Customer[]>(`${this.baseUrl}/customer/all`); // Get a list of all customers from the server
   }
