@@ -3,6 +3,10 @@
     <app-side-nav></app-side-nav>
   </div>
   <div class="col-sm-10 ps-3 mt-2">
+    <div>
+      <input id="search-input" type="text" [formControl]="searchControl" placeholder="Search location">
+      <button (click)="search()">Search</button>
+    </div>
     <div class="google_map_container">
       <div class="google-container">
         <google-map

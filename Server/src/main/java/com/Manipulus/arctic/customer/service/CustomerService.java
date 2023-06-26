@@ -46,6 +46,9 @@ public class CustomerService {
         return CustomerRepository.findCustomerById(id)
                 .orElseThrow(()-> new CustomerNotFoundException(" customer by id"+ id + "was not found"));
     }
+
+
+
     // Delete a customer by their ID
     @Transactional
     public void deleteCustomerById(Long id){

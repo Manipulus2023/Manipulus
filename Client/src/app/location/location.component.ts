@@ -4,8 +4,9 @@ import { Job } from '../job/job';
 import { HttpErrorResponse } from '@angular/common/http';
 import { locationService } from './location.service';
 import { Locations, NewLocation } from './locations';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormControl, FormsModule, NgForm } from '@angular/forms';
 import { Customer } from '../customer/customer';
+
 
 @Component({
   selector: 'app-location',
@@ -13,6 +14,8 @@ import { Customer } from '../customer/customer';
   styleUrls: ['./location.component.css']
 })
 export class LocationComponent implements OnInit {
+  searchControl = new FormControl();
+  autocomplete: google.maps.places.Autocomplete | undefined;
 
   lastClickedLat:number | undefined;
   lastClickedLng: number | undefined;
@@ -20,11 +23,14 @@ export class LocationComponent implements OnInit {
   public customersList: Customer[] = [];
   public locations : Locations[] =[];
   public customerId!: number;
-
+  geocoder: google.maps.Geocoder | undefined;
 
   constructor(private location_service: locationService) {
     this.lastClickedLat = undefined;
     this.lastClickedLng = undefined;
+  }
+  private initGeocoder() {
+    this.geocoder = new google.maps.Geocoder();
   }
   ngOnInit() {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -32,9 +38,51 @@ export class LocationComponent implements OnInit {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       }
+      this.initGeocoder();
     })
     this.dropMarkers(this.locations);
     this.getCustomers();
+
+    this.initAutocomplete();
+
+  } private initAutocomplete() {
+    const input = document.getElementById('search-input') as HTMLInputElement;
+    this.autocomplete = new google.maps.places.Autocomplete(input, { types: ['geocode'] });
+    this.autocomplete.addListener('place_changed', () => {
+      const place: google.maps.places.PlaceResult | undefined = this.autocomplete?.getPlace();
+
+      if (place?.geometry && place.geometry.location) {
+        const lat = place.geometry.location.lat();
+        const lng = place.geometry.location.lng();
+
+        // Do something with the selected location
+        console.log('Selected location:', lat, lng);
+        // Call your desired method or perform any other actions here
+      }
+    });
+  }
+
+  search() {
+    const query = this.searchControl.value;
+    if (query && this.geocoder) {
+      this.geocoder.geocode({ address: query }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK && results && results.length > 0) {
+          const location = results[0].geometry.location;
+          const lat = location.lat();
+          const lng = location.lng();
+
+          // Do something with the selected location
+          this.center={
+            lat: lat,
+            lng: lng,
+          }
+          console.log('Selected location:', lat, lng);
+          // Call your desired method or perform any other actions here
+        } else {
+          console.log('Geocode was not successful for the following reason:', status);
+        }
+      });
+    }
   }
 
   public findCustomerById(customerId: number): void {
@@ -70,7 +118,7 @@ export class LocationComponent implements OnInit {
   @ViewChild(MapInfoWindow, { static: false })
   info!: MapInfoWindow;
 
-  zoom = 9;
+  zoom = 12;
   maxZoom = 15;
   minZoom = 2;
   center!: google.maps.LatLngLiteral;
