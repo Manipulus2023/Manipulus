@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Customer } from './customer';
 import { CustomerService } from './customer.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,7 +15,6 @@ onChange(arg0: any) {
 throw new Error('Method not implemented.');
 }
   // Define class properties
-
   currentDate = new Date();
   public customers: Customer[] = [];
   public editCustomer!: Customer;
@@ -28,7 +27,9 @@ throw new Error('Method not implemented.');
   public activeStatus: boolean = true;
 
   // Inject customer service
-  constructor(private customerService: CustomerService) {}
+  constructor(private customerService: CustomerService) {
+
+  }
 
   ngOnInit(): void {
     // Define DataTables options
@@ -58,8 +59,12 @@ throw new Error('Method not implemented.');
     };
 
 
+   
+
   }
 
+  
+  
   // Retrieve customer data using customer service
   public getCustomers(): void {
     {

@@ -1,20 +1,25 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject, firstValueFrom } from 'rxjs';
 import { Job, NewJob,  } from './job';
 import { JobService } from './job.service';
 import { Customer } from '../customer/customer';
 import { Locations } from '../location/locations';
+import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { locationService } from './../location/location.service';
 @Component({
   selector: 'app-job',
   templateUrl: './job.component.html',
   styleUrls: ['./job.component.css'],
 })
 export class JobComponent implements OnInit {
+  lastClickedLat:number | undefined;
+  lastClickedLng: number | undefined;
   public jobs: Job[] = [];
   public editJob: Job | undefined;
   public deleteJob!: Job;
+  public  map_job: Job;
   dtoptions: DataTables.Settings = {};
   dtTriger: Subject<any> = new Subject<any>();
   public customers!: Customer;
@@ -35,7 +40,11 @@ export class JobComponent implements OnInit {
   public job_count!: number;
   public last_job_id!: number;
   currentPage: number = 1; 
-  constructor(private jobService: JobService) {}
+ 
+  constructor(private jobService: JobService) {
+    this.lastClickedLat = undefined;
+    this.lastClickedLng = undefined;
+  }
 
   ngOnInit(): void {
     this.dtoptions = {
@@ -46,7 +55,99 @@ export class JobComponent implements OnInit {
     this.getCustomers();
     this.getJobs();
     console.log(this.customersList , "all cuso");
+  
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.center = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      }
+    })
   }
+
+
+  title = 'angular-google-maps-app';
+
+  @ViewChild('myGoogleMap', { static: false })
+  map!: GoogleMap;
+  @ViewChild(MapInfoWindow, { static: false })
+  info!: MapInfoWindow;
+
+  zoom = 9;
+  maxZoom = 15;
+  minZoom = 2;
+  center!: google.maps.LatLngLiteral;
+  options: google.maps.MapOptions = {
+    zoomControl: true,
+    scrollwheel: true,
+    disableDoubleClickZoom: true,
+    mapTypeId: 'hybrid',
+    maxZoom:this.maxZoom,
+    minZoom:this.minZoom,
+  }
+ 
+  
+  markers = {
+    position: {
+      lat:-10.5003747,
+      lng: -10.5003747
+    },
+    label: {
+      color: "blue",
+      fontWeight :'bold',
+      text: "Marker label 2"
+    },
+    title: "",
+    info: "",
+    options: {
+      animation: 2
+    }
+  }  as  any;
+
+  infoContent = ''
+
+  eventHandler(event: any ,name:string){
+    console.log(event,name);
+    
+    // Add marker on double click event
+    if(name === 'mapClick'){
+     
+    }
+  }
+  dropMarker(event: any) {
+    console.log('dropMarker', event)
+    const lat = event.latLng.lat();
+    const lng = event.latLng.lng();
+  
+    this.markers.push({
+      position: {
+        lat: lat,
+        lng: lng,
+      },
+      label: {
+        color: 'blue',
+        fontWeight: 'bold',
+        text: 'Marker label ' + (this.markers.length + 1),
+      },
+      title: 'Marker title ' + (this.markers.length + 1),
+      info: 'Marker info ' + (this.markers.length + 1),
+      options: {
+        animation: google.maps.Animation.DROP,
+      },
+    });
+    console.log('dropMarker lat', lat)
+    this.lastClickedLat = lat;
+    this.lastClickedLng = lng;
+    console.log(this.lastClickedLat);
+
+  }
+
+
+  openInfo(marker: MapMarker, content: string) {
+    this.infoContent = content;
+    this.info.open(marker)
+  }
+
+
 
   public getCustomers(): void {
     {
@@ -262,6 +363,26 @@ public reload(): void {
     if (mode === 'delete') {
       button.setAttribute('data-bs-target', '#exampleModal3');
       this.deleteJob = job;
+    }
+    if (mode === 'map') {
+      button.setAttribute('data-bs-target', '#exampleModal_map');
+      this.map_job = job;
+      this.markers={
+        position: {
+          lat: job.location.location_lat,
+          lng: job.location.location_lng,
+        },
+        label: {
+          color: 'blue',
+          fontWeight: 'bold',
+          text: 'Marker label ' + (this.markers.length + 1),
+        },
+        title: job.job_type ,
+        info: (job.job_type)+' job @ Customer ' + (job.location.location_customer.name)  +' Contact Number: ' +(job.location.location_customer.contactNumber),
+        options: {
+          animation: google.maps.Animation.DROP,
+        },
+      };
     }
     container.appendChild(button);
     button.click();
