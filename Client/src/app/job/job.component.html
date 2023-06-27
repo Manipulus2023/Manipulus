@@ -22,9 +22,9 @@
             <th>type</th>
             <th>Status</th>
             <th>Job DUe Date</th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>Map</th>
           </tr>
         </thead>
         <tbody>
@@ -114,7 +114,7 @@
               (click)="onOpenModal(job, 'map')"
             >
               <img
-                src="../../assets/Icon/Customer/edit_FILL0_wght400_GRAD0_opsz48.png"
+                src="../../assets/Icon/Dashboard/pin_drop_FILL0_wght400_GRAD0_opsz48.png "
                 alt="Bootstrap"
                 width="20"
                 height="20"
@@ -413,10 +413,10 @@
          <!-- Section 1: Select Customer -->
          <section id="section2" [style.display]="currentPage === 2 ? 'block' : 'none'">
           <form #myForm4="ngForm" (ngSubmit)="nextPage2()">
-          <h6>Step 1: Select Customer</h6>
+          <h6>Step 2: Select Customer's location</h6>
           <div class="mb-3">
             <label for="jobLocation" class="form-label">Job Location</label>
-              <select [(ngModel)]="locationId" name="locationId" >
+              <select [(ngModel)]="locationId" name="locationId" class="custom-select mr-sm-2">
                 <option *ngFor="let customer_location of customer_locationList" [value]="customer_location.id">{{ customer_location.location_title }}</option>
               </select>
           
@@ -429,9 +429,7 @@
         <!-- Section 2: Job Details -->
         <section id="section3" [style.display]="currentPage === 3 ? 'block' : 'none'">
           <form #myForm1="ngForm" (ngSubmit)="submitForm1(myForm1)">
-            <h6>Step 2: Enter Job Details</h6>
-          
-            <button (click)="onclick()" >click</button>
+            <h6>Step 3: Enter job details</h6>
           <div class="col-lg-6">
             <div class="mb-3">
               <label class="form-label">Job type:</label>
